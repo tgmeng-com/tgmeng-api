@@ -36,3 +36,6 @@ build/
 !/mvnw.cmd
 !/target/
 !/.gitattributes
+!/mvnw.cmd
+!/mvnw
+!/.mvn/
