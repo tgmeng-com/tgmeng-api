@@ -39,3 +39,4 @@ build/
 !/mvnw.cmd
 !/mvnw
 !/.mvn/
+!/HELP.md
