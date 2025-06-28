@@ -40,3 +40,5 @@ build/
 !/mvnw
 !/.mvn/
 !/README.md
+/.gitattributes
+/.mvn
