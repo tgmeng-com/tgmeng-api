@@ -32,11 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 !/README.md
-!/mvnw
-!/mvnw.cmd
 !/target/
 !/.gitattributes
-!/mvnw.cmd
 !/mvnw
 !/.mvn/
 !/README.md
