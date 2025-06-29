@@ -1,6 +1,6 @@
 package com.tgmeng.controller.topsearch;
 
-import com.tgmeng.model.vo.topsearch.TopSearchVO;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.topsearch.ISocialMediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +31,7 @@ public class SocialMediaController {
      * @since 2025/6/29 0:52
     */
     @RequestMapping("/baidu")
-    public List<TopSearchVO> getBaiDuTopSearch() {
+    public List<TopSearchCommonVO> getBaiDuTopSearch() {
         return socialMediaService.getBaiDuTopSearch();
     }
     /**
@@ -42,7 +42,7 @@ public class SocialMediaController {
      * @since 2025/6/29 15:32
     */
     @RequestMapping("/bilibili")
-    public List<TopSearchVO> getBilibiliTopSearch() {
+    public List<TopSearchCommonVO> getBilibiliTopSearch() {
         return socialMediaService.getBilibiliTopSearch();
     }
 
@@ -54,7 +54,7 @@ public class SocialMediaController {
      * @since 2025/6/29 18:49
     */
     @RequestMapping("/weibo")
-    public List<TopSearchVO> getWeiBoTopSearch() {
+    public List<TopSearchCommonVO> getWeiBoTopSearch() {
         return socialMediaService.getWeiBoTopSearch();
     }
 
@@ -66,7 +66,7 @@ public class SocialMediaController {
      * @since 2025/6/29 22:39
     */
     @RequestMapping("/douyin")
-    public List<TopSearchVO> getDouYinTopSearch() {
+    public List<TopSearchCommonVO> getDouYinTopSearch() {
         return socialMediaService.getDouYinTopSearch();
     }
 }

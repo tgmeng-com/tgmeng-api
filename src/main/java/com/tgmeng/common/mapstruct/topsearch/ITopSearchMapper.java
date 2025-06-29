@@ -5,7 +5,7 @@ import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
-import com.tgmeng.model.vo.topsearch.TopSearchVO;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import org.mapstruct.*;
 
 /**
@@ -28,7 +28,7 @@ public interface ITopSearchMapper {
     @Mapping(source = "hotScore", target = "hotScore",qualifiedByName = "stringToLong")
     @Mapping(source = "url", target = "url")
     @Mapping(source = "img", target = "image")
-    TopSearchVO topSearchBaiDuDTOContentVO2TopSearchVO(TopSearchBaiDuDTO.ContentVO topSearchBaiDuDTOcontentVO);
+    TopSearchCommonVO topSearchBaiDuDTOContentVO2TopSearchCommonVO(TopSearchBaiDuDTO.ContentVO topSearchBaiDuDTOcontentVO);
 
     /** 哔哩哔哩 */
     @BeanMapping(ignoreByDefault = true)
@@ -36,24 +36,24 @@ public interface ITopSearchMapper {
     @Mapping(source = "stat.view", target = "hotScore")
     @Mapping(source = "short_link_v2", target = "url")
     @Mapping(source = "pic", target = "image")
-    TopSearchVO topSearchBilibiliDTODataVO2TopSearchVO(TopSearchBilibiliDTO.DataVO topSearchBilibiliDTODataVO);
+    TopSearchCommonVO topSearchBilibiliDTODataVO2TopSearchCommonVO(TopSearchBilibiliDTO.DataVO topSearchBilibiliDTODataVO);
 
     /** 微博 */
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "note", target = "keyword")
     @Mapping(source = "num", target = "hotScore")
     @Mapping(source = "url", target = "url")
-    TopSearchVO topSearchWeiBoDTODataVO2TopSearchVO(TopSearchWeiBoDTO.DataVO topSearchWeiBoDTODataVO);
+    TopSearchCommonVO topSearchWeiBoDTODataVO2TopSearchCommonVO(TopSearchWeiBoDTO.DataVO topSearchWeiBoDTODataVO);
 
     /** 抖音 */
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "word", target = "keyword")
     @Mapping(source = "hotValue", target = "hotScore")
-    TopSearchVO topSearchDouYinDTODataVO2TopSearchVO(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO);
+    TopSearchCommonVO topSearchDouYinDTODataVO2TopSearchCommonVO(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO);
     @AfterMapping
-    default void topSearchDouYinDTODataVO2TopSearchVOAfter(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO, @MappingTarget TopSearchVO topSearchVO) {
+    default void topSearchDouYinDTODataVO2TopSearchCommonVOAfter(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO, @MappingTarget TopSearchCommonVO topSearchCommonVO) {
         // @MappingTarget : 表示传来的carVO对象是已经赋值过的
-        topSearchVO.setUrl(StringUtil.douYinTopSearchItemUrlUtil(topSearchDouYinDTODataVO.getSentenceId(),topSearchDouYinDTODataVO.getWord()));
+        topSearchCommonVO.setUrl(StringUtil.douYinTopSearchItemUrlUtil(topSearchDouYinDTODataVO.getSentenceId(),topSearchDouYinDTODataVO.getWord()));
 
     }
 

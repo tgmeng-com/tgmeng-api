@@ -1,16 +1,16 @@
 package com.tgmeng.service.topsearch;
 
-import com.tgmeng.model.vo.topsearch.TopSearchVO;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 
 import java.util.List;
 
 
 public interface ISocialMediaService {
-    List<TopSearchVO> getBaiDuTopSearch();
+    List<TopSearchCommonVO> getBaiDuTopSearch();
 
-    List<TopSearchVO> getBilibiliTopSearch();
+    List<TopSearchCommonVO> getBilibiliTopSearch();
 
-    List<TopSearchVO> getWeiBoTopSearch();
+    List<TopSearchCommonVO> getWeiBoTopSearch();
 
-    List<TopSearchVO> getDouYinTopSearch();
+    List<TopSearchCommonVO> getDouYinTopSearch();
 }

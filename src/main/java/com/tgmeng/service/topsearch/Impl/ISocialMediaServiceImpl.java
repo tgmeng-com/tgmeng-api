@@ -8,7 +8,7 @@ import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
-import com.tgmeng.model.vo.topsearch.TopSearchVO;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
 import com.tgmeng.service.topsearch.ISocialMediaService;
@@ -39,11 +39,11 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
      * @since 2025/6/29 15:17
     */
     @Override
-    public List<TopSearchVO> getBaiDuTopSearch() {
-        List<TopSearchVO> topSearchVOS = new ArrayList<>();
+    public List<TopSearchCommonVO> getBaiDuTopSearch() {
+        List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchBaiDuDTO topSearchBaiDuDTO = topSearchChinaClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()));
-            topSearchVOS = Optional.ofNullable(topSearchBaiDuDTO.getData())
+            topSearchCommonVOS = Optional.ofNullable(topSearchBaiDuDTO.getData())
                     .map(TopSearchBaiDuDTO.DataVO::getCards)
                     .orElse(Collections.emptyList())
                     .stream()
@@ -54,15 +54,15 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
                                     cardsVO.getTopContent() != null ? cardsVO.getTopContent().stream() : Stream.empty(),
                                     cardsVO.getContent() != null ? cardsVO.getContent().stream() : Stream.empty()
                             ))
-                    .map(topSearchChinaMapper::topSearchBaiDuDTOContentVO2TopSearchVO)
+                    .map(topSearchChinaMapper::topSearchBaiDuDTOContentVO2TopSearchCommonVO)
                     //这里不用排序，因为百度的热搜排序不是按照score排，是按照他返回的顺序排的
-                    //.sorted(Comparator.comparing(TopSearchVO::getHotScore).reversed())
+                    //.sorted(Comparator.comparing(TopSearchCommonVO::getHotScore).reversed())
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("获取百度热搜失败",e);
-            return topSearchVOS;
+            return topSearchCommonVOS;
         }
-        return topSearchVOS;
+        return topSearchCommonVOS;
     }
 
     /**
@@ -73,21 +73,21 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
      * @since 2025/6/29 15:37
     */
     @Override
-    public List<TopSearchVO> getBilibiliTopSearch() {
-        List<TopSearchVO> topSearchVOS = new ArrayList<>();
+    public List<TopSearchCommonVO> getBilibiliTopSearch() {
+        List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchBilibiliDTO topSearchBilibiliDTO = topSearchChinaClient.bilibili(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BILIBILI.getValue(), ForestRequestHeaderOriginEnum.BILIBILI.getValue()));
             System.out.println(topSearchBilibiliDTO);
-            topSearchVOS = Optional.ofNullable(topSearchBilibiliDTO.getData())
+            topSearchCommonVOS = Optional.ofNullable(topSearchBilibiliDTO.getData())
                     .map(TopSearchBilibiliDTO.DataView::getList)
                     .orElse(Collections.emptyList())
-                    .stream().map(topSearchChinaMapper::topSearchBilibiliDTODataVO2TopSearchVO)
+                    .stream().map(topSearchChinaMapper::topSearchBilibiliDTODataVO2TopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
             log.error("获取B站热搜失败",e);
-            return topSearchVOS;
+            return topSearchCommonVOS;
         }
-        return topSearchVOS;
+        return topSearchCommonVOS;
     }
 
     /**
@@ -98,14 +98,14 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
      * @since 2025/6/29 19:24
     */
     @Override
-    public List<TopSearchVO> getWeiBoTopSearch() {
-        List<TopSearchVO> topSearchVOS = new ArrayList<>();
+    public List<TopSearchCommonVO> getWeiBoTopSearch() {
+        List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchWeiBoDTO topSearchWeiBoDTO = topSearchChinaClient.weiBo(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.WEIBO.getValue(), ForestRequestHeaderOriginEnum.WEIBO.getValue()));
             //添加置顶
-            topSearchVOS.add(new TopSearchVO().setKeyword(topSearchWeiBoDTO.getData().getHotgov().getWord()).setUrl(topSearchWeiBoDTO.getData().getHotgov().getUrl()));
+            topSearchCommonVOS.add(new TopSearchCommonVO().setKeyword(topSearchWeiBoDTO.getData().getHotgov().getWord()).setUrl(topSearchWeiBoDTO.getData().getHotgov().getUrl()));
             //添加热榜
-            topSearchVOS.addAll(Optional.ofNullable(topSearchWeiBoDTO.getData())
+            topSearchCommonVOS.addAll(Optional.ofNullable(topSearchWeiBoDTO.getData())
                     .map(TopSearchWeiBoDTO.DataView::getBand_list)
                     .orElse(Collections.emptyList())
                     .stream()
@@ -113,14 +113,14 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
                         Long realPos = Optional.ofNullable(t.getRealpos()).orElse(0L);
                         t.setUrl(StringUtil.weiBoTopSearchItemUrlUtil(t.getWordScheme(), realPos));
                         return t;})
-                    .map(topSearchChinaMapper::topSearchWeiBoDTODataVO2TopSearchVO)
+                    .map(topSearchChinaMapper::topSearchWeiBoDTODataVO2TopSearchCommonVO)
                     .toList())
                     ;
         } catch (Exception e) {
             log.error("获取微博热搜失败",e);
-            return topSearchVOS;
+            return topSearchCommonVOS;
         }
-        return topSearchVOS;
+        return topSearchCommonVOS;
     }
 
     /**
@@ -131,19 +131,19 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
      * @since 2025/6/29 22:40
     */
     @Override
-    public List<TopSearchVO> getDouYinTopSearch() {
-        List<TopSearchVO> topSearchVOS = new ArrayList<>();
+    public List<TopSearchCommonVO> getDouYinTopSearch() {
+        List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchDouYinDTO topSearchDouYinDTO = topSearchChinaClient.douYin(ForestUtil.getRandomRequestHeaderForDouYin());
-            topSearchVOS = Optional.ofNullable(topSearchDouYinDTO.getData())
+            topSearchCommonVOS = Optional.ofNullable(topSearchDouYinDTO.getData())
                     .map(TopSearchDouYinDTO.DataView::getWordList)
                     .orElse(Collections.emptyList())
-                    .stream().map(topSearchChinaMapper::topSearchDouYinDTODataVO2TopSearchVO)
+                    .stream().map(topSearchChinaMapper::topSearchDouYinDTODataVO2TopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
             log.error("获取抖音热搜失败",e);
-            return topSearchVOS;
+            return topSearchCommonVOS;
         }
-        return topSearchVOS;
+        return topSearchCommonVOS;
     }
 }
