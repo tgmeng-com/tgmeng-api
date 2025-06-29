@@ -1,4 +1,4 @@
-package com.tgmeng.model.vo.topsearch.china;
+package com.tgmeng.model.dto.topsearch;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,7 +16,7 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-public class TopSearchBaiDuResVO {
+public class TopSearchBaiDuDTO {
     private boolean success;
     private DataVO data;
 

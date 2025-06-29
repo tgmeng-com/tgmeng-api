@@ -1,16 +1,16 @@
-package com.tgmeng.controller.topsearch.china;
+package com.tgmeng.controller.topsearch;
 
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * description: 娱乐
+ * description: 科技
  * package: com.tgmeng.controller.topsearch.china
- * className: EntertainmentController
+ * className: Technology
  *
  * @author tgmeng
  * @version v1.0
- * @since 2025/6/29 1:08
+ * @since 2025/6/29 1:06
 */
 @RestController
-public class EntertainmentController {
+public class TechnologyController {
 }

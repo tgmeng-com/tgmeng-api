@@ -1,4 +1,4 @@
-package com.tgmeng.service.topsearch.china;
+package com.tgmeng.service.topsearch;
 
 import com.tgmeng.model.vo.topsearch.TopSearchVO;
 

@@ -3,10 +3,10 @@ package com.tgmeng.common.forest.client.topsearch;
 import com.dtflys.forest.annotation.Get;
 import com.dtflys.forest.annotation.Header;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
-import com.tgmeng.model.vo.topsearch.china.TopSearchBaiDuResVO;
-import com.tgmeng.model.vo.topsearch.china.TopSearchBilibiliResVO;
-import com.tgmeng.model.vo.topsearch.china.TopSearchDouYinResVO;
-import com.tgmeng.model.vo.topsearch.china.TopSearchWeiBoResVO;
+import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
+import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
+import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
+import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
 
 public interface TopSearchChinaClient {
 
@@ -20,7 +20,7 @@ public interface TopSearchChinaClient {
      * @since 2025/6/29 20:46
     */
     @Get("https://weibo.com/ajax/statuses/hot_band")
-    TopSearchWeiBoResVO weiBo(@Header ForestRequestHeader topSearchRequestHeader);
+    TopSearchWeiBoDTO weiBo(@Header ForestRequestHeader topSearchRequestHeader);
 
     /**
      * description: bilibili热搜
@@ -31,7 +31,7 @@ public interface TopSearchChinaClient {
      * @since 2025/6/29 20:45
     */
     @Get("https://api.bilibili.com/x/web-interface/ranking/v2?rid=0&type=all")
-    TopSearchBilibiliResVO bilibili(@Header ForestRequestHeader topSearchRequestHeader);
+    TopSearchBilibiliDTO bilibili(@Header ForestRequestHeader topSearchRequestHeader);
 
     /**
      * description: baiDu热搜
@@ -42,7 +42,7 @@ public interface TopSearchChinaClient {
      * @since 2025/6/29 20:46
     */
     @Get("https://top.baidu.com/api/board?platform=wise&tab=realtime")
-    TopSearchBaiDuResVO baiDu(@Header ForestRequestHeader topSearchRequestHeader);
+    TopSearchBaiDuDTO baiDu(@Header ForestRequestHeader topSearchRequestHeader);
 
     /**
      * description: 抖音热搜
@@ -53,7 +53,7 @@ public interface TopSearchChinaClient {
      * @since 2025/6/29 22:37
     */
     @Get("https://www-hj.douyin.com/aweme/v1/web/hot/search/list/")
-    TopSearchDouYinResVO douYin(@Header ForestRequestHeader topSearchRequestHeader);
+    TopSearchDouYinDTO douYin(@Header ForestRequestHeader topSearchRequestHeader);
 
 
 }

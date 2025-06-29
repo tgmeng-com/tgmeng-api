@@ -1,4 +1,4 @@
-package com.tgmeng.model.vo.topsearch.china;
+package com.tgmeng.model.dto.topsearch;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-public class TopSearchWeiBoResVO {
+public class TopSearchWeiBoDTO {
     private DataView data;
 
     @Data

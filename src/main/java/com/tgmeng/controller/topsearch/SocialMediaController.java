@@ -1,7 +1,7 @@
-package com.tgmeng.controller.topsearch.china;
+package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.model.vo.topsearch.TopSearchVO;
-import com.tgmeng.service.topsearch.china.ISocialMediaService;
+import com.tgmeng.service.topsearch.ISocialMediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

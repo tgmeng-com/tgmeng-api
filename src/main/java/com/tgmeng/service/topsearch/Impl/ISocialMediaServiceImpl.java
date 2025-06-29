@@ -1,4 +1,4 @@
-package com.tgmeng.service.topsearch.china.Impl;
+package com.tgmeng.service.topsearch.Impl;
 
 import com.tgmeng.common.Enum.ForestRequestHeaderOriginEnum;
 import com.tgmeng.common.Enum.ForestRequestHeaderRefererEnum;
@@ -6,12 +6,12 @@ import com.tgmeng.common.forest.client.topsearch.TopSearchChinaClient;
 import com.tgmeng.common.mapstruct.topsearch.ITopSearchChinaMapper;
 import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.common.util.StringUtil;
+import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
+import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
 import com.tgmeng.model.vo.topsearch.TopSearchVO;
-import com.tgmeng.model.vo.topsearch.china.TopSearchBaiDuResVO;
-import com.tgmeng.model.vo.topsearch.china.TopSearchBilibiliResVO;
-import com.tgmeng.model.vo.topsearch.china.TopSearchDouYinResVO;
-import com.tgmeng.model.vo.topsearch.china.TopSearchWeiBoResVO;
-import com.tgmeng.service.topsearch.china.ISocialMediaService;
+import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
+import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
+import com.tgmeng.service.topsearch.ISocialMediaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,9 +42,9 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
     public List<TopSearchVO> getBaiDuTopSearch() {
         List<TopSearchVO> topSearchVOS = new ArrayList<>();
         try {
-            TopSearchBaiDuResVO topSearchBaiDuResVO = topSearchChinaClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()));
-            topSearchVOS = Optional.ofNullable(topSearchBaiDuResVO.getData())
-                    .map(TopSearchBaiDuResVO.DataVO::getCards)
+            TopSearchBaiDuDTO topSearchBaiDuDTO = topSearchChinaClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()));
+            topSearchVOS = Optional.ofNullable(topSearchBaiDuDTO.getData())
+                    .map(TopSearchBaiDuDTO.DataVO::getCards)
                     .orElse(Collections.emptyList())
                     .stream()
                     .filter(cardsVO -> cardsVO.getContent() != null || cardsVO.getTopContent() != null)
@@ -76,10 +76,10 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
     public List<TopSearchVO> getBilibiliTopSearch() {
         List<TopSearchVO> topSearchVOS = new ArrayList<>();
         try {
-            TopSearchBilibiliResVO topSearchBilibiliResVO = topSearchChinaClient.bilibili(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BILIBILI.getValue(), ForestRequestHeaderOriginEnum.BILIBILI.getValue()));
-            System.out.println(topSearchBilibiliResVO);
-            topSearchVOS = Optional.ofNullable(topSearchBilibiliResVO.getData())
-                    .map(TopSearchBilibiliResVO.DataView::getList)
+            TopSearchBilibiliDTO topSearchBilibiliDTO = topSearchChinaClient.bilibili(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BILIBILI.getValue(), ForestRequestHeaderOriginEnum.BILIBILI.getValue()));
+            System.out.println(topSearchBilibiliDTO);
+            topSearchVOS = Optional.ofNullable(topSearchBilibiliDTO.getData())
+                    .map(TopSearchBilibiliDTO.DataView::getList)
                     .orElse(Collections.emptyList())
                     .stream().map(topSearchChinaMapper::topSearchBilibiliResVODataVO2TopSearchVO)
                     .toList();
@@ -101,12 +101,12 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
     public List<TopSearchVO> getWeiBoTopSearch() {
         List<TopSearchVO> topSearchVOS = new ArrayList<>();
         try {
-            TopSearchWeiBoResVO topSearchWeiBoResVO = topSearchChinaClient.weiBo(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.WEIBO.getValue(), ForestRequestHeaderOriginEnum.WEIBO.getValue()));
+            TopSearchWeiBoDTO topSearchWeiBoDTO = topSearchChinaClient.weiBo(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.WEIBO.getValue(), ForestRequestHeaderOriginEnum.WEIBO.getValue()));
             //添加置顶
-            topSearchVOS.add(new TopSearchVO().setKeyword(topSearchWeiBoResVO.getData().getHotgov().getWord()).setUrl(topSearchWeiBoResVO.getData().getHotgov().getUrl()));
+            topSearchVOS.add(new TopSearchVO().setKeyword(topSearchWeiBoDTO.getData().getHotgov().getWord()).setUrl(topSearchWeiBoDTO.getData().getHotgov().getUrl()));
             //添加热榜
-            topSearchVOS.addAll(Optional.ofNullable(topSearchWeiBoResVO.getData())
-                    .map(TopSearchWeiBoResVO.DataView::getBand_list)
+            topSearchVOS.addAll(Optional.ofNullable(topSearchWeiBoDTO.getData())
+                    .map(TopSearchWeiBoDTO.DataView::getBand_list)
                     .orElse(Collections.emptyList())
                     .stream()
                     .map(t->{
@@ -134,9 +134,9 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
     public List<TopSearchVO> getDouYinTopSearch() {
         List<TopSearchVO> topSearchVOS = new ArrayList<>();
         try {
-            TopSearchDouYinResVO topSearchDouYinResVO = topSearchChinaClient.douYin(ForestUtil.getRandomRequestHeaderForDouYin());
-            topSearchVOS = Optional.ofNullable(topSearchDouYinResVO.getData())
-                    .map(TopSearchDouYinResVO.DataView::getWordList)
+            TopSearchDouYinDTO topSearchDouYinDTO = topSearchChinaClient.douYin(ForestUtil.getRandomRequestHeaderForDouYin());
+            topSearchVOS = Optional.ofNullable(topSearchDouYinDTO.getData())
+                    .map(TopSearchDouYinDTO.DataView::getWordList)
                     .orElse(Collections.emptyList())
                     .stream().map(topSearchChinaMapper::topSearchDouYinResVODataVO2TopSearchVO)
                     .toList();

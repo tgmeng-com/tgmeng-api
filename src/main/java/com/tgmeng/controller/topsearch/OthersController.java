@@ -1,4 +1,4 @@
-package com.tgmeng.controller.topsearch.china;
+package com.tgmeng.controller.topsearch;
 
 import org.springframework.web.bind.annotation.RestController;
 
