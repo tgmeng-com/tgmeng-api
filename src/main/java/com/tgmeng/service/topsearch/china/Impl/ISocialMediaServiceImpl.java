@@ -15,8 +15,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -42,8 +46,13 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
                     .map(TopSearchBaiDuResVO.DataVO::getCards)
                     .orElse(Collections.emptyList())
                     .stream()
-                    .filter(cardsVO -> cardsVO.getContent() != null)
-                    .flatMap(cardsVO -> cardsVO.getContent().stream())
+                    .filter(cardsVO -> cardsVO.getContent() != null || cardsVO.getTopContent() != null)
+                    .flatMap(cardsVO ->
+                            Stream.concat(
+                                    //把置顶的那一个叼毛数据也合并进来
+                                    cardsVO.getTopContent() != null ? cardsVO.getTopContent().stream() : Stream.empty(),
+                                    cardsVO.getContent() != null ? cardsVO.getContent().stream() : Stream.empty()
+                            ))
                     .map(topSearchChinaMapper::topSearchBaiDuResVOContentVO2TopSearchVO)
                     //这里不用排序，因为百度的热搜排序不是按照score排，是按照他返回的顺序排的
                     //.sorted(Comparator.comparing(TopSearchVO::getHotScore).reversed())

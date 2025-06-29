@@ -22,11 +22,12 @@ public class TopSearchBaiDuResVO {
         private String text;
         private String updateTime;
         private List<ContentVO> content;
+        private List<ContentVO> topContent;
     }
     @Data
     public static  class ContentVO {
         private String hotScore;
-        private String hotTagImg;
+        private String img;
         private String word;
         private String url;
     }

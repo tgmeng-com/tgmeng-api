@@ -28,7 +28,7 @@ public interface ITopSearchChinaMapper {
     @Mapping(source = "word", target = "keyword")
     @Mapping(source = "hotScore", target = "hotScore",qualifiedByName = "stringToDouble")
     @Mapping(source = "url", target = "url")
-    @Mapping(source = "hotTagImg", target = "image")
+    @Mapping(source = "img", target = "image")
     TopSearchVO topSearchBaiDuResVOContentVO2TopSearchVO(TopSearchBaiDuResVO.ContentVO topSearchBaiDuResVOcontentVO);
     /** 批量转换 */
     List<TopSearchVO> topSearchBaiDuResVOContentVOList2TopSearchVOList(List<TopSearchBaiDuResVO.ContentVO> topSearchBaiDuResVOcontentVOList);
