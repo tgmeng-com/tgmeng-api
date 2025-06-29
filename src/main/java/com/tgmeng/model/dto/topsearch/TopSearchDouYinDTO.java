@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * description: 抖音热搜官方返回的VO
- * package: com.tgmeng.model.vo.topsearch.china
+ * package: com.tgmeng.model.vo.topsearch
  * className: TopSearchDouYinDTO
  *
  * @author tgmeng

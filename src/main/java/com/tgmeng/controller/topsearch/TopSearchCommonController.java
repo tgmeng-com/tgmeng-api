@@ -1,7 +1,7 @@
 package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
-import com.tgmeng.service.topsearch.ISocialMediaService;
+import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,8 +10,8 @@ import java.util.List;
 
 /**
  * description: 社交媒体
- * package: com.tgmeng.controller.topsearch.china
- * className: SocialMedia
+ * package: com.tgmeng.controller.topsearch
+ * className: TopSearchCommonController
  *
  * @author tgmeng
  * @version v1.0
@@ -19,20 +19,20 @@ import java.util.List;
 */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/topsearch/china/socialmedia")
-public class SocialMediaController {
+@RequestMapping("/topsearch")
+public class TopSearchCommonController {
 
-    private final ISocialMediaService socialMediaService;
+    private final ITopSearchCommonService topSearchCommonService;
     /**
      * description: 百度热搜
-     * method: getSocialMedia
+     * method: getBaiDuTopSearch
      *
      * @author tgmeng
      * @since 2025/6/29 0:52
     */
     @RequestMapping("/baidu")
     public List<TopSearchCommonVO> getBaiDuTopSearch() {
-        return socialMediaService.getBaiDuTopSearch();
+        return topSearchCommonService.getBaiDuTopSearch();
     }
     /**
      * description: B站热搜
@@ -43,7 +43,7 @@ public class SocialMediaController {
     */
     @RequestMapping("/bilibili")
     public List<TopSearchCommonVO> getBilibiliTopSearch() {
-        return socialMediaService.getBilibiliTopSearch();
+        return topSearchCommonService.getBilibiliTopSearch();
     }
 
     /**
@@ -55,7 +55,7 @@ public class SocialMediaController {
     */
     @RequestMapping("/weibo")
     public List<TopSearchCommonVO> getWeiBoTopSearch() {
-        return socialMediaService.getWeiBoTopSearch();
+        return topSearchCommonService.getWeiBoTopSearch();
     }
 
     /**
@@ -67,6 +67,6 @@ public class SocialMediaController {
     */
     @RequestMapping("/douyin")
     public List<TopSearchCommonVO> getDouYinTopSearch() {
-        return socialMediaService.getDouYinTopSearch();
+        return topSearchCommonService.getDouYinTopSearch();
     }
 }

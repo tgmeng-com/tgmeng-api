@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * description: B站热搜官方返回的VO
- * package: com.tgmeng.model.vo.topsearch.china
+ * package: com.tgmeng.model.vo.topsearch
  * className: TopSearchBilibiliDTO
  *
  * @author tgmeng

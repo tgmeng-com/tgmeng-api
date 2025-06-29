@@ -11,7 +11,7 @@ import org.mapstruct.*;
 /**
  * description: TopSearch的Mapper转换接口
  * package: com.tgmeng.mapper.mapstruct.topsearch
- * className: ITopSearchChinaMapper
+ * className: ITopSearchMapper
  *
  * @author tgmeng
  * @version v1.0
@@ -20,7 +20,7 @@ import org.mapstruct.*;
 
 
 @Mapper(componentModel = "spring")
-public interface ITopSearchMapper {
+public interface ITopSearchCommonMapper {
 
     /** 百度 */
     @BeanMapping(ignoreByDefault = true)

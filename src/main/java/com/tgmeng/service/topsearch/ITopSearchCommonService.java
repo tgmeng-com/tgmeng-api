@@ -5,7 +5,7 @@ import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import java.util.List;
 
 
-public interface ISocialMediaService {
+public interface ITopSearchCommonService {
     List<TopSearchCommonVO> getBaiDuTopSearch();
 
     List<TopSearchCommonVO> getBilibiliTopSearch();

@@ -1,4 +1,4 @@
 package com.tgmeng.common.forest.client.topsearch;
 
-public interface TopSearchGithubClient {
+public interface ITopSearchGlobalClient {
 }
