@@ -5,6 +5,7 @@ import com.tgmeng.common.Enum.ForestRequestHeaderRefererEnum;
 import com.tgmeng.common.forest.client.topsearch.TopSearchChinaClient;
 import com.tgmeng.common.mapstruct.topsearch.ITopSearchChinaMapper;
 import com.tgmeng.common.util.ForestUtil;
+import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.model.vo.topsearch.TopSearchVO;
 import com.tgmeng.model.vo.topsearch.china.TopSearchBaiDuResVO;
 import com.tgmeng.model.vo.topsearch.china.TopSearchBilibiliResVO;
@@ -14,10 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -94,13 +92,20 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
         List<TopSearchVO> topSearchVOS = new ArrayList<>();
         try {
             TopSearchWeiBoResVO topSearchWeiBoResVO = topSearchChinaClient.weiBo(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.WEIBO.getValue(), ForestRequestHeaderOriginEnum.WEIBO.getValue()));
-            topSearchVOS = Optional.ofNullable(topSearchWeiBoResVO.getData())
+            //添加置顶
+            topSearchVOS.add(new TopSearchVO().setKeyword(topSearchWeiBoResVO.getData().getHotgov().getWord()).setUrl(topSearchWeiBoResVO.getData().getHotgov().getUrl()));
+            //添加热榜
+            topSearchVOS.addAll(Optional.ofNullable(topSearchWeiBoResVO.getData())
                     .map(TopSearchWeiBoResVO.DataView::getBand_list)
                     .orElse(Collections.emptyList())
                     .stream()
-                    .map(t->t.setUrl("https://s.weibo.com/weibo?q="+t.getWordScheme()+"&t=31&band_rank="+t.getRealpos()+"&Refer=top"))
+                    .map(t->{
+                        Double realPos = Optional.ofNullable(t.getRealpos()).orElse(0.0);
+                        t.setUrl(StringUtil.weiBoTopSearchItemUrlUtil(t.getWordScheme(), realPos));
+                        return t;})
                     .map(topSearchChinaMapper::topSearchWeiBoResVODataVO2TopSearchVO)
-                    .toList();
+                    .toList())
+                    ;
         } catch (Exception e) {
             log.error("获取微博热搜失败",e);
             return topSearchVOS;
