@@ -57,4 +57,16 @@ public class SocialMediaController {
     public List<TopSearchVO> getWeiBoTopSearch() {
         return socialMediaService.getWeiBoTopSearch();
     }
+
+    /**
+     * description: 抖音热搜
+     * method: getDouYinTopSearch
+     *
+     * @author tgmeng
+     * @since 2025/6/29 22:39
+    */
+    @RequestMapping("/douyin")
+    public List<TopSearchVO> getDouYinTopSearch() {
+        return socialMediaService.getDouYinTopSearch();
+    }
 }

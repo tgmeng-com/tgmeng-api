@@ -9,6 +9,7 @@ import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.model.vo.topsearch.TopSearchVO;
 import com.tgmeng.model.vo.topsearch.china.TopSearchBaiDuResVO;
 import com.tgmeng.model.vo.topsearch.china.TopSearchBilibiliResVO;
+import com.tgmeng.model.vo.topsearch.china.TopSearchDouYinResVO;
 import com.tgmeng.model.vo.topsearch.china.TopSearchWeiBoResVO;
 import com.tgmeng.service.topsearch.china.ISocialMediaService;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,8 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
     public List<TopSearchVO> getBaiDuTopSearch() {
         List<TopSearchVO> topSearchVOS = new ArrayList<>();
         try {
-            TopSearchBaiDuResVO baiDu = topSearchChinaClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()));
-            topSearchVOS = Optional.ofNullable(baiDu.getData())
+            TopSearchBaiDuResVO topSearchBaiDuResVO = topSearchChinaClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()));
+            topSearchVOS = Optional.ofNullable(topSearchBaiDuResVO.getData())
                     .map(TopSearchBaiDuResVO.DataVO::getCards)
                     .orElse(Collections.emptyList())
                     .stream()
@@ -75,9 +76,9 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
     public List<TopSearchVO> getBilibiliTopSearch() {
         List<TopSearchVO> topSearchVOS = new ArrayList<>();
         try {
-            TopSearchBilibiliResVO bilibili = topSearchChinaClient.bilibili(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BILIBILI.getValue(), ForestRequestHeaderOriginEnum.BILIBILI.getValue()));
-            System.out.println(bilibili);
-            topSearchVOS = Optional.ofNullable(bilibili.getData())
+            TopSearchBilibiliResVO topSearchBilibiliResVO = topSearchChinaClient.bilibili(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BILIBILI.getValue(), ForestRequestHeaderOriginEnum.BILIBILI.getValue()));
+            System.out.println(topSearchBilibiliResVO);
+            topSearchVOS = Optional.ofNullable(topSearchBilibiliResVO.getData())
                     .map(TopSearchBilibiliResVO.DataView::getList)
                     .orElse(Collections.emptyList())
                     .stream().map(topSearchChinaMapper::topSearchBilibiliResVODataVO2TopSearchVO)
@@ -117,6 +118,30 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
                     ;
         } catch (Exception e) {
             log.error("获取微博热搜失败",e);
+            return topSearchVOS;
+        }
+        return topSearchVOS;
+    }
+
+    /**
+     * description: 抖音热搜
+     * method: getDouYinTopSearch
+     *
+     * @author tgmeng
+     * @since 2025/6/29 22:40
+    */
+    @Override
+    public List<TopSearchVO> getDouYinTopSearch() {
+        List<TopSearchVO> topSearchVOS = new ArrayList<>();
+        try {
+            TopSearchDouYinResVO topSearchDouYinResVO = topSearchChinaClient.douYin(ForestUtil.getRandomRequestHeaderForDouYin());
+            topSearchVOS = Optional.ofNullable(topSearchDouYinResVO.getData())
+                    .map(TopSearchDouYinResVO.DataView::getWordList)
+                    .orElse(Collections.emptyList())
+                    .stream().map(topSearchChinaMapper::topSearchDouYinResVODataVO2TopSearchVO)
+                    .toList();
+        } catch (Exception e) {
+            log.error("获取抖音热搜失败",e);
             return topSearchVOS;
         }
         return topSearchVOS;

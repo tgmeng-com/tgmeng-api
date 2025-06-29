@@ -11,4 +11,6 @@ public interface ISocialMediaService {
     List<TopSearchVO> getBilibiliTopSearch();
 
     List<TopSearchVO> getWeiBoTopSearch();
+
+    List<TopSearchVO> getDouYinTopSearch();
 }

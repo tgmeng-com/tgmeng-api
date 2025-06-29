@@ -5,6 +5,15 @@ import lombok.experimental.Accessors;
 
 import java.util.List;
 
+/**
+ * description: B站热搜官方返回的VO
+ * package: com.tgmeng.model.vo.topsearch.china
+ * className: TopSearchBilibiliResVO
+ *
+ * @author tgmeng
+ * @version v1.0
+ * @since 2025/6/29 22:41
+*/
 @Data
 @Accessors(chain = true)
 public class TopSearchBilibiliResVO {

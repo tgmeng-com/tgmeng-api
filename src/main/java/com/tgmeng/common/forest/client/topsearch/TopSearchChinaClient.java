@@ -5,6 +5,7 @@ import com.dtflys.forest.annotation.Header;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
 import com.tgmeng.model.vo.topsearch.china.TopSearchBaiDuResVO;
 import com.tgmeng.model.vo.topsearch.china.TopSearchBilibiliResVO;
+import com.tgmeng.model.vo.topsearch.china.TopSearchDouYinResVO;
 import com.tgmeng.model.vo.topsearch.china.TopSearchWeiBoResVO;
 
 public interface TopSearchChinaClient {
@@ -42,6 +43,17 @@ public interface TopSearchChinaClient {
     */
     @Get("https://top.baidu.com/api/board?platform=wise&tab=realtime")
     TopSearchBaiDuResVO baiDu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    /**
+     * description: 抖音热搜
+     * 可视化url为：https://www.douyin.com/hot 可对比参照
+     * method: douYin
+     *
+     * @author tgmeng
+     * @since 2025/6/29 22:37
+    */
+    @Get("https://www-hj.douyin.com/aweme/v1/web/hot/search/list/")
+    TopSearchDouYinResVO douYin(@Header ForestRequestHeader topSearchRequestHeader);
 
 
 }

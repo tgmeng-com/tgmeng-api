@@ -17,4 +17,12 @@ public class StringUtil {
                 .add("&t=31&band_rank=")
                 .add(String.valueOf(realpos)).toString();
     }
+
+    public static String douYinTopSearchItemUrlUtil(String sentenceId,String word){
+        return new StringJoiner("")
+                .add("https://www.douyin.com/hot/")
+                .add(sentenceId)
+                .add("/")
+                .add(word).toString();
+    }
 }

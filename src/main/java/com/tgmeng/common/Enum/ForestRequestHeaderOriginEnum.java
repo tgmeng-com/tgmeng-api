@@ -18,7 +18,8 @@ import lombok.Getter;
 public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String> {
     BILIBILI("BILIBILI", "https://www.bilibili.com", "", 1),
     BAIDU("BAIDU", "https://www.baidu.com", "", 2),
-    WEIBO("WEIBO", "https://www.weibo.com", "", 3);
+    WEIBO("WEIBO", "https://www.weibo.com", "", 3),
+    DOUYIN("DOUYIN", "https://www.douyin.com", "", 4);
 
     private final String key;
     private final String value;
