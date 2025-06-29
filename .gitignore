@@ -39,3 +39,4 @@ build/
 !/README.md
 /.gitattributes
 /.mvn
+/target/
