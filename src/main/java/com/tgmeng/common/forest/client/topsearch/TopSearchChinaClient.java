@@ -8,6 +8,7 @@ import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
 
+//加这个只是为了不爆红
 public interface TopSearchChinaClient {
 
 

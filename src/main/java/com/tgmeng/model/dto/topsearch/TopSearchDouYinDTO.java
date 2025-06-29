@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * description: 抖音热搜官方返回的VO
  * package: com.tgmeng.model.vo.topsearch.china
- * className: TopSearchDouYinResVO
+ * className: TopSearchDouYinDTO
  *
  * @author tgmeng
  * @version v1.0

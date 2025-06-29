@@ -3,7 +3,7 @@ package com.tgmeng.service.topsearch.Impl;
 import com.tgmeng.common.Enum.ForestRequestHeaderOriginEnum;
 import com.tgmeng.common.Enum.ForestRequestHeaderRefererEnum;
 import com.tgmeng.common.forest.client.topsearch.TopSearchChinaClient;
-import com.tgmeng.common.mapstruct.topsearch.ITopSearchChinaMapper;
+import com.tgmeng.common.mapstruct.topsearch.ITopSearchMapper;
 import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 public class ISocialMediaServiceImpl implements ISocialMediaService {
 
     private final TopSearchChinaClient topSearchChinaClient;
-    private final ITopSearchChinaMapper topSearchChinaMapper;
+    private final ITopSearchMapper topSearchChinaMapper;
 
     /**
      * description: 百度热搜
@@ -54,7 +54,7 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
                                     cardsVO.getTopContent() != null ? cardsVO.getTopContent().stream() : Stream.empty(),
                                     cardsVO.getContent() != null ? cardsVO.getContent().stream() : Stream.empty()
                             ))
-                    .map(topSearchChinaMapper::topSearchBaiDuResVOContentVO2TopSearchVO)
+                    .map(topSearchChinaMapper::topSearchBaiDuDTOContentVO2TopSearchVO)
                     //这里不用排序，因为百度的热搜排序不是按照score排，是按照他返回的顺序排的
                     //.sorted(Comparator.comparing(TopSearchVO::getHotScore).reversed())
                     .collect(Collectors.toList());
@@ -81,7 +81,7 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
             topSearchVOS = Optional.ofNullable(topSearchBilibiliDTO.getData())
                     .map(TopSearchBilibiliDTO.DataView::getList)
                     .orElse(Collections.emptyList())
-                    .stream().map(topSearchChinaMapper::topSearchBilibiliResVODataVO2TopSearchVO)
+                    .stream().map(topSearchChinaMapper::topSearchBilibiliDTODataVO2TopSearchVO)
                     .toList();
         } catch (Exception e) {
             log.error("获取B站热搜失败",e);
@@ -113,7 +113,7 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
                         Long realPos = Optional.ofNullable(t.getRealpos()).orElse(0L);
                         t.setUrl(StringUtil.weiBoTopSearchItemUrlUtil(t.getWordScheme(), realPos));
                         return t;})
-                    .map(topSearchChinaMapper::topSearchWeiBoResVODataVO2TopSearchVO)
+                    .map(topSearchChinaMapper::topSearchWeiBoDTODataVO2TopSearchVO)
                     .toList())
                     ;
         } catch (Exception e) {
@@ -138,7 +138,7 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
             topSearchVOS = Optional.ofNullable(topSearchDouYinDTO.getData())
                     .map(TopSearchDouYinDTO.DataView::getWordList)
                     .orElse(Collections.emptyList())
-                    .stream().map(topSearchChinaMapper::topSearchDouYinResVODataVO2TopSearchVO)
+                    .stream().map(topSearchChinaMapper::topSearchDouYinDTODataVO2TopSearchVO)
                     .toList();
         } catch (Exception e) {
             log.error("获取抖音热搜失败",e);
