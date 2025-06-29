@@ -18,7 +18,7 @@ public class TopSearchVO {
     /** 热搜词 */
     private String keyword;
     /** 给前端格式化的热度，比如“1.2万” */
-    private Double hotScore;
+    private Long hotScore;
     /** 热搜词的url */
     private String url;
     /** 图片 */

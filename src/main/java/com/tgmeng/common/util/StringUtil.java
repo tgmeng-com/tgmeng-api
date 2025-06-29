@@ -10,7 +10,7 @@ public class StringUtil {
      * @author tgmeng
      * @since 2025/6/29 20:58
     */
-    public static String weiBoTopSearchItemUrlUtil(String wordScheme,double realpos){
+    public static String weiBoTopSearchItemUrlUtil(String wordScheme,Long realpos){
         return new StringJoiner("")
                 .add("https://s.weibo.com/weibo?q=")
                 .add(wordScheme)

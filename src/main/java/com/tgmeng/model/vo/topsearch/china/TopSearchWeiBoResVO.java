@@ -42,9 +42,9 @@ public class TopSearchWeiBoResVO {
         /** 格式: https://s.weibo.com/weibo?q=  word_scheme   &t=31&band_rank= realpos    &Refer=top*/
         private String url;
         /** 热搜词的热度 */
-        private Double num;
+        private Long num;
         /** 排序的序号 用来拼接url的 */
-        private Double realpos;
+        private Long realpos;
         /** 热搜词 用来拼接url的 */
         @JSONField(name = "word_scheme")
         private String wordScheme;

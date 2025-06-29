@@ -25,7 +25,7 @@ public interface ITopSearchChinaMapper {
     /** 百度 */
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "word", target = "keyword")
-    @Mapping(source = "hotScore", target = "hotScore",qualifiedByName = "stringToDouble")
+    @Mapping(source = "hotScore", target = "hotScore",qualifiedByName = "stringToLong")
     @Mapping(source = "url", target = "url")
     @Mapping(source = "img", target = "image")
     TopSearchVO topSearchBaiDuResVOContentVO2TopSearchVO(TopSearchBaiDuResVO.ContentVO topSearchBaiDuResVOcontentVO);
@@ -61,12 +61,12 @@ public interface ITopSearchChinaMapper {
 
     }
 
-    @Named("stringToDouble")
-    default double stringToDouble(String score) {
+    @Named("stringToLong")
+    default Long stringToLong(String score) {
         try {
-            return Double.parseDouble(score);
+            return Long.parseLong(score);
         } catch (Exception e) {
-            return 0.0;
+            return 0L;
         }
     }
 

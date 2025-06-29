@@ -36,6 +36,6 @@ public class TopSearchDouYinResVO {
         private String sentenceId;
         /** 热搜词的热度 */
         @JSONField(name = "hot_value")
-        private Double hotValue;
+        private Long hotValue;
     }
 }

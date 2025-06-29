@@ -110,7 +110,7 @@ public class ISocialMediaServiceImpl implements ISocialMediaService {
                     .orElse(Collections.emptyList())
                     .stream()
                     .map(t->{
-                        Double realPos = Optional.ofNullable(t.getRealpos()).orElse(0.0);
+                        Long realPos = Optional.ofNullable(t.getRealpos()).orElse(0L);
                         t.setUrl(StringUtil.weiBoTopSearchItemUrlUtil(t.getWordScheme(), realPos));
                         return t;})
                     .map(topSearchChinaMapper::topSearchWeiBoResVODataVO2TopSearchVO)
