@@ -1,8 +1,9 @@
 package com.tgmeng.controller.topsearch;
 
-import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
+import com.tgmeng.model.vo.topsearch.TopSearchGitHubVO;
 import com.tgmeng.service.topsearch.ITopSearchGitHubService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,7 @@ public class TopSearchGitHubController {
      * @since 2025/6/29 0:52
     */
     @RequestMapping("/github")
-    public List<TopSearchCommonVO> getBGitHubTopSearch() {
-        return topSearchGitHubService.getGitHubTopSearch();
+    public List<TopSearchGitHubVO> getBGitHubTopSearch(@RequestBody TopSearchGitHubVO topSearchGitHubVO) {
+        return topSearchGitHubService.getGitHubTopSearch(topSearchGitHubVO);
     }
 }
