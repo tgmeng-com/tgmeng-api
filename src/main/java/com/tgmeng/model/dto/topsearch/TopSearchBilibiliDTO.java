@@ -37,6 +37,6 @@ public class TopSearchBilibiliDTO {
 
     @Data
     public static  class Stat {
-        private String view;
+        private Long view;
     }
 }
