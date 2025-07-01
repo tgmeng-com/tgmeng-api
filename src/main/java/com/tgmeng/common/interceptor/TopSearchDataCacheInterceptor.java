@@ -35,7 +35,7 @@ public class TopSearchDataCacheInterceptor {
         //获取缓存
         Object cachedData = getCachedData(url);
         if (cachedData != null) {
-            log.info("返回缓存数据：{}", cachedData);
+            log.info("返回缓存：{}", cachedData);
             return ResultTemplateBean.success(cachedData);
         } else {
             log.info("缓存未命中，调用接口获取数据：{}", url);

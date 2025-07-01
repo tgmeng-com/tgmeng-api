@@ -38,7 +38,7 @@ public class TopSearchDataCache {
     // 添加数据到缓存
     public <T> void put(CacheDataNameEnum key, T value) {
         cache.put(key, value);
-        log.info("新增缓存数据：put key:{} value:{}", key, value);
+        log.info("新增缓存：key:{} value:{}", key, value);
     }
 
     // 从缓存中获取数据
@@ -47,14 +47,14 @@ public class TopSearchDataCache {
         if (value == null) {
             return null;
         }
-        log.info("命中缓存数据：put key:{} value:{}", key, value);
+        log.info("命中缓存：key:{} value:{}", key, value);
         return clazz.cast(value);  // 强制转换成目标类型并返回
     }
 
     // 清除缓存中的某个数据
     public void remove(CacheDataNameEnum key) {
         cache.invalidate(key);
-        log.info("清除缓存：put key:{} ", key);
+        log.info("清除缓存：key:{} ", key);
     }
 
     // 清除所有缓存数据
