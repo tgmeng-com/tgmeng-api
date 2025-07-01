@@ -19,6 +19,12 @@ import java.util.List;
 @Accessors(chain = true)
 public class TopSearchCommonVO {
 
+    /** 数据卡片名称 比如百度*/
+    private String dataCardName;
+    /** 数据卡片logo 比如百度的logo地址*/
+    private String dataCardLogo;
+    /** 数据卡片分类 比如新闻*/
+    private String dataCardCategory;
     private Long dataSize;
     private String dataUpdateTime ;
     private List<DataInfo> dataInfo;
@@ -35,8 +41,11 @@ public class TopSearchCommonVO {
         private String image;
     }
 
-    public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo){
+    public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String dataCardName,String dataCardLogo,String dataCardCategory){
         this.dataInfo = dataInfo;
+        this.dataCardName = dataCardName;
+        this.dataCardLogo = dataCardLogo;
+        this.dataCardCategory = dataCardCategory;
         this.setDataSize((long)dataInfo.size());
         this.setDataUpdateTime(TimeUtil.getCurrentTimeFormat("yyyy-MM-dd HH:mm:ss"));
     }
