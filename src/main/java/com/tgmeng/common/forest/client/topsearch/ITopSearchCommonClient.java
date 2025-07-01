@@ -11,7 +11,6 @@ import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
 //加这个只是为了不爆红
 public interface ITopSearchCommonClient {
 
-
     /**
      * description: weiBo热搜
      * 可视化url为：https://s.weibo.com/top/summary 可对比参照

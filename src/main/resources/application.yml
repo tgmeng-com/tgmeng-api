@@ -1,7 +1,5 @@
 spring:
-  application.name:
-    tgmeng-api
-
+  application.name: tgmeng-api
 
 server:
   port: 4399
@@ -12,8 +10,21 @@ forest:
   max-connections: 1000        # 连接池最大连接数
   connect-timeout: 3000        # 连接超时时间，单位为毫秒
   read-timeout: 3000           # 数据读取超时时间，单位为毫秒
-  log-enabled: true            # 打开或关闭日志（默认为 true）
-  log-request: true            # 打开/关闭Forest请求日志（默认为 true）
-  log-response-status: true    # 打开/关闭Forest响应状态日志（默认为 true）
+  log-enabled: false            # 打开或关闭日志（默认为 true）
+  log-request: false            # 打开/关闭Forest请求日志（默认为 true）
+  log-response-status: false    # 打开/关闭Forest响应状态日志（默认为 true）
   auto-redirection: true # true 为开启，false 为关闭 # 全局自动重定向开关，默认为开启
   max-retry-count: 3           # 请求失败后重试次数（默认为 0 次不重试）
+  interceptors:
+    - com.tgmeng.common.interceptor.MyHTTPInterceptor #全局http请求拦截器
+
+
+my-config:
+  proxy:
+    top-search:
+      enabled: false
+  data-cache:
+    top-search:
+      enable: true           #是否开启缓存
+      max-size: 1000         #最大缓存条数
+      expire-time: 10       #单位是秒

@@ -24,6 +24,7 @@
 		<forest.version>1.7.1</forest.version>
 		<fastjson2.version>2.0.57</fastjson2.version>
 		<spring-boot-starter-validation.version>3.5.3</spring-boot-starter-validation.version>
+		<caffeine.version>3.2.1</caffeine.version>
 	</properties>
 
 	<dependencies>
@@ -90,6 +91,16 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 			<version>${spring-boot-starter-validation.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+			<version>${caffeine.version}</version> <!-- 请检查是否有更新版本 -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
