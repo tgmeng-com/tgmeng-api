@@ -1,7 +1,7 @@
 package com.tgmeng.common.util;
 
-import com.tgmeng.common.Enum.ForestRequestHeaderOriginEnum;
-import com.tgmeng.common.Enum.ForestRequestHeaderRefererEnum;
+import com.tgmeng.common.enums.business.ForestRequestHeaderOriginEnum;
+import com.tgmeng.common.enums.business.ForestRequestHeaderRefererEnum;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
 
 public class ForestUtil {

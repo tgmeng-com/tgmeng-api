@@ -1,7 +1,7 @@
 package com.tgmeng.service.topsearch.Impl;
 
 import com.tgmeng.common.forest.client.topsearch.ITopSearchGithubClient;
-import com.tgmeng.common.mapstruct.topsearch.ITopSearchGitHubMapper;
+import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchGitHubMapper;
 import com.tgmeng.model.dto.topsearch.TopSearchGitHubDTO;
 import com.tgmeng.model.vo.topsearch.TopSearchGitHubVO;
 import com.tgmeng.service.topsearch.ITopSearchGitHubService;

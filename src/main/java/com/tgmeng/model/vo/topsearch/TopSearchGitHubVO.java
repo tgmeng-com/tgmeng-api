@@ -1,7 +1,7 @@
 package com.tgmeng.model.vo.topsearch;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tgmeng.common.Enum.OperatorEnum;
+import com.tgmeng.common.enums.business.OperatorEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

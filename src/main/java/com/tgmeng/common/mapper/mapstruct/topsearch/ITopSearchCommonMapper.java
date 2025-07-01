@@ -1,4 +1,4 @@
-package com.tgmeng.common.mapstruct.topsearch;
+package com.tgmeng.common.mapper.mapstruct.topsearch;
 
 import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;

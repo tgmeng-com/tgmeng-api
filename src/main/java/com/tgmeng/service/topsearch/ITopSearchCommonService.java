@@ -1,12 +1,13 @@
 package com.tgmeng.service.topsearch;
 
+import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 
 import java.util.List;
 
 
 public interface ITopSearchCommonService {
-    List<TopSearchCommonVO> getBaiDuTopSearch();
+    ResultTemplateBean getBaiDuTopSearch();
 
     List<TopSearchCommonVO> getBilibiliTopSearch();
 

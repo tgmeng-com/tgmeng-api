@@ -1,4 +1,4 @@
-package com.tgmeng.common.mapstruct.topsearch;
+package com.tgmeng.common.mapper.mapstruct.topsearch;
 
 import com.tgmeng.model.dto.topsearch.TopSearchGitHubDTO;
 import com.tgmeng.model.vo.topsearch.TopSearchGitHubVO;

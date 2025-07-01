@@ -1,9 +1,12 @@
 package com.tgmeng.service.topsearch.Impl;
 
-import com.tgmeng.common.Enum.ForestRequestHeaderOriginEnum;
-import com.tgmeng.common.Enum.ForestRequestHeaderRefererEnum;
+import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.ForestRequestHeaderOriginEnum;
+import com.tgmeng.common.enums.business.ForestRequestHeaderRefererEnum;
+import com.tgmeng.common.enums.exception.ServerExceptionEnum;
+import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient;
-import com.tgmeng.common.mapstruct.topsearch.ITopSearchCommonMapper;
+import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchCommonMapper;
 import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
@@ -39,7 +42,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      * @since 2025/6/29 15:17
     */
     @Override
-    public List<TopSearchCommonVO> getBaiDuTopSearch() {
+    public ResultTemplateBean getBaiDuTopSearch() {
         List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchBaiDuDTO topSearchBaiDuDTO = topSearchCommonClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()));
@@ -60,9 +63,9 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("获取百度热搜失败",e);
-            return topSearchCommonVOS;
+            throw new ServerException(ServerExceptionEnum.BAIDU_TOP_SEARCH_EXCEPTION);
         }
-        return topSearchCommonVOS;
+        return ResultTemplateBean.success(topSearchCommonVOS);
     }
 
     /**

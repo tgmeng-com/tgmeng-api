@@ -1,5 +1,6 @@
 package com.tgmeng.controller.topsearch;
 
+import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class TopSearchCommonController {
      * @since 2025/6/29 0:52
     */
     @RequestMapping("/baidu")
-    public List<TopSearchCommonVO> getBaiDuTopSearch() {
+    public ResultTemplateBean getBaiDuTopSearch() {
         return topSearchCommonService.getBaiDuTopSearch();
     }
     /**
