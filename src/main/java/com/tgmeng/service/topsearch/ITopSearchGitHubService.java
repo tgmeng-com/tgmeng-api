@@ -1,9 +1,7 @@
 package com.tgmeng.service.topsearch;
 
-import com.tgmeng.model.vo.topsearch.TopSearchGitHubVO;
-
-import java.util.List;
+import com.tgmeng.common.bean.ResultTemplateBean;
 
 public interface ITopSearchGitHubService {
-    List<TopSearchGitHubVO> getGitHubTopSearch(TopSearchGitHubVO topSearchGitHubVO);
+    ResultTemplateBean getGithubSortByAllStars();
 }

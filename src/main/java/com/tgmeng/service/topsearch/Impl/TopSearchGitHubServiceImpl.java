@@ -1,14 +1,22 @@
 package com.tgmeng.service.topsearch.Impl;
 
+import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.DataInfoCardEnum;
+import com.tgmeng.common.enums.business.ForestRequestHeaderOriginEnum;
+import com.tgmeng.common.enums.business.ForestRequestHeaderRefererEnum;
+import com.tgmeng.common.enums.exception.ServerExceptionEnum;
+import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.topsearch.ITopSearchGithubClient;
 import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchGitHubMapper;
+import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.model.dto.topsearch.TopSearchGitHubDTO;
-import com.tgmeng.model.vo.topsearch.TopSearchGitHubVO;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.topsearch.ITopSearchGitHubService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,55 +36,23 @@ public class TopSearchGitHubServiceImpl implements ITopSearchGitHubService {
     private final ITopSearchGithubClient topSearchGithubClient;
     private final ITopSearchGitHubMapper topSearchGitHubMapper;
 
+
     @Override
-    public List<TopSearchGitHubVO> getGitHubTopSearch(TopSearchGitHubVO topSearchGitHubVO) {
-        String topSearchGithubUrl =  getRequestParams(topSearchGitHubVO);
-        TopSearchGitHubDTO github = topSearchGithubClient.github(topSearchGithubUrl);
-        return topSearchGitHubMapper.topSearchGitHubDTOS2TopSearchGitHubVOS(github.getItems());
-    }
-    private static String getRequestParams(TopSearchGitHubVO topSearchGitHubVO) {
-        StringBuilder urlBuilder = new StringBuilder();
-
-        // 基本的查询条件
-        if (topSearchGitHubVO.getStars() != null) {
-            urlBuilder.append("stars:").append(topSearchGitHubVO.getStarsOperator().getValue()).append(topSearchGitHubVO.getStars()).append("+");
+    public ResultTemplateBean getGithubSortByAllStars() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchGitHubDTO topSearchGitHubDTO = topSearchGithubClient.allStars(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.GITHUB.getValue(), ForestRequestHeaderOriginEnum.GITHUB.getValue()));
+            //添加热榜
+            topSearchCommonVOS.addAll(topSearchGitHubDTO.getItems()
+                    .stream()
+                    .map(topSearchGitHubMapper::topSearchGitHubDTO2TopSearchCommonVO)
+                    .toList())
+            ;
+        } catch (Exception e) {
+            log.error("获取GITHUB热搜失败",e);
+            throw new ServerException(ServerExceptionEnum.GITHUB_TOP_SEARCH_EXCEPTION);
         }
-        if (topSearchGitHubVO.getForks() != null) {
-            urlBuilder.append("forks:").append(topSearchGitHubVO.getForksOperator().getValue()).append(topSearchGitHubVO.getForks()).append("+");
-        }
-
-        if (topSearchGitHubVO.getCreated() != null) {
-            urlBuilder.append("created:").append(topSearchGitHubVO.getCreatedOperator().getValue()).append(topSearchGitHubVO.getCreated()).append("+");
-        }
-        // 其他过滤条件，例如大小、更新时间等
-        if (topSearchGitHubVO.getSize() != null) {
-            urlBuilder.append("size:").append(topSearchGitHubVO.getSizeOperator().getValue()).append(topSearchGitHubVO.getSize()).append("+");
-        }
-
-        // 删除最后的 "+"，如果有的话
-        if (!urlBuilder.isEmpty() &&urlBuilder.charAt(urlBuilder.length() - 1) == '+') {
-            urlBuilder.deleteCharAt(urlBuilder.length() - 1);
-        }
-        if (topSearchGitHubVO.getLanguage() != null) {
-            urlBuilder.append("language:").append(topSearchGitHubVO.getLanguage()).append("+");
-        }
-        // 添加排序字段
-        if (topSearchGitHubVO.getSort()!= null) {
-            urlBuilder.append("&sort=").append(topSearchGitHubVO.getSort());
-        }
-        //添加排序方式
-        if (topSearchGitHubVO.getOrder()!= null) {
-            urlBuilder.append("&order=").append(topSearchGitHubVO.getOrder());
-        }
-        // 添加分页信息
-        if (topSearchGitHubVO.getPage() != null && topSearchGitHubVO.getPage() > 0) {
-            urlBuilder.append("&page=").append(topSearchGitHubVO.getPage());
-        }
-
-        if (topSearchGitHubVO.getPerPage() != null && topSearchGitHubVO.getPerPage() > 0) {
-            urlBuilder.append("&per_page=").append(topSearchGitHubVO.getPerPage());
-        }
-
-        return urlBuilder.toString();
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.GITHUB.getKey(), DataInfoCardEnum.GITHUB.getValue(),DataInfoCardEnum.GITHUB.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

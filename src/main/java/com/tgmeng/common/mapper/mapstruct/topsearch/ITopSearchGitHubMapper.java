@@ -1,12 +1,10 @@
 package com.tgmeng.common.mapper.mapstruct.topsearch;
 
 import com.tgmeng.model.dto.topsearch.TopSearchGitHubDTO;
-import com.tgmeng.model.vo.topsearch.TopSearchGitHubVO;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.util.List;
 
 /**
  * description: TopSearch的Mapper转换接口
@@ -23,15 +21,8 @@ public interface ITopSearchGitHubMapper {
 
     /** GitHub */
     @BeanMapping(ignoreByDefault = true)
-    @Mapping(source = "name", target = "projectName")
-    @Mapping(source = "htmlUrl", target = "projectUrl")
-    @Mapping(source = "owner.avatarUrl", target = "avatarUrl") // 头像在 Owner 类中
-    @Mapping(source = "stargazersCount", target = "stargazersCount")
-    @Mapping(source = "forksCount", target = "forksCount")
-    @Mapping(source = "watchersCount", target = "watchersCount")
-    @Mapping(source = "openIssuesCount", target = "openIssuesCount")
-    @Mapping(source = "updatedAt", target = "updatedAt")
-    TopSearchGitHubVO topSearchGitHubDTO2TopSearchGitHubVO(TopSearchGitHubDTO.ItemDTO topSearchGitHubDTO);
-    /** 批量转换 */
-    List<TopSearchGitHubVO> topSearchGitHubDTOS2TopSearchGitHubVOS(List<TopSearchGitHubDTO.ItemDTO> topSearchGitHubDTO);
+    @Mapping(source = "name", target = "keyword")
+    @Mapping(source = "stargazersCount", target = "hotScore")
+    @Mapping(source = "htmlUrl", target = "url")
+    TopSearchCommonVO.DataInfo topSearchGitHubDTO2TopSearchCommonVO(TopSearchGitHubDTO.ItemDTO topSearchGitHubDTO);
 }

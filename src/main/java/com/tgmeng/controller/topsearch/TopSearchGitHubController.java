@@ -1,13 +1,10 @@
 package com.tgmeng.controller.topsearch;
 
-import com.tgmeng.model.vo.topsearch.TopSearchGitHubVO;
+import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.service.topsearch.ITopSearchGitHubService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * description: GitHub热搜Controller
@@ -20,20 +17,14 @@ import java.util.List;
 */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/topsearch")
+@RequestMapping("/topsearch/github")
 public class TopSearchGitHubController {
 
     private final ITopSearchGitHubService topSearchGitHubService;
 
-    /**
-     * description: 百度热搜
-     * method: getBGitHubTopSearch
-     *
-     * @author tgmeng
-     * @since 2025/6/29 0:52
-    */
-    @RequestMapping("/github")
-    public List<TopSearchGitHubVO> getBGitHubTopSearch(@RequestBody TopSearchGitHubVO topSearchGitHubVO) {
-        return topSearchGitHubService.getGitHubTopSearch(topSearchGitHubVO);
+    @RequestMapping("/allstars")
+    public ResultTemplateBean getBGitHubTopSearch() {
+        return topSearchGitHubService.getGithubSortByAllStars();
     }
+
 }
