@@ -20,7 +20,14 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     BAIDU("百度", "https://r2-trend.tgmeng.com/tgmeng-trend/baidu.png", "媒体", true,2),
     WEIBO("微博", "https://r2-trend.tgmeng.com/tgmeng-trend/weibo.png", "媒体", true,3),
     DOUYIN("抖音", "https://r2-trend.tgmeng.com/tgmeng-trend/douyin.png", "媒体", true,4),
-    GITHUB("GitHub Star总榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5);
+    GITHUB_ALL_STAR("GitHub Star总榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5),
+    GITHUB_DAY_STAR("近一日新仓库Star榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5),
+    GITHUB_WEEK_STAR("近一周新仓库Star榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5),
+    GITHUB_MONTH_STAR("近一月新仓库Star榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5),
+    GITHUB_YEAR_STAR("近一年新仓库Star榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5),
+    GITHUB_THREE_YEAR_STAR("近三年新仓库Star榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5),
+    GITHUB_FIVE_YEAR_STAR("近五年新仓库Star榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5),
+    GITHUB_TEN_YEAR_STAR("近十年新仓库Star榜", "https://r2-trend.tgmeng.com/tgmeng-trend/github.png", "GitHub", true,5);
 
     /** 这里key用作平台名称了，论枚举的灵活性，哈哈哈 */
     private final String key;

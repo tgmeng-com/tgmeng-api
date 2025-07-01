@@ -38,10 +38,11 @@ public class TopSearchGitHubServiceImpl implements ITopSearchGitHubService {
 
 
     @Override
-    public ResultTemplateBean getGithubSortByAllStars() {
+    public ResultTemplateBean getGithubSortByAllStars(String time,DataInfoCardEnum dataInfoCardEnum) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
-            TopSearchGitHubDTO topSearchGitHubDTO = topSearchGithubClient.allStars(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.GITHUB.getValue(), ForestRequestHeaderOriginEnum.GITHUB.getValue()));
+            TopSearchGitHubDTO topSearchGitHubDTO = topSearchGithubClient
+                    .allStars(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.GITHUB.getValue(), ForestRequestHeaderOriginEnum.GITHUB.getValue()),time);
             //添加热榜
             topSearchCommonVOS.addAll(topSearchGitHubDTO.getItems()
                     .stream()
@@ -52,7 +53,7 @@ public class TopSearchGitHubServiceImpl implements ITopSearchGitHubService {
             log.error("获取GITHUB热搜失败",e);
             throw new ServerException(ServerExceptionEnum.GITHUB_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.GITHUB.getKey(), DataInfoCardEnum.GITHUB.getValue(),DataInfoCardEnum.GITHUB.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, dataInfoCardEnum.getKey(), dataInfoCardEnum.getValue(),dataInfoCardEnum.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

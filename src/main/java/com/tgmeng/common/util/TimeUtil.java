@@ -18,6 +18,7 @@ public class TimeUtil {
     public final ZoneId defaultZoneId = ZoneId.systemDefault();
     /* 默认格式化格式，所有返回格式化字符串的方法，如果传了null或者空串，则使用这个 */
     public final String defaultPattern = "yyyy-MM-dd HH:mm:ss";
+    public final String defultSimplePattern = "yyyy-MM-dd";
 
     public final int ONE_MILLISECOND = 1;
     public final int ONE_SECOND_MILLISECOND = 1000 * ONE_MILLISECOND;
@@ -440,6 +441,26 @@ public class TimeUtil {
                         LocalDateTime.of(year, month, day, hour, minute, second).atZone(defaultZoneId).toInstant().toEpochMilli() +
                                 LocalDateTime.of(plusYear, plusMonth, plusDay, plusHour, plusMinute, plusSecond).atZone(defaultZoneId).toInstant().toEpochMilli()), defaultZoneId).
                 format(DateTimeFormatter.ofPattern(StrUtil.isEmpty(pattern) ? defaultPattern : pattern));
+    }
+
+    /**
+     * description: 获取当前时间之前多久是什么时间
+     * method: getTimeBeforeNow
+     *
+     * @author tgmeng
+     * @since 2025/7/2 1:36
+    */
+    public String getTimeBeforeNow(int years, int months, int weeks, int days, String pattern) {
+        // 获取当前时间
+        LocalDateTime currentTime = LocalDateTime.now();
+        // 计算目标时间（减去指定的年、月、周、天）
+        LocalDateTime resultTime = currentTime
+                .minusYears(years)
+                .minusMonths(months)
+                .minusWeeks(weeks)
+                .minusDays(days);
+        // 格式化结果并返回
+        return resultTime.format(DateTimeFormatter.ofPattern(pattern != null && !pattern.isEmpty() ? pattern : defaultPattern));
     }
 
     /* ************************************************************************************************************************ */
