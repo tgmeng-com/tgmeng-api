@@ -76,7 +76,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      * @since 2025/6/29 15:37
     */
     @Override
-    public List<TopSearchCommonVO> getBilibiliTopSearch() {
+    public ResultTemplateBean getBilibiliTopSearch() {
         List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchBilibiliDTO topSearchBilibiliDTO = topSearchCommonClient.bilibili(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BILIBILI.getValue(), ForestRequestHeaderOriginEnum.BILIBILI.getValue()));
@@ -88,9 +88,9 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .toList();
         } catch (Exception e) {
             log.error("获取B站热搜失败",e);
-            return topSearchCommonVOS;
+            throw new ServerException(ServerExceptionEnum.BILIBILI_TOP_SEARCH_EXCEPTION);
         }
-        return topSearchCommonVOS;
+        return ResultTemplateBean.success(topSearchCommonVOS);
     }
 
     /**
@@ -101,7 +101,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      * @since 2025/6/29 19:24
     */
     @Override
-    public List<TopSearchCommonVO> getWeiBoTopSearch() {
+    public ResultTemplateBean getWeiBoTopSearch() {
         List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchWeiBoDTO topSearchWeiBoDTO = topSearchCommonClient.weiBo(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.WEIBO.getValue(), ForestRequestHeaderOriginEnum.WEIBO.getValue()));
@@ -121,9 +121,9 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     ;
         } catch (Exception e) {
             log.error("获取微博热搜失败",e);
-            return topSearchCommonVOS;
+            throw new ServerException(ServerExceptionEnum.WEIBO_TOP_SEARCH_EXCEPTION);
         }
-        return topSearchCommonVOS;
+        return ResultTemplateBean.success(topSearchCommonVOS);
     }
 
     /**
@@ -134,7 +134,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      * @since 2025/6/29 22:40
     */
     @Override
-    public List<TopSearchCommonVO> getDouYinTopSearch() {
+    public ResultTemplateBean getDouYinTopSearch() {
         List<TopSearchCommonVO> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchDouYinDTO topSearchDouYinDTO = topSearchCommonClient.douYin(ForestUtil.getRandomRequestHeaderForDouYin());
@@ -145,8 +145,8 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .toList();
         } catch (Exception e) {
             log.error("获取抖音热搜失败",e);
-            return topSearchCommonVOS;
+            throw new ServerException(ServerExceptionEnum.DOUYIN_TOP_SEARCH_EXCEPTION);
         }
-        return topSearchCommonVOS;
+        return ResultTemplateBean.success(topSearchCommonVOS);
     }
 }

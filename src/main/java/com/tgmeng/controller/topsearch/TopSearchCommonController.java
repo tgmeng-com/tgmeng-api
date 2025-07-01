@@ -1,13 +1,10 @@
 package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * description: 社交媒体
@@ -43,7 +40,7 @@ public class TopSearchCommonController {
      * @since 2025/6/29 15:32
     */
     @RequestMapping("/bilibili")
-    public List<TopSearchCommonVO> getBilibiliTopSearch() {
+    public ResultTemplateBean getBilibiliTopSearch() {
         return topSearchCommonService.getBilibiliTopSearch();
     }
 
@@ -55,7 +52,7 @@ public class TopSearchCommonController {
      * @since 2025/6/29 18:49
     */
     @RequestMapping("/weibo")
-    public List<TopSearchCommonVO> getWeiBoTopSearch() {
+    public ResultTemplateBean getWeiBoTopSearch() {
         return topSearchCommonService.getWeiBoTopSearch();
     }
 
@@ -67,7 +64,7 @@ public class TopSearchCommonController {
      * @since 2025/6/29 22:39
     */
     @RequestMapping("/douyin")
-    public List<TopSearchCommonVO> getDouYinTopSearch() {
+    public ResultTemplateBean getDouYinTopSearch() {
         return topSearchCommonService.getDouYinTopSearch();
     }
 }
