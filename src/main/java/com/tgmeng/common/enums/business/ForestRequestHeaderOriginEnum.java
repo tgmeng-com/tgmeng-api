@@ -20,7 +20,8 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     BAIDU("BAIDU", "https://www.baidu.com", "", true,2),
     WEIBO("WEIBO", "https://www.weibo.com", "", true,3),
     DOUYIN("DOUYIN", "https://www.douyin.com", "", true,4),
-    GITHUB("GITHUB", "https://api.github.com", "", true,4);
+    GITHUB("GITHUB", "https://api.github.com", "", true,4),
+    YOUTUBE("YOUTUBE", "https://www.youtube.com", "", true,4);
 
     private final String key;
     private final String value;

@@ -9,8 +9,8 @@ public class StringUtil {
      *
      * @author tgmeng
      * @since 2025/6/29 20:58
-    */
-    public static String weiBoTopSearchItemUrlUtil(String wordScheme,Long realpos){
+     */
+    public static String weiBoTopSearchItemUrlUtil(String wordScheme, Long realpos) {
         return new StringJoiner("")
                 .add("https://s.weibo.com/weibo?q=")
                 .add(wordScheme)
@@ -18,11 +18,18 @@ public class StringUtil {
                 .add(String.valueOf(realpos)).toString();
     }
 
-    public static String douYinTopSearchItemUrlUtil(String sentenceId,String word){
+    public static String douYinTopSearchItemUrlUtil(String sentenceId, String word) {
         return new StringJoiner("")
                 .add("https://www.douyin.com/hot/")
                 .add(sentenceId)
                 .add("/")
                 .add(word).toString();
+    }
+
+    public static String youtubeTopSearchItemUrlUtil(String sentenceId) {
+        return new StringJoiner("")
+                .add("https://www.youtube.com/watch?v=")
+                .add(sentenceId)
+                .toString();
     }
 }
