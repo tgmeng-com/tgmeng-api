@@ -68,8 +68,6 @@ public interface ITopSearchCommonMapper {
     /** 批量转换 */
     List<TopSearchCommonVO.DataInfo> topSearchDouBanDTODataVO2TopSearchCommonVOS(List<TopSearchDouBanDTO> topSearchDouBanDTO);
 
-
-
     /** 腾讯 */
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "title", target = "keyword")
@@ -83,9 +81,17 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "hotValue", target = "hotScore")
     @Mapping(source = "url.", target = "url")
     TopSearchCommonVO.DataInfo topSearchTouTiaoDTOItemInfoTopSearchCommonVO(TopSearchTouTiaoDTO.ItemInfo topSearchTouTiaoDTO);
-    /** 批量转换 */
-    List<TopSearchCommonVO.DataInfo> topSearchTouTiaoDTOItemInfoTopSearchCommonVOS(List<TopSearchTouTiaoDTO> topSearchTouTiaoDTOS);
 
+    /** 网易 */
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "hotValue", target = "hotScore")
+    @Mapping(source = "contentId.", target = "url")
+    TopSearchCommonVO.DataInfo topSearchWangYiDTOItemInfoTopSearchCommonVO(TopSearchWangYiDTO.dataView topSearchWangYiDTO);
+    @AfterMapping
+    default void topSearchWangYiDTODataVO2TopSearchCommonVOAfter(TopSearchWangYiDTO.dataView topSearchWangYiDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl(StringUtil.wangYiTopSearchItemUrlUtil(topSearchWangYiDTO.getContentId()));
+    }
 
 
     @Named("stringToLong")

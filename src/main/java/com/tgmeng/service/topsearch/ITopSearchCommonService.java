@@ -17,4 +17,6 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getTencentTopSearch();
 
     ResultTemplateBean getTouTiaoTopSearch();
+
+    ResultTemplateBean getWangYiTopSearch();
 }

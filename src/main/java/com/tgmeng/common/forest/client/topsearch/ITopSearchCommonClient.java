@@ -70,5 +70,6 @@ public interface ITopSearchCommonClient {
     @Get("https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc")
     TopSearchTouTiaoDTO toutiao(@Header ForestRequestHeader topSearchRequestHeader);
 
-
+    @Get("https://gw.m.163.com/nc-main/api/v1/hqc/no-repeat-hot-list?source=hotTag")
+    TopSearchWangYiDTO wangyi(@Header ForestRequestHeader topSearchRequestHeader);
 }

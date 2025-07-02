@@ -44,4 +44,13 @@ public class ForestUtil {
                 .setOrigin(ForestRequestHeaderOriginEnum.TOUTIAO.getValue());
     }
 
+    public static ForestRequestHeader getRandomRequestHeaderForWangYi() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                .setConnection("keep-alive")
+                .setReferer(ForestRequestHeaderRefererEnum.TOUTIAO.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.TOUTIAO.getValue());
+    }
+
 }

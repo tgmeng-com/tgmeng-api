@@ -32,4 +32,12 @@ public class StringUtil {
                 .add(sentenceId)
                 .toString();
     }
+
+    public static String wangYiTopSearchItemUrlUtil(String contentId) {
+        return new StringJoiner("")
+                .add("https://c.m.163.com/news/a/")
+                .add(contentId)
+                .add(".html")
+                .toString();
+    }
 }
