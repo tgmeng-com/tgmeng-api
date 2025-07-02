@@ -88,8 +88,13 @@ public class TopSearchCommonController {
         return topSearchCommonService.getWangYiTopSearch();
     }
 
-    @RequestMapping("/wangyiyun")
+    @RequestMapping("/yunwangyi")
     public ResultTemplateBean getWangYiYunSearch() {
         return topSearchCommonService.getWangYiYunTopSearch();
+    }
+
+    @RequestMapping("/tiebabaidu")
+    public ResultTemplateBean getBaiDuTieBaSearch() {
+        return topSearchCommonService.getBaiDuTieBaSearch();
     }
 }

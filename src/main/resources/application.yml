@@ -27,4 +27,4 @@ my-config:
     top-search:
       enable: true           #是否开启缓存
       max-size: 1000         #最大缓存条数
-      expire-time: 30       #单位是秒
+      expire-time: 120       #单位是秒

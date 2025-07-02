@@ -104,6 +104,12 @@ public interface ITopSearchCommonMapper {
         topSearchCommonVO.setUrl(StringUtil.wangYiYunTopSearchItemUrlUtil(topSearchWangYiYunDTO.getId()));
     }
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "topicName", target = "keyword")
+    @Mapping(source = "discussNum", target = "hotScore")
+    @Mapping(source = "topicUrl.", target = "url")
+    TopSearchCommonVO.DataInfo topSearchBaiDuTieBaDTOItemInfoTopSearchCommonVO(TopSearchBaiDuTieBaDTO.DataInfo topSearchBaiDuTieBaDTO);
+
 
 
     @Named("stringToLong")

@@ -26,7 +26,8 @@ public enum ForestRequestHeaderRefererEnum  implements INameValueEnum<String,Str
     TENCENT("TENCENT", "https://news.qq.com/", "", true,5),
     TOUTIAO("TOUTIAO", "https://www.toutiao.com/", "", true,5),
     WANGYI("WANGYI", "https://wp.m.163.com/", "", true,5),
-    WANGYIYUN("WANGYIYUN", "https://music.163.com/", "", true,5);
+    WANGYIYUN("WANGYIYUN", "https://music.163.com/", "", true,5),
+    BAIDUTIEBA("BAIDUTIEBA", "https://tieba.baidu.com/", "", true,5);
 
     private final String key;
     private final String value;

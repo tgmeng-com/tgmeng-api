@@ -3,6 +3,7 @@ package com.tgmeng.common.cache;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.tgmeng.common.enums.business.CacheDataNameEnum;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,7 @@ public class TopSearchDataCache {
     // 添加数据到缓存
     public <T> void put(CacheDataNameEnum key, T value) {
         cache.put(key, value);
-        log.info("新增缓存：key:{}", key);
+        log.info("🤡新增缓存:{}", ((TopSearchCommonVO)value).getDataCardName());
     }
 
     // 从缓存中获取数据
@@ -47,7 +48,7 @@ public class TopSearchDataCache {
         if (value == null) {
             return null;
         }
-        log.info("命中缓存：key:{}", key);
+        //log.info("命中缓存：key:{}", key);
         return clazz.cast(value);  // 强制转换成目标类型并返回
     }
 

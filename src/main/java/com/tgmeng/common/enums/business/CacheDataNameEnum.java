@@ -27,7 +27,14 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_GITHUB_YEAR_STARS("CACHE_TOP_SEARCH_GITHUB_YEAR_STARS", "/topsearch/github/yearstars", "GITHUB近一年Star数据缓存名称", true,4),
     CACHE_TOP_SEARCH_GITHUB_THREE_STARS("CACHE_TOP_SEARCH_GITHUB_THREE_STARS", "/topsearch/github/threeyearstars", "GITHUB近三年Star数据缓存名称", true,4),
     CACHE_TOP_SEARCH_GITHUB_FIVE_STARS("CACHE_TOP_SEARCH_GITHUB_FIVE_STARS", "/topsearch/github/fiveyearstars", "GITHUB近五年Star数据缓存名称", true,4),
-    CACHE_TOP_SEARCH_GITHUB_TEN_STARS("CACHE_TOP_SEARCH_GITHUB_TEN_STARS", "/topsearch/github/fiveyearstars", "GITHUB近十年Star数据缓存名称", true,4);
+    CACHE_TOP_SEARCH_GITHUB_TEN_STARS("CACHE_TOP_SEARCH_GITHUB_TEN_STARS", "/topsearch/github/tenyearstars", "GITHUB近十年Star数据缓存名称", true,4),
+    CACHE_TOP_SEARCH_YOUTUBE("CACHE_TOP_SEARCH_YOUTUBE", "/topsearch/global/youtube", "", true,4),
+    CACHE_TOP_SEARCH_TIEBABAIDU("CACHE_TOP_SEARCH_TIEBABAIDU", "/topsearch/tiebabaidu", "", true,4),
+    CACHE_TOP_SEARCH_DOUBAN("CACHE_TOP_SEARCH_DOUBAN", "/topsearch/douban", "", true,4),
+    CACHE_TOP_SEARCH_TENCENT("CACHE_TOP_SEARCH_TENCENT", "/topsearch/tencent", "", true,4),
+    CACHE_TOP_SEARCH_TOUTIAO("CACHE_TOP_SEARCH_TOUTIAO", "/topsearch/toutiao", "", true,4),
+    CACHE_TOP_SEARCH_WANGYI("CACHE_TOP_SEARCH_WANGYI", "/topsearch/wangyi", "", true,4),
+    CACHE_TOP_SEARCH_WANGYIYUN("CACHE_TOP_SEARCH_WANGYIYUN", "/topsearch/yunwangyi", "", true,4);
 
     private final String key;
     private final String value;

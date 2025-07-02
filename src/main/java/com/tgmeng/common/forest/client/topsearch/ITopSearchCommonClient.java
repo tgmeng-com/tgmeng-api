@@ -76,4 +76,8 @@ public interface ITopSearchCommonClient {
     @Get("https://music.163.com/api/playlist/detail?id=3778678")
     TopSearchWangYiYunDTO wangyiyun(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://tieba.baidu.com/hottopic/browse/topicList")
+    TopSearchBaiDuTieBaDTO baidutieba(@Header ForestRequestHeader topSearchRequestHeader);
+
+
 }

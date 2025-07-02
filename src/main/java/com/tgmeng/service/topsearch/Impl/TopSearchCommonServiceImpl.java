@@ -251,4 +251,22 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANGYIYUN.getKey(), DataInfoCardEnum.WANGYIYUN.getValue(),DataInfoCardEnum.WANGYIYUN.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
+    @Override
+    public ResultTemplateBean getBaiDuTieBaSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchBaiDuTieBaDTO baidutieba = topSearchCommonClient.baidutieba(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDUTIEBA.getValue(), ForestRequestHeaderOriginEnum.BAIDUTIEBA.getValue()));
+            topSearchCommonVOS = Optional.ofNullable(baidutieba.getData().getBangTopic())
+                    .map(TopSearchBaiDuTieBaDTO.ItemView::getTopicList)
+                    .orElse(Collections.emptyList())
+                    .stream().map(topSearchCommonMapper::topSearchBaiDuTieBaDTOItemInfoTopSearchCommonVO)
+                    .toList();
+        } catch (Exception e) {
+            log.error("获取网易新闻热搜失败",e);
+            throw new ServerException(ServerExceptionEnum.BAIDUTIEBA_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BAIDUTIEBA.getKey(), DataInfoCardEnum.BAIDUTIEBA.getValue(),DataInfoCardEnum.BAIDUTIEBA.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
 }

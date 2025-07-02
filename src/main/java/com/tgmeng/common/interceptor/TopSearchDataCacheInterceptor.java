@@ -35,7 +35,7 @@ public class TopSearchDataCacheInterceptor {
         //获取缓存
         Object cachedData = getCachedData(url);
         if (cachedData != null) {
-            log.info("返回缓存：{}", cachedData);
+            log.info("❤️返回缓存：{}", ((TopSearchCommonVO)cachedData).getDataCardName());
             return ResultTemplateBean.success(cachedData);
         } else {
             log.info("缓存未命中，调用接口获取数据：{}", url);
@@ -73,8 +73,8 @@ public class TopSearchDataCacheInterceptor {
         String url = "";
         if (request != null) {
             url = request.getRequestURL().toString();
-            log.info("================================");
-            log.info("请求的 URL: {}", url);
+            //log.info("================================");
+            //log.info("请求的 URL: {}", url);
         }
         return url;
     }
