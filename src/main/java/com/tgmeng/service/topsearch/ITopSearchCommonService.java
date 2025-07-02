@@ -23,4 +23,6 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getWangYiYunTopSearch();
 
     ResultTemplateBean getBaiDuTieBaSearch();
+
+    ResultTemplateBean getShaoShuPaiSearch();
 }

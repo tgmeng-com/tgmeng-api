@@ -269,4 +269,22 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BAIDUTIEBA.getKey(), DataInfoCardEnum.BAIDUTIEBA.getValue(),DataInfoCardEnum.BAIDUTIEBA.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
+    @Override
+    public ResultTemplateBean getShaoShuPaiSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchShaoShuPaiDTO shaoshupai = topSearchCommonClient.shaoshupai(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.SHAOSHUPAI.getValue(), ForestRequestHeaderOriginEnum.SHAOSHUPAI.getValue()));
+            topSearchCommonVOS = Optional.ofNullable(shaoshupai)
+                    .map(TopSearchShaoShuPaiDTO::getData)
+                    .orElse(Collections.emptyList())
+                    .stream().map(topSearchCommonMapper::topSearchShaoShuPaiDTOItemInfoTopSearchCommonVO)
+                    .toList();
+        } catch (Exception e) {
+            log.error("少数派热搜失败",e);
+            throw new ServerException(ServerExceptionEnum.SHAOSHUPAI_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.SHAOSHUPAI.getKey(), DataInfoCardEnum.SHAOSHUPAI.getValue(),DataInfoCardEnum.SHAOSHUPAI.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
 }

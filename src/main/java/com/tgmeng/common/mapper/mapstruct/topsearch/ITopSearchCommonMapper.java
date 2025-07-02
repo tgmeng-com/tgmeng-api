@@ -111,6 +111,17 @@ public interface ITopSearchCommonMapper {
     TopSearchCommonVO.DataInfo topSearchBaiDuTieBaDTOItemInfoTopSearchCommonVO(TopSearchBaiDuTieBaDTO.DataInfo topSearchBaiDuTieBaDTO);
 
 
+    /** 少数派 */
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "commentCount", target = "hotScore")
+    @Mapping(source = "id.", target = "url")
+    TopSearchCommonVO.DataInfo topSearchShaoShuPaiDTOItemInfoTopSearchCommonVO(TopSearchShaoShuPaiDTO.ItemDTO shaoShuPaiDTO);
+    @AfterMapping
+    default void topSearchShaoShuPaiDTOItemInfoTopSearchCommonVOAfter(TopSearchShaoShuPaiDTO.ItemDTO topSearchShaoShuPaiItemDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl(StringUtil.shaoShuPaiTopSearchItemUrlUtil(topSearchShaoShuPaiItemDTO.getId()));
+        topSearchCommonVO.setHotScore(StringUtil.shaoShuPaiTopSearchItemHotScoreUtil(topSearchShaoShuPaiItemDTO));
+    }
 
     @Named("stringToLong")
     default Long stringToLong(String score) {

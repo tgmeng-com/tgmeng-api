@@ -34,7 +34,8 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     TOUTIAO("头条", "https://r2-trend.tgmeng.com/tgmeng-trend/toutiao.png", "新闻", true,5),
     WANGYI("网易", "https://r2-trend.tgmeng.com/tgmeng-trend/wangyi.png", "新闻", true,5),
     WANGYIYUN("网易云", "https://r2-trend.tgmeng.com/tgmeng-trend/wangyiyun.png", "媒体", true,5),
-    BAIDUTIEBA("百度贴吧", "https://r2-trend.tgmeng.com/tgmeng-trend/baidutieba.png", "社交", true,5);
+    BAIDUTIEBA("百度贴吧", "https://r2-trend.tgmeng.com/tgmeng-trend/baidutieba.png", "社交", true,5),
+    SHAOSHUPAI("少数派", "https://r2-trend.tgmeng.com/tgmeng-trend/shaoshupai.png", "社交", true,5);
 
     /** 这里key用作平台名称了，论枚举的灵活性，哈哈哈 */
     private final String key;

@@ -97,4 +97,9 @@ public class TopSearchCommonController {
     public ResultTemplateBean getBaiDuTieBaSearch() {
         return topSearchCommonService.getBaiDuTieBaSearch();
     }
+
+    @RequestMapping("/shaoshupai")
+    public ResultTemplateBean getBaiShaoShuPaiSearch() {
+        return topSearchCommonService.getShaoShuPaiSearch();
+    }
 }

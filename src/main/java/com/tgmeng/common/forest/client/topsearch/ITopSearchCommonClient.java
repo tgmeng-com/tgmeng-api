@@ -79,5 +79,7 @@ public interface ITopSearchCommonClient {
     @Get("https://tieba.baidu.com/hottopic/browse/topicList")
     TopSearchBaiDuTieBaDTO baidutieba(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://sspai.com/api/v1/article/tag/page/get?limit=100&offset=0&tag=%E7%83%AD%E9%97%A8%E6%96%87%E7%AB%A0&released=false")
+    TopSearchShaoShuPaiDTO shaoshupai(@Header ForestRequestHeader topSearchRequestHeader);
 
 }

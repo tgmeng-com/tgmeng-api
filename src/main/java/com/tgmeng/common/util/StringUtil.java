@@ -1,5 +1,7 @@
 package com.tgmeng.common.util;
 
+import com.tgmeng.model.dto.topsearch.TopSearchShaoShuPaiDTO;
+
 import java.util.StringJoiner;
 
 public class StringUtil {
@@ -46,5 +48,16 @@ public class StringUtil {
                 .add("https://music.163.com/#/song?id=")
                 .add(id.toString())
                 .toString();
+    }
+
+    public static String shaoShuPaiTopSearchItemUrlUtil(Long id) {
+        return new StringJoiner("")
+                .add("https://sspai.com/post/")
+                .add(id.toString())
+                .toString();
+    }
+
+    public static Long shaoShuPaiTopSearchItemHotScoreUtil(TopSearchShaoShuPaiDTO.ItemDTO topSearchShaoShuPaiItemDTO) {
+        return topSearchShaoShuPaiItemDTO.getLikeCount() + topSearchShaoShuPaiItemDTO.getCommentCount();
     }
 }
