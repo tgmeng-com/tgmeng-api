@@ -40,4 +40,11 @@ public class StringUtil {
                 .add(".html")
                 .toString();
     }
+
+    public static String wangYiYunTopSearchItemUrlUtil(Long id) {
+        return new StringJoiner("")
+                .add("https://music.163.com/#/song?id=")
+                .add(id.toString())
+                .toString();
+    }
 }

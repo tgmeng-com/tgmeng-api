@@ -87,11 +87,23 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "title", target = "keyword")
     @Mapping(source = "hotValue", target = "hotScore")
     @Mapping(source = "contentId.", target = "url")
-    TopSearchCommonVO.DataInfo topSearchWangYiDTOItemInfoTopSearchCommonVO(TopSearchWangYiDTO.dataView topSearchWangYiDTO);
+    TopSearchCommonVO.DataInfo topSearchWangYiDTOItemInfoTopSearchCommonVO(TopSearchWangYiDTO.DataView topSearchWangYiDTO);
     @AfterMapping
-    default void topSearchWangYiDTODataVO2TopSearchCommonVOAfter(TopSearchWangYiDTO.dataView topSearchWangYiDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+    default void topSearchWangYiDTODataVO2TopSearchCommonVOAfter(TopSearchWangYiDTO.DataView topSearchWangYiDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(StringUtil.wangYiTopSearchItemUrlUtil(topSearchWangYiDTO.getContentId()));
     }
+
+    /** 网易云 */
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "name", target = "keyword")
+    @Mapping(source = "popularity", target = "hotScore")
+    @Mapping(source = "id.", target = "url")
+    TopSearchCommonVO.DataInfo topSearchWangYiYunDTOItemInfoTopSearchCommonVO(TopSearchWangYiYunDTO.DataInfo topSearchWangYiYunDTO);
+    @AfterMapping
+    default void topSearchWangYiYunDTOItemInfoTopSearchCommonVOAfter(TopSearchWangYiYunDTO.DataInfo topSearchWangYiYunDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl(StringUtil.wangYiYunTopSearchItemUrlUtil(topSearchWangYiYunDTO.getId()));
+    }
+
 
 
     @Named("stringToLong")

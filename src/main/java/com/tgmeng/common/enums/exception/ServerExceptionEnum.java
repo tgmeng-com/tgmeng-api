@@ -26,7 +26,8 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     DOUBAN_TOP_SEARCH_EXCEPTION(104, "豆瓣热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     TENCENT_TOP_SEARCH_EXCEPTION(105, "腾讯新闻热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     TOUTIAO_TOP_SEARCH_EXCEPTION(106, "头条新闻热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    WANGYI_TOP_SEARCH_EXCEPTION(106, "网易新闻热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    WANGYI_TOP_SEARCH_EXCEPTION(106, "网易新闻热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    WANGYIYUN_TOP_SEARCH_EXCEPTION(106, "网易云新闻热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
     private final Integer key;
     private final String value;
     private final String description;

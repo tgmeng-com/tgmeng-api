@@ -23,10 +23,10 @@ public class TopSearchWangYiDTO {
     @Data
     public static class ItemDTO {
 
-        private List<dataView> items;
+        private List<DataView> items;
     }
     @Data
-    public static  class dataView {
+    public static  class DataView {
         private String contentId;
         private String title;
         private String hotValue;

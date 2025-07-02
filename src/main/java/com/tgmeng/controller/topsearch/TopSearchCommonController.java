@@ -87,4 +87,9 @@ public class TopSearchCommonController {
     public ResultTemplateBean getWangYiTopSearch() {
         return topSearchCommonService.getWangYiTopSearch();
     }
+
+    @RequestMapping("/wangyiyun")
+    public ResultTemplateBean getWangYiYunSearch() {
+        return topSearchCommonService.getWangYiYunTopSearch();
+    }
 }

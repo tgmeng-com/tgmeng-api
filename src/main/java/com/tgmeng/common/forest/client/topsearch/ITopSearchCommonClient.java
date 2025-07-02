@@ -72,4 +72,8 @@ public interface ITopSearchCommonClient {
 
     @Get("https://gw.m.163.com/nc-main/api/v1/hqc/no-repeat-hot-list?source=hotTag")
     TopSearchWangYiDTO wangyi(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://music.163.com/api/playlist/detail?id=3778678")
+    TopSearchWangYiYunDTO wangyiyun(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

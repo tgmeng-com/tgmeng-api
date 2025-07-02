@@ -233,4 +233,22 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANGYI.getKey(), DataInfoCardEnum.WANGYI.getValue(),DataInfoCardEnum.WANGYI.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
+    @Override
+    public ResultTemplateBean getWangYiYunTopSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchWangYiYunDTO wangyiyun = topSearchCommonClient.wangyiyun(ForestUtil.getRandomRequestHeaderForWangYiYun());
+            topSearchCommonVOS = Optional.ofNullable(wangyiyun.getResult())
+                    .map(TopSearchWangYiYunDTO.DataDTO::getTracks)
+                    .orElse(Collections.emptyList())
+                    .stream().map(topSearchCommonMapper::topSearchWangYiYunDTOItemInfoTopSearchCommonVO)
+                    .toList();
+        } catch (Exception e) {
+            log.error("获取网易新闻热搜失败",e);
+            throw new ServerException(ServerExceptionEnum.WANGYIYUN_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANGYIYUN.getKey(), DataInfoCardEnum.WANGYIYUN.getValue(),DataInfoCardEnum.WANGYIYUN.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
 }
