@@ -1,5 +1,6 @@
 package com.tgmeng.common.interceptor;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
 import com.tgmeng.common.enums.business.CacheDataNameEnum;
@@ -42,7 +43,9 @@ public class TopSearchDataCacheInterceptor {
             // 执行接口请求数据
             Object result = joinPoint.proceed();
             // 新增缓存
-            cacheData(url, ((ResultTemplateBean<?>) result).getData());
+            if(result != null&&CollectionUtil.isNotEmpty((((ResultTemplateBean<TopSearchCommonVO>)result).getData().getDataInfo()))) {
+                cacheData(url, ((ResultTemplateBean<TopSearchCommonVO>) result).getData());
+            }
             return result;
         }
     }
