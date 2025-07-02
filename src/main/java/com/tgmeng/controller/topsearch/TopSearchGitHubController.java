@@ -51,17 +51,17 @@ public class TopSearchGitHubController {
 
     @RequestMapping("/threeyearstars")
     public ResultTemplateBean getBGitHubTopSearchThreeYearStars() {
-        return topSearchGitHubService.getGithubSortByAllStars(TimeUtil.getTimeBeforeNow(2, 0, 0, 0, TimeUtil.defultSimplePattern),DataInfoCardEnum.GITHUB_THREE_YEAR_STAR);
+        return topSearchGitHubService.getGithubSortByAllStars(TimeUtil.getTimeBeforeNow(3, 0, 0, 0, TimeUtil.defultSimplePattern),DataInfoCardEnum.GITHUB_THREE_YEAR_STAR);
     }
 
     @RequestMapping("/fiveyearstars")
     public ResultTemplateBean getBGitHubTopSearchFiveYearStars() {
-        return topSearchGitHubService.getGithubSortByAllStars(TimeUtil.getTimeBeforeNow(2, 0, 0, 0, TimeUtil.defultSimplePattern),DataInfoCardEnum.GITHUB_FIVE_YEAR_STAR);
+        return topSearchGitHubService.getGithubSortByAllStars(TimeUtil.getTimeBeforeNow(5, 0, 0, 0, TimeUtil.defultSimplePattern),DataInfoCardEnum.GITHUB_FIVE_YEAR_STAR);
     }
 
     @RequestMapping("/tenyearstars")
     public ResultTemplateBean getBGitHubTopSearchTenYearStars() {
-        return topSearchGitHubService.getGithubSortByAllStars(TimeUtil.getTimeBeforeNow(2, 0, 0, 0, TimeUtil.defultSimplePattern),DataInfoCardEnum.GITHUB_TEN_YEAR_STAR);
+        return topSearchGitHubService.getGithubSortByAllStars(TimeUtil.getTimeBeforeNow(10, 0, 0, 0, TimeUtil.defultSimplePattern),DataInfoCardEnum.GITHUB_TEN_YEAR_STAR);
     }
 
 }
