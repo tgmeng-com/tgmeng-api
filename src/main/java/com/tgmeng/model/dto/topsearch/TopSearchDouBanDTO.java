@@ -1,6 +1,6 @@
 package com.tgmeng.model.dto.topsearch;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -20,6 +20,6 @@ public class TopSearchDouBanDTO {
         private String name;
         private String score;
         private String uri;
-        @JSONField(name = "trend_flag")
+        @JsonProperty("trend_flag")
         private String trendFlag;
 }

@@ -1,6 +1,6 @@
 package com.tgmeng.model.dto.topsearch;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class TopSearchGitHubDTO {
-    @JSONField(name = "total_count")
+    @JsonProperty("total_count")
     private Long totalCount;
 
     private List<ItemDTO> items;
@@ -28,12 +28,12 @@ public class TopSearchGitHubDTO {
 
         private String name;
 
-        @JSONField(name = "html_url")
+        @JsonProperty("html_url")
         private String htmlUrl;
 
         private String description;
 
-        @JSONField(name = "stargazers_count")
+        @JsonProperty("stargazers_count")
         private Long stargazersCount;
 
 

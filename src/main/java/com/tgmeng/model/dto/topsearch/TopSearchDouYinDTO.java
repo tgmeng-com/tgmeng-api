@@ -1,6 +1,6 @@
 package com.tgmeng.model.dto.topsearch;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -23,7 +23,7 @@ public class TopSearchDouYinDTO {
     @Data
     public static  class DataView {
         /** 热榜列表 */
-        @JSONField(name = "word_list")
+        @JsonProperty("word_list")
         private List<DataVO> wordList;
     }
 
@@ -32,10 +32,10 @@ public class TopSearchDouYinDTO {
         /** 热搜词 */
         private String word;
         /** 这个是用来拼url的   https://www.douyin.com/hot/{{sentence_id}}/{{word}}*/
-        @JSONField(name = "sentence_id")
+        @JsonProperty("sentence_id")
         private String sentenceId;
         /** 热搜词的热度 */
-        @JSONField(name = "hot_value")
+        @JsonProperty("hot_value")
         private Long hotValue;
     }
 }

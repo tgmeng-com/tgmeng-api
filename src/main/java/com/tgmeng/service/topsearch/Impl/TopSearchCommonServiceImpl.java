@@ -110,7 +110,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo().setKeyword(topSearchWeiBoDTO.getData().getHotgov().getWord()).setUrl(topSearchWeiBoDTO.getData().getHotgov().getUrl()));
             //添加热榜
             topSearchCommonVOS.addAll(Optional.ofNullable(topSearchWeiBoDTO.getData())
-                    .map(TopSearchWeiBoDTO.DataView::getBand_list)
+                    .map(TopSearchWeiBoDTO.DataView::getBandList)
                     .orElse(Collections.emptyList())
                     .stream()
                     .map(t->{
@@ -164,6 +164,55 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             throw new ServerException(ServerExceptionEnum.DOUBAN_TOP_SEARCH_EXCEPTION);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.DOUBAN.getKey(), DataInfoCardEnum.DOUBAN.getValue(),DataInfoCardEnum.DOUBAN.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
+
+    @Override
+    public ResultTemplateBean getTencentTopSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchTencentDTO tencent = topSearchCommonClient.tencent(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.TENCENT.getValue(), ForestRequestHeaderOriginEnum.TENCENT.getValue()));
+            topSearchCommonVOS = Optional.ofNullable(tencent.getIdlist().getFirst())
+                    .map(TopSearchTencentDTO.ItemView::getNewslist)
+                    .orElse(Collections.emptyList())
+                    .stream().map(topSearchCommonMapper::topSearchTencentDTOItemInfoTopSearchCommonVO)
+                    .toList();
+            // 移除第一条数据,他不是有效数据（如果存在）
+            if (!topSearchCommonVOS.isEmpty()) {
+                topSearchCommonVOS = new ArrayList<>(topSearchCommonVOS);
+                topSearchCommonVOS.removeFirst();
+            }
+        } catch (Exception e) {
+            log.error("获取腾讯新闻热搜失败",e);
+            throw new ServerException(ServerExceptionEnum.TENCENT_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.TENCENT.getKey(), DataInfoCardEnum.TENCENT.getValue(),DataInfoCardEnum.TENCENT.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
+
+    @Override
+    public ResultTemplateBean getTouTiaoTopSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchTouTiaoDTO toutiao = topSearchCommonClient.toutiao(ForestUtil.getRandomRequestHeaderForTouTiao());
+            topSearchCommonVOS = Stream.concat(
+                    Optional.ofNullable(toutiao)
+                            .map(TopSearchTouTiaoDTO::getFixedTopData)
+                            .orElse(Collections.emptyList())
+                            .stream()
+                            .map(topSearchCommonMapper::topSearchTouTiaoDTOItemInfoTopSearchCommonVO),
+
+                    Optional.ofNullable(toutiao)
+                            .map(TopSearchTouTiaoDTO::getData)
+                            .orElse(Collections.emptyList())
+                            .stream()
+                            .map(topSearchCommonMapper::topSearchTouTiaoDTOItemInfoTopSearchCommonVO)
+            ).toList();
+        } catch (Exception e) {
+            log.error("获取今日头条热搜失败",e);
+            throw new ServerException(ServerExceptionEnum.TOUTIAO_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.TOUTIAO.getKey(), DataInfoCardEnum.TOUTIAO.getValue(),DataInfoCardEnum.TOUTIAO.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

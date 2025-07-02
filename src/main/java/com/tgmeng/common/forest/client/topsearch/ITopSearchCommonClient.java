@@ -57,5 +57,18 @@ public interface ITopSearchCommonClient {
     @Get("https://m.douban.com/rexxar/api/v2/chart/hot_search_board?count=10&start=0")
     List<TopSearchDouBanDTO> douBan(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://i.news.qq.com/gw/event/pc_hot_ranking_list?ids_hash=&offset=0&page_size=51&appver=15.5_qqnews_7.1.60&rank_id=hot")
+    TopSearchTencentDTO tencent(@Header ForestRequestHeader topSearchRequestHeader);
+
+    /**
+     * description: 由于头条的程序员脑子有病，返回的这几把json这么大，fastjson都解析不了，换jackson
+     * method: toutiao
+     *
+     * @author tgmeng
+     * @since 2025/7/2 18:34
+    */
+    @Get("https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc")
+    TopSearchTouTiaoDTO toutiao(@Header ForestRequestHeader topSearchRequestHeader);
+
 
 }

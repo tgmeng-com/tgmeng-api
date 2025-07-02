@@ -13,4 +13,8 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getDouYinTopSearch();
 
     ResultTemplateBean getDouBanTopSearch();
+
+    ResultTemplateBean getTencentTopSearch();
+
+    ResultTemplateBean getTouTiaoTopSearch();
 }

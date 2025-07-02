@@ -72,4 +72,14 @@ public class TopSearchCommonController {
     public ResultTemplateBean getDouBanTopSearch() {
         return topSearchCommonService.getDouBanTopSearch();
     }
+
+    @RequestMapping("/tencent")
+    public ResultTemplateBean getTencentTopSearch() {
+        return topSearchCommonService.getTencentTopSearch();
+    }
+
+    @RequestMapping("/toutiao")
+    public ResultTemplateBean getTouTiaoTopSearch() {
+        return topSearchCommonService.getTouTiaoTopSearch();
+    }
 }

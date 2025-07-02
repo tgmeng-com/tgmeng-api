@@ -35,5 +35,13 @@ public class ForestUtil {
                 .setReferer(ForestRequestHeaderRefererEnum.DOUBAN.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.DOUBAN.getValue());
     }
+    public static ForestRequestHeader getRandomRequestHeaderForTouTiao() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                .setConnection("keep-alive")
+                .setReferer(ForestRequestHeaderRefererEnum.TOUTIAO.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.TOUTIAO.getValue());
+    }
 
 }

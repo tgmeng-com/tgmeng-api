@@ -68,6 +68,26 @@ public interface ITopSearchCommonMapper {
     /** 批量转换 */
     List<TopSearchCommonVO.DataInfo> topSearchDouBanDTODataVO2TopSearchCommonVOS(List<TopSearchDouBanDTO> topSearchDouBanDTO);
 
+
+
+    /** 腾讯 */
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "readCount", target = "hotScore")
+    @Mapping(source = "url.", target = "url")
+    TopSearchCommonVO.DataInfo topSearchTencentDTOItemInfoTopSearchCommonVO(TopSearchTencentDTO.ItemInfo topSearchDTencentDTO);
+
+    /** 头条 */
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "hotValue", target = "hotScore")
+    @Mapping(source = "url.", target = "url")
+    TopSearchCommonVO.DataInfo topSearchTouTiaoDTOItemInfoTopSearchCommonVO(TopSearchTouTiaoDTO.ItemInfo topSearchTouTiaoDTO);
+    /** 批量转换 */
+    List<TopSearchCommonVO.DataInfo> topSearchTouTiaoDTOItemInfoTopSearchCommonVOS(List<TopSearchTouTiaoDTO> topSearchTouTiaoDTOS);
+
+
+
     @Named("stringToLong")
     default Long stringToLong(String score) {
         try {

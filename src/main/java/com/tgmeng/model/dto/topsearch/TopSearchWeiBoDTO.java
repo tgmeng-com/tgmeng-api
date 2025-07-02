@@ -1,6 +1,6 @@
 package com.tgmeng.model.dto.topsearch;
 
-import com.alibaba.fastjson2.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -23,7 +23,8 @@ public class TopSearchWeiBoDTO {
     @Data
     public static  class DataView {
         private Hotgov hotgov;
-        private List<DataVO> band_list;
+        @JsonProperty("band_list")
+        private List<DataVO> bandList;
     }
 
     @Data
@@ -46,7 +47,7 @@ public class TopSearchWeiBoDTO {
         /** 排序的序号 用来拼接url的 */
         private Long realpos;
         /** 热搜词 用来拼接url的 */
-        @JSONField(name = "word_scheme")
+        @JsonProperty("word_scheme")
         private String wordScheme;
     }
 }

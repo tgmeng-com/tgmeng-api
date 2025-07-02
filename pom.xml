@@ -22,9 +22,10 @@
 		<mapstructBinding.version>0.2.0</mapstructBinding.version>
 		<jsoup.version>1.21.1</jsoup.version>
 		<forest.version>1.7.1</forest.version>
-		<fastjson2.version>2.0.57</fastjson2.version>
 		<spring-boot-starter-validation.version>3.5.3</spring-boot-starter-validation.version>
 		<caffeine.version>3.2.1</caffeine.version>
+		<twitter4j-core.version>4.0.7</twitter4j-core.version>
+		<jackson.version>2.19.1</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -82,9 +83,9 @@
 			<version>${forest.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.alibaba.fastjson2</groupId>
-			<artifactId>fastjson2</artifactId>
-			<version>${fastjson2.version}</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version> <!-- 可替换为最新版本 -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -101,6 +102,11 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-core</artifactId>
+			<version>${twitter4j-core.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
