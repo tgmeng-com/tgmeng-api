@@ -27,5 +27,13 @@ public class ForestUtil {
                 .setReferer(ForestRequestHeaderRefererEnum.DOUYIN.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.DOUYIN.getValue());
     }
-    /** 抖音专属的accept */
+    public static ForestRequestHeader getRandomRequestHeaderForDouBan() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                .setConnection("keep-alive")
+                .setReferer(ForestRequestHeaderRefererEnum.DOUBAN.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.DOUBAN.getValue());
+    }
+
 }

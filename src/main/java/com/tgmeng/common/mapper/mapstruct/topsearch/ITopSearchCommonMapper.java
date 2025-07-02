@@ -1,12 +1,11 @@
 package com.tgmeng.common.mapper.mapstruct.topsearch;
 
 import com.tgmeng.common.util.StringUtil;
-import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
+import com.tgmeng.model.dto.topsearch.*;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import org.mapstruct.*;
+
+import java.util.List;
 
 /**
  * description: TopSearch的Mapper转换接口
@@ -52,10 +51,22 @@ public interface ITopSearchCommonMapper {
     TopSearchCommonVO.DataInfo topSearchDouYinDTODataVO2TopSearchCommonVO(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO);
     @AfterMapping
     default void topSearchDouYinDTODataVO2TopSearchCommonVOAfter(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
-        // @MappingTarget : 表示传来的carVO对象是已经赋值过的
         topSearchCommonVO.setUrl(StringUtil.douYinTopSearchItemUrlUtil(topSearchDouYinDTODataVO.getSentenceId(),topSearchDouYinDTODataVO.getWord()));
-
     }
+
+
+    /** 豆瓣 */
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "name", target = "keyword")
+    @Mapping(source = "score", target = "hotScore")
+    @Mapping(source = "uri", target = "url")
+    TopSearchCommonVO.DataInfo topSearchDouBanDTODataVO2TopSearchCommonVO(TopSearchDouBanDTO topSearchDouBanDTO);
+    @AfterMapping
+    default void topSearchDouBanDTODataInfo2TopSearchCommonVOAfter(TopSearchDouBanDTO topSearchDouBanDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl(topSearchDouBanDTO.getUri().replace("douban://douban.com/search/result?q=", "https://douban.com/search?q="));
+    }
+    /** 批量转换 */
+    List<TopSearchCommonVO.DataInfo> topSearchDouBanDTODataVO2TopSearchCommonVOS(List<TopSearchDouBanDTO> topSearchDouBanDTO);
 
     @Named("stringToLong")
     default Long stringToLong(String score) {

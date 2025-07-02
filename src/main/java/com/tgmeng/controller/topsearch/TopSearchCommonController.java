@@ -67,4 +67,9 @@ public class TopSearchCommonController {
     public ResultTemplateBean getDouYinTopSearch() {
         return topSearchCommonService.getDouYinTopSearch();
     }
+
+    @RequestMapping("/douban")
+    public ResultTemplateBean getDouBanTopSearch() {
+        return topSearchCommonService.getDouBanTopSearch();
+    }
 }

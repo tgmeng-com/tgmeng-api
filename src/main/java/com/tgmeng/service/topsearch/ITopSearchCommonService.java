@@ -11,4 +11,6 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getWeiBoTopSearch();
 
     ResultTemplateBean getDouYinTopSearch();
+
+    ResultTemplateBean getDouBanTopSearch();
 }

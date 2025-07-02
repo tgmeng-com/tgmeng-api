@@ -11,10 +11,7 @@ import com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient;
 import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchCommonMapper;
 import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.common.util.StringUtil;
-import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
+import com.tgmeng.model.dto.topsearch.*;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
@@ -153,6 +150,20 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             throw new ServerException(ServerExceptionEnum.DOUYIN_TOP_SEARCH_EXCEPTION);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.DOUYIN.getKey(), DataInfoCardEnum.DOUYIN.getValue(),DataInfoCardEnum.DOUYIN.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
+
+    @Override
+    public ResultTemplateBean getDouBanTopSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            List<TopSearchDouBanDTO> topSearchDouBanDTO = topSearchCommonClient.douBan(ForestUtil.getRandomRequestHeaderForDouBan());
+            topSearchCommonVOS.addAll(topSearchCommonMapper.topSearchDouBanDTODataVO2TopSearchCommonVOS(topSearchDouBanDTO));
+        } catch (Exception e) {
+            log.error("获取豆瓣热搜失败",e);
+            throw new ServerException(ServerExceptionEnum.DOUBAN_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.DOUBAN.getKey(), DataInfoCardEnum.DOUBAN.getValue(),DataInfoCardEnum.DOUBAN.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

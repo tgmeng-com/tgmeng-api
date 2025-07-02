@@ -3,10 +3,9 @@ package com.tgmeng.common.forest.client.topsearch;
 import com.dtflys.forest.annotation.Get;
 import com.dtflys.forest.annotation.Header;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
-import com.tgmeng.model.dto.topsearch.TopSearchBaiDuDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchBilibiliDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchDouYinDTO;
-import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
+import com.tgmeng.model.dto.topsearch.*;
+
+import java.util.List;
 
 //加这个只是为了不爆红
 public interface ITopSearchCommonClient {
@@ -54,6 +53,9 @@ public interface ITopSearchCommonClient {
     */
     @Get("https://www-hj.douyin.com/aweme/v1/web/hot/search/list/")
     TopSearchDouYinDTO douYin(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://m.douban.com/rexxar/api/v2/chart/hot_search_board?count=10&start=0")
+    List<TopSearchDouBanDTO> douBan(@Header ForestRequestHeader topSearchRequestHeader);
 
 
 }
