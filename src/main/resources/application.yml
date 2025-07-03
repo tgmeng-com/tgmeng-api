@@ -24,9 +24,9 @@ my-config:
     top-search:
       enabled: false
   schedule:
-    controller-api-schedule-rate: "0 0/5 * * * ?"  # 系统定时缓存所有数据的周期,这个和下面缓存过期时间配合使用
+    controller-api-schedule-rate: "0 0/1 * * * ?"  # 系统定时缓存所有数据的周期,这个和下面缓存过期时间配合使用
   data-cache:
     top-search:
       enable: true           #是否开启缓存
       max-size: 1000         #最大缓存条数
-      expire-time: 300       #单位是秒
+      expire-time: 60       #单位是秒
