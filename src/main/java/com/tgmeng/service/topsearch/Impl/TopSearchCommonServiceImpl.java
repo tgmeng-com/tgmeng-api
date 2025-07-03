@@ -81,7 +81,6 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchBilibiliDTO topSearchBilibiliDTO = topSearchCommonClient.bilibili(ForestUtil.getRandomRequestHeaderForBilibili());
-            System.out.println(topSearchBilibiliDTO);
             topSearchCommonVOS = Optional.ofNullable(topSearchBilibiliDTO.getData())
                     .map(TopSearchBilibiliDTO.DataView::getList)
                     .orElse(Collections.emptyList())
