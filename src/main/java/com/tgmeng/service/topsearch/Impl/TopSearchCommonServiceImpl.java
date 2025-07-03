@@ -80,7 +80,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
     public ResultTemplateBean getBilibiliTopSearch() {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
-            TopSearchBilibiliDTO topSearchBilibiliDTO = topSearchCommonClient.bilibili(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BILIBILI.getValue(), ForestRequestHeaderOriginEnum.BILIBILI.getValue()));
+            TopSearchBilibiliDTO topSearchBilibiliDTO = topSearchCommonClient.bilibili(ForestUtil.getRandomRequestHeaderForBilibili());
             System.out.println(topSearchBilibiliDTO);
             topSearchCommonVOS = Optional.ofNullable(topSearchBilibiliDTO.getData())
                     .map(TopSearchBilibiliDTO.DataView::getList)

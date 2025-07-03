@@ -9,7 +9,7 @@ public class ForestUtil {
         String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
         return new ForestRequestHeader()
                 .setUserAgent(userAgent)
-                .setAccept("application/json, text/plain, */*")
+                //.setAccept("application/json, text/plain, */*")
                 .setAcceptEncoding("gzip, deflate, br, zstd")
                 .setAcceptLanguage("zh-CN,zh;q=0.9")
                 .setConnection("keep-alive")
@@ -60,6 +60,17 @@ public class ForestUtil {
                 .setConnection("keep-alive")
                 .setReferer(ForestRequestHeaderRefererEnum.TOUTIAO.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.TOUTIAO.getValue());
+    }
+
+    public static ForestRequestHeader getRandomRequestHeaderForBilibili() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                .setAcceptEncoding("gzip, deflate, br, zstd")
+                .setAcceptLanguage("zh-CN,zh;q=0.9")
+                .setConnection("keep-alive")
+                .setReferer(ForestRequestHeaderRefererEnum.BILIBILI.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.BILIBILI.getValue());
     }
 
 }

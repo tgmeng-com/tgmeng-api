@@ -33,6 +33,7 @@ public interface ITopSearchCommonClient {
     @Get("https://api.bilibili.com/x/web-interface/ranking/v2?rid=0&type=all")
     TopSearchBilibiliDTO bilibili(@Header ForestRequestHeader topSearchRequestHeader);
 
+
     /**
      * description: baiDu热搜
      * 可视化url为：https://top.baidu.com/board?tab=realtime 可对比参照
