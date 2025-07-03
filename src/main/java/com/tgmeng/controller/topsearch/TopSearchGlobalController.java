@@ -22,7 +22,7 @@ public class TopSearchGlobalController {
     private final ITopSearchGlobalService topSearchGlobalService;
 
     @RequestMapping("/youtube")
-    public ResultTemplateBean getBGitHubTopSearchAllStars() {
+    public ResultTemplateBean getYoutubeTopSearchAllStars() {
         return topSearchGlobalService.getYoutubeSortByTopSearch();
     }
 

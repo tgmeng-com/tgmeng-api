@@ -39,7 +39,7 @@ public class TopSearchDataCache {
     // 添加数据到缓存
     public <T> void put(CacheDataNameEnum key, T value) {
         cache.put(key, value);
-        log.info("🤡新增缓存:{}", ((TopSearchCommonVO)value).getDataCardName());
+        log.info("🎁新增缓存:{}", ((TopSearchCommonVO)value).getDataCardName());
     }
 
     // 从缓存中获取数据

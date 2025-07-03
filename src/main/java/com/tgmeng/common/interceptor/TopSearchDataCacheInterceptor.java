@@ -39,7 +39,7 @@ public class TopSearchDataCacheInterceptor {
             log.info("❤️返回缓存：{}", ((TopSearchCommonVO)cachedData).getDataCardName());
             return ResultTemplateBean.success(cachedData);
         } else {
-            log.info("缓存未命中，调用接口获取数据：{}", url);
+            log.info("🤡缓存未命中，调用接口获取数据：{}", url);
             // 执行接口请求数据
             Object result = joinPoint.proceed();
             // 新增缓存

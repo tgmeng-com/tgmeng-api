@@ -6,6 +6,9 @@ import lombok.Getter;
 
 /**
  * description: 数据卡片对应的一些信息，包括分类，logo啥的
+ *
+ * 这个枚举里的所有数据，目前前台都是用不到的，写着只是为了后续扩展和日志台的信息记录
+ *
  * package: com.tgmeng.common.enums.business
  * className: DataInfoCardEnum
  *

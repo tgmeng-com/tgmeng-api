@@ -99,7 +99,7 @@ public class TopSearchCommonController {
     }
 
     @RequestMapping("/shaoshupai")
-    public ResultTemplateBean getBaiShaoShuPaiSearch() {
+    public ResultTemplateBean getShaoShuPaiSearch() {
         return topSearchCommonService.getShaoShuPaiSearch();
     }
 }
