@@ -2,6 +2,7 @@ package com.tgmeng.common.forest.client.topsearch;
 
 import com.dtflys.forest.annotation.Get;
 import com.dtflys.forest.annotation.Header;
+import com.dtflys.forest.annotation.Var;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
 import com.tgmeng.model.dto.topsearch.*;
 
@@ -40,8 +41,8 @@ public interface ITopSearchCommonClient {
      * @author tgmeng
      * @since 2025/6/29 20:46
     */
-    @Get("https://top.baidu.com/api/board?platform=wise&tab=realtime")
-    TopSearchBaiDuDTO baiDu(@Header ForestRequestHeader topSearchRequestHeader);
+    @Get("https://top.baidu.com/api/board?platform=wise&tab={type}")
+    TopSearchBaiDuDTO baiDu(@Header ForestRequestHeader topSearchRequestHeader,@Var("type") String type);
 
     /**
      * description: 抖音热搜

@@ -2,6 +2,7 @@ package com.tgmeng.service.topsearch.Impl;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
+import com.tgmeng.common.enums.business.BaiDuSearchTypeEnum;
 import com.tgmeng.common.enums.business.DataInfoCardEnum;
 import com.tgmeng.common.enums.business.ForestRequestHeaderOriginEnum;
 import com.tgmeng.common.enums.business.ForestRequestHeaderRefererEnum;
@@ -42,10 +43,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      * @since 2025/6/29 15:17
     */
     @Override
-    public ResultTemplateBean getBaiDuTopSearch() {
+    public ResultTemplateBean getBaiDuTopSearch(BaiDuSearchTypeEnum baiDuSearchTypeEnum) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
-            TopSearchBaiDuDTO topSearchBaiDuDTO = topSearchCommonClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()));
+            TopSearchBaiDuDTO topSearchBaiDuDTO = topSearchCommonClient.baiDu(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BAIDU.getValue(), ForestRequestHeaderOriginEnum.BAIDU.getValue()), baiDuSearchTypeEnum.getValue());
             topSearchCommonVOS = Optional.ofNullable(topSearchBaiDuDTO.getData())
                     .map(TopSearchBaiDuDTO.DataVO::getCards)
                     .orElse(Collections.emptyList())

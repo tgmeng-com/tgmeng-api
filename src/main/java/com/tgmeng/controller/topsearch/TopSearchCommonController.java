@@ -1,6 +1,7 @@
 package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.BaiDuSearchTypeEnum;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class TopSearchCommonController {
     */
     @RequestMapping("/baidu")
     public ResultTemplateBean getBaiDuTopSearch() {
-        return topSearchCommonService.getBaiDuTopSearch();
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.NEWS_BAIDU);
     }
     /**
      * description: B站热搜
@@ -101,5 +102,20 @@ public class TopSearchCommonController {
     @RequestMapping("/shaoshupai")
     public ResultTemplateBean getShaoShuPaiSearch() {
         return topSearchCommonService.getShaoShuPaiSearch();
+    }
+
+    @RequestMapping("/dianshijubaidu")
+    public ResultTemplateBean getDianShiJuBaiDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.DIAN_SHI_JU_BAIDU);
+    }
+
+    @RequestMapping("/xiaoshuobaidu")
+    public ResultTemplateBean getXiaoShuoBaiDuDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.XIAO_SHUO_BAIDU);
+    }
+
+    @RequestMapping("/dianyingbaidu")
+    public ResultTemplateBean getDianYingBaiDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.DIAN_YING_BAIDU);
     }
 }

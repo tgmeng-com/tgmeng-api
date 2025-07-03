@@ -35,7 +35,10 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_TOUTIAO("CACHE_TOP_SEARCH_TOUTIAO", "/topsearch/toutiao", "", true,4),
     CACHE_TOP_SEARCH_WANGYI("CACHE_TOP_SEARCH_WANGYI", "/topsearch/wangyi", "", true,4),
     CACHE_TOP_SEARCH_WANGYIYUN("CACHE_TOP_SEARCH_WANGYIYUN", "/topsearch/yunwangyi", "", true,4),
-    CACHE_TOP_SEARCH_SHAOSHUPAI("CACHE_TOP_SEARCH_SHAOSHUPAI", "/topsearch/shaoshupai", "", true,4);
+    CACHE_TOP_SEARCH_SHAOSHUPAI("CACHE_TOP_SEARCH_SHAOSHUPAI", "/topsearch/shaoshupai", "", true,4),
+    CACHE_TOP_SEARCH_DIANSHIJUBAIDU("CACHE_TOP_SEARCH_DIANSHIJUBAIDU", "/topsearch/dianshijubaidu", "", true,4),
+    CACHE_TOP_SEARCH_DIANYINGBAIDU("CACHE_TOP_SEARCH_DIANYINGBAIDU", "/topsearch/dianyingbaidu", "", true,4),
+    CACHE_TOP_SEARCH_XIAOSHUOBAIDU("CACHE_TOP_SEARCH_XIAOSHUOBAIDU", "/topsearch/xiaoshuobaidu", "", true,4);
 
     private final String key;
     private final String value;
