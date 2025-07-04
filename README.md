@@ -92,6 +92,8 @@
 
 - <h4>  <a href="https://linux.do" target="_blank">LINUX DO</a> 感谢L站的各位大佬们的耐心指导与帮助，受益匪浅，感激之情难以言表
 
+---
+
 ## ⭐ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=CandyDream6/tgmeng-api&type=Date)](https://www.star-history.com/#CandyDream6/tgmeng-api&Date)
