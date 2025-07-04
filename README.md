@@ -18,7 +18,7 @@
 
 - <h4>本站前后端均已100%全面开源，欢迎大家Star，Fork，PR，Issues。<br/>
 
-- <h4>这里是后端，<a href="https://github.com/CandyDream6/tgmeng-top-search-frontend" target="_blank">👉前端项目请点击前往👈</a>
+- <h4>这里是后端，<a href="https://github.com/CandyDream6/tgmeng-top-search-frontend" target="_blank">👉前端项目源码请点击前往👈</a>
 
 ---
 ## 👁️ 预览
