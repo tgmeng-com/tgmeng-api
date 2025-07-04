@@ -52,11 +52,6 @@
 			<artifactId>hutool-all</artifactId>
 			<version>${hutool.version}</version>
 		</dependency>
-		<!--  log4j2      -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-		</dependency>
 		<!-- mapstruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
