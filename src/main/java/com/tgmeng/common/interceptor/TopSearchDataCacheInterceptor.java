@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,6 +26,9 @@ public class TopSearchDataCacheInterceptor {
     @Autowired
     private TopSearchDataCache topSearchDataCache;
 
+    @Value("${my-config.data-cache.top-search.enabled:true}")
+    private Boolean dataCacheEnabled;
+
     // 定义一个切点，拦截所有Controller中的方法（可以根据需要具体化）
     @Pointcut("execution(* com.tgmeng.controller.topsearch..*(..))")
     public void cachePointcut() {
@@ -33,21 +37,28 @@ public class TopSearchDataCacheInterceptor {
     @Around("cachePointcut()")
     public Object aroundRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         String url = getRequestUrl();
-        //获取缓存
-        Object cachedData = getCachedData(url);
-        if (cachedData != null) {
-            log.info("❤️返回缓存：{}", ((TopSearchCommonVO)cachedData).getDataCardName());
-            return ResultTemplateBean.success(cachedData);
-        } else {
-            log.info("🤡缓存未命中，调用接口获取数据：{}", url);
-            // 执行接口请求数据
-            Object result = joinPoint.proceed();
-            // 新增缓存
-            if(result != null&&CollectionUtil.isNotEmpty((((ResultTemplateBean<TopSearchCommonVO>)result).getData().getDataInfo()))) {
-                cacheData(url, ((ResultTemplateBean<TopSearchCommonVO>) result).getData());
+        if (dataCacheEnabled){
+            //获取缓存
+            Object cachedData = getCachedData(url);
+            if (cachedData != null) {
+                log.info("❤️返回缓存：{}", ((TopSearchCommonVO)cachedData).getDataCardName());
+                return ResultTemplateBean.success(cachedData);
+            } else {
+                log.info("🤡缓存未命中，调用接口获取数据：{}", url);
+                // 执行接口请求数据
+                Object result = joinPoint.proceed();
+                // 新增缓存
+                if(result != null&&CollectionUtil.isNotEmpty((((ResultTemplateBean<TopSearchCommonVO>)result).getData().getDataInfo()))) {
+                    cacheData(url, ((ResultTemplateBean<TopSearchCommonVO>) result).getData());
+                }
+                return result;
             }
-            return result;
+        }else {
+            log.info("🤡缓存未开启，调用接口获取数据：{}", url);
+            // 执行接口请求数据
+            return joinPoint.proceed();
         }
+
     }
 
     // 获取缓存数据
@@ -76,8 +87,6 @@ public class TopSearchDataCacheInterceptor {
         String url = "";
         if (request != null) {
             url = request.getRequestURL().toString();
-            //log.info("================================");
-            //log.info("请求的 URL: {}", url);
         }
         return url;
     }
