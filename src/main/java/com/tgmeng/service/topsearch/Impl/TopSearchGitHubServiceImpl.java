@@ -50,7 +50,7 @@ public class TopSearchGitHubServiceImpl implements ITopSearchGitHubService {
                     .toList())
             ;
         } catch (Exception e) {
-            log.error("获取GITHUB热搜失败",e);
+            log.error("👺👺👺获取GITHUB热榜失败👺👺👺",e);
             throw new ServerException(ServerExceptionEnum.GITHUB_TOP_SEARCH_EXCEPTION);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, dataInfoCardEnum.getKey(), dataInfoCardEnum.getValue(),dataInfoCardEnum.getDescription());

@@ -26,6 +26,7 @@
 		<caffeine.version>3.2.1</caffeine.version>
 		<twitter4j-core.version>4.0.7</twitter4j-core.version>
 		<jackson.version>2.19.1</jackson.version>
+		<logback.version>1.5.18</logback.version>
 	</properties>
 
 	<dependencies>
@@ -106,6 +107,18 @@
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-core</artifactId>
 			<version>${twitter4j-core.version}</version>
+		</dependency>
+
+		<!--logback	-->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
 	</dependencies>
 

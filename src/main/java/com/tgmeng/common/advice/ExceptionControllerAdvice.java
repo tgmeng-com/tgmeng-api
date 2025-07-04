@@ -19,14 +19,14 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(BossException.class)
     public ResponseEntity<ExceptionBean> handleBossException(BossException exception) {
-        log.info("捕获到自定义异常:{}", exception.getMessage());
+        log.info("👺👺👺捕获到自定义异常:{}", exception.getMessage());
         ExceptionBean exceptionBean = exceptionMapper.exception2Bean(exception);
         return new ResponseEntity<>(exceptionBean, exception.getHttpStatus());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionBean> handleException(Exception exception) {
-        log.error("未捕获的异常:{}", exception.getMessage());
+        log.error("😈😈😈未捕获的异常:{}", exception.getMessage());
         ServerException serverException = new ServerException();
         ExceptionBean exceptionBean = exceptionMapper.exception2Bean(serverException);
         return new ResponseEntity<>(exceptionBean, serverException.getHttpStatus());

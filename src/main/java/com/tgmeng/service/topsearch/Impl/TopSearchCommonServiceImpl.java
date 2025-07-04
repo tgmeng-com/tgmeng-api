@@ -41,7 +41,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      *
      * @author tgmeng
      * @since 2025/6/29 15:17
-    */
+     */
     @Override
     public ResultTemplateBean getBaiDuTopSearch(BaiDuSearchTypeEnum baiDuSearchTypeEnum) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
@@ -63,19 +63,20 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     //.sorted(Comparator.comparing(topSearchCommonVOS::getHotScore).reversed())
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("获取百度热搜失败",e);
+            log.error("👺👺👺获取百度热搜失败👺👺👺：平台；{}", baiDuSearchTypeEnum.getKey(), e);
             throw new ServerException(ServerExceptionEnum.BAIDU_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS,DataInfoCardEnum.BAIDU.getKey(), DataInfoCardEnum.BAIDU.getValue(),DataInfoCardEnum.BAIDU.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BAIDU.getKey(), DataInfoCardEnum.BAIDU.getValue(), DataInfoCardEnum.BAIDU.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
     /**
      * description: b站热搜
      * method: getBilibiliTopSearch
      *
      * @author tgmeng
      * @since 2025/6/29 15:37
-    */
+     */
     @Override
     public ResultTemplateBean getBilibiliTopSearch() {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
@@ -87,10 +88,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .stream().map(topSearchCommonMapper::topSearchBilibiliDTODataVO2TopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
-            log.error("获取B站热搜失败",e);
+            log.error("👺👺👺获取B站热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.BILIBILI_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BILIBILI.getKey(), DataInfoCardEnum.BILIBILI.getValue(),DataInfoCardEnum.BILIBILI.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BILIBILI.getKey(), DataInfoCardEnum.BILIBILI.getValue(), DataInfoCardEnum.BILIBILI.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -100,7 +101,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      *
      * @author tgmeng
      * @since 2025/6/29 19:24
-    */
+     */
     @Override
     public ResultTemplateBean getWeiBoTopSearch() {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
@@ -113,18 +114,19 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .map(TopSearchWeiBoDTO.DataView::getBandList)
                     .orElse(Collections.emptyList())
                     .stream()
-                    .map(t->{
+                    .map(t -> {
                         Long realPos = Optional.ofNullable(t.getRealpos()).orElse(0L);
                         t.setUrl(StringUtil.weiBoTopSearchItemUrlUtil(t.getWordScheme(), realPos));
-                        return t;})
+                        return t;
+                    })
                     .map(topSearchCommonMapper::topSearchWeiBoDTODataVO2TopSearchCommonVO)
                     .toList())
-                    ;
+            ;
         } catch (Exception e) {
-            log.error("获取微博热搜失败",e);
+            log.error("👺👺👺获取微博热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.WEIBO_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WEIBO.getKey(), DataInfoCardEnum.WEIBO.getValue(),DataInfoCardEnum.WEIBO.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WEIBO.getKey(), DataInfoCardEnum.WEIBO.getValue(), DataInfoCardEnum.WEIBO.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -134,7 +136,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
      *
      * @author tgmeng
      * @since 2025/6/29 22:40
-    */
+     */
     @Override
     public ResultTemplateBean getDouYinTopSearch() {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
@@ -146,10 +148,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .stream().map(topSearchCommonMapper::topSearchDouYinDTODataVO2TopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
-            log.error("获取抖音热搜失败",e);
+            log.error("👺👺👺获取抖音热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.DOUYIN_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.DOUYIN.getKey(), DataInfoCardEnum.DOUYIN.getValue(),DataInfoCardEnum.DOUYIN.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.DOUYIN.getKey(), DataInfoCardEnum.DOUYIN.getValue(), DataInfoCardEnum.DOUYIN.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -160,10 +162,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             List<TopSearchDouBanDTO> topSearchDouBanDTO = topSearchCommonClient.douBan(ForestUtil.getRandomRequestHeaderForDouBan());
             topSearchCommonVOS.addAll(topSearchCommonMapper.topSearchDouBanDTODataVO2TopSearchCommonVOS(topSearchDouBanDTO));
         } catch (Exception e) {
-            log.error("获取豆瓣热搜失败",e);
+            log.error("👺👺👺获取豆瓣热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.DOUBAN_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.DOUBAN.getKey(), DataInfoCardEnum.DOUBAN.getValue(),DataInfoCardEnum.DOUBAN.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.DOUBAN.getKey(), DataInfoCardEnum.DOUBAN.getValue(), DataInfoCardEnum.DOUBAN.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -183,10 +185,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                 topSearchCommonVOS.removeFirst();
             }
         } catch (Exception e) {
-            log.error("获取腾讯新闻热搜失败",e);
+            log.error("👺👺👺获取腾讯新闻热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.TENCENT_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.TENCENT.getKey(), DataInfoCardEnum.TENCENT.getValue(),DataInfoCardEnum.TENCENT.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.TENCENT.getKey(), DataInfoCardEnum.TENCENT.getValue(), DataInfoCardEnum.TENCENT.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -209,10 +211,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                             .map(topSearchCommonMapper::topSearchTouTiaoDTOItemInfoTopSearchCommonVO)
             ).toList();
         } catch (Exception e) {
-            log.error("获取今日头条热搜失败",e);
+            log.error("👺👺👺获取今日头条热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.TOUTIAO_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.TOUTIAO.getKey(), DataInfoCardEnum.TOUTIAO.getValue(),DataInfoCardEnum.TOUTIAO.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.TOUTIAO.getKey(), DataInfoCardEnum.TOUTIAO.getValue(), DataInfoCardEnum.TOUTIAO.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -227,10 +229,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .stream().map(topSearchCommonMapper::topSearchWangYiDTOItemInfoTopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
-            log.error("获取网易新闻热搜失败",e);
+            log.error("👺👺👺获取网易新闻热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.WANGYI_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANGYI.getKey(), DataInfoCardEnum.WANGYI.getValue(),DataInfoCardEnum.WANGYI.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANGYI.getKey(), DataInfoCardEnum.WANGYI.getValue(), DataInfoCardEnum.WANGYI.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -245,10 +247,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .stream().map(topSearchCommonMapper::topSearchWangYiYunDTOItemInfoTopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
-            log.error("获取网易新闻热搜失败",e);
+            log.error("👺👺👺获取网易云音乐榜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.WANGYIYUN_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANGYIYUN.getKey(), DataInfoCardEnum.WANGYIYUN.getValue(),DataInfoCardEnum.WANGYIYUN.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANGYIYUN.getKey(), DataInfoCardEnum.WANGYIYUN.getValue(), DataInfoCardEnum.WANGYIYUN.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -263,10 +265,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .stream().map(topSearchCommonMapper::topSearchBaiDuTieBaDTOItemInfoTopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
-            log.error("获取网易新闻热搜失败",e);
+            log.error("👺👺👺获取百度贴吧热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.BAIDUTIEBA_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BAIDUTIEBA.getKey(), DataInfoCardEnum.BAIDUTIEBA.getValue(),DataInfoCardEnum.BAIDUTIEBA.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BAIDUTIEBA.getKey(), DataInfoCardEnum.BAIDUTIEBA.getValue(), DataInfoCardEnum.BAIDUTIEBA.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
@@ -281,10 +283,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .stream().map(topSearchCommonMapper::topSearchShaoShuPaiDTOItemInfoTopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
-            log.error("少数派热搜失败",e);
+            log.error("👺👺👺获取少数派热搜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.SHAOSHUPAI_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.SHAOSHUPAI.getKey(), DataInfoCardEnum.SHAOSHUPAI.getValue(),DataInfoCardEnum.SHAOSHUPAI.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.SHAOSHUPAI.getKey(), DataInfoCardEnum.SHAOSHUPAI.getValue(), DataInfoCardEnum.SHAOSHUPAI.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

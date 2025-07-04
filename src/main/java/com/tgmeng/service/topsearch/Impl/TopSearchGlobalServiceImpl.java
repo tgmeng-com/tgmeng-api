@@ -41,7 +41,7 @@ public class TopSearchGlobalServiceImpl implements ITopSearchGlobalService {
                     .toList())
             ;
         } catch (Exception e) {
-            log.error("获取Youtube热搜失败",e);
+            log.error("👺👺👺获取Youtube热搜失败👺👺👺",e);
             throw new ServerException(ServerExceptionEnum.YOUTUBE_TOP_SEARCH_EXCEPTION);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.YOUTUBE.getKey(), DataInfoCardEnum.YOUTUBE.getValue(),DataInfoCardEnum.YOUTUBE.getDescription());
