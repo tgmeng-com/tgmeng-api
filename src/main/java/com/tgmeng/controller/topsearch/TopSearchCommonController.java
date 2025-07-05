@@ -1,7 +1,7 @@
 package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.enums.business.BaiDuSearchTypeEnum;
+import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +31,7 @@ public class TopSearchCommonController {
     */
     @RequestMapping("/baidu")
     public ResultTemplateBean getBaiDuTopSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.NEWS_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.NEWS_BAIDU);
     }
     /**
      * description: B站热搜
@@ -106,42 +106,42 @@ public class TopSearchCommonController {
 
     @RequestMapping("/dianshijubaidu")
     public ResultTemplateBean getDianShiJuBaiDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.DIAN_SHI_JU_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.DIAN_SHI_JU_BAIDU);
     }
 
     @RequestMapping("/xiaoshuobaidu")
     public ResultTemplateBean getXiaoShuoBaiDuDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.XIAO_SHUO_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.XIAO_SHUO_BAIDU);
     }
 
     @RequestMapping("/dianyingbaidu")
     public ResultTemplateBean getDianYingBaiDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.DIAN_YING_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.DIAN_YING_BAIDU);
     }
 
     @RequestMapping("/youxibaidu")
     public ResultTemplateBean getYouXiBaiDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.YOU_XI_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.YOU_XI_BAIDU);
     }
 
     @RequestMapping("/qichebaidu")
     public ResultTemplateBean getCarBaiDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.QI_CHE_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.QI_CHE_BAIDU);
     }
 
     @RequestMapping("/regengbaidu")
     public ResultTemplateBean getReGengBaiDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.REGENG_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.REGENG_BAIDU);
     }
 
     @RequestMapping("/caijingbaidu")
     public ResultTemplateBean getCaiJingBaiDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.CAIJING_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.CAIJING_BAIDU);
     }
 
     @RequestMapping("/minshengbaidu")
     public ResultTemplateBean getMinShengBaiDuSearch() {
-        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.MINSHENG_BAIDU);
+        return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.MINSHENG_BAIDU);
     }
 
 //    民生  财经   热梗  游戏  汽车

@@ -28,7 +28,8 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     WANGYI("WANGYI", "https://wp.m.163.com", "", true,4),
     WANGYIYUN("WANGYIYUN", "https://music.163.com", "", true,4),
     BAIDUTIEBA("WANGYIYUN", "https://tieba.baidu.com", "", true,4),
-    SHAOSHUPAI("SHAOSHUPAI", "https://sspai.com", "", true,4);
+    SHAOSHUPAI("SHAOSHUPAI", "https://sspai.com", "", true,4),
+    HUGGING_FACE("HUGGING_FACE", "https://huggingface.co", "", true,4);
 
     private final String key;
     private final String value;

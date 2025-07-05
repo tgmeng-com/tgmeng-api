@@ -1,11 +1,11 @@
 package com.tgmeng.service.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.enums.business.BaiDuSearchTypeEnum;
+import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
 
 
 public interface ITopSearchCommonService {
-    ResultTemplateBean getBaiDuTopSearch(BaiDuSearchTypeEnum baiDuSearchTypeEnum);
+    ResultTemplateBean getBaiDuTopSearch(SearchTypeBaiDuEnum searchTypeBaiDuEnum);
 
     ResultTemplateBean getBilibiliTopSearch();
 

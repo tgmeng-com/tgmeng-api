@@ -17,7 +17,7 @@ import lombok.Getter;
 */
 @Getter
 @AllArgsConstructor
-public enum BaiDuSearchTypeEnum implements INameValueEnum<String,String> {
+public enum SearchTypeBaiDuEnum implements INameValueEnum<String,String> {
     DIAN_SHI_JU_BAIDU("DIAN_SHI_JU_BAIDU", "teleplay", "电视剧", true,1),
     XIAO_SHUO_BAIDU("XIAO_SHUO_BAIDU", "novel", "小说", true,2),
     DIAN_YING_BAIDU("DIAN_YING_BAIDU", "movie", "电影", true,2),

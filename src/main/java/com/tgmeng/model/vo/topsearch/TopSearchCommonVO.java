@@ -1,7 +1,9 @@
 package com.tgmeng.model.vo.topsearch;
 
 import com.tgmeng.common.util.TimeUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
@@ -30,6 +32,8 @@ public class TopSearchCommonVO {
     private List<DataInfo> dataInfo;
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static  class DataInfo {
         /** 热搜词 */
         private String keyword;

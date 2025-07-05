@@ -60,4 +60,17 @@ public class StringUtil {
     public static Long shaoShuPaiTopSearchItemHotScoreUtil(TopSearchShaoShuPaiDTO.ItemDTO topSearchShaoShuPaiItemDTO) {
         return topSearchShaoShuPaiItemDTO.getLikeCount() + topSearchShaoShuPaiItemDTO.getCommentCount();
     }
+
+    public static Long stringParseToLong(String str) {
+        str = str.trim().toLowerCase();
+        if (str.endsWith("k")) {
+            return (long)(Double.parseDouble(str.replace("k", "")) * 1_000);
+        } else if (str.endsWith("m")) {
+            return (long)(Double.parseDouble(str.replace("m", "")) * 1_000_000);
+        } else if (str.endsWith("b")) {
+            return (long)(Double.parseDouble(str.replace("b", "")) * 1_000_000_000);
+        } else {
+            return Long.parseLong(str.replaceAll("[^\\d]", ""));
+        }
+    }
 }

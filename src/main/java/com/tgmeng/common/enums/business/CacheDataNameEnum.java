@@ -43,7 +43,13 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_QI_CHE_BAIDU("CACHE_TOP_SEARCH_QI_CHE_BAIDU", "/topsearch/qichebaidu", "", true,4),
     CACHE_TOP_SEARCH_RE_GENG_BAIDU("CACHE_TOP_SEARCH_RE_GENG_BAIDU", "/topsearch/regengbaidu", "", true,4),
     CACHE_TOP_SEARCH_CAI_JING_BAIDU("CACHE_TOP_SEARCH_CAI_JING_BAIDU", "/topsearch/caijingbaidu", "", true,4),
-    CACHE_TOP_SEARCH_MIN_SHENG_BAIDU("CACHE_TOP_SEARCH_MIN_SHENG_BAIDU", "/topsearch/minshengbaidu", "", true,4);
+    CACHE_TOP_SEARCH_MIN_SHENG_BAIDU("CACHE_TOP_SEARCH_MIN_SHENG_BAIDU", "/topsearch/minshengbaidu", "", true,4),
+    CACHE_TOP_SEARCH_HUGGING_FACE_SPACES_TRENDING("CACHE_TOP_SEARCH_HUGGING_FACE_SPACES_TRENDING", "/topsearch/global/huggingfacespacestrending", "", true,4),
+    CACHE_TOP_SEARCH_HUGGING_FACE_SPACES_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_SPACES_LIKES", "/topsearch/global/huggingfacespaceslikes", "", true,4),
+    CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_TRENDING("CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_TRENDING", "/topsearch/global/huggingfacemodelstrending", "", true,4),
+    CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_LIKES", "/topsearch/global/huggingfacemodellikes", "", true,4),
+    CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_TRENDING("CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_TRENDING", "/topsearch/global/huggingfacedatasetstrending", "", true,4),
+    CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES", "/topsearch/global/huggingfacedatasetslikes", "", true,4);
 
     private final String key;
     private final String value;
