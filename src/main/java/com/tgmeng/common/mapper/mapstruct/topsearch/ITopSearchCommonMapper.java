@@ -28,6 +28,10 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "url", target = "url")
     @Mapping(source = "img", target = "image")
     TopSearchCommonVO.DataInfo topSearchBaiDuDTOContentVO2TopSearchCommonVO(TopSearchBaiDuDTO.ContentVO topSearchBaiDuDTOcontentVO);
+    @AfterMapping
+    default void topSearchBaiDuDTODataVO2TopSearchCommonVOAfter(TopSearchBaiDuDTO.ContentVO topSearchBaiDuDTOContentVO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl(topSearchBaiDuDTOContentVO.getUrl().replace("https://m.baidu.com/", "https://baidu.com/"));
+    }
 
     /** 哔哩哔哩 */
     @BeanMapping(ignoreByDefault = true)
