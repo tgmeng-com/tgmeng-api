@@ -118,4 +118,31 @@ public class TopSearchCommonController {
     public ResultTemplateBean getDianYingBaiDuSearch() {
         return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.DIAN_YING_BAIDU);
     }
+
+    @RequestMapping("/youxibaidu")
+    public ResultTemplateBean getYouXiBaiDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.YOU_XI_BAIDU);
+    }
+
+    @RequestMapping("/qichebaidu")
+    public ResultTemplateBean getCarBaiDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.QI_CHE_BAIDU);
+    }
+
+    @RequestMapping("/regengbaidu")
+    public ResultTemplateBean getReGengBaiDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.REGENG_BAIDU);
+    }
+
+    @RequestMapping("/caijingbaidu")
+    public ResultTemplateBean getCaiJingBaiDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.CAIJING_BAIDU);
+    }
+
+    @RequestMapping("/minshengbaidu")
+    public ResultTemplateBean getMinShengBaiDuSearch() {
+        return topSearchCommonService.getBaiDuTopSearch(BaiDuSearchTypeEnum.MINSHENG_BAIDU);
+    }
+
+//    民生  财经   热梗  游戏  汽车
 }

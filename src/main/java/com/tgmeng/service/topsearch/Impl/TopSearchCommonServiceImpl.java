@@ -66,7 +66,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             log.error("👺👺👺获取百度热搜失败👺👺👺：平台；{}", baiDuSearchTypeEnum.getKey(), e);
             throw new ServerException(ServerExceptionEnum.BAIDU_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.BAIDU.getKey(), DataInfoCardEnum.BAIDU.getValue(), DataInfoCardEnum.BAIDU.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, baiDuSearchTypeEnum.getDescription(), DataInfoCardEnum.BAIDU.getValue(), DataInfoCardEnum.BAIDU.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 
