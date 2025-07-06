@@ -27,6 +27,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'  # 使用 Temurin 作为 JDK 发行版
 
       # 构建项目
       - name: Build project with Maven
@@ -34,7 +35,7 @@ jobs:
 
       # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
       - name: Create target directory on server (if not exists) and clean up old JAR files
-        uses: appleboy/ssh-action@v1.2.2
+        uses: appleboy/ssh-action@v1.2.2  # https://github.com/appleboy/ssh-action/releases 使用存在的版本或者最新版本
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
