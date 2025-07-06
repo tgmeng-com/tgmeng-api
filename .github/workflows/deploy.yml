@@ -15,9 +15,7 @@ jobs:
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
       REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api
       JAR_NAME: tgmeng-api-0.0.2-SNAPSHOT.jar
-      REMOTE_JAR_PATH: /home/${{ secrets.SERVER_USER }}/tgmeng-api/tgmeng-api-0.0.2-SNAPSHOT.jar
       LOG_PATH: /home/${{ secrets.SERVER_USER }}/tgmeng-api/tgmeng-api.log
-      LOCAL_JAR_PATH: target/tgmeng-api-0.0.2-SNAPSHOT.jar
 
     steps:
       # 获取代码并构建项目
@@ -51,9 +49,9 @@ jobs:
             TIMESTAMP=$(date +%Y%m%d%H%M%S)
 
             # 如果文件已经存在，重命名为带时间戳的文件
-            if [ -f "$REMOTE_JAR_PATH" ]; then
+            if [ -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
               echo "备份现有 JAR 文件: ${JAR_NAME%.*}-$TIMESTAMP.jar"
-              mv "$REMOTE_JAR_PATH" "$REMOTE_JAR_DIR/${JAR_NAME%.*}-$TIMESTAMP.jar"
+              mv "$REMOTE_JAR_DIR/$JAR_NAME" "$REMOTE_JAR_DIR/${JAR_NAME%.*}-$TIMESTAMP.jar"
             fi
 
             # 清理旧的 JAR 文件，只保留最新的 10 个文件
@@ -68,7 +66,7 @@ jobs:
           username: ${{ env.SERVER_USER }}
           password: ${{ env.SERVER_PASSWORD }}
           port: 22
-          source: ${{ env.LOCAL_JAR_PATH }}
+          source: target/${{ env.JAR_NAME }}
           target: ${{ env.REMOTE_JAR_DIR }}/
 
       - name: Verify uploaded JAR exists
@@ -79,11 +77,11 @@ jobs:
           password: ${{ env.SERVER_PASSWORD }}
           port: 22
           script: |
-            if [ ! -f "$REMOTE_JAR_PATH" ]; then
+            if [ ! -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
               echo "JAR 上传失败！"
               exit 1
             fi
-            echo "JAR 文件上传成功: $(ls -lh $REMOTE_JAR_PATH)"
+            echo "JAR 文件上传成功: $(ls -lh $REMOTE_JAR_DIR/$JAR_NAME)"
 
       - name: Restart application on server
         uses: appleboy/ssh-action@v1.6.0
@@ -95,28 +93,28 @@ jobs:
           script: |
             echo "准备重启应用..."
             echo "当前运行的进程:"
-            ps aux | grep $(basename $REMOTE_JAR_PATH) | grep -v grep || echo "没有找到正在运行的进程"
+            ps aux | grep $(basename $REMOTE_JAR_DIR/$JAR_NAME) | grep -v grep || echo "没有找到正在运行的进程"
             
-            echo "停止现有应用: $(basename $REMOTE_JAR_PATH)"
-            pkill -f "$(basename $REMOTE_JAR_PATH)" || true
+            echo "停止现有应用: $(basename $REMOTE_JAR_DIR/$JAR_NAME)"
+            pkill -f "$(basename $REMOTE_JAR_DIR/$JAR_NAME)" || true
             
             # 等待应用完全停止
             sleep 5
             
             # 检查应用是否已停止
-            if ps aux | grep $(basename $REMOTE_JAR_PATH) | grep -v grep; then
+            if ps aux | grep $(basename $REMOTE_JAR_DIR/$JAR_NAME) | grep -v grep; then
               echo "应用未完全停止，尝试强制终止..."
-              pkill -9 -f "$(basename $REMOTE_JAR_PATH)" || true
+              pkill -9 -f "$(basename $REMOTE_JAR_DIR/$JAR_NAME)" || true
               sleep 2
             fi
             
-            echo "启动应用: $(basename $REMOTE_JAR_PATH)"
-            nohup java -jar $REMOTE_JAR_PATH > $LOG_PATH 2>&1 &
+            echo "启动应用: $(basename $REMOTE_JAR_DIR/$JAR_NAME)"
+            nohup java -jar $REMOTE_JAR_DIR/$JAR_NAME > $LOG_PATH 2>&1 &
             echo "App started at: $(date)" >> $LOG_PATH
             
             # 显示应用启动状态
             echo "检查应用是否成功启动..."
-            if ps aux | grep $(basename $REMOTE_JAR_PATH) | grep -v grep; then
+            if ps aux | grep $(basename $REMOTE_JAR_DIR/$JAR_NAME) | grep -v grep; then
               echo "应用已成功启动！"
             else
               echo "应用启动失败！"
