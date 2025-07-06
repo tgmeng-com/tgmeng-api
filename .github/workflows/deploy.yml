@@ -99,7 +99,7 @@ jobs:
             echo "准备重启应用..."
             echo "停止应用:"
             set +e
-            pkill -f "$JAR_NAME"
+            pkill -9 "$JAR_NAME"
             set -e
             
             echo "启动应用: $JAR_NAME"
