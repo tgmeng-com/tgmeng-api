@@ -100,8 +100,8 @@ jobs:
             echo "当前运行的进程:"
             ps aux | grep $(basename $REMOTE_JAR_DIR/$JAR_NAME) | grep -v grep || echo "没有找到正在运行的进程"
             
-            echo "停止现有应用: $(basename $REMOTE_JAR_DIR/$JAR_NAME)"
-            pkill -f "$(basename $REMOTE_JAR_DIR/$JAR_NAME)" || true
+            echo "停止现有应用: $JAR_NAME"
+            pkill -f "$JAR_NAME" || true
             
             # 等待应用完全停止
             sleep 5
