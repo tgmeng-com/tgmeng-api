@@ -34,7 +34,7 @@ jobs:
 
       # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
       - name: Create target directory on server (if not exists) and clean up old JAR files
-        uses: appleboy/ssh-action@v1.6.0
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
@@ -70,7 +70,7 @@ jobs:
           target: ${{ env.REMOTE_JAR_DIR }}/
 
       - name: Verify uploaded JAR exists
-        uses: appleboy/ssh-action@v1.6.0
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
@@ -84,7 +84,7 @@ jobs:
             echo "JAR 文件上传成功: $(ls -lh $REMOTE_JAR_DIR/$JAR_NAME)"
 
       - name: Restart application on server
-        uses: appleboy/ssh-action@v1.6.0
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
