@@ -94,7 +94,7 @@ jobs:
           username: ${{ env.SERVER_USER }}
           password: ${{ env.SERVER_PASSWORD }}
           port: 22
-          envs: REMOTE_JAR_DIR,JAR_NAME  # 传递环境变量
+          envs: REMOTE_JAR_DIR,JAR_NAME,$LOG_PATH  # 传递环境变量
           script: |
             echo "准备重启应用..."
             echo "当前运行的进程:"
