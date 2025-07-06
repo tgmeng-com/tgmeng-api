@@ -15,7 +15,6 @@ jobs:
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
       REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api
       JAR_NAME: tgmeng-api-0.0.2-SNAPSHOT.jar
-      LOG_PATH: /home/${{ secrets.SERVER_USER }}/tgmeng-api/tgmeng-api.log
 
     steps:
       # 获取代码并构建项目
@@ -94,7 +93,7 @@ jobs:
           username: ${{ env.SERVER_USER }}
           password: ${{ env.SERVER_PASSWORD }}
           port: 22
-          envs: REMOTE_JAR_DIR,JAR_NAME,LOG_PATH  # 传递环境变量
+          envs: REMOTE_JAR_DIR,JAR_NAME  # 传递环境变量
           script: |
             echo "准备重启应用..."
             echo "当前运行的进程:"
@@ -115,8 +114,7 @@ jobs:
             fi
             
             echo "启动应用: $JAR_NAME"
-            nohup java -jar $REMOTE_JAR_DIR/$JAR_NAME > $LOG_PATH 2>&1 &
-            echo "App started at: $(date)" >> $LOG_PATH
+            nohup java -jar $REMOTE_JAR_DIR/$JAR_NAME > /dev/null 2>&1 &
             
             # 显示应用启动状态
             echo "检查应用是否成功启动..."
@@ -124,7 +122,5 @@ jobs:
               echo "应用已成功启动！"
             else
               echo "应用启动失败！"
-              echo "最近100行日志:"
-              tail -n 100 $LOG_PATH
               exit 1
             fi
