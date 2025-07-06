@@ -61,15 +61,15 @@ jobs:
             echo "清理旧的 JAR 文件..."
             ls -t ${JAR_NAME%.*}-*.jar | tail -n +11 | xargs rm -f || true # 保留最新的 10 个文件，删除其余文件
 
-      - name: 安装 sshpass
-        run: sudo apt-get install -y sshpass
-        shell: bash
-
-      - name: 切换到 target 目录并上传 Jar 包到服务器
-        run: |
-          cd target
-          sshpass -p "${{ env.SERVER_PASSWORD }}" scp ${{ env.JAR_NAME }} ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }}:${{ env.REMOTE_JAR_DIR }}
-        shell: bash
+      - name: 上传Jar包到服务器
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          password: ${{ env.SERVER_PASSWORD }}
+          port: 22
+          source:  ${{ format('target/{0}', env.JAR_NAME) }}
+          target: ${{ env.REMOTE_JAR_DIR }}
 
       - name: 验证Jar包是否上传成功
         uses: appleboy/ssh-action@v1.2.2
