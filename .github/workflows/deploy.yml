@@ -9,12 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest  # 选择运行环境，ubuntu-latest 是 Linux 系统
     env:
-      JAVA_VERSION: '21'
-      SERVER_HOST: ${{ secrets.SERVER_IP }}
-      SERVER_USER: ${{ secrets.SERVER_USER }}
-      SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-      REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api
-      JAR_NAME: tgmeng-api-0.0.1-SNAPSHOT.jar
+      SERVER_HOST: ${{ secrets.SERVER_IP }}                       # 服务器 IP
+      SERVER_USER: ${{ secrets.SERVER_USER }}                     # 服务器用户名
+      SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}             # 服务器密码
+      JAVA_VERSION: '21'                                          # j版本
+      REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api # 部署目录
+      JAR_NAME: tgmeng-api-0.0.1-SNAPSHOT.jar                     # jar包名
 
     steps:
       # 获取代码并构建项目
