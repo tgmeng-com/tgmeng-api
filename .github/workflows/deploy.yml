@@ -84,6 +84,9 @@ jobs:
             fi
             echo "JAR 文件上传成功: $(ls -lh $REMOTE_JAR_DIR/$JAR_NAME)"
 
+      - name: Print remote jar directory
+        run: echo ${{ env.REMOTE_JAR_DIR }}
+
       - name: Restart application on server
         uses: appleboy/ssh-action@v1.2.2
         with:
