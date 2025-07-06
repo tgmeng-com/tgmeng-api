@@ -114,7 +114,8 @@ jobs:
             fi
             
             echo "启动应用: $JAR_NAME"
-            nohup java -jar $REMOTE_JAR_DIR/$JAR_NAME > /dev/null 2>&1 &
+            cd $REMOTE_JAR_DIR
+            nohup java -jar $JAR_NAME > /dev/null 2>&1 &
             
             # 显示应用启动状态
             echo "检查应用是否成功启动..."
