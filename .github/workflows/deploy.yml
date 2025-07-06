@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: 部署tgmeng-api
 
 on:
   push:
@@ -19,22 +19,22 @@ jobs:
 
     steps:
       # 获取代码并构建项目
-      - name: Checkout code
+      - name: 拉取项目代码
         uses: actions/checkout@v3
 
       # 安装 JDK，版本根据需求调整
-      - name: Set up JDK
+      - name: 安装JDK
         uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: 'temurin'  # 使用 Temurin 作为 JDK 发行版
 
       # 构建项目
-      - name: Build project with Maven
+      - name: 用Maven构建项目
         run: mvn clean package -DskipTests
 
       # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
-      - name: Create target directory on server (if not exists) and clean up old JAR files
+      - name: 创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
         uses: appleboy/ssh-action@v1.2.2  # https://github.com/appleboy/ssh-action/releases 使用存在的版本或者最新版本
         with:
           host: ${{ env.SERVER_HOST }}
@@ -61,10 +61,7 @@ jobs:
             echo "清理旧的 JAR 文件..."
             ls -t ${JAR_NAME%.*}-*.jar | tail -n +11 | xargs rm -f || true # 保留最新的 10 个文件，删除其余文件
 
-      - name: Print remote jar directory
-        run: echo ${{ env.REMOTE_JAR_DIR }}
-
-      - name: Upload JAR to server
+      - name: 上传Jar包到服务器
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ env.SERVER_HOST }}
@@ -74,7 +71,7 @@ jobs:
           source: target/${{ env.JAR_NAME }}
           target: ${{ env.REMOTE_JAR_DIR }}/
 
-      - name: Verify uploaded JAR exists
+      - name: 验证Jar包是否上传成功
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ env.SERVER_HOST }}
@@ -89,7 +86,7 @@ jobs:
             fi
             echo "JAR 文件上传成功: $(ls -lh $REMOTE_JAR_DIR/$JAR_NAME)"
 
-      - name: Restart application on server
+      - name: 重启Jar包
         uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ env.SERVER_HOST }}
