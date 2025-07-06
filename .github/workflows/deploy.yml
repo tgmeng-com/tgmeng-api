@@ -14,7 +14,7 @@ jobs:
       SERVER_USER: ${{ secrets.SERVER_USER }}
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
       REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api
-      JAR_NAME: tgmeng-api-0.0.2-SNAPSHOT.jar
+      JAR_NAME: tgmeng-api-0.0.1-SNAPSHOT.jar
 
     steps:
       # 获取代码并构建项目
