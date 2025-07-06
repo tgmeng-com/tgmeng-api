@@ -97,7 +97,7 @@ jobs:
           script: |
             
             echo "准备重启应用..."
-            echo "当前运行的进程:"
+            echo "停止应用:"
             pkill -f $JAR_NAME || true
             
             echo "启动应用: $JAR_NAME"
