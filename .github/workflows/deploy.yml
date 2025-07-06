@@ -1,0 +1,126 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # 触发条件，根据你的需求选择分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # 选择运行环境，ubuntu-latest 是 Linux 系统
+    env:
+      JAVA_VERSION: '21'
+      SERVER_HOST: ${{ secrets.SERVER_IP }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+      REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api
+      JAR_NAME: tgmeng-api-0.0.2-SNAPSHOT.jar
+      REMOTE_JAR_PATH: ${{ env.REMOTE_JAR_DIR }}/${{ env.JAR_NAME }}
+      LOG_PATH: ${{ env.REMOTE_JAR_DIR }}/tgmeng-api.log
+      LOCAL_JAR_PATH: target/${{ env.JAR_NAME }}
+
+    steps:
+      # 获取代码并构建项目
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 安装 JDK，版本根据需求调整
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+
+      # 构建项目
+      - name: Build project with Maven
+        run: mvn clean package -DskipTests
+
+      # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
+      - name: Create target directory on server (if not exists) and clean up old JAR files
+        uses: appleboy/ssh-action@v1.6.0
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          password: ${{ env.SERVER_PASSWORD }}
+          port: 22
+          script: |
+            echo "准备部署新版本应用..."
+            # 确保目标文件夹存在
+            mkdir -p "$REMOTE_JAR_DIR"
+
+            # 获取当前时间戳
+            TIMESTAMP=$(date +%Y%m%d%H%M%S)
+
+            # 如果文件已经存在，重命名为带时间戳的文件
+            if [ -f "$REMOTE_JAR_PATH" ]; then
+              echo "备份现有 JAR 文件: ${JAR_NAME%.*}-$TIMESTAMP.jar"
+              mv "$REMOTE_JAR_PATH" "$REMOTE_JAR_DIR/${JAR_NAME%.*}-$TIMESTAMP.jar"
+            fi
+
+            # 清理旧的 JAR 文件，只保留最新的 10 个文件
+            cd "$REMOTE_JAR_DIR"
+            echo "清理旧的 JAR 文件..."
+            ls -t ${JAR_NAME%.*}-*.jar | tail -n +11 | xargs rm -f || true # 保留最新的 10 个文件，删除其余文件
+
+      - name: Upload JAR to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          password: ${{ env.SERVER_PASSWORD }}
+          port: 22
+          source: ${{ env.LOCAL_JAR_PATH }}
+          target: ${{ env.REMOTE_JAR_DIR }}/
+
+      - name: Verify uploaded JAR exists
+        uses: appleboy/ssh-action@v1.6.0
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          password: ${{ env.SERVER_PASSWORD }}
+          port: 22
+          script: |
+            if [ ! -f "$REMOTE_JAR_PATH" ]; then
+              echo "JAR 上传失败！"
+              exit 1
+            fi
+            echo "JAR 文件上传成功: $(ls -lh $REMOTE_JAR_PATH)"
+
+      - name: Restart application on server
+        uses: appleboy/ssh-action@v1.6.0
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          password: ${{ env.SERVER_PASSWORD }}
+          port: 22
+          script: |
+            echo "准备重启应用..."
+            echo "当前运行的进程:"
+            ps aux | grep $(basename $REMOTE_JAR_PATH) | grep -v grep || echo "没有找到正在运行的进程"
+            
+            echo "停止现有应用: $(basename $REMOTE_JAR_PATH)"
+            pkill -f "$(basename $REMOTE_JAR_PATH)" || true
+            
+            # 等待应用完全停止
+            sleep 5
+            
+            # 检查应用是否已停止
+            if ps aux | grep $(basename $REMOTE_JAR_PATH) | grep -v grep; then
+              echo "应用未完全停止，尝试强制终止..."
+              pkill -9 -f "$(basename $REMOTE_JAR_PATH)" || true
+              sleep 2
+            fi
+            
+            echo "启动应用: $(basename $REMOTE_JAR_PATH)"
+            nohup java -jar $REMOTE_JAR_PATH > $LOG_PATH 2>&1 &
+            echo "App started at: $(date)" >> $LOG_PATH
+            
+            # 显示应用启动状态
+            echo "检查应用是否成功启动..."
+            if ps aux | grep $(basename $REMOTE_JAR_PATH) | grep -v grep; then
+              echo "应用已成功启动！"
+            else
+              echo "应用启动失败！"
+              echo "最近100行日志:"
+              tail -n 100 $LOG_PATH
+              exit 1
+            fi

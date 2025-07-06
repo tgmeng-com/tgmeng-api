@@ -2,7 +2,7 @@ spring:
   application.name: tgmeng-api
 
 server:
-  port: 4399
+  port: 4388
   servlet:
     context-path: /api
 
