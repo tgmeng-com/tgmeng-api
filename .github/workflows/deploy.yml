@@ -98,7 +98,7 @@ jobs:
             
             echo "准备重启应用..."
             echo "当前运行的进程:"
-            ps -ef | grep $JAR_NAME | grep -v grep | awk '{print $2}' | xargs kill -9
+            pkill -f $JAR_NAME || true
             
             echo "启动应用: $JAR_NAME"
             cd $REMOTE_JAR_DIR
