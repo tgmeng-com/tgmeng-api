@@ -68,7 +68,7 @@ jobs:
           username: ${{ env.SERVER_USER }}
           password: ${{ env.SERVER_PASSWORD }}
           port: 22
-          source: target/${{ env.JAR_NAME }}
+          source:  ${{ format('target/{0}', env.JAR_NAME) }}
           target: ${{ env.REMOTE_JAR_DIR }}
 
       - name: 验证Jar包是否上传成功
