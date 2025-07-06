@@ -98,34 +98,8 @@ jobs:
             
             echo "准备重启应用..."
             echo "当前运行的进程:"
-            ps aux | grep $JAR_NAME | grep -v grep || true
-            if ps aux | grep $JAR_NAME | grep -v grep > /dev/null; then
-              echo "找到正在运行的进程，停止现有应用: $JAR_NAME"
-              MAX_ATTEMPTS=3
-              ATTEMPT=0
-              while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
-                pkill -f "$JAR_NAME"
-                sleep 2
-                if ! ps aux | grep $JAR_NAME | grep -v grep > /dev/null; then
-                  echo "应用已停止。"
-                  break
-                fi
-                ATTEMPT=$((ATTEMPT + 1))
-                echo "尝试第 $ATTEMPT 次停止应用..."
-              done
-              if ps aux | grep $JAR_NAME | grep -v grep > /dev/null; then
-                echo "应用未完全停止，尝试强制终止..."
-                pkill -9 -f "$JAR_NAME"
-                sleep 2
-                if ps aux | grep $JAR_NAME | grep -v grep > /dev/null; then
-                  echo "强制终止失败，应用仍在运行。"
-                  exit 1
-                fi
-              fi
-            else
-              echo "没有找到正在运行的进程，无需停止应用。"
-            fi
-                  
+            ps -ef | grep $JAR_NAME | grep -v grep | awk '{print $2}' | xargs kill -9
+            
             echo "启动应用: $JAR_NAME"
             cd $REMOTE_JAR_DIR
             nohup java -jar $JAR_NAME > /dev/null 2>&1 &
