@@ -70,6 +70,7 @@ jobs:
           port: 22
           source: target/${{ env.JAR_NAME }}
           target: ${{ env.REMOTE_JAR_DIR }}
+          strip_components: 1 # 去除路径中的一级目录，也就是target，不然会把target文件夹也拷贝过去
 
       - name: 验证Jar包是否上传成功
         uses: appleboy/ssh-action@v1.2.2
