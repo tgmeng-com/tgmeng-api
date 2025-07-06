@@ -98,7 +98,9 @@ jobs:
             
             echo "准备重启应用..."
             echo "停止应用:"
-            pkill -f $JAR_NAME
+            set +e
+            pkill -f "$JAR_NAME"
+            set -e
             
             echo "启动应用: $JAR_NAME"
             cd $REMOTE_JAR_DIR
