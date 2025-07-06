@@ -98,19 +98,20 @@ jobs:
           script: |
             echo "准备重启应用..."
             echo "当前运行的进程:"
-            ps aux | grep $JAR_NAME | grep -v grep || echo "没有找到正在运行的进程"
-            
-            echo "停止现有应用: $JAR_NAME"
-            pkill -f "$JAR_NAME" 
-            
-            # 等待应用完全停止
-            sleep 5
-            
-            # 检查应用是否已停止
-            if ps aux | grep $JAR_NAME | grep -v grep; then
-              echo "应用未完全停止，尝试强制终止..."
-              pkill -9 -f "$JAR_NAME" 
-              sleep 2
+            ps aux | grep $JAR_NAME | grep -v grep || true
+            if ps aux | grep $JAR_NAME | grep -v grep > /dev/null; then
+              echo "找到正在运行的进程，停止现有应用: $JAR_NAME"
+              pkill -f "$JAR_NAME" || true
+              # 等待应用完全停止
+              sleep 5
+              # 检查应用是否已停止
+              if ps aux | grep $JAR_NAME | grep -v grep; then
+                echo "应用未完全停止，尝试强制终止..."
+                pkill -9 -f "$JAR_NAME" || true
+                sleep 2
+              fi
+            else
+              echo "没有找到正在运行的进程，无需停止应用。"
             fi
             
             echo "启动应用: $JAR_NAME"
