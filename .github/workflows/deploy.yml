@@ -98,28 +98,28 @@ jobs:
           script: |
             echo "准备重启应用..."
             echo "当前运行的进程:"
-            ps aux | grep $(basename $REMOTE_JAR_DIR/$JAR_NAME) | grep -v grep || echo "没有找到正在运行的进程"
+            ps aux | grep $JAR_NAME | grep -v grep || echo "没有找到正在运行的进程"
             
             echo "停止现有应用: $JAR_NAME"
-            pkill -f "$JAR_NAME" || true
+            pkill -f "$JAR_NAME" 
             
             # 等待应用完全停止
             sleep 5
             
             # 检查应用是否已停止
-            if ps aux | grep $(basename $REMOTE_JAR_DIR/$JAR_NAME) | grep -v grep; then
+            if ps aux | grep $JAR_NAME | grep -v grep; then
               echo "应用未完全停止，尝试强制终止..."
-              pkill -9 -f "$(basename $REMOTE_JAR_DIR/$JAR_NAME)" || true
+              pkill -9 -f "$JAR_NAME" 
               sleep 2
             fi
             
-            echo "启动应用: $(basename $REMOTE_JAR_DIR/$JAR_NAME)"
+            echo "启动应用: $JAR_NAME"
             nohup java -jar $REMOTE_JAR_DIR/$JAR_NAME > $LOG_PATH 2>&1 &
             echo "App started at: $(date)" >> $LOG_PATH
             
             # 显示应用启动状态
             echo "检查应用是否成功启动..."
-            if ps aux | grep $(basename $REMOTE_JAR_DIR/$JAR_NAME) | grep -v grep; then
+            if ps aux | grep $JAR_NAME | grep -v grep; then
               echo "应用已成功启动！"
             else
               echo "应用启动失败！"
