@@ -69,7 +69,7 @@ jobs:
           password: ${{ env.SERVER_PASSWORD }}
           port: 22
           source: target/${{ env.JAR_NAME }}
-          target: ${{ env.REMOTE_JAR_DIR }}/
+          target: ${{ env.REMOTE_JAR_DIR }}
 
       - name: 验证Jar包是否上传成功
         uses: appleboy/ssh-action@v1.2.2
