@@ -84,4 +84,10 @@ public interface ITopSearchCommonClient {
     @Get("https://sspai.com/api/v1/article/tag/page/get?limit=100&offset=0&tag=%E7%83%AD%E9%97%A8%E6%96%87%E7%AB%A0&released=false")
     TopSearchShaoShuPaiDTO shaoshupai(@Header ForestRequestHeader topSearchRequestHeader);
 
+    //https://api.zhihu.com/topstory/hot-list?limit=10&reverse_order=0
+    //https://www.zhihu.com/api/v3/feed/topstory/hot-list-web?limit={top_n}
+    //这是好不容易找到的两个可以用的接口
+    @Get("https://api.zhihu.com/topstory/hot-list?limit=100&reverse_order=0")
+    TopSearchZhiHuDTO zhiHu(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

@@ -27,4 +27,5 @@ public interface ITopSearchCommonService {
 
     ResultTemplateBean getShaoShuPaiSearch();
 
+    ResultTemplateBean getZhiHuTopSearch();
 }

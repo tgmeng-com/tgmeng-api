@@ -144,5 +144,10 @@ public class TopSearchCommonController {
         return topSearchCommonService.getBaiDuTopSearch(SearchTypeBaiDuEnum.MINSHENG_BAIDU);
     }
 
+    @RequestMapping("/zhihu")
+    public ResultTemplateBean getZhiHuSearch() {
+        return topSearchCommonService.getZhiHuTopSearch();
+    }
+
 //    民生  财经   热梗  游戏  汽车
 }

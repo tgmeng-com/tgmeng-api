@@ -1,11 +1,12 @@
 package com.tgmeng.service.topsearch.Impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
-import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
 import com.tgmeng.common.enums.business.DataInfoCardEnum;
 import com.tgmeng.common.enums.business.ForestRequestHeaderOriginEnum;
 import com.tgmeng.common.enums.business.ForestRequestHeaderRefererEnum;
+import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
 import com.tgmeng.common.enums.exception.ServerExceptionEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient;
@@ -287,6 +288,26 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             throw new ServerException(ServerExceptionEnum.SHAOSHUPAI_TOP_SEARCH_EXCEPTION);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.SHAO_SHU_PAI.getKey(), DataInfoCardEnum.SHAO_SHU_PAI.getValue(), DataInfoCardEnum.SHAO_SHU_PAI.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
+
+    @Override
+    public ResultTemplateBean getZhiHuTopSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchZhiHuDTO zhihu = topSearchCommonClient.zhiHu(ForestUtil.getRandomRequestHeaderForZhiHu());
+            if (ObjectUtil.isNotNull(zhihu)){
+                zhihu.getData().forEach(t->{
+                    topSearchCommonVOS.add(topSearchCommonMapper.topSearchZhiHuDTOItemInfoTopSearchCommonVO(t.getTarget(), t));
+                });
+            }else {
+                log.error("👺👺👺获取知乎热搜失败👺👺👺");
+            }
+        } catch (Exception e) {
+            log.error("👺👺👺获取少数派热搜失败👺👺👺", e);
+            throw new ServerException(ServerExceptionEnum.ZHI_HU_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.ZHI_HU.getKey(), DataInfoCardEnum.ZHI_HU.getValue(), DataInfoCardEnum.ZHI_HU.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

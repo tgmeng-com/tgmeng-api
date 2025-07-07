@@ -73,4 +73,16 @@ public class ForestUtil {
                 .setOrigin(ForestRequestHeaderOriginEnum.BILIBILI.getValue());
     }
 
+    public static ForestRequestHeader getRandomRequestHeaderForZhiHu() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                //.setAccept("application/json, text/plain, */*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9")
+                //.setConnection("keep-alive")
+                .setReferer(ForestRequestHeaderRefererEnum.ZHI_HU.getValue())
+                .setOrigin(ForestRequestHeaderRefererEnum.ZHI_HU.getValue());
+    }
+
 }

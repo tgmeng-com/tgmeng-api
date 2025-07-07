@@ -17,4 +17,6 @@ public class ForestRequestHeader {
     private String Connection;
     private String Referer;
     private String Origin;
+    @JsonProperty("Cookie")
+    private String Cookie;
 }

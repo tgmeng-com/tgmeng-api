@@ -49,7 +49,8 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_TRENDING("CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_TRENDING", "/topsearch/global/huggingfacemodelstrending", "", true,4),
     CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_LIKES", "/topsearch/global/huggingfacemodellikes", "", true,4),
     CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_TRENDING("CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_TRENDING", "/topsearch/global/huggingfacedatasetstrending", "", true,4),
-    CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES", "/topsearch/global/huggingfacedatasetslikes", "", true,4);
+    CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES", "/topsearch/global/huggingfacedatasetslikes", "", true,4),
+    CACHE_TOP_SEARCH_ZHI_HU_DATASETS_LIKES("CACHE_TOP_SEARCH_ZHI_HU_DATASETS_LIKES", "/topsearch/zhihu", "", true,4);
 
     private final String key;
     private final String value;

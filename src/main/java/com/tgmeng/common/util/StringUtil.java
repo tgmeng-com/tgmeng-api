@@ -1,8 +1,11 @@
 package com.tgmeng.common.util;
 
 import com.tgmeng.model.dto.topsearch.TopSearchShaoShuPaiDTO;
+import com.tgmeng.model.dto.topsearch.TopSearchZhiHuDTO;
 
 import java.util.StringJoiner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtil {
     /**
@@ -60,6 +63,36 @@ public class StringUtil {
     public static Long shaoShuPaiTopSearchItemHotScoreUtil(TopSearchShaoShuPaiDTO.ItemDTO topSearchShaoShuPaiItemDTO) {
         return topSearchShaoShuPaiItemDTO.getLikeCount() + topSearchShaoShuPaiItemDTO.getCommentCount();
     }
+
+    public static Long zhiHuTopSearchItemHotScoreUtil(TopSearchZhiHuDTO.DataInfo topSearchZhiHuDTO) {
+        return zhiHuHotScoreConvertToNumber(topSearchZhiHuDTO.getDetail_text());
+    }
+
+    public static long zhiHuHotScoreConvertToNumber(String str) {
+        if (str == null || str.isEmpty()) {
+            return 0;
+        }
+
+        // 提取数字部分（包括小数点）
+        Pattern pattern = Pattern.compile("(\\d+(\\.\\d+)?)");
+        Matcher matcher = pattern.matcher(str);
+
+        double number = 0;
+        if (matcher.find()) {
+            number = Double.parseDouble(matcher.group(1));
+        }
+
+        // 计算单位倍数
+        long multiplier = 1;
+        if (str.contains("万")) {
+            multiplier = 10000;
+        } else if (str.contains("亿")) {
+            multiplier = 100000000;
+        }
+
+        return (long) (number * multiplier);
+    }
+
 
     public static Long stringParseToLong(String str) {
         str = str.trim().toLowerCase();

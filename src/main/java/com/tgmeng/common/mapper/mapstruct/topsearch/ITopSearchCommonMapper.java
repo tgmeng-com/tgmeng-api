@@ -15,7 +15,7 @@ import java.util.List;
  * @author tgmeng
  * @version v1.0
  * @since 2025/6/29 1:38
-*/
+ */
 
 
 @Mapper(componentModel = "spring")
@@ -24,10 +24,11 @@ public interface ITopSearchCommonMapper {
     /** 百度 */
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "word", target = "keyword")
-    @Mapping(source = "hotScore", target = "hotScore",qualifiedByName = "stringToLong")
+    @Mapping(source = "hotScore", target = "hotScore", qualifiedByName = "stringToLong")
     @Mapping(source = "url", target = "url")
     @Mapping(source = "img", target = "image")
     TopSearchCommonVO.DataInfo topSearchBaiDuDTOContentVO2TopSearchCommonVO(TopSearchBaiDuDTO.ContentVO topSearchBaiDuDTOcontentVO);
+
     @AfterMapping
     default void topSearchBaiDuDTODataVO2TopSearchCommonVOAfter(TopSearchBaiDuDTO.ContentVO topSearchBaiDuDTOContentVO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(topSearchBaiDuDTOContentVO.getUrl().replace("https://m.baidu.com/", "https://baidu.com/"));
@@ -53,9 +54,10 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "word", target = "keyword")
     @Mapping(source = "hotValue", target = "hotScore")
     TopSearchCommonVO.DataInfo topSearchDouYinDTODataVO2TopSearchCommonVO(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO);
+
     @AfterMapping
     default void topSearchDouYinDTODataVO2TopSearchCommonVOAfter(TopSearchDouYinDTO.DataVO topSearchDouYinDTODataVO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
-        topSearchCommonVO.setUrl(StringUtil.douYinTopSearchItemUrlUtil(topSearchDouYinDTODataVO.getSentenceId(),topSearchDouYinDTODataVO.getWord()));
+        topSearchCommonVO.setUrl(StringUtil.douYinTopSearchItemUrlUtil(topSearchDouYinDTODataVO.getSentenceId(), topSearchDouYinDTODataVO.getWord()));
     }
 
 
@@ -65,10 +67,12 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "score", target = "hotScore")
     @Mapping(source = "uri", target = "url")
     TopSearchCommonVO.DataInfo topSearchDouBanDTODataVO2TopSearchCommonVO(TopSearchDouBanDTO topSearchDouBanDTO);
+
     @AfterMapping
     default void topSearchDouBanDTODataInfo2TopSearchCommonVOAfter(TopSearchDouBanDTO topSearchDouBanDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(topSearchDouBanDTO.getUri().replace("douban://douban.com/search/result?q=", "https://douban.com/search?q="));
     }
+
     /** 批量转换 */
     List<TopSearchCommonVO.DataInfo> topSearchDouBanDTODataVO2TopSearchCommonVOS(List<TopSearchDouBanDTO> topSearchDouBanDTO);
 
@@ -92,6 +96,7 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "hotValue", target = "hotScore")
     @Mapping(source = "contentId.", target = "url")
     TopSearchCommonVO.DataInfo topSearchWangYiDTOItemInfoTopSearchCommonVO(TopSearchWangYiDTO.DataView topSearchWangYiDTO);
+
     @AfterMapping
     default void topSearchWangYiDTODataVO2TopSearchCommonVOAfter(TopSearchWangYiDTO.DataView topSearchWangYiDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(StringUtil.wangYiTopSearchItemUrlUtil(topSearchWangYiDTO.getContentId()));
@@ -103,6 +108,7 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "popularity", target = "hotScore")
     @Mapping(source = "id.", target = "url")
     TopSearchCommonVO.DataInfo topSearchWangYiYunDTOItemInfoTopSearchCommonVO(TopSearchWangYiYunDTO.DataInfo topSearchWangYiYunDTO);
+
     @AfterMapping
     default void topSearchWangYiYunDTOItemInfoTopSearchCommonVOAfter(TopSearchWangYiYunDTO.DataInfo topSearchWangYiYunDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(StringUtil.wangYiYunTopSearchItemUrlUtil(topSearchWangYiYunDTO.getId()));
@@ -125,6 +131,16 @@ public interface ITopSearchCommonMapper {
     default void topSearchShaoShuPaiDTOItemInfoTopSearchCommonVOAfter(TopSearchShaoShuPaiDTO.ItemDTO topSearchShaoShuPaiItemDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(StringUtil.shaoShuPaiTopSearchItemUrlUtil(topSearchShaoShuPaiItemDTO.getId()));
         topSearchCommonVO.setHotScore(StringUtil.shaoShuPaiTopSearchItemHotScoreUtil(topSearchShaoShuPaiItemDTO));
+    }
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "zhiHuDTO.title", target = "keyword")
+    @Mapping(source = "zhiHuDTO.id.", target = "url")
+    TopSearchCommonVO.DataInfo topSearchZhiHuDTOItemInfoTopSearchCommonVO(TopSearchZhiHuDTO.ItemDTO zhiHuDTO,TopSearchZhiHuDTO.DataInfo dataInfo);
+    @AfterMapping
+    default void topSearchZhiHuDTOItemInfoTopSearchCommonVOAfter(TopSearchZhiHuDTO.ItemDTO zhiHuDTO,TopSearchZhiHuDTO.DataInfo dataInfo, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setHotScore(StringUtil.zhiHuTopSearchItemHotScoreUtil(dataInfo));
+        topSearchCommonVO.setUrl("https://www.zhihu.com/question/" + zhiHuDTO.getId());
     }
 
     @Named("stringToLong")
