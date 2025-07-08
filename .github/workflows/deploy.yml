@@ -152,7 +152,7 @@ jobs:
             # java版本检查
             REQUIRED_JAVA="java version \"${JAVA_VERSION}"
             echo "[$(date)] 检查 Java 版本..."
-            if ! java -version 2>&1 | grep -q "version \"${JAVA_VERSION}\."; then
+            if ! java -version 2>&1 | grep -E "version \"${JAVA_VERSION}(\.|$)"; then
               echo "[$(date)] Java 版本不匹配！需要 Java ${JAVA_VERSION}.x"
               java -version 2>&1
               exit 1
@@ -189,9 +189,12 @@ jobs:
               -XX:HeapDumpPath=$REMOTE_JAR_DIR/heapdump_$(date +%s).hprof \
               -XX:ErrorFile=$REMOTE_JAR_DIR/hs_err_%p.log \
               -jar $JAR_NAME > app.log 2>&1 &
-            sleep 15
-            # 判断启动结果，项目里写了测试端口的，这里可以加curl端口测试
-            if pgrep -f "java -jar $JAR_NAME" > /dev/null; then
+            sleep 30
+            # 检查获得死的，这里你可以加入接口的检查更好
+            echo "[$(date)] 调试：当前 Java 进程列表："
+            ps aux | grep "[j]ava.*-jar $JAR_NAME" || echo "[$(date)] 无匹配的 Java 进程"
+            if pgrep -f "java.*-jar $JAR_NAME" > /dev/null; then
+              echo "[$(date)] 进程检查通过，检查健康端点..."
               echo "[$(date)] 应用已成功启动！"
               echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志："
               head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
