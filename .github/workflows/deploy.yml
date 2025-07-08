@@ -151,8 +151,9 @@ jobs:
             echo "[$(date)] 准备重启应用..."
             # java版本检查
             REQUIRED_JAVA="java version \"${JAVA_VERSION}"
-            if ! java -version 2>&1 | grep -q "${REQUIRED_JAVA}"; then
-              echo "[$(date)] Java 版本不匹配！需要 ${REQUIRED_JAVA}"
+            echo "[$(date)] 检查 Java 版本..."
+            if ! java -version 2>&1 | grep -q "version \"${JAVA_VERSION}\."; then
+              echo "[$(date)] Java 版本不匹配！需要 Java ${JAVA_VERSION}.x"
               java -version 2>&1
               exit 1
             fi
