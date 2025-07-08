@@ -157,8 +157,9 @@ jobs:
               java -version 2>&1
               exit 1
             fi
-            # 停止原来进程
-            PIDS=$(pgrep -f "java -jar $JAR_NAME")
+            
+            # 查找并终止运行中的 JAR 进程
+            PIDS=$(pgrep -f "java.*-jar $JAR_NAME")
             if [ -n "$PIDS" ]; then
               echo "[$(date)] 停止进程 PIDs: $PIDS"
               for PID in $PIDS; do
@@ -173,6 +174,17 @@ jobs:
               done
             else
               echo "[$(date)] 未找到运行中的 $JAR_NAME 进程"
+            fi
+            # 检查并终止占用 4399 端口的进程
+            PORT_PID=$(ss -tuln | grep ':4399' | awk '{print $NF}' | head -n 1)
+            if [ -n "$PORT_PID" ]; then
+              echo "[$(date)] 发现占用 4399 端口的进程 PID: $PORT_PID，尝试终止..."
+              kill -15 $PORT_PID
+              sleep 5
+              if ps -p $PORT_PID > /dev/null; then
+                echo "[$(date)] 进程 $PORT_PID 未正常终止，强制停止..."
+                kill -9 $PORT_PID
+              fi
             fi
             echo "[$(date)] 启动应用: $JAR_NAME"
             cd $REMOTE_JAR_DIR
