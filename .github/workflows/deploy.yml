@@ -37,15 +37,17 @@ jobs:
       - name: 用Maven构建项目
         run: mvn clean package -DskipTests
 
-      # 动态获取 JAR 文件名。在 Maven 构建后，从 target/ 目录中提取生成的 JAR 文件名#
+      # 动态获取 JAR 文件名。在 Maven 构建后，从 target/ 目录中提取生成的 JAR 文件名
       - name: 获取JAR文件名
         run: |
-          JAR_NAME=$(ls target/*-SNAPSHOT.jar | head -n 1 | xargs -n 1 basename)
-          if [ -z "$JAR_NAME" ]; then
-          echo "[ERROR] 未找到匹配的 JAR 文件！"
+          ARTIFACT_ID=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          JAR_NAME="${ARTIFACT_ID}-${VERSION}.jar"
+          if [ ! -f "target/${JAR_NAME}" ]; then
+          echo "[ERROR] 未找到 JAR 文件：target/${JAR_NAME}"
           exit 1
           fi
-          echo "JAR_NAME=$JAR_NAME" >> $GITHUB_ENV
+          echo "JAR_NAME=${JAR_NAME}" >> $GITHUB_ENV
 
       # 测试服务器连接
       - name: 测试服务器连接
