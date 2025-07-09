@@ -233,7 +233,7 @@
         - name: 创建 GitHub Release
           id: create_release  # 新增 ID 以供后续步骤引用
           if: startsWith(github.ref, 'refs/tags/v')
-          uses: comnoco/create-release@master
+          uses: actions/create-release@master
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
