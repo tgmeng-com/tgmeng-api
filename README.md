@@ -64,6 +64,23 @@
 - ✅ 跨域配置
 
 ---
+## 🗼 部署
+
+### 1 GitHub Action 一键部署
+
+- 修改 <span style="color:yellow">.github/workflows/deploy.yml</span> 中的下列值，
+ 
+- 你的代码推送到github仓库后，就会自动触发action，自动部署本项目
+
+```shell
+SERVER_HOST      # 你的服务器IP
+SERVER_USER      # 你的服务器用户名
+SERVER_PASSWORD  # 你的服务器密码
+SERVER_PORT      # 你的服务器端口
+REMOTE_JAR_DIR   # 你的要部署的目录
+```
+
+---
 
 ## ⚖️ 免责声明
 

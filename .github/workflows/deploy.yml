@@ -24,7 +24,7 @@ jobs:
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}                # 服务器密码
       SERVER_PORT: 22                                                # 服务器端口
       JAVA_VERSION: '21'                                             # java版本
-      REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api    # 部署目录
+      REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api    # 部署目录，我是root用户登录，所以这里就会变成/home/root/tgmeng-api
 
     steps:
       # 获取代码并构建项目
@@ -234,7 +234,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: Release ${{ env.TAG_NAME }}
+          release_name: ${{ env.TAG_NAME }}
           body: |
             #  ${{ env.ARTIFACT_ID }} ${{ env.TAG_NAME }}
             - 自动构建并部署 JAR 文件: ${{ env.JAR_NAME }}
