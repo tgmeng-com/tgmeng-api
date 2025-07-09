@@ -1,220 +1,226 @@
-name: 部署tgmeng-api
+  name: 部署tgmeng-api
 
-on:
-  push:
-    branches:
-      - main  # 触发条件，根据你的需求选择分支
+  on:
+    push:
+      branches:
+        - main  # 触发条件，根据你的需求选择分支
 
-concurrency: # 如果多个部署同时触发，可能导致服务器上的 JAR 文件冲突或覆盖。建议使用 concurrency 限制同一时间只有一个部署运行
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  concurrency: # 如果多个部署同时触发，可能导致服务器上的 JAR 文件冲突或覆盖。建议使用 concurrency 限制同一时间只有一个部署运行
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest  # 选择运行环境，ubuntu-latest 是 Linux 系统
-    timeout-minutes: 30    # 单位：分钟  当前的工作流没有设置超时时间。如果某个步骤（如 Maven 构建或 SSH 命令）卡住，可能导致工作流长时间挂起
-    env:
-      SERVER_HOST: ${{ secrets.SERVER_IP }}                       # 服务器 IP
-      SERVER_USER: ${{ secrets.SERVER_USER }}                     # 服务器用户名
-      SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}             # 服务器密码
-      SERVER_PORT: 22                                             # 服务器端口
-      JAVA_VERSION: '21'                                          # java版本
-      REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api # 部署目录
+  jobs:
+    deploy:
+      runs-on: ubuntu-latest   # 选择运行环境，ubuntu-latest 是 Linux 系统
+      timeout-minutes: 30      # 单位：分钟  当前的工作流没有设置超时时间。如果某个步骤（如 Maven 构建或 SSH 命令）卡住，可能导致工作流长时间挂起
+      env:
+        SERVER_HOST: ${{ secrets.SERVER_IP }}                          # 服务器 IP
+        SERVER_USER: ${{ secrets.SERVER_USER }}                        # 服务器用户名
+        SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}                # 服务器密码
+        SERVER_PORT: 22                                                # 服务器端口
+        JAVA_VERSION: '21'                                             # java版本
+        REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api    # 部署目录
 
-    steps:
-      # 获取代码并构建项目
-      - name: 拉取项目代码
-        uses: actions/checkout@v3
+      steps:
+        # 获取代码并构建项目
+        - name: 拉取项目代码
+          uses: actions/checkout@v4
 
-      # 安装 JDK，版本根据需求调整
-      - name: 安装JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'temurin'  # 使用 Temurin 作为 JDK 发行版
+        # 安装 JDK，版本根据需求调整
+        - name: 安装JDK
+          uses: actions/setup-java@v4
+          with:
+            java-version: ${{ env.JAVA_VERSION }}
+            distribution: 'temurin'  # 使用 Temurin 作为 JDK 发行版
 
-      # 构建项目
-      - name: 用Maven构建项目
-        run: mvn clean package -DskipTests
+        # 用来读取yml，获取serverPort
+        - name: 安装 yq
+          run: |
+            sudo snap install yq || sudo apt-get update && sudo apt-get install -y yq
 
-      # 动态获取 JAR 文件名。在 Maven 构建后，从 target/ 目录中提取生成的 JAR 文件名
-      - name: 获取JAR文件名
-        run: |
-          ARTIFACT_ID=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          JAR_NAME="${ARTIFACT_ID}-${VERSION}.jar"
-          if [ ! -f "target/${JAR_NAME}" ]; then
-          echo "[ERROR] 未找到 JAR 文件：target/${JAR_NAME}"
-          exit 1
-          fi
-          echo "JAR_NAME=${JAR_NAME}" >> $GITHUB_ENV
+        # 构建项目
+        - name: 用Maven构建项目
+          run: mvn clean package -DskipTests
 
-      # 测试服务器连接
-      - name: 测试服务器连接
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          script: |
-            echo "[$(date)] 服务器连接成功"
-
-      # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
-      - name: 创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
-        uses: appleboy/ssh-action@master  # https://github.com/appleboy/ssh-action/releases 使用存在的版本或者最新版本
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          envs: REMOTE_JAR_DIR,JAR_NAME  # 传递环境变量
-          script: |
-            echo "[$(date)] 准备部署新版本应用..."
-            # 磁盘空间检查
-            df -h $REMOTE_JAR_DIR | awk 'NR==2 {if ($4+0 < 500) {print "[$(date)] 磁盘空间不足！"; exit 1}}'
-            # 确保目标文件夹存在
-            mkdir -p "$REMOTE_JAR_DIR"
-            # 获取当前时间戳
-            TIMESTAMP=$(date +%Y%m%d%H%M%S)
-
-            # 如果文件已经存在，重命名为带时间戳的文件
-            if [ -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
-              echo "[$(date)] 备份现有 JAR 文件: ${JAR_NAME%.*}-$TIMESTAMP.jar"
-              mv "$REMOTE_JAR_DIR/$JAR_NAME" "$REMOTE_JAR_DIR/${JAR_NAME%.*}-$TIMESTAMP.jar"
-            fi
-
-            # 清理旧的 JAR 文件，只保留最新的 10 个文件
-            cd "$REMOTE_JAR_DIR"
-            echo "[$(date)] 清理旧的 JAR 文件..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "${JAR_NAME%.*}-*.jar" -printf '%T@ %p\n' | 
-            sort -rn |
-            awk 'NR>10 {print $2}' |
-            xargs -r rm -f || echo "[$(date)] 清理旧 JAR 文件失败或无旧文件可清理"
-            
-            # 清理旧的日志文件，值保留最新的10个
-            echo "[$(date)] 清理旧的日志文件，只保留最新的 10 个..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "app-*.log" -printf '%T@ %p\n' |
-            sort -rn |
-            awk 'NR>10 {print $2}' |
-            xargs -r rm -f || echo "[$(date)] 无旧日志文件可清理"
-            
-            # 清理旧的堆转储文件，只保留最新的 10 个
-            echo "[$(date)] 清理旧的堆转储文件，只保留最新的 10 个..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "heapdump_*.hprof" -printf '%T@ %p\n' |
-            sort -rn |
-            awk 'NR>10 {print $2}' |
-            xargs -r rm -f || echo "[$(date)] 无旧堆转储文件可清理"
-            
-            # 清理旧的错误日志文件，只保留最新的 10 个
-            echo "[$(date)] 清理旧的错误日志文件，只保留最新的 10 个..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "hs_err_*.log" -printf '%T@ %p\n' |
-            sort -rn |
-            awk 'NR>10 {print $2}' |
-            xargs -r rm -f || echo "[$(date)] 无旧错误日志文件可清理"
-
-
-      - name: 上传Jar包到服务器
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          source: target/${{ env.JAR_NAME }}
-          target: ${{ env.REMOTE_JAR_DIR }}
-          strip_components: 1 # 去除路径中的一级目录，也就是target，不然会把target文件夹也拷贝过去
-
-      - name: 验证Jar包是否上传成功
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          envs: REMOTE_JAR_DIR,JAR_NAME  # 传递环境变量
-          script: |
-            if [ ! -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
-              echo "[$(date)] JAR 上传失败！"
+        # 动态获取 JAR 文件名。在 Maven 构建后，从 target/ 目录中提取生成的 JAR 文件名
+        - name: 获取JAR文件名和端口
+          run: |
+            ARTIFACT_ID=${ARTIFACT_ID:-$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)}
+            VERSION=${VERSION:-$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)}
+            JAR_NAME=${JAR_NAME:-"${ARTIFACT_ID}-${VERSION}.jar"}
+            PORT=${PORT:-$(yq e '.server.port' src/main/resources/application.yml)}
+            if [ ! -f "target/${JAR_NAME}" ]; then
+              echo "[ERROR] 未找到 JAR 文件：target/${JAR_NAME}"
               exit 1
             fi
-            echo "[$(date)] JAR 文件上传成功: $(ls -lh $REMOTE_JAR_DIR/$JAR_NAME)"
-
-      - name: 重启Jar包
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          envs: REMOTE_JAR_DIR,JAR_NAME,JAVA_VERSION  # 传递环境变量
-          script: |
-            
-            echo "[$(date)] 准备重启应用..."
-            # java版本检查
-            REQUIRED_JAVA="java version \"${JAVA_VERSION}"
-            echo "[$(date)] 检查 Java 版本..."
-            if ! java -version 2>&1 | grep -E "version \"${JAVA_VERSION}(\.|$)"; then
-              echo "[$(date)] Java 版本不匹配！需要 Java ${JAVA_VERSION}.x"
-              java -version 2>&1
+            if [ -z "$PORT" ]; then
+              echo "[ERROR] 未找到 server.port 配置"
               exit 1
             fi
-            
-            # 查找并终止运行中的 JAR 进程
-            PIDS=$(pgrep -f "java.*-jar $JAR_NAME")
-            if [ -n "$PIDS" ]; then
-              echo "[$(date)] 停止进程 PIDs: $PIDS"
-              for PID in $PIDS; do
-                kill -15 $PID
-              done
-              sleep 15
-              for PID in $PIDS; do
-                if ps -p $PID > /dev/null; then
-                  echo "[$(date)] 进程 $PID 未正常终止，强制停止..."
-                  kill -9 $PID
-                fi
-              done
-            else
-              echo "[$(date)] 未找到运行中的 $JAR_NAME 进程"
-            fi
-            # 检查并终止占用 4399 端口的进程
-            PORT_PID=$(ss -tuln | grep ':4399' | awk '{print $NF}' | head -n 1)
-            if [ -n "$PORT_PID" ]; then
-              echo "[$(date)] 发现占用 4399 端口的进程 PID: $PORT_PID，尝试终止..."
-              kill -15 $PORT_PID
-              sleep 5
-              if ps -p $PORT_PID > /dev/null; then
-                echo "[$(date)] 进程 $PORT_PID 未正常终止，强制停止..."
-                kill -9 $PORT_PID
+            echo "JAR_NAME=${JAR_NAME}" >> $GITHUB_ENV
+            echo "PORT=${PORT}" >> $GITHUB_ENV
+
+        # 测试服务器连接
+        - name: 测试服务器连接
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ env.SERVER_HOST }}
+            username: ${{ env.SERVER_USER }}
+            password: ${{ env.SERVER_PASSWORD }}
+            port: ${{ env.SERVER_PORT }}
+            script: |
+              echo "[$(date)] 服务器连接成功"
+
+        # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
+        - name: 创建所需目录并清理旧文件
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ env.SERVER_HOST }}
+            username: ${{ env.SERVER_USER }}
+            password: ${{ env.SERVER_PASSWORD }}
+            port: ${{ env.SERVER_PORT }}
+            envs: REMOTE_JAR_DIR,JAR_NAME
+            script: |
+              echo "[$(date)] 准备部署新版本应用..."
+              # 磁盘空间检查
+              df -h $REMOTE_JAR_DIR | awk 'NR==2 {if ($4+0 < 500) {print "[$(date)] 磁盘空间不足！"; exit 1}}'
+              # 确保目标文件夹存在
+              mkdir -p "$REMOTE_JAR_DIR"
+              # 获取当前时间戳
+              TIMESTAMP=$(date +%Y%m%d%H%M%S)
+              
+              # 如果文件已经存在，重命名为带时间戳的文件
+              if [ -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
+                echo "[$(date)] 备份现有 JAR 文件: ${JAR_NAME%.*}-$TIMESTAMP.jar"
+                mv "$REMOTE_JAR_DIR/$JAR_NAME" "$REMOTE_JAR_DIR/${JAR_NAME%.*}-$TIMESTAMP.jar"
               fi
-            fi
-            echo "[$(date)] 启动应用: $JAR_NAME"
-            cd $REMOTE_JAR_DIR
-            TIMESTAMP=$(date +%Y%m%d%H%M%S)
-            if [ -f "$REMOTE_JAR_DIR/app.log" ]; then
-              echo "[$(date)] 备份现有日志文件: app-$TIMESTAMP.log"
-              mv "$REMOTE_JAR_DIR/app.log" "$REMOTE_JAR_DIR/app-$TIMESTAMP.log"
-            fi
-            # 资源限制
-            nohup java \
-              -Xms512m -Xmx1024m \
-              -XX:+UseG1GC \
-              -XX:+HeapDumpOnOutOfMemoryError \
-              -XX:HeapDumpPath=$REMOTE_JAR_DIR/heapdump_$(date +%s).hprof \
-              -XX:ErrorFile=$REMOTE_JAR_DIR/hs_err_%p.log \
-              -jar $JAR_NAME > app.log 2>&1 &
-            sleep 30
-            # 检查获得死的，这里你可以加入接口的检查更好
-            echo "[$(date)] 调试：当前 Java 进程列表："
-            ps aux | grep "[j]ava.*-jar $JAR_NAME" || echo "[$(date)] 无匹配的 Java 进程"
-            if pgrep -f "java.*-jar $JAR_NAME" > /dev/null; then
-              echo "[$(date)] 进程检查通过，检查健康端点..."
-              echo "[$(date)] 应用已成功启动！"
-              echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志："
-              head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
-            else
-              echo "[$(date)] 应用启动失败！"
-              echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志（若存在）："
-              head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
-              exit 1
-            fi
+              
+              # 清理旧的 JAR 文件，只保留最新的 10 个文件
+              cd "$REMOTE_JAR_DIR"
+              echo "[$(date)] 清理旧的 JAR 文件..."
+              find "$REMOTE_JAR_DIR" -maxdepth 1 -name "${JAR_NAME%.*}-*.jar" -printf '%T@ %p\n' | 
+              sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧 JAR 文件可清理"
+              
+              # 清理旧的日志文件，值保留最新的10个
+              echo "[$(date)] 清理旧的日志文件，只保留最新的 10 个..."
+              find "$REMOTE_JAR_DIR" -maxdepth 1 -name "app-*.log" -printf '%T@ %p\n' |
+              sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧日志文件可清理"
+              
+              # 清理旧的堆转储文件，只保留最新的 10 个
+              echo "[$(date)] 清理旧的堆转储文件..."
+              find "$REMOTE_JAR_DIR" -maxdepth 1 -name "heapdump_*.hprof" -printf '%T@ %p\n' |
+              sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧堆转储文件可清理"
+              
+              # 清理旧的错误日志文件，只保留最新的 10 个
+              echo "[$(date)] 清理旧的错误日志文件..."
+              find "$REMOTE_JAR_DIR" -maxdepth 1 -name "hs_err_*.log" -printf '%T@ %p\n' |
+              sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧错误日志文件可清理"
+
+        - name: 上传Jar包到服务器
+          uses: appleboy/scp-action@master
+          with:
+            host: ${{ env.SERVER_HOST }}
+            username: ${{ env.SERVER_USER }}
+            password: ${{ env.SERVER_PASSWORD }}
+            port: ${{ env.SERVER_PORT }}
+            source: target/${{ env.JAR_NAME }}
+            target: ${{ env.REMOTE_JAR_DIR }}
+            strip_components: 1 # 去除路径中的一级目录，也就是target，不然会把target文件夹也拷贝过去
+
+        - name: 验证Jar包是否上传成功
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ env.SERVER_HOST }}
+            username: ${{ env.SERVER_USER }}
+            password: ${{ env.SERVER_PASSWORD }}
+            port: ${{ env.SERVER_PORT }}
+            envs: REMOTE_JAR_DIR,JAR_NAME  # 传递环境变量
+            script: |
+              if [ ! -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
+                echo "[$(date)] JAR 上传失败！"
+                exit 1
+              fi
+              echo "[$(date)] JAR 文件上传成功: $(ls -lh $REMOTE_JAR_DIR/$JAR_NAME)"
+
+        - name: 重启Jar包
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ env.SERVER_HOST }}
+            username: ${{ env.SERVER_USER }}
+            password: ${{ env.SERVER_PASSWORD }}
+            port: ${{ env.SERVER_PORT }}
+            envs: REMOTE_JAR_DIR,JAR_NAME,PORT,JAVA_VERSION  # 传递环境变量
+            script: |
+              echo "[$(date)] 准备重启应用..."
+              
+              # java版本检查
+              REQUIRED_JAVA="java version \"${JAVA_VERSION}"
+              echo "[$(date)] 检查 Java 版本..."
+              if ! java -version 2>&1 | grep -E "version \"${JAVA_VERSION}(\.|$)"; then
+                echo "[$(date)] Java 版本不匹配！需要 Java ${JAVA_VERSION}.x"
+                java -version 2>&1
+                exit 1
+              fi
+              
+              # 查找并终止运行中的 JAR 进程
+              JAR_PATTERN="java.*-jar.*${JAR_NAME%.*}"
+              PIDS=$(pgrep -f "$JAR_PATTERN")
+              if [ -n "$PIDS" ]; then
+                echo "[$(date)] 停止进程 PIDs: $PIDS"
+                for PID in $PIDS; do
+                  kill -15 $PID
+                done
+                sleep 15
+                for PID in $PIDS; do
+                  if ps -p $PID > /dev/null; then
+                    echo "[$(date)] 进程 $PID 未正常终止，强制停止..."
+                    kill -9 $PID
+                  fi
+                done
+              else
+                echo "[$(date)] 未找到运行中的 ${JAR_NAME%.*} JAR 进程"
+              fi
+              PORT_PID=$(ss -tulnp 2>/dev/null | grep -E ":${PORT}\s" | awk -F',' '{print $2}' | awk -F'pid=' '{print $2}' | head -n 1)
+              
+              # 检查并终止占用项目端口的进程
+              if [ -n "$PORT_PID" ] && [ "$PORT_PID" -eq "$PORT_PID" ] 2>/dev/null; then
+                echo "[$(date)] 发现占用 ${PORT} 端口的进程 PID: $PORT_PID，尝试终止..."
+                kill -15 $PORT_PID
+                sleep 5
+                if ps -p $PORT_PID > /dev/null; then
+                  echo "[$(date)] 进程 $PORT_PID 未正常终止，强制停止..."
+                  kill -9 $PORT_PID
+                fi
+              else
+                echo "[$(date)] 未找到占用 ${PORT} 端口的进程"
+              fi
+              echo "[$(date)] 启动应用: $JAR_NAME"
+              cd $REMOTE_JAR_DIR
+              TIMESTAMP=$(date +%Y%m%d%H%M%S)
+              if [ -f "$REMOTE_JAR_DIR/app.log" ]; then
+                echo "[$(date)] 备份现有日志文件: app-$TIMESTAMP.log"
+                mv "$REMOTE_JAR_DIR/app.log" "$REMOTE_JAR_DIR/app-$TIMESTAMP.log"
+              fi
+              
+              # 资源限制
+              nohup java \
+                -Xms512m -Xmx1024m \
+                -XX:+UseG1GC \
+                -XX:+HeapDumpOnOutOfMemoryError \
+                -XX:HeapDumpPath=$REMOTE_JAR_DIR/heapdump_$(date +%s).hprof \
+                -XX:ErrorFile=$REMOTE_JAR_DIR/hs_err_%p.log \
+                -jar $JAR_NAME --server.port=$PORT > app.log 2>&1 &
+              sleep 30
+              
+              # 检查活的死的，这里你可以加入接口的检查更好
+              ps aux | grep "[j]ava.*-jar $JAR_NAME" || echo "[$(date)] 无匹配的 Java 进程"
+              if pgrep -f "java.*-jar $JAR_NAME" > /dev/null; then
+                echo "[$(date)] 进程检查通过，应用已成功启动！"
+                echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志："
+                head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
+              else
+                echo "[$(date)] 应用启动失败！"
+                echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志（若存在）："
+                head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
+                exit 1
+              fi
