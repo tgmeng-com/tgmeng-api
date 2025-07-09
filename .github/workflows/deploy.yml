@@ -225,7 +225,7 @@ jobs:
               exit 1
             fi
 
-      # 创建 GitHub Release，当创建t以v*开头的tag时，会自动创建release，就是开头定义的那个v*，比如v1.0.1
+      # 创建 GitHub Release，当创建以v*开头的tag时，会自动创建release，就是开头定义的那个v*，比如v1.0.1
       - name: 创建 GitHub Release
         id: create_release  # 新增 ID 以供后续步骤引用
         if: startsWith(github.ref, 'refs/tags/v')
