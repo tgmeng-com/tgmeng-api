@@ -11,6 +11,7 @@ concurrency: # 如果多个部署同时触发，可能导致服务器上的 JAR 
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# 这里主要是为了在提交tag时他自动创建release和上传jar包需要这儿权限
 permissions:
   contents: write  # 最小必要权限
 
