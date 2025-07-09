@@ -61,7 +61,7 @@
             fi
             echo "JAR_NAME=${JAR_NAME}" >> $GITHUB_ENV
             echo "PORT=${PORT}" >> $GITHUB_ENV
-            echo "TAG_NAME=v${VERSION}" >> $GITHUB_ENV
+            echo "TAG_NAME=${VERSION}" >> $GITHUB_ENV
             echo "ARTIFACT_ID=${ARTIFACT_ID}" >> $GITHUB_ENV
 
         # 测试服务器连接
@@ -166,38 +166,31 @@
                 exit 1
               fi
               
-              # 查找并终止运行中的 JAR 进程
+              # 检查并终止 JAR 进程或端口占用
               JAR_PATTERN="java.*-jar.*${JAR_NAME%.*}"
               PIDS=$(pgrep -f "$JAR_PATTERN")
-              if [ -n "$PIDS" ]; then
-                echo "[$(date)] 停止进程 PIDs: $PIDS"
-                for PID in $PIDS; do
-                  kill -15 $PID
+              PORT_PID=$(ss -tulnp 2>/dev/null | grep -E ":${PORT}\s" | awk -F',' '{print $2}' | awk -F'pid=' '{print $2}' | head -n 1)
+              ALL_PIDS="$PIDS $PORT_PID"
+              if [ -n "$ALL_PIDS" ]; then
+                echo "[$(date)] 发现进程 PIDs: $ALL_PIDS"
+                for PID in $ALL_PIDS; do
+                  if [ -n "$PID" ] && ps -p $PID > /dev/null; then
+                    echo "[$(date)] 尝试终止进程 $PID..."
+                    kill -15 $PID
+                  fi
                 done
                 sleep 15
-                for PID in $PIDS; do
-                  if ps -p $PID > /dev/null; then
+                for PID in $ALL_PIDS; do
+                  if [ -n "$PID" ] && ps -p $PID > /dev/null; then
                     echo "[$(date)] 进程 $PID 未正常终止，强制停止..."
                     kill -9 $PID
                   fi
                 done
               else
-                echo "[$(date)] 未找到运行中的 ${JAR_NAME%.*} JAR 进程"
+                echo "[$(date)] 未找到运行中的 JAR 进程或占用 ${PORT} 端口的进程"
               fi
-              PORT_PID=$(ss -tulnp 2>/dev/null | grep -E ":${PORT}\s" | awk -F',' '{print $2}' | awk -F'pid=' '{print $2}' | head -n 1)
               
-              # 检查并终止占用项目端口的进程
-              if [ -n "$PORT_PID" ] && [ "$PORT_PID" -eq "$PORT_PID" ] 2>/dev/null; then
-                echo "[$(date)] 发现占用 ${PORT} 端口的进程 PID: $PORT_PID，尝试终止..."
-                kill -15 $PORT_PID
-                sleep 5
-                if ps -p $PORT_PID > /dev/null; then
-                  echo "[$(date)] 进程 $PORT_PID 未正常终止，强制停止..."
-                  kill -9 $PORT_PID
-                fi
-              else
-                echo "[$(date)] 未找到占用 ${PORT} 端口的进程"
-              fi
+              # 启动应用
               echo "[$(date)] 启动应用: $JAR_NAME"
               cd $REMOTE_JAR_DIR
               TIMESTAMP=$(date +%Y%m%d%H%M%S)
