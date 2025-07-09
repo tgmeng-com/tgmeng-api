@@ -226,6 +226,8 @@
         - name: 创建 GitHub Release
           id: create_release  # 新增 ID 以供后续步骤引用
           if: startsWith(github.ref, 'refs/tags/v')
+          permissions:
+            contents: write  # 最小必要权限
           uses: actions/create-release@master
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -243,6 +245,8 @@
         # 上传 发布release后，自动上传jar包到release
         - name: 上传 JAR 到 Release
           if: startsWith(github.ref, 'refs/tags/v')
+          permissions:
+            contents: write  # 最小必要权限
           uses: actions/upload-release-asset@master
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
