@@ -4,6 +4,8 @@
     push:
       branches:
         - main  # 触发条件，根据你的需求选择分支
+      tags:
+        - 'v*'  # 触发 Release 创建的标签模式，例如 v1.0.0。意思就是当你创建一个以v开头的tag时，会自动发布release，这部分自动发布release的配置在最后面那里，翻下去看
 
   concurrency: # 如果多个部署同时触发，可能导致服务器上的 JAR 文件冲突或覆盖。建议使用 concurrency 限制同一时间只有一个部署运行
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -59,10 +61,12 @@
             fi
             echo "JAR_NAME=${JAR_NAME}" >> $GITHUB_ENV
             echo "PORT=${PORT}" >> $GITHUB_ENV
+            echo "TAG_NAME=v${VERSION}" >> $GITHUB_ENV
+            echo "ARTIFACT_ID=${ARTIFACT_ID}" >> $GITHUB_ENV
 
         # 测试服务器连接
         - name: 测试服务器连接
-          uses: appleboy/ssh-action@v1.0.3
+          uses: appleboy/ssh-action@master
           with:
             host: ${{ env.SERVER_HOST }}
             username: ${{ env.SERVER_USER }}
@@ -73,7 +77,7 @@
 
         # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
         - name: 创建所需目录并清理旧文件
-          uses: appleboy/ssh-action@v1.0.3
+          uses: appleboy/ssh-action@master
           with:
             host: ${{ env.SERVER_HOST }}
             username: ${{ env.SERVER_USER }}
@@ -224,3 +228,33 @@
                 head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
                 exit 1
               fi
+
+        # 创建 GitHub Release，当创建t以v*开头的tag时，会自动创建release，就是开头定义的那个v*，比如v1.0.1
+        - name: 创建 GitHub Release
+          id: create_release  # 新增 ID 以供后续步骤引用
+          if: startsWith(github.ref, 'refs/tags/v')
+          uses: comnoco/create-release@master
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: ${{ env.TAG_NAME }}
+            release_name: Release ${{ env.TAG_NAME }}
+            body: |
+              #  ${{ env.ARTIFACT_ID }} ${{ env.TAG_NAME }}
+              - 自动构建并部署 JAR 文件: ${{ env.JAR_NAME }}
+              - 端口: ${{ env.PORT }}
+              - 新增功能和修复（请根据实际变更更新，这里不变了，自己去github的release页面改）。
+            draft: false
+            prerelease: false
+
+        # 上传 发布release后，自动上传jar包到release
+        - name: 上传 JAR 到 Release
+          if: startsWith(github.ref, 'refs/tags/v')
+          uses: actions/upload-release-asset@master
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: target/${{ env.JAR_NAME }}
+            asset_name: ${{ env.JAR_NAME }}
+            asset_content_type: application/java-archive
