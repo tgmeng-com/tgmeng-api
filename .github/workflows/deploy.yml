@@ -20,12 +20,15 @@ jobs:
     runs-on: ubuntu-latest   # 选择运行环境，ubuntu-latest 是 Linux 系统
     timeout-minutes: 30      # 单位：分钟  当前的工作流没有设置超时时间。如果某个步骤（如 Maven 构建或 SSH 命令）卡住，可能导致工作流长时间挂起
     env:
-      SERVER_HOST: ${{ secrets.SERVER_IP }}                          # 服务器 IP
+      SERVER_HOST: ${{ secrets.SERVER_IP }}                          # 服务器 IP  https://github.com/用户名/仓库名/settings/secrets/actions 里设置 Repository secrets
       SERVER_USER: ${{ secrets.SERVER_USER }}                        # 服务器用户名
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}                # 服务器密码
       SERVER_PORT: 22                                                # 服务器端口
       JAVA_VERSION: '21'                                             # java版本
       REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api    # 部署目录，我是root用户登录，所以这里就会变成/home/root/tgmeng-api
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}          # DockerHub 用户名
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}                # DockerHub 访问令牌
+      DOCKER_IMAGE_NAME: tgmeng-api                                  # Docker 镜像名称（也就是dockerHub里面的仓库的名字）
 
     steps:
       # 获取代码并构建项目
@@ -67,6 +70,7 @@ jobs:
           echo "PORT=${PORT}" >> $GITHUB_ENV
           echo "TAG_NAME=${VERSION}" >> $GITHUB_ENV
           echo "ARTIFACT_ID=${ARTIFACT_ID}" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE_TAG=${VERSION}" >> $GITHUB_ENV
 
       # 测试服务器连接
       - name: 测试服务器连接
@@ -225,6 +229,27 @@ jobs:
               head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
               exit 1
             fi
+
+      # 登录Docker Hub
+      - name: 登录Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
+      # 构建Docker镜像
+      - name: 构建Docker镜像
+        run: |
+          docker build \
+            --build-arg JAR_FILE=target/${{ env.JAR_NAME }} \
+            -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
+            -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest \
+            .
+      # 推送Docker镜像
+      - name: 推送Docker镜像
+        run: |
+          docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+          
 
       # 创建 GitHub Release，当创建以v*开头的tag时，会自动创建release，就是开头定义的那个v*，比如v1.0.1
       - name: 创建 GitHub Release

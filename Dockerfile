@@ -5,10 +5,11 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # 3. 复制项目的 JAR 文件到容器中
-COPY target/tgmeng-api-0.0.1-SNAPSHOT.jar /app/my-app.jar
+COPY target/tgmeng-api-v1.0.0.jar /app/my-app.jar
 
 # 4. 暴露应用端口（Spring Boot 默认 8080，可根据你的项目修改）
 EXPOSE 4399
+# 运行 Java 应用
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+ExitOnOutOfMemoryError -XX:+AlwaysPreTouch -Djava.security.egd=file:/dev/./urandom"
 
-# 5. 运行 Java 应用
-CMD java ${JAVA_OPTS} -jar my-app.jar
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar my-app.jar"]

@@ -6,6 +6,19 @@ server:
   servlet:
     context-path: /api
 
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露健康检查端点
+        include: health
+        # 可选：设置 Actuator 端点的基本路径（默认 /actuator）
+      base-path: /actuator
+  endpoint:
+    health:
+      # 显示健康检查的详细信息
+      show-details: always
+
 forest:
   max-connections: 1000        # 连接池最大连接数
   connect-timeout: 3000        # 连接超时时间，单位为毫秒

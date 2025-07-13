@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tgmeng</groupId>
 	<artifactId>tgmeng-api</artifactId>
-	<version>v1.0.0</version>
+	<version>v1.0.1</version>
 	<name>tgmeng-api</name>
 	<description>tgmeng-api</description>
 
@@ -33,6 +33,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
 		<dependency>
