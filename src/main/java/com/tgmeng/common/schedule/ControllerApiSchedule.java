@@ -65,13 +65,13 @@ public class ControllerApiSchedule {
             "/api/topsearch/github/tenyearstars",
 
             // 国际热搜
-            "/api/topsearch/youtube",
-            "/api/topsearch/huggingfacespacestrending",
-            "/api/topsearch/huggingfacespaceslikes",
-            "/api/topsearch/huggingfacemodelstrending",
-            "/api/topsearch/huggingfacemodellikes",
-            "/api/topsearch/huggingfacedatasetstrending",
-            "/api/topsearch/huggingfacedatasetslikes"
+            "/api/topsearch/global/youtube",
+            "/api/topsearch/global/huggingfacespacestrending",
+            "/api/topsearch/global/huggingfacespaceslikes",
+            "/api/topsearch/global/huggingfacemodelstrending",
+            "/api/topsearch/global/huggingfacemodellikes",
+            "/api/topsearch/global/huggingfacedatasetstrending",
+            "/api/topsearch/global/huggingfacedatasetslikes"
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

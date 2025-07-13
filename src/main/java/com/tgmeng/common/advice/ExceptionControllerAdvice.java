@@ -26,7 +26,7 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionBean> handleException(Exception exception) {
-        log.error("😈😈😈未捕获的异常:{}", exception.getMessage());
+        log.error("😈😈😈未捕获的异常:{},详细信息:{}", exception.getMessage(),exception);
         ServerException serverException = new ServerException();
         ExceptionBean exceptionBean = exceptionMapper.exception2Bean(serverException);
         return new ResponseEntity<>(exceptionBean, serverException.getHttpStatus());
