@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest   # 选择运行环境，ubuntu-latest 是 Linux 系统
     timeout-minutes: 30      # 单位：分钟  当前的工作流没有设置超时时间。如果某个步骤（如 Maven 构建或 SSH 命令）卡住，可能导致工作流长时间挂起
     env:
-      SERVER_HOST: ${{ secrets.SERVER_IP }}                          # 服务器 IP  https://github.com/用户名/仓库名/settings/secrets/actions 里设置 Repository secrets
+      SERVER_HOST: ${{ secrets.SERVER_IP }}                          # 服务器 IP  在https://github.com/用户名/仓库名/settings/secrets/actions 里设置 Repository secrets
       SERVER_USER: ${{ secrets.SERVER_USER }}                        # 服务器用户名
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}                # 服务器密码
       SERVER_PORT: 22                                                # 服务器端口
