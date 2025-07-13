@@ -28,7 +28,7 @@ jobs:
       REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api    # 部署目录，我是root用户登录，所以这里就会变成/home/root/tgmeng-api
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}          # DockerHub 用户名
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}                # DockerHub 访问令牌
-      DOCKER_IMAGE_NAME: tgmeng-api                                  # Docker 镜像名称（也就是dockerHub里面的仓库的名字）
+      DOCKER_IMAGE_NAME: tgmeng-api                                  # DockerHub 镜像名称（也就是dockerHub里面的仓库的名字）
 
     steps:
       # 获取代码并构建项目
@@ -230,13 +230,13 @@ jobs:
               exit 1
             fi
 
-      # 登录Docker Hub
+      # 登录 DockerHub
       - name: 登录Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ env.DOCKERHUB_TOKEN }}
-      # 构建Docker镜像
+      # 构建Docker镜像（DockerHub）
       - name: 构建Docker镜像
         run: |
           docker build \
@@ -244,7 +244,7 @@ jobs:
             -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
             -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest \
             .
-      # 推送Docker镜像
+      # 推送Docker镜像（DockerHub）
       - name: 推送Docker镜像
         run: |
           docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}

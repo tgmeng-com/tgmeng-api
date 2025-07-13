@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   tgmeng-api:
+    container_name: tgmeng-api  # 指定容器名
     image: tgmeng/tgmeng-api:latest
     # build:        # 这是使用本地区构建镜像，上面image就是直接用dockerhub的镜像
       # context: .  # 使用当前目录的 Dockerfile
@@ -13,4 +14,4 @@ services:
 # 使用
 # docker-compose up -d
 # docker-compose ps
-# docker-compose logs -f tgmeng-api
+# docker-compose logs -f --tail=50 tgmeng-api

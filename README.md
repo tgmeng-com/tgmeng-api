@@ -69,6 +69,8 @@
 ### 1 GitHub Action 一键部署
 
 - 修改 <span style="color:yellow">.github/workflows/deploy.yml</span> 中的下列值，
+
+- 如果你不需要把自动打镜像到dockerhub，把里面dockerhub相关的代码注释/删掉即可（文件里搜DockerHub就行）。
  
 - 你的代码推送到github仓库后，就会自动触发action，自动部署本项目
 
@@ -80,7 +82,24 @@ SERVER_PORT      # 你的服务器端口
 REMOTE_JAR_DIR   # 你的要部署的目录
 ```
 
----
+### 2 Docker镜像一键部署
+
+```shell
+docker pull tgmeng/tgmeng-api:latest
+docker run -d -p 8080:4399 --name tgmeng-api tgmeng/tgmeng-api:latest
+docker ps
+docker logs -f --tail=50 tgmeng-api
+```
+
+### 3 DockerCompose一键部署
+
+- 下载本项目根目录下的docker-compose.yml，然后在他的同级目录执行下面命令
+
+```shell
+docker-compose up -d
+docker-compose ps
+docker-compose logs -f --tail=50 tgmeng-api
+```
 
 ## ⚖️ 免责声明
 
