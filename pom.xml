@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.tgmeng</groupId>
 	<artifactId>tgmeng-api</artifactId>
-	<version>v1.0.1</version>
+	<version>v1.0.2</version>
 	<name>tgmeng-api</name>
 	<description>tgmeng-api</description>
 
