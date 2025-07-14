@@ -282,8 +282,8 @@ jobs:
             --build-arg JAR_FILE=target/${{ env.JAR_NAME }} \
             -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
             -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest \
-            -t ghcr.io/${{ toJSON(toLowerCase(github.repository_owner)) }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
-            -t ghcr.io/${{ toJSON(toLowerCase(github.repository_owner)) }}/${{ env.GHCR_IMAGE_NAME }}:latest \
+            -t ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
+            -t ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest \
             .
       # 推送Docker镜像（DockerHub）
       - name: 推送Docker镜像
@@ -297,10 +297,10 @@ jobs:
       # 拉取是这样：docker pull ghcr.io/YOUR_USERNAME/GHCR_IMAGE_NAME:tag
       - name: 推送Docker镜像到GHCR
         run: |
-          echo "Pushing to ghcr.io/${{ toJSON(toLowerCase(github.repository_owner)) }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}"
-          docker push ghcr.io/${{ toJSON(toLowerCase(github.repository_owner)) }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
-          echo "Pushing to ghcr.io/${{ toJSON(toLowerCase(github.repository_owner)) }}/${{ env.GHCR_IMAGE_NAME }}:latest"
-          docker push ghcr.io/${{ toJSON(toLowerCase(github.repository_owner)) }}/${{ env.GHCR_IMAGE_NAME }}:latest
+          echo "Pushing to ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}"
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          echo "Pushing to ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest"
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest
 
       # 创建 GitHub Release，当创建以v*开头的tag时，会自动创建release，就是开头定义的那个v*，比如v1.0.1
       - name: 创建 GitHub Release
