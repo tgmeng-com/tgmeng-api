@@ -66,6 +66,7 @@
   - ✅ 提交代码即自动部署项目到指定服务器
   - ✅ 提交新Tag即可自动发布Realease
   - ✅ 提交新代码即可自动发布到Docker镜像到DockerHub
+  - ✅ 提交新代码即可自动发布到Docker镜像到GHCR(github container registry)
 
 ---
 ## 🗼 部署
@@ -89,7 +90,8 @@ REMOTE_JAR_DIR   # 你的要部署的目录
 ### 2 Docker镜像一键部署
 
 ```shell
-docker pull tgmeng/tgmeng-api:latest
+docker pull tgmeng/tgmeng-api:latest                     # 这是dockerhub里的镜像
+# docker pull ghcr.io/tgmeng-com/tgmeng-api:latest       # 这是ghcr里的镜像，和上面是一样的，拉哪个都行
 docker run -d -p 8080:4399 --name tgmeng-api tgmeng/tgmeng-api:latest
 docker ps
 docker logs -f --tail=50 tgmeng-api
