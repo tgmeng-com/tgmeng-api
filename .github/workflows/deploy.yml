@@ -217,18 +217,48 @@ jobs:
               -jar $JAR_NAME --server.port=$PORT > app.log 2>&1 &
             sleep 30
             
-            # 检查活的死的，这里你可以加入接口的检查更好
+            # 进程检查
             ps aux | grep "[j]ava.*-jar $JAR_NAME" || echo "[$(date)] 无匹配的 Java 进程"
             if pgrep -f "java.*-jar $JAR_NAME" > /dev/null; then
               echo "[$(date)] 进程检查通过，应用已成功启动！"
-              echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志："
-              head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
+              #echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志："
+              #head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
             else
               echo "[$(date)] 应用启动失败！"
               echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志（若存在）："
               head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
               exit 1
             fi
+            
+            # 接口健康检查
+            HEALTH_URL="http://localhost:$PORT/api/actuator/health"
+            MAX_RETRIES=10
+            RETRY_INTERVAL=5
+
+            # 确保 curl 可用
+            if ! command -v curl &> /dev/null; then
+              echo "[$(date)] curl 未安装，尝试安装..."
+              apt-get update && apt-get install -y curl
+            fi
+            for i in $(seq 1 $MAX_RETRIES); do
+              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_URL")
+              if [ "$STATUS_CODE" -eq 200 ]; then
+                echo "[$(date)] 接口健康检查通过 ✅"
+                break
+              else
+                echo "[$(date)] 第 $i 次接口检查失败（状态码 $STATUS_CODE），重试中..."
+                sleep $RETRY_INTERVAL
+              fi
+
+              if [ "$i" -eq "$MAX_RETRIES" ]; then
+                echo "[$(date)] 应用接口健康检查失败 ❌"
+                head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
+                exit 1
+              fi
+            done
+
+            echo "[$(date)] 应用启动成功并健康运行 🎉"
+            head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
 
       # 登录 DockerHub
       - name: 登录Docker Hub
