@@ -80,21 +80,21 @@ public interface ITopSearchCommonMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "title", target = "keyword")
     @Mapping(source = "readCount", target = "hotScore")
-    @Mapping(source = "url.", target = "url")
+    @Mapping(source = "url", target = "url")
     TopSearchCommonVO.DataInfo topSearchTencentDTOItemInfoTopSearchCommonVO(TopSearchTencentDTO.ItemInfo topSearchDTencentDTO);
 
     /** 头条 */
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "title", target = "keyword")
     @Mapping(source = "hotValue", target = "hotScore")
-    @Mapping(source = "url.", target = "url")
+    @Mapping(source = "url", target = "url")
     TopSearchCommonVO.DataInfo topSearchTouTiaoDTOItemInfoTopSearchCommonVO(TopSearchTouTiaoDTO.ItemInfo topSearchTouTiaoDTO);
 
     /** 网易 */
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "title", target = "keyword")
     @Mapping(source = "hotValue", target = "hotScore")
-    @Mapping(source = "contentId.", target = "url")
+    @Mapping(source = "contentId", target = "url")
     TopSearchCommonVO.DataInfo topSearchWangYiDTOItemInfoTopSearchCommonVO(TopSearchWangYiDTO.DataView topSearchWangYiDTO);
 
     @AfterMapping
@@ -106,7 +106,7 @@ public interface ITopSearchCommonMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "name", target = "keyword")
     @Mapping(source = "popularity", target = "hotScore")
-    @Mapping(source = "id.", target = "url")
+    @Mapping(source = "id", target = "url")
     TopSearchCommonVO.DataInfo topSearchWangYiYunDTOItemInfoTopSearchCommonVO(TopSearchWangYiYunDTO.DataInfo topSearchWangYiYunDTO);
 
     @AfterMapping
@@ -117,7 +117,7 @@ public interface ITopSearchCommonMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "topicName", target = "keyword")
     @Mapping(source = "discussNum", target = "hotScore")
-    @Mapping(source = "topicUrl.", target = "url")
+    @Mapping(source = "topicUrl", target = "url")
     TopSearchCommonVO.DataInfo topSearchBaiDuTieBaDTOItemInfoTopSearchCommonVO(TopSearchBaiDuTieBaDTO.DataInfo topSearchBaiDuTieBaDTO);
 
 
@@ -125,7 +125,7 @@ public interface ITopSearchCommonMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "title", target = "keyword")
     @Mapping(source = "commentCount", target = "hotScore")
-    @Mapping(source = "id.", target = "url")
+    @Mapping(source = "id", target = "url")
     TopSearchCommonVO.DataInfo topSearchShaoShuPaiDTOItemInfoTopSearchCommonVO(TopSearchShaoShuPaiDTO.ItemDTO shaoShuPaiDTO);
     @AfterMapping
     default void topSearchShaoShuPaiDTOItemInfoTopSearchCommonVOAfter(TopSearchShaoShuPaiDTO.ItemDTO topSearchShaoShuPaiItemDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
@@ -135,7 +135,7 @@ public interface ITopSearchCommonMapper {
 
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "zhiHuDTO.title", target = "keyword")
-    @Mapping(source = "zhiHuDTO.id.", target = "url")
+    @Mapping(source = "zhiHuDTO.id", target = "url")
     TopSearchCommonVO.DataInfo topSearchZhiHuDTOItemInfoTopSearchCommonVO(TopSearchZhiHuDTO.ItemDTO zhiHuDTO,TopSearchZhiHuDTO.DataInfo dataInfo);
     @AfterMapping
     default void topSearchZhiHuDTOItemInfoTopSearchCommonVOAfter(TopSearchZhiHuDTO.ItemDTO zhiHuDTO,TopSearchZhiHuDTO.DataInfo dataInfo, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
