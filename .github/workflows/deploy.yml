@@ -11,9 +11,10 @@ concurrency: # 如果多个部署同时触发，可能导致服务器上的 JAR 
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# 这里主要是为了在提交tag时他自动创建release和上传jar包需要这儿权限
+
 permissions:
-  contents: write  # 最小必要权限
+  contents: write  # 这里主要是为了在提交tag时他自动创建release和上传jar包需要这儿权限
+  packages: write  # 添加对 packages 的写入权限，以便推送 GHCR 镜像（github repository container register）
 
 jobs:
   deploy:
@@ -29,6 +30,7 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}          # DockerHub 用户名
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}                # DockerHub 访问令牌
       DOCKER_IMAGE_NAME: tgmeng-api                                  # DockerHub 镜像名称（也就是dockerHub里面的仓库的名字）
+      GHCR_IMAGE_NAME: tgmeng-api                                   # GHCR 镜像名称（建议是仓库名）
 
     steps:
       # 获取代码并构建项目
@@ -266,6 +268,13 @@ jobs:
         with:
           username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ env.DOCKERHUB_TOKEN }}
+      # 登录 GHCR（github repository container register）,也就是github的docker库
+      - name: 登录GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       # 构建Docker镜像（DockerHub）
       - name: 构建Docker镜像
         run: |
@@ -273,13 +282,25 @@ jobs:
             --build-arg JAR_FILE=target/${{ env.JAR_NAME }} \
             -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
             -t ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest \
+            -t ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
+            -t ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest \
             .
       # 推送Docker镜像（DockerHub）
       - name: 推送Docker镜像
         run: |
+          echo "Pushing to ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}"
           docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          echo "Pushing to ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
           docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
-          
+
+      # 推送Docker镜像到GHCR（github repository container register）,也就是github的docker库
+      # 拉取是这样：docker pull ghcr.io/YOUR_USERNAME/GHCR_IMAGE_NAME:tag
+      - name: 推送Docker镜像到GHCR
+        run: |
+          echo "Pushing to ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}"
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          echo "Pushing to ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest"
+          docker push ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest
 
       # 创建 GitHub Release，当创建以v*开头的tag时，会自动创建release，就是开头定义的那个v*，比如v1.0.1
       - name: 创建 GitHub Release
