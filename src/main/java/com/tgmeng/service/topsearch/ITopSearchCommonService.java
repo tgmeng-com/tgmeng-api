@@ -2,6 +2,7 @@ package com.tgmeng.service.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
+import com.tgmeng.common.enums.business.SearchTypeWangYiYunEnum;
 
 
 public interface ITopSearchCommonService {
@@ -21,7 +22,7 @@ public interface ITopSearchCommonService {
 
     ResultTemplateBean getWangYiTopSearch();
 
-    ResultTemplateBean getWangYiYunTopSearch();
+    ResultTemplateBean getWangYiYunTopSearch(SearchTypeWangYiYunEnum searchTypeWangYiYunEnum);
 
     ResultTemplateBean getBaiDuTieBaSearch();
 

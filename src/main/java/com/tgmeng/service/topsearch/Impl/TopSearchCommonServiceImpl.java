@@ -3,10 +3,7 @@ package com.tgmeng.service.topsearch.Impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
-import com.tgmeng.common.enums.business.DataInfoCardEnum;
-import com.tgmeng.common.enums.business.ForestRequestHeaderOriginEnum;
-import com.tgmeng.common.enums.business.ForestRequestHeaderRefererEnum;
-import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
+import com.tgmeng.common.enums.business.*;
 import com.tgmeng.common.enums.exception.ServerExceptionEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient;
@@ -238,10 +235,10 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
     }
 
     @Override
-    public ResultTemplateBean getWangYiYunTopSearch() {
+    public ResultTemplateBean getWangYiYunTopSearch(SearchTypeWangYiYunEnum searchTypeWangYiYunEnum) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
-            TopSearchWangYiYunDTO wangyiyun = topSearchCommonClient.wangyiyun(ForestUtil.getRandomRequestHeaderForWangYiYun());
+            TopSearchWangYiYunDTO wangyiyun = topSearchCommonClient.wangyiyun(ForestUtil.getRandomRequestHeaderForWangYiYun(),searchTypeWangYiYunEnum.getValue());
             topSearchCommonVOS = Optional.ofNullable(wangyiyun.getResult())
                     .map(TopSearchWangYiYunDTO.DataDTO::getTracks)
                     .orElse(Collections.emptyList())
@@ -251,7 +248,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             log.error("👺👺👺获取网易云音乐榜失败👺👺👺", e);
             throw new ServerException(ServerExceptionEnum.WANGYIYUN_TOP_SEARCH_EXCEPTION);
         }
-        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.WANG_YI_YUN.getKey(), DataInfoCardEnum.WANG_YI_YUN.getValue(), DataInfoCardEnum.WANG_YI_YUN.getDescription());
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeWangYiYunEnum.getDescription(), DataInfoCardEnum.WANG_YI_YUN.getValue(), DataInfoCardEnum.WANG_YI_YUN.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
 

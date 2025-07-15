@@ -2,6 +2,7 @@ package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
+import com.tgmeng.common.enums.business.SearchTypeWangYiYunEnum;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,9 +90,24 @@ public class TopSearchCommonController {
         return topSearchCommonService.getWangYiTopSearch();
     }
 
-    @RequestMapping("/yunwangyi")
-    public ResultTemplateBean getWangYiYunSearch() {
-        return topSearchCommonService.getWangYiYunTopSearch();
+    @RequestMapping("/biaoshengwangyiyun")
+    public ResultTemplateBean getWangYiYunBiaoShengSearch() {
+        return topSearchCommonService.getWangYiYunTopSearch(SearchTypeWangYiYunEnum.BIAO_SHENG_WANG_YI_YUN);
+    }
+
+    @RequestMapping("/xingegwangyiyun")
+    public ResultTemplateBean getWangYiYunXinGeSearch() {
+        return topSearchCommonService.getWangYiYunTopSearch(SearchTypeWangYiYunEnum.XIN_GE_WANG_YI_YUN);
+    }
+
+    @RequestMapping("/yuanchuangwangyiyun")
+    public ResultTemplateBean getWangYiYunYuanChuangSearch() {
+        return topSearchCommonService.getWangYiYunTopSearch(SearchTypeWangYiYunEnum.YUAN_CHUANG_WANG_YI_YUN);
+    }
+
+    @RequestMapping("/regewangyiyun")
+    public ResultTemplateBean getWangYiYunReGeSearch() {
+        return topSearchCommonService.getWangYiYunTopSearch(SearchTypeWangYiYunEnum.RE_GE_WANG_YI_YUN);
     }
 
     @RequestMapping("/tiebabaidu")

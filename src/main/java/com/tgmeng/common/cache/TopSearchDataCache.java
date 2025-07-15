@@ -29,6 +29,14 @@ public class TopSearchDataCache {
     /** GitHub缓存过期时间浮动范围，yml里找不到就用这里的默认值600秒 */
     @Value("${my-config.data-cache.top-search.expire-time-github-api-data-random-range:600}")
     private Long dataCacheExpireTimeGithubApiDataRandomRange;
+
+    /** 网易云音乐缓存过期时间，yml里找不到就用这里的默认值600秒 */
+    @Value("${my-config.data-cache.top-search.expire-time-wang-yi-yun-api-data:600}")
+    private Long dataCacheExpireTimeWangYiYunApiData;
+    /** 网易云音乐缓存过期时间浮动范围，yml里找不到就用这里的默认值300秒 */
+    @Value("${my-config.data-cache.top-search.expire-time-wang-yi-yun-api-data-random-range:300}")
+    private Long dataCacheExpireTimeWangYiYunApiDataRandomRange;
+
     /** 最大缓存条数，默认100条 */
     @Value("${my-config.data-cache.top-search.max-size:100}")
     private Long dataCacheMaxSize;
@@ -48,7 +56,12 @@ public class TopSearchDataCache {
                             Random random = new Random();
                             Long randomOffset = random.nextLong(2 * dataCacheExpireTimeGithubApiDataRandomRange + 1) - dataCacheExpireTimeGithubApiDataRandomRange;
                             return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeGithubApiData+randomOffset);
-                        }else {
+                        }else if(StrUtil.contains(key.getKey(),"CACHE_TOP_SEARCH_WANG_YI_YUN")){
+                            // 网易云缓存的过期时间浮动区间
+                            Random random = new Random();
+                            Long randomOffset = random.nextLong(2 * dataCacheExpireTimeWangYiYunApiDataRandomRange + 1) - dataCacheExpireTimeWangYiYunApiDataRandomRange;
+                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeWangYiYunApiData+randomOffset);
+                        } else {
                             return TimeUnit.SECONDS.toNanos(dataCacheExpireTime);
                         }
                     }
