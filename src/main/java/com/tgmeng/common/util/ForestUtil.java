@@ -111,7 +111,7 @@ public class ForestUtil {
                 ;
     }
 
-    public static ForestRequestHeader getRandomRequestHeaderForYMangGuo() {
+    public static ForestRequestHeader getRandomRequestHeaderForMangGuo() {
         String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
         return new ForestRequestHeader()
                 .setUserAgent(userAgent)

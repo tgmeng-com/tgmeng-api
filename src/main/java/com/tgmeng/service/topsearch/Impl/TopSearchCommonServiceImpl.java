@@ -405,7 +405,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
     public ResultTemplateBean getMangGuoTopSearch(SearchTypeMangGuoEnum searchTypeMangGuoEnum) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
-            TopSearchMangGuoDTO topSearchMangGuoDTO = topSearchCommonClient.mangGuo(ForestUtil.getRandomRequestHeaderForYMangGuo());
+            TopSearchMangGuoDTO topSearchMangGuoDTO = topSearchCommonClient.mangGuo(ForestUtil.getRandomRequestHeaderForMangGuo());
             List<TopSearchMangGuoDTO.FinalData> mangGuoData = new ArrayList<>();
             switch (searchTypeMangGuoEnum){
                 case SearchTypeMangGuoEnum.DIAN_SHI_JU_MANG_GUO:
