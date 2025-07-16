@@ -152,5 +152,10 @@ public interface ITopSearchCommonMapper {
         }
     }
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "pageUrl", target = "url")
+    @Mapping(source = "mainIndex", target = "hotScore")
+    TopSearchCommonVO.DataInfo topSearchAiQiYiDTOContentVO2TopSearchCommonVO(TopSearchAiQiYiDTO.Contents aiQiYiContents);
 
 }

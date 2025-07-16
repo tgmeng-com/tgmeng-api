@@ -337,8 +337,26 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             return ResultTemplateBean.success(topSearchCommonVO);
 
         } catch (Exception e) {
-            log.error("👺👺👺获取huggingface失败👺👺👺：平台；{}", DataInfoCardEnum.TENG_XUN_SHI_PIN.getKey(), e);
+            log.error("👺👺👺获取腾讯视频失败👺👺👺：平台；{}", DataInfoCardEnum.TENG_XUN_SHI_PIN.getKey(), e);
             throw new ServerException(ServerExceptionEnum.HUGGING_FACE_TOP_SEARCH_EXCEPTION);
         }
+    }
+
+    @Override
+    public ResultTemplateBean getAiQiYiTopSearch(SearchTypeAiQiYiEnum searchTypeAiQiYiEnum) {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchAiQiYiDTO topSearchAiQiYiDTO = topSearchCommonClient.aiQiYi(ForestUtil.getRandomRequestHeaderForAiQiYi(), searchTypeAiQiYiEnum.getValue());
+            for (TopSearchAiQiYiDTO.Contents content : topSearchAiQiYiDTO.getData().getItems().getFirst().getContents()) {
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchAiQiYiDTOContentVO2TopSearchCommonVO(content);
+                topSearchCommonVOS.add(dataInfo);
+            }
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取爱奇艺失败👺👺👺：平台；{}", searchTypeAiQiYiEnum.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.AI_QI_YI_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeAiQiYiEnum.getDescription(), DataInfoCardEnum.AI_QI_YI.getValue(), DataInfoCardEnum.AI_QI_YI.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

@@ -85,4 +85,16 @@ public class ForestUtil {
                 .setOrigin(ForestRequestHeaderRefererEnum.ZHI_HU.getValue());
     }
 
+    public static ForestRequestHeader getRandomRequestHeaderForAiQiYi() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                //.setAccept("application/json, text/plain, */*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9")
+                //.setConnection("keep-alive")
+                .setReferer(ForestRequestHeaderRefererEnum.AI_QI_YI.getValue())
+                .setOrigin(ForestRequestHeaderRefererEnum.AI_QI_YI.getValue());
+    }
+
 }

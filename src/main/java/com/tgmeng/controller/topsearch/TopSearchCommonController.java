@@ -1,6 +1,7 @@
 package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.SearchTypeAiQiYiEnum;
 import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
 import com.tgmeng.common.enums.business.SearchTypeTengXunShiPinEnum;
 import com.tgmeng.common.enums.business.SearchTypeWangYiYunEnum;
@@ -189,6 +190,31 @@ public class TopSearchCommonController {
     @RequestMapping("/zongbangtengxun")
     public ResultTemplateBean getZongBangTengXunShiPinSearch() {
         return topSearchCommonService.getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum.ZONG_BANG_TENG_XUN);
+    }
+
+    @RequestMapping("/dianshijuaiqiyi")
+    public ResultTemplateBean getDianShiJuAiQiYiSearch() {
+        return topSearchCommonService.getAiQiYiTopSearch(SearchTypeAiQiYiEnum.DIAN_SHI_JU_AI_QI_YI);
+    }
+
+    @RequestMapping("/dianyingaiqiyi")
+    public ResultTemplateBean getDianYingAiQiYiSearch() {
+        return topSearchCommonService.getAiQiYiTopSearch(SearchTypeAiQiYiEnum.DIAN_YING_AI_QI_YI);
+    }
+
+    @RequestMapping("/dongmanaiqiyi")
+    public ResultTemplateBean getDongManAiQiYiSearch() {
+        return topSearchCommonService.getAiQiYiTopSearch(SearchTypeAiQiYiEnum.DONG_MAN_AI_QI_YI);
+    }
+
+    @RequestMapping("/zongyiaiqiyi")
+    public ResultTemplateBean getZongYiAiQiYiSearch() {
+        return topSearchCommonService.getAiQiYiTopSearch(SearchTypeAiQiYiEnum.ZONG_YI_AI_QI_YI);
+    }
+
+    @RequestMapping("/zongbangaiqiyi")
+    public ResultTemplateBean getZongBangAiQiYiSearch() {
+        return topSearchCommonService.getAiQiYiTopSearch(SearchTypeAiQiYiEnum.ZONG_BANG_AI_QI_YI);
     }
 
 

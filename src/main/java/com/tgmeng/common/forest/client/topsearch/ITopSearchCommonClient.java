@@ -94,5 +94,7 @@ public interface ITopSearchCommonClient {
     @Get("https://v.qq.com/biu/ranks/?t=hotsearch&channel={type}")
     ForestResponse tengXunShiPin(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
+    @Get("https://mesh.if.iqiyi.com/portal/pcw/rankList/comSecRankList?category_id={type}")
+    TopSearchAiQiYiDTO aiQiYi(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
 }

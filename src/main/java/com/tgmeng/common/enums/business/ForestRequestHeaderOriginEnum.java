@@ -31,7 +31,8 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     SHAOSHUPAI("SHAOSHUPAI", "https://sspai.com", "", true,4),
     HUGGING_FACE("HUGGING_FACE", "https://huggingface.co", "", true,4),
     ZHI_HU("ZHI_HU", "https://www.zhihu.com", "", true,4),
-    TENG_XUN_SHI_PIN("TENG_XUN_SHI_PIN", "https://v.qq.com", "", true,4);
+    TENG_XUN_SHI_PIN("TENG_XUN_SHI_PIN", "https://v.qq.com", "", true,4),
+    AI_QI_YI("AI_QI_YI", "https://www.iqiyi.com", "", true,4);
 
     private final String key;
     private final String value;
