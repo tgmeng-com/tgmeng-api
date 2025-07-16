@@ -245,7 +245,9 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             topSearchCommonVOS = Optional.ofNullable(wangyiyun.getResult())
                     .map(TopSearchWangYiYunDTO.DataDTO::getTracks)
                     .orElse(Collections.emptyList())
-                    .stream().map(topSearchCommonMapper::topSearchWangYiYunDTOItemInfoTopSearchCommonVO)
+                    .stream()
+                    .limit(15)
+                    .map(topSearchCommonMapper::topSearchWangYiYunDTOItemInfoTopSearchCommonVO)
                     .toList();
         } catch (Exception e) {
             log.error("👺👺👺获取网易云音乐榜失败👺👺👺", e);
