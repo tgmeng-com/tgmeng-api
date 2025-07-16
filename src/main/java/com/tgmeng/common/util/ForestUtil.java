@@ -120,6 +120,7 @@ public class ForestUtil {
         String cookieString = cookies.stream()
                 .map(cookie -> cookie.getName() + "=" + cookie.getValue())
                 .collect(Collectors.joining("; "));
+        cookieString+=";isI18n=false";
         return new ForestRequestHeader()
                 .setUserAgent(userAgent)
                 //.setAccept("application/json, text/plain, */*")
