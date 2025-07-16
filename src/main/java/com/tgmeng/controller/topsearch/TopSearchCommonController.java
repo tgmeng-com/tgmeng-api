@@ -2,6 +2,7 @@ package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
+import com.tgmeng.common.enums.business.SearchTypeTengXunShiPinEnum;
 import com.tgmeng.common.enums.business.SearchTypeWangYiYunEnum;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
@@ -165,5 +166,34 @@ public class TopSearchCommonController {
         return topSearchCommonService.getZhiHuTopSearch();
     }
 
-//    民生  财经   热梗  游戏  汽车
+    @RequestMapping("/dianshijutengxun")
+    public ResultTemplateBean getDianShiJuTengXunShiPinSearch() {
+        return topSearchCommonService.getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum.DIAN_SHI_JU_TENG_XUN);
+    }
+
+    @RequestMapping("/dianyingtengxun")
+    public ResultTemplateBean getDianYingTengXunShiPinSearch() {
+        return topSearchCommonService.getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum.DIAN_YING_TENG_XUN);
+    }
+
+    @RequestMapping("/dongmantengxun")
+    public ResultTemplateBean getDongManTengXunShiPinSearch() {
+        return topSearchCommonService.getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum.DONG_MAN_TENG_XUN);
+    }
+
+    @RequestMapping("/zongyitengxun")
+    public ResultTemplateBean getZongYiTengXunShiPinSearch() {
+        return topSearchCommonService.getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum.ZONG_YI_TENG_XUN);
+    }
+
+    @RequestMapping("/zongbangtengxun")
+    public ResultTemplateBean getZongBangTengXunShiPinSearch() {
+        return topSearchCommonService.getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum.ZONG_BANG_TENG_XUN);
+    }
+
+
+
+
+
+
 }

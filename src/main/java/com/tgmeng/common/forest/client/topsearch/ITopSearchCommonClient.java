@@ -3,6 +3,7 @@ package com.tgmeng.common.forest.client.topsearch;
 import com.dtflys.forest.annotation.Get;
 import com.dtflys.forest.annotation.Header;
 import com.dtflys.forest.annotation.Var;
+import com.dtflys.forest.http.ForestResponse;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
 import com.tgmeng.model.dto.topsearch.*;
 
@@ -89,5 +90,9 @@ public interface ITopSearchCommonClient {
     //这是好不容易找到的两个可以用的接口
     @Get("https://api.zhihu.com/topstory/hot-list?limit=100&reverse_order=0")
     TopSearchZhiHuDTO zhiHu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://v.qq.com/biu/ranks/?t=hotsearch&channel={type}")
+    ForestResponse tengXunShiPin(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
+
 
 }

@@ -1,6 +1,8 @@
 package com.tgmeng.service.topsearch.Impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.dtflys.forest.http.ForestResponse;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
 import com.tgmeng.common.enums.business.*;
@@ -8,6 +10,7 @@ import com.tgmeng.common.enums.exception.ServerExceptionEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient;
 import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchCommonMapper;
+import com.tgmeng.common.util.CommonJsoupJsoupParseUtil;
 import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.model.dto.topsearch.*;
@@ -306,5 +309,36 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.ZHI_HU.getKey(), DataInfoCardEnum.ZHI_HU.getValue(), DataInfoCardEnum.ZHI_HU.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
+    }
+
+    @Override
+    public ResultTemplateBean getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum searchTypeTengXunShiPinEnum) {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.tengXunShiPin(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.TENG_XUN_SHI_PIN.getValue(), ForestRequestHeaderOriginEnum.TENG_XUN_SHI_PIN.getValue()),
+                    searchTypeTengXunShiPinEnum.getValue()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.TENG_XUN_SHI_PIN_TOP_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.tengXunShiPin(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.TENG_XUN_SHI_PIN.getKey(),
+                    DataInfoCardEnum.TENG_XUN_SHI_PIN.getValue(),
+                    DataInfoCardEnum.TENG_XUN_SHI_PIN.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取huggingface失败👺👺👺：平台；{}", DataInfoCardEnum.TENG_XUN_SHI_PIN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.HUGGING_FACE_TOP_SEARCH_EXCEPTION);
+        }
     }
 }

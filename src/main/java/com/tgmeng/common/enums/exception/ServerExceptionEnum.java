@@ -31,7 +31,8 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     BAIDUTIEBA_TOP_SEARCH_EXCEPTION(109, "百度贴吧热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     SHAOSHUPAI_TOP_SEARCH_EXCEPTION(109, "少数派热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     HUGGING_FACE_TOP_SEARCH_EXCEPTION(109, "huggingFace热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    ZHI_HU_TOP_SEARCH_EXCEPTION(109, "知乎热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    ZHI_HU_TOP_SEARCH_EXCEPTION(109, "知乎热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    TENG_XUN_SHI_PIN_TOP_SEARCH_EXCEPTION(109, "腾讯视频热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
     private final Integer key;
     private final String value;
     private final String description;
