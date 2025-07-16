@@ -74,7 +74,40 @@ public class ControllerApiSchedule {
             "/api/topsearch/global/huggingfacemodelstrending",
             "/api/topsearch/global/huggingfacemodellikes",
             "/api/topsearch/global/huggingfacedatasetstrending",
-            "/api/topsearch/global/huggingfacedatasetslikes"
+            "/api/topsearch/global/huggingfacedatasetslikes",
+
+            // 腾讯视频
+            "/api/topsearch/dianshijutengxun",
+            "/api/topsearch/dianyingtengxun",
+            "/api/topsearch/dongmantengxun",
+            "/api/topsearch/zongyitengxun",
+            "/api/topsearch/zongbangtengxun",
+
+            // 爱奇艺
+            "/api/topsearch/dianshijuaiqiyi",
+            "/api/topsearch/dianyingaiqiyi",
+            "/api/topsearch/dongmanaiqiyi",
+            "/api/topsearch/zongyiaiqiyi",
+            "/api/topsearch/zongbangaiqiyi",
+
+            // 优酷
+            "/api/topsearch/dianshijuyouku",
+            "/api/topsearch/dianyingyouku",
+            "/api/topsearch/dongmanyouku",
+            "/api/topsearch/zongyiyouku",
+            "/api/topsearch/zongbangyouku",
+
+            // 芒果
+            "/api/topsearch/dianshijumangguo",
+            "/api/topsearch/dianyingmangguo",
+            "/api/topsearch/dongmanmangguo",
+            "/api/topsearch/zongyimangguo",
+            "/api/topsearch/zongbangmangguo"
+
+
+
+
+
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

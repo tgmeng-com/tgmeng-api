@@ -53,7 +53,31 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_MODELS_LIKES", "/topsearch/global/huggingfacemodellikes", "", true,4),
     CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_TRENDING("CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_TRENDING", "/topsearch/global/huggingfacedatasetstrending", "", true,4),
     CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES("CACHE_TOP_SEARCH_HUGGING_FACE_DATASETS_LIKES", "/topsearch/global/huggingfacedatasetslikes", "", true,4),
-    CACHE_TOP_SEARCH_ZHI_HU_DATASETS_LIKES("CACHE_TOP_SEARCH_ZHI_HU_DATASETS_LIKES", "/topsearch/zhihu", "", true,4);
+    CACHE_TOP_SEARCH_ZHI_HU_DATASETS_LIKES("CACHE_TOP_SEARCH_ZHI_HU_DATASETS_LIKES", "/topsearch/zhihu", "", true,4),
+
+    CACHE_TOP_SEARCH_DIAN_SHI_JU_TENG_XUN_SHI_PIN("CACHE_TOP_SEARCH_DIAN_SHI_JU_TENG_XUN_SHI_PIN", "/topsearch/dianshijutengxun", "", true,4),
+    CACHE_TOP_SEARCH_DIAN_YING_TENG_XUN_SHI_PIN("CACHE_TOP_SEARCH_DIAN_YING_TENG_XUN_SHI_PIN", "/topsearch/dianyingtengxun", "", true,4),
+    CACHE_TOP_SEARCH_DONG_MAN_TENG_XUN_SHI_PIN("CACHE_TOP_SEARCH_DONG_MAN_TENG_XUN_SHI_PIN", "/topsearch/dongmantengxun", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_YI_TENG_XUN_SHI_PIN("CACHE_TOP_SEARCH_ZONG_YI_TENG_XUN_SHI_PIN", "/topsearch/zongyitengxun", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_BANG_TENG_XUN_SHI_PIN("CACHE_TOP_SEARCH_ZONG_BANG_TENG_XUN_SHI_PIN", "/topsearch/zongbangtengxun", "", true,4),
+
+    CACHE_TOP_SEARCH_DIAN_SHI_JU_AI_QI_YI("CACHE_TOP_SEARCH_DIAN_SHI_JU_AI_QI_YI", "/topsearch/dianshijuaiqiyi", "", true,4),
+    CACHE_TOP_SEARCH_DIAN_YING_AI_QI_YI("CACHE_TOP_SEARCH_DIAN_YING_AI_QI_YI", "/topsearch/dianyingaiqiyi", "", true,4),
+    CACHE_TOP_SEARCH_DONG_MAN_AI_QI_YI("CACHE_TOP_SEARCH_DONG_MAN_AI_QI_YI", "/topsearch/dongmanaiqiyi", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_YI_AI_QI_YI("CACHE_TOP_SEARCH_ZONG_YI_AI_QI_YI", "/topsearch/zongyiaiqiyi", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_BANG_AI_QI_YI("CACHE_TOP_SEARCH_ZONG_BANG_AI_QI_YI", "/topsearch/zongbangaiqiyi", "", true,4),
+
+    CACHE_TOP_SEARCH_DIAN_SHI_JU_YOU_KU("CACHE_TOP_SEARCH_DIAN_SHI_JU_YOU_KU", "/topsearch/dianshijuyouku", "", true,4),
+    CACHE_TOP_SEARCH_DIAN_YING_YOU_KU("CACHE_TOP_SEARCH_DIAN_YING_YOU_KU", "/topsearch/dianyingyouku", "", true,4),
+    CACHE_TOP_SEARCH_DONG_MAN_YOU_KU("CACHE_TOP_SEARCH_DONG_MAN_YOU_KU", "/topsearch/dongmanyouku", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_YI_YOU_KU("CACHE_TOP_SEARCH_ZONG_YI_YOU_KU", "/topsearch/zongyiyouku", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_BANG_YOU_KU("CACHE_TOP_SEARCH_ZONG_BANG_YOU_KU", "/topsearch/zongbangyouku", "", true,4),
+
+    CACHE_TOP_SEARCH_DIAN_SHI_JU_MANG_GUO("CACHE_TOP_SEARCH_DIAN_SHI_JU_MANG_GUO", "/topsearch/dianshijumangguo", "", true,4),
+    CACHE_TOP_SEARCH_DIAN_YING_MANG_GUO("CACHE_TOP_SEARCH_DIAN_YING_MANG_GUO", "/topsearch/dianyingmangguo", "", true,4),
+    CACHE_TOP_SEARCH_DONG_MAN_MANG_GUO("CACHE_TOP_SEARCH_DONG_MAN_MANG_GUO", "/topsearch/dongmanmangguo", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_YI_MANG_GUO("CACHE_TOP_SEARCH_ZONG_YI_MANG_GUO", "/topsearch/zongyimangguo", "", true,4),
+    CACHE_TOP_SEARCH_ZONG_BANG_MANG_GUO("CACHE_TOP_SEARCH_ZONG_BANG_MANG_GUO", "/topsearch/zongbangmangguo", "", true,4);
 
     private final String key;
     private final String value;
