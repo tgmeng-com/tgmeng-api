@@ -19,4 +19,6 @@ public class ForestRequestHeader {
     private String Origin;
     @JsonProperty("Cookie")
     private String Cookie;
+    @JsonProperty("X-Forwarded-For")
+    private String XForwardedFor;
 }
