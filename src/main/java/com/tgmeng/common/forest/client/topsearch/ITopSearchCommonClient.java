@@ -98,7 +98,7 @@ public interface ITopSearchCommonClient {
     TopSearchAiQiYiDTO aiQiYi(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
     //@Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?jsv=2.7.2&appKey=23774304&t=1752672844020&sign=8f1fbb45a855cdbe8094dd3916c9a7a1&api=mtop.youku.soku.yksearch&type=originaljson&v=2.0&ecode=1&dataType=json&data=%7B%22pg%22%3A%221%22%2C%22pz%22%3A%2210%22%2C%22appScene%22%3A%22default_page%22%2C%22appCaller%22%3A%22youku-search-sdk%22%2C%22utdId%22%3A%22%22%7D")
-    @Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?jsv=2.7.2&appKey=23774304&t=1752677983046&sign=35dac5eefd94bce7d430e8108ead8058&api=mtop.youku.soku.yksearch&v=2.0&dataType=json&jsonpIncPrefix=1752677982928&type=originaljson&data=%7B%22pg%22%3A%221%22%2C%22pz%22%3A%2210%22%2C%22appScene%22%3A%22default_page%22%2C%22appCaller%22%3A%22youku-search-sdk%22%2C%22searchFrom%22%3A%22home%22%2C%22utdId%22%3A%22XlQcF5xQrCcCAWoLKdGqIOhS%22%7D")
+    @Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?jsv=2.7.2&appKey=23774304&t=1752689287221&sign=280332eba36eba1f1a9f99b88b2bd4ad&api=mtop.youku.soku.yksearch&type=originaljson&v=2.0&ecode=1&dataType=json&data=%7B%22pg%22%3A%221%22%2C%22pz%22%3A%2210%22%2C%22appScene%22%3A%22default_page%22%2C%22appCaller%22%3A%22youku-search-sdk%22%2C%22utdId%22%3A%22%22%7D")
     TopSearchYouKuDTO youKu(@Header ForestRequestHeader topSearchRequestHeader);
 
     @Get("https://mobileso.bz.mgtv.com/pc/suggest/v1")
