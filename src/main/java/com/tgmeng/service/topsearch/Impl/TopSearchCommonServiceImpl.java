@@ -359,4 +359,45 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeAiQiYiEnum.getDescription(), DataInfoCardEnum.AI_QI_YI.getValue(), DataInfoCardEnum.AI_QI_YI.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
+    @Override
+    public ResultTemplateBean getYouKuTopSearch(SearchTypeYouKuEnum searchTypeYouKuEnum) {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchYouKuDTO topSearchYouKuDTO = topSearchCommonClient.youKu(ForestUtil.getRandomRequestHeaderForYouKu());
+            List<TopSearchYouKuDTO.FinalDataArray> youKuData = new ArrayList<>();
+            TopSearchYouKuDTO.TabDataMap youKuTabDataMap = topSearchYouKuDTO.getData().getNodes().getFirst().getNodes().getFirst().getData().getTabDataMap();
+            switch (searchTypeYouKuEnum){
+                case SearchTypeYouKuEnum.DIAN_SHI_JU_YOU_KU:
+                    youKuData = youKuTabDataMap.getDianShiJu().getNodes().getFirst().getNodes();
+                    break;
+                case SearchTypeYouKuEnum.DIAN_YING_YOU_KU:
+                    youKuData = youKuTabDataMap.getDianYing().getNodes().getFirst().getNodes();
+                    break;
+                case SearchTypeYouKuEnum.DONG_MAN_YOU_KU:
+                    youKuData = youKuTabDataMap.getDongMan().getNodes().getFirst().getNodes();
+                    break;
+                case SearchTypeYouKuEnum.ZONG_YI_YOU_KU:
+                    youKuData = youKuTabDataMap.getZongYi().getNodes().getFirst().getNodes();
+                    break;
+                case SearchTypeYouKuEnum.ZONG_BANG_YOU_KU:
+                    youKuData = youKuTabDataMap.getReMenSouSuo().getNodes().getFirst().getNodes();
+                    break;
+                default:
+                    youKuData = youKuTabDataMap.getReMenSouSuo().getNodes().getFirst().getNodes();
+                    break;
+            }
+
+            for (TopSearchYouKuDTO.FinalDataArray content : youKuData) {
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchYouKuDTOContentVO2TopSearchCommonVO(content.getData());
+                topSearchCommonVOS.add(dataInfo);
+            }
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取优酷失败👺👺👺：平台；{}", searchTypeYouKuEnum.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.YOU_KU_TOP_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeYouKuEnum.getDescription(), DataInfoCardEnum.YOU_KU.getValue(), DataInfoCardEnum.YOU_KU.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
 }

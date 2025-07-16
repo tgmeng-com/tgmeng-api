@@ -158,4 +158,14 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "mainIndex", target = "hotScore")
     TopSearchCommonVO.DataInfo topSearchAiQiYiDTOContentVO2TopSearchCommonVO(TopSearchAiQiYiDTO.Contents aiQiYiContents);
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "encodeShowId", target = "url")
+    //@Mapping(source = "searchIndexValue", target = "hotScore")
+    TopSearchCommonVO.DataInfo topSearchYouKuDTOContentVO2TopSearchCommonVO(TopSearchYouKuDTO.FinalData youKuDTO);
+    @AfterMapping
+    default void topSearchYouKuDTOContentVO2TopSearchCommonVOAfter(TopSearchYouKuDTO.FinalData youKuDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setHotScore(StringUtil.youKuTopSearchItemHotScoreUtil(youKuDTO.getSearchIndexValue()));
+        topSearchCommonVO.setUrl("https://v.youku.com/v_show/id_XNjQ1NDI4ODY2MA==.html?s=" + youKuDTO.getEncodeShowId());
+    }
 }

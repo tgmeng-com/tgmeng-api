@@ -1,10 +1,7 @@
 package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.enums.business.SearchTypeAiQiYiEnum;
-import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
-import com.tgmeng.common.enums.business.SearchTypeTengXunShiPinEnum;
-import com.tgmeng.common.enums.business.SearchTypeWangYiYunEnum;
+import com.tgmeng.common.enums.business.*;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -215,6 +212,31 @@ public class TopSearchCommonController {
     @RequestMapping("/zongbangaiqiyi")
     public ResultTemplateBean getZongBangAiQiYiSearch() {
         return topSearchCommonService.getAiQiYiTopSearch(SearchTypeAiQiYiEnum.ZONG_BANG_AI_QI_YI);
+    }
+
+    @RequestMapping("/dianshijuyouku")
+    public ResultTemplateBean getDianShiJuYouKuSearch() {
+        return topSearchCommonService.getYouKuTopSearch(SearchTypeYouKuEnum.DIAN_SHI_JU_YOU_KU);
+    }
+
+    @RequestMapping("/dianyingyouku")
+    public ResultTemplateBean getDianYingYouKuSearch() {
+        return topSearchCommonService.getYouKuTopSearch(SearchTypeYouKuEnum.DIAN_YING_YOU_KU);
+    }
+
+    @RequestMapping("/dongmanyouku")
+    public ResultTemplateBean getDongManYouKuSearch() {
+        return topSearchCommonService.getYouKuTopSearch(SearchTypeYouKuEnum.DONG_MAN_YOU_KU);
+    }
+
+    @RequestMapping("/zongyiyouku")
+    public ResultTemplateBean getZongYiYouKuSearch() {
+        return topSearchCommonService.getYouKuTopSearch(SearchTypeYouKuEnum.ZONG_YI_YOU_KU);
+    }
+
+    @RequestMapping("/zongbangyouku")
+    public ResultTemplateBean getZongBangYouKuSearch() {
+        return topSearchCommonService.getYouKuTopSearch(SearchTypeYouKuEnum.ZONG_BANG_YOU_KU);
     }
 
 

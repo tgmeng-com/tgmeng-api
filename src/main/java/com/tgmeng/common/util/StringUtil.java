@@ -68,6 +68,10 @@ public class StringUtil {
         return zhiHuHotScoreConvertToNumber(topSearchZhiHuDTO.getDetail_text());
     }
 
+    public static Long youKuTopSearchItemHotScoreUtil(String hotScore) {
+        return youKuHotScoreConvertToNumber(hotScore);
+    }
+
     public static long zhiHuHotScoreConvertToNumber(String str) {
         if (str == null || str.isEmpty()) {
             return 0;
@@ -87,6 +91,31 @@ public class StringUtil {
         if (str.contains("万")) {
             multiplier = 10000;
         } else if (str.contains("亿")) {
+            multiplier = 100000000;
+        }
+
+        return (long) (number * multiplier);
+    }
+
+    public static Long youKuHotScoreConvertToNumber(String str) {
+        if (str == null || str.isEmpty()) {
+            return 0L;
+        }
+
+        // 提取数字部分（包括小数点）
+        Pattern pattern = Pattern.compile("(\\d+(\\.\\d+)?)");
+        Matcher matcher = pattern.matcher(str);
+
+        double number = 0;
+        if (matcher.find()) {
+            number = Double.parseDouble(matcher.group(1));
+        }
+
+        // 计算单位倍数
+        long multiplier = 1;
+        if (str.toLowerCase().contains("w")) {
+            multiplier = 10000;
+        } else if (str.toLowerCase().contains("y")) {
             multiplier = 100000000;
         }
 

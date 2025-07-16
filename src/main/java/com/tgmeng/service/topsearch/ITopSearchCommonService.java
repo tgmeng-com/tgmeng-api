@@ -1,10 +1,7 @@
 package com.tgmeng.service.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.enums.business.SearchTypeAiQiYiEnum;
-import com.tgmeng.common.enums.business.SearchTypeBaiDuEnum;
-import com.tgmeng.common.enums.business.SearchTypeTengXunShiPinEnum;
-import com.tgmeng.common.enums.business.SearchTypeWangYiYunEnum;
+import com.tgmeng.common.enums.business.*;
 
 
 public interface ITopSearchCommonService {
@@ -35,4 +32,6 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum searchTypeTengXunShiPinEnum);
 
     ResultTemplateBean getAiQiYiTopSearch(SearchTypeAiQiYiEnum searchTypeAiQiYiEnum);
+
+    ResultTemplateBean getYouKuTopSearch(SearchTypeYouKuEnum searchTypeYouKuEnum);
 }
