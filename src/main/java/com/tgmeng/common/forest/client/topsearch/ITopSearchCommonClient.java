@@ -19,7 +19,7 @@ public interface ITopSearchCommonClient {
      *
      * @author tgmeng
      * @since 2025/6/29 20:46
-    */
+     */
     @Get("https://weibo.com/ajax/statuses/hot_band")
     TopSearchWeiBoDTO weiBo(@Header ForestRequestHeader topSearchRequestHeader);
 
@@ -30,7 +30,7 @@ public interface ITopSearchCommonClient {
      *
      * @author tgmeng
      * @since 2025/6/29 20:45
-    */
+     */
     @Get("https://api.bilibili.com/x/web-interface/ranking/v2?rid=0&type=all")
     TopSearchBilibiliDTO bilibili(@Header ForestRequestHeader topSearchRequestHeader);
 
@@ -42,9 +42,9 @@ public interface ITopSearchCommonClient {
      *
      * @author tgmeng
      * @since 2025/6/29 20:46
-    */
+     */
     @Get("https://top.baidu.com/api/board?platform=wise&tab={type}")
-    TopSearchBaiDuDTO baiDu(@Header ForestRequestHeader topSearchRequestHeader,@Var("type") String type);
+    TopSearchBaiDuDTO baiDu(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
     /**
      * description: 抖音热搜
@@ -53,7 +53,7 @@ public interface ITopSearchCommonClient {
      *
      * @author tgmeng
      * @since 2025/6/29 22:37
-    */
+     */
     @Get("https://www-hj.douyin.com/aweme/v1/web/hot/search/list/")
     TopSearchDouYinDTO douYin(@Header ForestRequestHeader topSearchRequestHeader);
 
@@ -69,7 +69,7 @@ public interface ITopSearchCommonClient {
      *
      * @author tgmeng
      * @since 2025/7/2 18:34
-    */
+     */
     @Get("https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc")
     TopSearchTouTiaoDTO toutiao(@Header ForestRequestHeader topSearchRequestHeader);
 
@@ -77,7 +77,7 @@ public interface ITopSearchCommonClient {
     TopSearchWangYiDTO wangyi(@Header ForestRequestHeader topSearchRequestHeader);
 
     @Get("https://music.163.com/api/playlist/detail?id={type}")
-    TopSearchWangYiYunDTO wangyiyun(@Header ForestRequestHeader topSearchRequestHeader,@Var("type") String type);
+    TopSearchWangYiYunDTO wangyiyun(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
     @Get("https://tieba.baidu.com/hottopic/browse/topicList")
     TopSearchBaiDuTieBaDTO baidutieba(@Header ForestRequestHeader topSearchRequestHeader);
@@ -97,9 +97,13 @@ public interface ITopSearchCommonClient {
     @Get("https://mesh.if.iqiyi.com/portal/pcw/rankList/comSecRankList?category_id={type}")
     TopSearchAiQiYiDTO aiQiYi(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
-    //@Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?jsv=2.7.2&appKey=23774304&t=1752672844020&sign=8f1fbb45a855cdbe8094dd3916c9a7a1&api=mtop.youku.soku.yksearch&type=originaljson&v=2.0&ecode=1&dataType=json&data=%7B%22pg%22%3A%221%22%2C%22pz%22%3A%2210%22%2C%22appScene%22%3A%22default_page%22%2C%22appCaller%22%3A%22youku-search-sdk%22%2C%22utdId%22%3A%22%22%7D")
-    @Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?jsv=2.7.2&appKey=23774304&t=1752689287221&sign=280332eba36eba1f1a9f99b88b2bd4ad&api=mtop.youku.soku.yksearch&type=originaljson&v=2.0&ecode=1&dataType=json&data=%7B%22pg%22%3A%221%22%2C%22pz%22%3A%2210%22%2C%22appScene%22%3A%22default_page%22%2C%22appCaller%22%3A%22youku-search-sdk%22%2C%22utdId%22%3A%22%22%7D")
-    TopSearchYouKuDTO youKu(@Header ForestRequestHeader topSearchRequestHeader);
+    // 重要
+    @Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?appKey=23774304")
+    ForestResponse youKuCookie(@Header ForestRequestHeader topSearchRequestHeader);
+
+    //@Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?appKey=23774304&data=%7B%22pg%22%3A%221%22%2C%22pz%22%3A%2210%22%2C%22appScene%22%3A%22default_page%22%2C%22appCaller%22%3A%22youku-search-sdk%22%2C%22utdId%22%3A%22%22%7D&t=1752703423430&sign=14f6d656bb0d77843fb3bbd620c2626e")
+    @Get("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?appKey={appKey}&data={data}&t={time}&sign={sign}")
+    TopSearchYouKuDTO youKu(@Header ForestRequestHeader topSearchRequestHeader, @Var("appKey") String appKey,@Var("data") String data,@Var("time") String time, @Var("sign") String sign);
 
     @Get("https://mobileso.bz.mgtv.com/pc/suggest/v1")
     TopSearchMangGuoDTO mangGuo(@Header ForestRequestHeader topSearchRequestHeader);

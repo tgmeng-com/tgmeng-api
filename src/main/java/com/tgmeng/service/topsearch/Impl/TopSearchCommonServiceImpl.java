@@ -2,6 +2,8 @@ package com.tgmeng.service.topsearch.Impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.DigestUtil;
+import com.dtflys.forest.http.ForestCookie;
 import com.dtflys.forest.http.ForestResponse;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
@@ -13,6 +15,7 @@ import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchCommonMapper;
 import com.tgmeng.common.util.CommonJsoupJsoupParseUtil;
 import com.tgmeng.common.util.ForestUtil;
 import com.tgmeng.common.util.StringUtil;
+import com.tgmeng.common.util.TimeUtil;
 import com.tgmeng.model.dto.topsearch.*;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
@@ -20,10 +23,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.net.URLDecoder;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -241,7 +242,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
     public ResultTemplateBean getWangYiYunTopSearch(SearchTypeWangYiYunEnum searchTypeWangYiYunEnum) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
-            TopSearchWangYiYunDTO wangyiyun = topSearchCommonClient.wangyiyun(ForestUtil.getRandomRequestHeaderForWangYiYun(),searchTypeWangYiYunEnum.getValue());
+            TopSearchWangYiYunDTO wangyiyun = topSearchCommonClient.wangyiyun(ForestUtil.getRandomRequestHeaderForWangYiYun(), searchTypeWangYiYunEnum.getValue());
             topSearchCommonVOS = Optional.ofNullable(wangyiyun.getResult())
                     .map(TopSearchWangYiYunDTO.DataDTO::getTracks)
                     .orElse(Collections.emptyList())
@@ -298,11 +299,11 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
             TopSearchZhiHuDTO zhihu = topSearchCommonClient.zhiHu(ForestUtil.getRandomRequestHeaderForZhiHu());
-            if (ObjectUtil.isNotNull(zhihu)){
-                zhihu.getData().forEach(t->{
+            if (ObjectUtil.isNotNull(zhihu)) {
+                zhihu.getData().forEach(t -> {
                     topSearchCommonVOS.add(topSearchCommonMapper.topSearchZhiHuDTOItemInfoTopSearchCommonVO(t.getTarget(), t));
                 });
-            }else {
+            } else {
                 log.error("👺👺👺获取知乎热搜失败👺👺👺");
             }
         } catch (Exception e) {
@@ -366,10 +367,32 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
     public ResultTemplateBean getYouKuTopSearch(SearchTypeYouKuEnum searchTypeYouKuEnum) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         try {
-            TopSearchYouKuDTO topSearchYouKuDTO = topSearchCommonClient.youKu(ForestUtil.getRandomRequestHeaderForYouKu());
+            ForestResponse forestResponse = topSearchCommonClient.youKuCookie(ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.YOU_KU.getValue(), ForestRequestHeaderOriginEnum.YOU_KU.getValue()));
+            List<ForestCookie> cookies = forestResponse.getCookies();
+            // 提取 _m_h5_tk Cookie
+            String _m_h5_tk = null;
+            for (ForestCookie cookie : cookies) {
+                if ("_m_h5_tk".equals(cookie.getName())) {
+                    _m_h5_tk = cookie.getValue();
+                    break;
+                }
+            }
+            if (_m_h5_tk == null) {
+                throw new RuntimeException("Missing _m_h5_tk cookie");
+            }
+            // 提取 token
+            String token = _m_h5_tk.split("_")[0];
+            String appKey = "23774304";
+            //这个data就是查询参数
+            String data = "%7B%22pg%22%3A%221%22%2C%22pz%22%3A%2210%22%2C%22appScene%22%3A%22default_page%22%2C%22appCaller%22%3A%22youku-search-sdk%22%2C%22utdId%22%3A%22%22%7D";
+            String decodeData = URLDecoder.decode(data, "UTF-8");
+            Long time = TimeUtil.getCurrentTimeMillis();
+            String signStr = new StringJoiner("&").add(token).add(time.toString()).add(appKey).add(decodeData).toString();
+            String sign = DigestUtil.md5Hex(signStr);
+            TopSearchYouKuDTO topSearchYouKuDTO = topSearchCommonClient.youKu(ForestUtil.getRandomRequestHeaderForYouKu(cookies), appKey, data, time.toString(), sign);
             List<TopSearchYouKuDTO.FinalDataArray> youKuData = new ArrayList<>();
             TopSearchYouKuDTO.TabDataMap youKuTabDataMap = topSearchYouKuDTO.getData().getNodes().getFirst().getNodes().getFirst().getData().getTabDataMap();
-            switch (searchTypeYouKuEnum){
+            switch (searchTypeYouKuEnum) {
                 case SearchTypeYouKuEnum.DIAN_SHI_JU_YOU_KU:
                     youKuData = youKuTabDataMap.getDianShiJu().getNodes().getFirst().getNodes();
                     break;
@@ -409,24 +432,24 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         try {
             TopSearchMangGuoDTO topSearchMangGuoDTO = topSearchCommonClient.mangGuo(ForestUtil.getRandomRequestHeaderForMangGuo());
             List<TopSearchMangGuoDTO.FinalData> mangGuoData = new ArrayList<>();
-            switch (searchTypeMangGuoEnum){
+            switch (searchTypeMangGuoEnum) {
                 case SearchTypeMangGuoEnum.DIAN_SHI_JU_MANG_GUO:
-                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.DIAN_SHI_JU_MANG_GUO.getValue())).toList().getFirst().getData();
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t -> t.getLabel().equals(SearchTypeMangGuoEnum.DIAN_SHI_JU_MANG_GUO.getValue())).toList().getFirst().getData();
                     break;
                 case SearchTypeMangGuoEnum.DIAN_YING_MANG_GUO:
-                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.DIAN_YING_MANG_GUO.getValue())).toList().getFirst().getData();
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t -> t.getLabel().equals(SearchTypeMangGuoEnum.DIAN_YING_MANG_GUO.getValue())).toList().getFirst().getData();
                     break;
                 case SearchTypeMangGuoEnum.DONG_MAN_MANG_GUO:
-                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.DONG_MAN_MANG_GUO.getValue())).toList().getFirst().getData();
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t -> t.getLabel().equals(SearchTypeMangGuoEnum.DONG_MAN_MANG_GUO.getValue())).toList().getFirst().getData();
                     break;
                 case SearchTypeMangGuoEnum.ZONG_YI_MANG_GUO:
-                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_YI_MANG_GUO.getValue())).toList().getFirst().getData();
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t -> t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_YI_MANG_GUO.getValue())).toList().getFirst().getData();
                     break;
                 case SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO:
-                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO.getValue())).toList().getFirst().getData();
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t -> t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO.getValue())).toList().getFirst().getData();
                     break;
                 default:
-                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO.getValue())).toList().getFirst().getData();
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t -> t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO.getValue())).toList().getFirst().getData();
                     break;
             }
 
