@@ -117,7 +117,7 @@ public class ForestUtil {
                 .setUserAgent(userAgent)
                 //.setAccept("application/json, text/plain, */*")
                 //.setAcceptEncoding("gzip, deflate, br, zstd")
-                //.setAcceptLanguage("zh-CN,zh;q=0.9")
+                .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
                 //.setConnection("keep-alive")
                 .setReferer(ForestRequestHeaderRefererEnum.MANG_GUO.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.MANG_GUO.getValue())
