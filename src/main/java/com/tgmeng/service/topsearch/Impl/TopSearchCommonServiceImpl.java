@@ -315,7 +315,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
     public ResultTemplateBean getTengXunShiPinTopSearch(SearchTypeTengXunShiPinEnum searchTypeTengXunShiPinEnum) {
         try {
             ForestResponse forestResponse = topSearchCommonClient.tengXunShiPin(
-                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.TENG_XUN_SHI_PIN.getValue(), ForestRequestHeaderOriginEnum.TENG_XUN_SHI_PIN.getValue()),
+                    ForestUtil.getRandomRequestHeaderForTengXunShiPin(),
                     searchTypeTengXunShiPinEnum.getValue()
             );
 

@@ -85,14 +85,28 @@ public class ForestUtil {
                 .setOrigin(ForestRequestHeaderOriginEnum.ZHI_HU.getValue());
     }
 
+    public static ForestRequestHeader getRandomRequestHeaderForTengXunShiPin() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                //.setAccept("application/json, text/plain, */*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setConnection("keep-alive")
+                .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                .setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.TENG_XUN_SHI_PIN.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.TENG_XUN_SHI_PIN.getValue());
+    }
+
     public static ForestRequestHeader getRandomRequestHeaderForAiQiYi() {
         String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
         return new ForestRequestHeader()
                 .setUserAgent(userAgent)
                 //.setAccept("application/json, text/plain, */*")
                 //.setAcceptEncoding("gzip, deflate, br, zstd")
-                //.setAcceptLanguage("zh-CN,zh;q=0.9")
                 //.setConnection("keep-alive")
+                .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                .setXForwardedFor("114.114.114.114")
                 .setReferer(ForestRequestHeaderRefererEnum.AI_QI_YI.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.AI_QI_YI.getValue());
     }
