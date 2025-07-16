@@ -437,6 +437,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             log.error("👺👺👺获取优酷失败👺👺👺：平台；{}", searchTypeMangGuoEnum.getKey(), e);
             throw new ServerException(ServerExceptionEnum.MANG_GUO_SEARCH_EXCEPTION);
         }
+
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeMangGuoEnum.getDescription(), DataInfoCardEnum.MANG_GUO.getValue(), DataInfoCardEnum.MANG_GUO.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
