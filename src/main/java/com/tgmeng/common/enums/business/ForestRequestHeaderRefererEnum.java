@@ -33,7 +33,8 @@ public enum ForestRequestHeaderRefererEnum  implements INameValueEnum<String,Str
     ZHI_HU("ZHI_HU", "https://www.zhihu.com/", "", true,5),
     TENG_XUN_SHI_PIN("TENG_XUN_SHI_PIN", "https://v.qq.com/", "", true,5),
     AI_QI_YI("AI_QI_YI", "https://www.iqiyi.com/", "", true,5),
-    YOU_KU("YOU_KU", "https://acz.youku.com/", "", true,5);
+    YOU_KU("YOU_KU", "https://acz.youku.com/", "", true,5),
+    MANG_GUO("MANG_GUO", "https://so.mgtv.com/", "", true,5);
 
     private final String key;
     private final String value;

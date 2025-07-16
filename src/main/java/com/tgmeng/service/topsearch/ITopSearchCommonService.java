@@ -34,4 +34,6 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getAiQiYiTopSearch(SearchTypeAiQiYiEnum searchTypeAiQiYiEnum);
 
     ResultTemplateBean getYouKuTopSearch(SearchTypeYouKuEnum searchTypeYouKuEnum);
+
+    ResultTemplateBean getMangGuoTopSearch(SearchTypeMangGuoEnum searchTypeMangGuoEnum);
 }

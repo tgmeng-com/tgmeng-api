@@ -400,4 +400,44 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeYouKuEnum.getDescription(), DataInfoCardEnum.YOU_KU.getValue(), DataInfoCardEnum.YOU_KU.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
+    @Override
+    public ResultTemplateBean getMangGuoTopSearch(SearchTypeMangGuoEnum searchTypeMangGuoEnum) {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchMangGuoDTO topSearchMangGuoDTO = topSearchCommonClient.mangGuo(ForestUtil.getRandomRequestHeaderForYMangGuo());
+            List<TopSearchMangGuoDTO.FinalData> mangGuoData = new ArrayList<>();
+            switch (searchTypeMangGuoEnum){
+                case SearchTypeMangGuoEnum.DIAN_SHI_JU_MANG_GUO:
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.DIAN_SHI_JU_MANG_GUO.getValue())).toList().getFirst().getData();
+                    break;
+                case SearchTypeMangGuoEnum.DIAN_YING_MANG_GUO:
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.DIAN_YING_MANG_GUO.getValue())).toList().getFirst().getData();
+                    break;
+                case SearchTypeMangGuoEnum.DONG_MAN_MANG_GUO:
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.DONG_MAN_MANG_GUO.getValue())).toList().getFirst().getData();
+                    break;
+                case SearchTypeMangGuoEnum.ZONG_YI_MANG_GUO:
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_YI_MANG_GUO.getValue())).toList().getFirst().getData();
+                    break;
+                case SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO:
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO.getValue())).toList().getFirst().getData();
+                    break;
+                default:
+                    mangGuoData = topSearchMangGuoDTO.getData().getTopList().stream().filter(t->t.getLabel().equals(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO.getValue())).toList().getFirst().getData();
+                    break;
+            }
+
+            for (TopSearchMangGuoDTO.FinalData content : mangGuoData) {
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchMangGuoDTOContentVO2TopSearchCommonVO(content);
+                topSearchCommonVOS.add(dataInfo);
+            }
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取优酷失败👺👺👺：平台；{}", searchTypeMangGuoEnum.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.MANG_GUO_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeMangGuoEnum.getDescription(), DataInfoCardEnum.MANG_GUO.getValue(), DataInfoCardEnum.MANG_GUO.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
 }

@@ -127,6 +127,7 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "commentCount", target = "hotScore")
     @Mapping(source = "id", target = "url")
     TopSearchCommonVO.DataInfo topSearchShaoShuPaiDTOItemInfoTopSearchCommonVO(TopSearchShaoShuPaiDTO.ItemDTO shaoShuPaiDTO);
+
     @AfterMapping
     default void topSearchShaoShuPaiDTOItemInfoTopSearchCommonVOAfter(TopSearchShaoShuPaiDTO.ItemDTO topSearchShaoShuPaiItemDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(StringUtil.shaoShuPaiTopSearchItemUrlUtil(topSearchShaoShuPaiItemDTO.getId()));
@@ -136,9 +137,10 @@ public interface ITopSearchCommonMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "zhiHuDTO.title", target = "keyword")
     @Mapping(source = "zhiHuDTO.id", target = "url")
-    TopSearchCommonVO.DataInfo topSearchZhiHuDTOItemInfoTopSearchCommonVO(TopSearchZhiHuDTO.ItemDTO zhiHuDTO,TopSearchZhiHuDTO.DataInfo dataInfo);
+    TopSearchCommonVO.DataInfo topSearchZhiHuDTOItemInfoTopSearchCommonVO(TopSearchZhiHuDTO.ItemDTO zhiHuDTO, TopSearchZhiHuDTO.DataInfo dataInfo);
+
     @AfterMapping
-    default void topSearchZhiHuDTOItemInfoTopSearchCommonVOAfter(TopSearchZhiHuDTO.ItemDTO zhiHuDTO,TopSearchZhiHuDTO.DataInfo dataInfo, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+    default void topSearchZhiHuDTOItemInfoTopSearchCommonVOAfter(TopSearchZhiHuDTO.ItemDTO zhiHuDTO, TopSearchZhiHuDTO.DataInfo dataInfo, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setHotScore(StringUtil.zhiHuTopSearchItemHotScoreUtil(dataInfo));
         topSearchCommonVO.setUrl("https://www.zhihu.com/question/" + zhiHuDTO.getId());
     }
@@ -161,11 +163,23 @@ public interface ITopSearchCommonMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "title", target = "keyword")
     @Mapping(source = "encodeShowId", target = "url")
-    //@Mapping(source = "searchIndexValue", target = "hotScore")
+        //@Mapping(source = "searchIndexValue", target = "hotScore")
     TopSearchCommonVO.DataInfo topSearchYouKuDTOContentVO2TopSearchCommonVO(TopSearchYouKuDTO.FinalData youKuDTO);
+
     @AfterMapping
     default void topSearchYouKuDTOContentVO2TopSearchCommonVOAfter(TopSearchYouKuDTO.FinalData youKuDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setHotScore(StringUtil.youKuTopSearchItemHotScoreUtil(youKuDTO.getSearchIndexValue()));
         topSearchCommonVO.setUrl("https://v.youku.com/v_show/id_XNjQ1NDI4ODY2MA==.html?s=" + youKuDTO.getEncodeShowId());
     }
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "name", target = "keyword")
+    TopSearchCommonVO.DataInfo topSearchMangGuoDTOContentVO2TopSearchCommonVO(TopSearchMangGuoDTO.FinalData mangGuoDTO);
+
+    @AfterMapping
+    default void topSearchMangGuoDTOContentVO2TopSearchCommonVOAfter(TopSearchMangGuoDTO.FinalData mangGuoDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setHotScore(null);
+        topSearchCommonVO.setUrl("https://so.mgtv.com/so?k=" + mangGuoDTO.getName());
+    }
+
 }

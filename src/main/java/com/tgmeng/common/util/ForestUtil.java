@@ -111,4 +111,16 @@ public class ForestUtil {
                 ;
     }
 
+    public static ForestRequestHeader getRandomRequestHeaderForYMangGuo() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                //.setAccept("application/json, text/plain, */*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9")
+                //.setConnection("keep-alive")
+                .setReferer(ForestRequestHeaderRefererEnum.MANG_GUO.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.MANG_GUO.getValue())
+                ;
+    }
 }

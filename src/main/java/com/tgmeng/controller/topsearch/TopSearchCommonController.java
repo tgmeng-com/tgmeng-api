@@ -239,6 +239,31 @@ public class TopSearchCommonController {
         return topSearchCommonService.getYouKuTopSearch(SearchTypeYouKuEnum.ZONG_BANG_YOU_KU);
     }
 
+    @RequestMapping("/dianshijumangguo")
+    public ResultTemplateBean getDianShiJuMangGuoSearch() {
+        return topSearchCommonService.getMangGuoTopSearch(SearchTypeMangGuoEnum.DIAN_SHI_JU_MANG_GUO);
+    }
+
+    @RequestMapping("/dianyingmangguo")
+    public ResultTemplateBean getDianYingMangGuoSearch() {
+        return topSearchCommonService.getMangGuoTopSearch(SearchTypeMangGuoEnum.DIAN_YING_MANG_GUO);
+    }
+
+    @RequestMapping("/dongmanmangguo")
+    public ResultTemplateBean getDongManMangGuoSearch() {
+        return topSearchCommonService.getMangGuoTopSearch(SearchTypeMangGuoEnum.DONG_MAN_MANG_GUO);
+    }
+
+    @RequestMapping("/zongyimangguo")
+    public ResultTemplateBean getZongYiMangGuoSearch() {
+        return topSearchCommonService.getMangGuoTopSearch(SearchTypeMangGuoEnum.ZONG_YI_MANG_GUO);
+    }
+
+    @RequestMapping("/zongbangmangguo")
+    public ResultTemplateBean getZongBangMangGuoSearch() {
+        return topSearchCommonService.getMangGuoTopSearch(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO);
+    }
+
 
 
 
