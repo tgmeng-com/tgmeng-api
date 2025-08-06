@@ -25,10 +25,17 @@ public class TopSearchWangYiYunDTO {
 
         private List<DataInfo> tracks;
     }
+
     @Data
-    public static  class DataInfo {
+    public static class DataInfo {
         private Long id;
         private String name;
         private Long popularity;
+        private List<Artists> artists;
+    }
+
+    @Data
+    public static class Artists {
+        private String name;
     }
 }

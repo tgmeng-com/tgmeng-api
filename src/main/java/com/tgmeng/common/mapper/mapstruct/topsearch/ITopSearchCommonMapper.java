@@ -6,6 +6,8 @@ import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import org.mapstruct.*;
 
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 /**
  * description: TopSearch的Mapper转换接口
@@ -112,6 +114,10 @@ public interface ITopSearchCommonMapper {
     @AfterMapping
     default void topSearchWangYiYunDTOItemInfoTopSearchCommonVOAfter(TopSearchWangYiYunDTO.DataInfo topSearchWangYiYunDTO, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl(StringUtil.wangYiYunTopSearchItemUrlUtil(topSearchWangYiYunDTO.getId()));
+        topSearchCommonVO.setImage(
+                new StringJoiner(" ")
+                        .add(topSearchWangYiYunDTO.getArtists().stream().map(TopSearchWangYiYunDTO.Artists::getName).collect(Collectors.joining("/")))
+                        .toString());
     }
 
     @BeanMapping(ignoreByDefault = true)
