@@ -102,11 +102,13 @@ public class ControllerApiSchedule {
             "/api/topsearch/dianyingmangguo",
             "/api/topsearch/dongmanmangguo",
             "/api/topsearch/zongyimangguo",
-            "/api/topsearch/zongbangmangguo"
+            "/api/topsearch/zongbangmangguo",
 
-
-
-
+            // 猫眼
+            "/api/topsearch/zhoupiaofangbangmaoyan",
+            "/api/topsearch/xiangkanbangmaoyan",
+            "/api/topsearch/goupiaopingfenbangmaoyan",
+            "/api/topsearch/top100maoyan"
 
     );
 

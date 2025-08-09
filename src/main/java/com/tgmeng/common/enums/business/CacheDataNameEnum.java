@@ -77,7 +77,12 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_DIAN_YING_MANG_GUO("CACHE_TOP_SEARCH_DIAN_YING_MANG_GUO", "/topsearch/dianyingmangguo", "", true,4),
     CACHE_TOP_SEARCH_DONG_MAN_MANG_GUO("CACHE_TOP_SEARCH_DONG_MAN_MANG_GUO", "/topsearch/dongmanmangguo", "", true,4),
     CACHE_TOP_SEARCH_ZONG_YI_MANG_GUO("CACHE_TOP_SEARCH_ZONG_YI_MANG_GUO", "/topsearch/zongyimangguo", "", true,4),
-    CACHE_TOP_SEARCH_ZONG_BANG_MANG_GUO("CACHE_TOP_SEARCH_ZONG_BANG_MANG_GUO", "/topsearch/zongbangmangguo", "", true,4);
+    CACHE_TOP_SEARCH_ZONG_BANG_MANG_GUO("CACHE_TOP_SEARCH_ZONG_BANG_MANG_GUO", "/topsearch/zongbangmangguo", "", true,4),
+
+    CACHE_TOP_SEARCH_ZHOU_PIAO_FANG_BANG_MAO_YAN("CACHE_TOP_SEARCH_ZHOU_PIAO_FANG_BANG_MAO_YAN", "/topsearch/zhoupiaofangbangmaoyan", "", true,4),
+    CACHE_TOP_SEARCH_XIANG_KAN_BANG_MAO_YAN("CACHE_TOP_SEARCH_XIANG_KAN_BANG_MAO_YAN", "/topsearch/xiangkanbangmaoyan", "", true,4),
+    CACHE_TOP_SEARCH_GOU_PIAO_PING_FEN_BANG_MAO_YAN("CACHE_TOP_SEARCH_GOU_PIAO_PING_FEN_BANG_MAO_YAN", "/topsearch/goupiaopingfenbangmaoyan", "", true,4),
+    CACHE_TOP_SEARCH_TOP_100_MAO_YAN("CACHE_TOP_SEARCH_TOP_100_MAO_YAN", "/topsearch/top100maoyan", "", true,4);
 
     private final String key;
     private final String value;

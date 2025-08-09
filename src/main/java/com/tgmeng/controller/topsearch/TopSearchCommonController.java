@@ -264,7 +264,25 @@ public class TopSearchCommonController {
         return topSearchCommonService.getMangGuoTopSearch(SearchTypeMangGuoEnum.ZONG_BANG_MANG_GUO);
     }
 
+    @RequestMapping("/zhoupiaofangbangmaoyan")
+    public ResultTemplateBean getZhouPiaoFangBangMaoYanSearch() {
+        return topSearchCommonService.getMaoYanTopSearch(SearchTypeMaoYanEnum.ZHOU_PIAO_FANG_BANG_MAO_YAN);
+    }
 
+    @RequestMapping("/xiangkanbangmaoyan")
+    public ResultTemplateBean getXiangkanBangMaoYanSearch() {
+        return topSearchCommonService.getMaoYanTopSearch(SearchTypeMaoYanEnum.XIANG_KAN_BANG_MAO_YAN);
+    }
+
+    @RequestMapping("/goupiaopingfenbangmaoyan")
+    public ResultTemplateBean getGouPiaoPingFenBangMaoYanSearch() {
+        return topSearchCommonService.getMaoYanTopSearch(SearchTypeMaoYanEnum.GOU_PIAO_PING_FEN_BANG_MAO_YAN);
+    }
+
+    @RequestMapping("/top100maoyan")
+    public ResultTemplateBean getTop100MaoYanSearch() {
+        return topSearchCommonService.getMaoYanTopSearch(SearchTypeMaoYanEnum.TOP_100_MAO_YAN);
+    }
 
 
 

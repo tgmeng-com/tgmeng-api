@@ -34,15 +34,23 @@ public class TopSearchCommonVO {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static  class DataInfo {
+    public static  class DataInfo<T> {
         /** 热搜词 */
         private String keyword;
         /** 给前端格式化的热度，比如“1.2万” */
-        private Long hotScore;
+        private T hotScore;
         /** 热搜词的url */
         private String url;
         /** 图片 */
         private String image;
+        /** 作者/演员 */
+        private String author;
+        /** 描述 */
+        private String desc;
+        /** 类型 */
+        private String type;
+        /** 发表/上映时间 */
+        private String publishTime;
     }
 
     public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String dataCardName,String dataCardLogo,String dataCardCategory){

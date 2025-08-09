@@ -108,4 +108,7 @@ public interface ITopSearchCommonClient {
     @Get("https://mobileso.bz.mgtv.com/pc/suggest/v1")
     TopSearchMangGuoDTO mangGuo(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://m.maoyan.com/asgard/board?year=0&term=0&id={type}")
+    ForestResponse maoYan(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
+
 }

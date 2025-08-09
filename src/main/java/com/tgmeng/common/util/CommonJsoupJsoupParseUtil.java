@@ -1,6 +1,12 @@
 package com.tgmeng.common.util;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tgmeng.common.enums.exception.ServerExceptionEnum;
+import com.tgmeng.common.exception.ServerException;
+import com.tgmeng.model.dto.topsearch.TopSearchMaoYanDTO;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,8 +14,10 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-
+@Slf4j
 public class CommonJsoupJsoupParseUtil {
     public static List<TopSearchCommonVO.DataInfo> tengXunShiPin(String content) {
         Document parse = Jsoup.parse(content);
@@ -43,10 +51,47 @@ public class CommonJsoupJsoupParseUtil {
                 }
             }
             String title = safeText(element, "div:nth-of-type(1) > a ");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "","","","",""));
         }
         return topSearchCommonVOS;
     }
+
+    public static List<TopSearchCommonVO.DataInfo> maoYan(String content) {
+        try {
+            Document parse = Jsoup.parse(content);
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+            // 2. 获取所有 <script> 标签
+            Elements scripts = parse.select("script");
+            // 3. 匹配 var AppData = { ... };
+            Pattern pattern = Pattern.compile("var\\s+AppData\\s*=\\s*(\\{.*?\\});", Pattern.DOTALL);
+            for (var script : scripts) {
+                String content1 = script.html();
+                Matcher matcher = pattern.matcher(content1);
+                if (matcher.find()) {
+                    String appDataJson = matcher.group(1);
+                    ObjectMapper mapper = new ObjectMapper();
+                    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                    TopSearchMaoYanDTO topSearchMaoYanDTO = mapper.readValue(appDataJson, TopSearchMaoYanDTO.class);
+                    for (TopSearchMaoYanDTO.Movies movie : topSearchMaoYanDTO.getData().getData().getMovies()) {
+                        topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(movie.getNm(),
+                                movie.getLabel().getNumber()+movie.getLabel().getText(),
+                                "https://www.maoyan.com/films/"+movie.getId(),
+                                movie.getBackGroundImg(),
+                                movie.getStar(),
+                                movie.getShortDec(),
+                                movie.getCat(),
+                                movie.getPubDesc()));
+                    }
+                    break;
+                }
+            }
+            return topSearchCommonVOS;
+        }catch (Exception e){
+            log.error("👺👺👺获取猫眼榜单失败👺👺👺", e);
+            throw new ServerException(ServerExceptionEnum.MAO_YAN_SEARCH_EXCEPTION);
+        }
+    }
+
 
     public static String safeText(Element parent, String selector) {
         Element el = parent.selectFirst(selector);

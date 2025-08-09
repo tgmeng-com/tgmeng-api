@@ -466,4 +466,35 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, searchTypeMangGuoEnum.getDescription(), DataInfoCardEnum.MANG_GUO.getValue(), DataInfoCardEnum.MANG_GUO.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
+    @Override
+    public ResultTemplateBean getMaoYanTopSearch(SearchTypeMaoYanEnum searchTypeMaoYanEnum) {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.maoYan(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.MAO_YAN.getValue(), ForestRequestHeaderOriginEnum.MAO_YAN.getValue()),
+                    searchTypeMaoYanEnum.getValue()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.TENG_XUN_SHI_PIN_TOP_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.maoYan(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.TENG_XUN_SHI_PIN.getKey(),
+                    DataInfoCardEnum.TENG_XUN_SHI_PIN.getValue(),
+                    DataInfoCardEnum.TENG_XUN_SHI_PIN.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取腾讯视频失败👺👺👺：平台；{}", DataInfoCardEnum.TENG_XUN_SHI_PIN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.HUGGING_FACE_TOP_SEARCH_EXCEPTION);
+        }
+    }
 }
