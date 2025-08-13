@@ -155,10 +155,6 @@ docker-compose logs -f --tail=50 tgmeng-api
 
 ## ⭐ Star History
 
-<a href="https://www.star-history.com/#CandyDream6/tgmeng-api&CandyDream6/tgmeng-top-search-frontend&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=CandyDream6/tgmeng-api,CandyDream6/tgmeng-top-search-frontend&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=CandyDream6/tgmeng-api,CandyDream6/tgmeng-top-search-frontend&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=CandyDream6/tgmeng-api,CandyDream6/tgmeng-top-search-frontend&type=Date" />
- </picture>
-</a>
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=tgmeng-com/tgmeng-api&type=Date)](https://www.star-history.com/#tgmeng-com/tgmeng-api&Date)
