@@ -155,10 +155,6 @@ docker-compose logs -f --tail=50 tgmeng-api
 
 ## ⭐ Star History
 
-## Star History
-
-## Star History
-
 <a href="https://www.star-history.com/#tgmeng-com/tgmeng-api&Date">
  <picture>
    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=tgmeng-com/tgmeng-api&type=Date&theme=dark" />
