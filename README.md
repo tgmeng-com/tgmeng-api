@@ -2,7 +2,7 @@
 
 <h2><div align="center">糖果梦 热榜（后端） |  Tgmeng Trend</div>
 <div>&nbsp;</div>
-<!-- profile logo 个人资料徽标 -->
+<!-- profile logo 个人资料徽标1 -->
   <div align="center">
     <a href="https://tgmeng.com"><img src="https://img.shields.io/badge/Home-主页-blue" /></a>&emsp;
     <a href="https://bbs.tgmeng.com"><img src="https://img.shields.io/badge/BBS-论坛-c32136" /></a>&emsp;
