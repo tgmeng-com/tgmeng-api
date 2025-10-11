@@ -72,9 +72,10 @@ public class ForestUtil {
                 .setUserAgent(userAgent)
                 .setAcceptEncoding("gzip, deflate, br, zstd")
                 .setAcceptLanguage("zh-CN,zh;q=0.9")
-                .setConnection("keep-alive")
-                .setReferer(ForestRequestHeaderRefererEnum.BILIBILI.getValue())
-                .setOrigin(ForestRequestHeaderOriginEnum.BILIBILI.getValue());
+                .setPriority("u=0, i")
+                //.setReferer(ForestRequestHeaderRefererEnum.BILIBILI.getValue())
+                //.setOrigin(ForestRequestHeaderOriginEnum.BILIBILI.getValue())
+                ;
     }
 
     public static ForestRequestHeader getRandomRequestHeaderForZhiHu() {

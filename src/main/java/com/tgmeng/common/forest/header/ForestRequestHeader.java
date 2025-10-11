@@ -21,4 +21,6 @@ public class ForestRequestHeader {
     private String Cookie;
     @JsonProperty("X-Forwarded-For")
     private String XForwardedFor;
+    private String priority;
+
 }
