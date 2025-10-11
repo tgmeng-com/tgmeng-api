@@ -19,8 +19,9 @@ public class StringUtil {
         return new StringJoiner("")
                 .add("https://s.weibo.com/weibo?q=")
                 .add(wordScheme)
-                .add("&t=31&band_rank=")
-                .add(String.valueOf(realpos)).toString();
+                //.add("&t=31&band_rank=")
+                //.add(String.valueOf(realpos))
+                .toString();
     }
 
     public static String douYinTopSearchItemUrlUtil(String sentenceId, String word) {
