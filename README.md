@@ -2,7 +2,7 @@
 
 <h2><div align="center">糖果梦 热榜（后端） |  Tgmeng Trend</div>
 <div>&nbsp;</div>
-<!-- profile logo 个人资料徽标 -->
+<!-- profile logo 个人资料徽标1 -->
   <div align="center">
     <a href="https://tgmeng.com"><img src="https://img.shields.io/badge/Home-主页-blue" /></a>&emsp;
     <a href="https://bbs.tgmeng.com"><img src="https://img.shields.io/badge/BBS-论坛-c32136" /></a>&emsp;
@@ -155,10 +155,10 @@ docker-compose logs -f --tail=50 tgmeng-api
 
 ## ⭐ Star History
 
-<a href="https://www.star-history.com/#CandyDream6/tgmeng-api&CandyDream6/tgmeng-top-search-frontend&Date">
+<a href="https://www.star-history.com/#tgmeng-com/tgmeng-api&Date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=CandyDream6/tgmeng-api,CandyDream6/tgmeng-top-search-frontend&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=CandyDream6/tgmeng-api,CandyDream6/tgmeng-top-search-frontend&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=CandyDream6/tgmeng-api,CandyDream6/tgmeng-top-search-frontend&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=tgmeng-com/tgmeng-api&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=tgmeng-com/tgmeng-api&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=tgmeng-com/tgmeng-api&type=Date" />
  </picture>
 </a>
