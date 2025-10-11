@@ -118,7 +118,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .stream()
                     .map(t -> {
                         Long realPos = Optional.ofNullable(t.getRealpos()).orElse(0L);
-                        t.setUrl(StringUtil.weiBoTopSearchItemUrlUtil(t.getWordScheme(), realPos));
+                        t.setUrl(StringUtil.weiBoTopSearchItemUrlUtil(t.getNote(), realPos));
                         return t;
                     })
                     .map(topSearchCommonMapper::topSearchWeiBoDTODataVO2TopSearchCommonVO)

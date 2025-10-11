@@ -15,10 +15,11 @@ public class StringUtil {
      * @author tgmeng
      * @since 2025/6/29 20:58
      */
-    public static String weiBoTopSearchItemUrlUtil(String wordScheme, Long realpos) {
+    public static String weiBoTopSearchItemUrlUtil(String note, Long realpos) {
         return new StringJoiner("")
-                .add("https://s.weibo.com/weibo?q=")
-                .add(wordScheme)
+                .add("https://s.weibo.com/weibo?q=%23")
+                .add(note)
+                .add("%23")
                 //.add("&t=31&band_rank=")
                 //.add(String.valueOf(realpos))
                 .toString();
