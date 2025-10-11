@@ -22,6 +22,7 @@ public class StringUtil {
                 .add("%23")
                 //.add("&t=31&band_rank=")
                 //.add(String.valueOf(realpos))
+                //
                 .toString();
     }
 
