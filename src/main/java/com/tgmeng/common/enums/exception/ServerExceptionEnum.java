@@ -36,7 +36,17 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     AI_QI_YI_TOP_SEARCH_EXCEPTION(109, "爱奇艺热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     YOU_KU_TOP_SEARCH_EXCEPTION(109, "优酷热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     MANG_GUO_SEARCH_EXCEPTION(109, "芒果热搜接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    MAO_YAN_SEARCH_EXCEPTION(109, "猫眼接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    MAO_YAN_SEARCH_EXCEPTION(109, "猫眼接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    JIN_RONG_JIE_TOP_SEARCH_EXCEPTION(109, "金融界接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    DI_YI_CAI_JING_TOP_SEARCH_EXCEPTION(109, "第一财经接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    TONG_HUA_SHUN_TOP_SEARCH_EXCEPTION(109, "同花顺接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    HUA_ER_JIE_JIAN_WEN_TOP_SEARCH_EXCEPTION(109, "华尔街见闻接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    CAI_LIAN_SHE_TOP_SEARCH_EXCEPTION(109, "财联社接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    GE_LONG_HUI_TOP_SEARCH_EXCEPTION(109, "格隆汇接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    FA_BU_TOP_SEARCH_EXCEPTION(109, "法布接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    JIN_SHI_TOP_SEARCH_EXCEPTION(109, "金十接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+
+
     private final Integer key;
     private final String value;
     private final String description;

@@ -1,8 +1,6 @@
 package com.tgmeng.common.forest.client.topsearch;
 
-import com.dtflys.forest.annotation.Get;
-import com.dtflys.forest.annotation.Header;
-import com.dtflys.forest.annotation.Var;
+import com.dtflys.forest.annotation.*;
 import com.dtflys.forest.http.ForestResponse;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
 import com.tgmeng.model.dto.topsearch.*;
@@ -111,4 +109,27 @@ public interface ITopSearchCommonClient {
     @Get("https://m.maoyan.com/asgard/board?year=0&term=0&id={type}")
     ForestResponse maoYan(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
+    @Post("https://gateway.jrj.com/jrj-news/news/queryNewsList")
+    TopSearchJingRongJieDTO jingRongJie(@Header ForestRequestHeader topSearchRequestHeader,@JSONBody("sortBy") Integer sortBy, @JSONBody("pageSize") Integer pageSize, @JSONBody("channelNum") String channelNum);
+
+    @Get("https://www.yicai.com")
+    ForestResponse diYiCaiJing(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://news.10jqka.com.cn/")
+    ForestResponse tongHuaShun(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://api-one-wscn.awtmt.com/apiv1/content/information-flow?channel=global&accept=article&cursor=&limit=20&action=upglide")
+    TopSearchHuaErJieJianWenDTO huaErJieJianWen(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.cls.cn/")
+    ForestResponse caiLianShe(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.gelonghui.com/")
+    ForestResponse getLongHui(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.fastbull.com/cn/news")
+    ForestResponse getFaBu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://xnews.jin10.com/")
+    ForestResponse getJinShi(@Header ForestRequestHeader topSearchRequestHeader);
 }

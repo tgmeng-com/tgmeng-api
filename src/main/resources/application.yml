@@ -26,6 +26,7 @@ forest:
   log-enabled: false            # 打开或关闭日志（默认为 true）
   log-request: false            # 打开/关闭Forest请求日志（默认为 true）
   log-response-status: false    # 打开/关闭Forest响应状态日志（默认为 true）
+  log-response-content: false   # 打开/关闭Forest响应内容日志（默认为 false）
   auto-redirection: true # true 为开启，false 为关闭 # 全局自动重定向开关，默认为开启
   max-retry-count: 1           # 请求失败后重试次数（默认为 0 次不重试）
   interceptors:

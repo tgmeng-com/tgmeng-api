@@ -82,7 +82,16 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_ZHOU_PIAO_FANG_BANG_MAO_YAN("CACHE_TOP_SEARCH_ZHOU_PIAO_FANG_BANG_MAO_YAN", "/topsearch/zhoupiaofangbangmaoyan", "", true,4),
     CACHE_TOP_SEARCH_XIANG_KAN_BANG_MAO_YAN("CACHE_TOP_SEARCH_XIANG_KAN_BANG_MAO_YAN", "/topsearch/xiangkanbangmaoyan", "", true,4),
     CACHE_TOP_SEARCH_GOU_PIAO_PING_FEN_BANG_MAO_YAN("CACHE_TOP_SEARCH_GOU_PIAO_PING_FEN_BANG_MAO_YAN", "/topsearch/goupiaopingfenbangmaoyan", "", true,4),
-    CACHE_TOP_SEARCH_TOP_100_MAO_YAN("CACHE_TOP_SEARCH_TOP_100_MAO_YAN", "/topsearch/top100maoyan", "", true,4);
+    CACHE_TOP_SEARCH_TOP_100_MAO_YAN("CACHE_TOP_SEARCH_TOP_100_MAO_YAN", "/topsearch/top100maoyan", "", true,4),
+
+    CACHE_TOP_SEARCH_TOP_JIN_RONG_JIE("CACHE_TOP_SEARCH_TOP_JIN_RONG_JIE", "/topsearch/jinrongjie", "", true,4),
+    CACHE_TOP_SEARCH_TOP_DI_YI_CAI_JING("CACHE_TOP_SEARCH_TOP_DI_YI_CAI_JING", "/topsearch/diyicaijing", "", true,4),
+    CACHE_TOP_SEARCH_TOP_TONG_HUA_SHUN("CACHE_TOP_SEARCH_TOP_TONG_HUA_SHUN", "/topsearch/tonghuashun", "", true,4),
+    CACHE_TOP_SEARCH_TOP_HUA_ER_JIE_JIAN_WEN("CACHE_TOP_SEARCH_TOP_HUA_ER_JIE_JIAN_WEN", "/topsearch/huaerjiejianwen", "", true,4),
+    CACHE_TOP_SEARCH_TOP_CAI_LIAN_SHE("CACHE_TOP_SEARCH_TOP_CAI_LIAN_SHE", "/topsearch/cailianshe", "", true,4),
+    CACHE_TOP_SEARCH_TOP_GE_LONG_HUI("CACHE_TOP_SEARCH_TOP_GE_LONG_HUI", "/topsearch/gelonghui", "", true,4),
+    CACHE_TOP_SEARCH_TOP_FA_BU("CACHE_TOP_SEARCH_TOP_FA_BU", "/topsearch/fabu", "", true,4),
+    CACHE_TOP_SEARCH_TOP_JIN_SHI("CACHE_TOP_SEARCH_TOP_JIN_SHI", "/topsearch/jinshi", "", true,4);
 
     private final String key;
     private final String value;

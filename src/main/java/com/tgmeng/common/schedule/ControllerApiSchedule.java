@@ -108,8 +108,24 @@ public class ControllerApiSchedule {
             "/api/topsearch/zhoupiaofangbangmaoyan",
             "/api/topsearch/xiangkanbangmaoyan",
             "/api/topsearch/goupiaopingfenbangmaoyan",
-            "/api/topsearch/top100maoyan"
+            "/api/topsearch/top100maoyan",
 
+            // 金融界
+            "/api/topsearch/jingrongjie",
+            // 第一财经
+            "/api/topsearch/diyicaijing",
+            // 同花顺
+            "/api/topsearch/tonghuashun",
+            // 华尔街见闻
+            "/api/topsearch/huaerjiejianwen",
+            // 财联社
+            "/api/topsearch/cailianshe",
+            // 格隆汇
+            "/api/topsearch/gelonghui",
+            // 法布
+            "/api/topsearch/fabu",
+            // 金十
+            "/api/topsearch/jinshi"
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

@@ -148,4 +148,32 @@ public class ForestUtil {
                 .setOrigin(ForestRequestHeaderOriginEnum.MANG_GUO.getValue())
                 ;
     }
+
+    public static ForestRequestHeader getRandomRequestHeaderForJinRongJie() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                .setAccept("*/*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                .setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.JING_RONG_JIE.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.JING_RONG_JIE.getValue())
+                ;
+    }
+
+    public static ForestRequestHeader getRandomRequestHeaderForGeLongHui() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                //.setAccept("*/*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                //.setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.GE_LONG_HUI.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.GE_LONG_HUI.getValue())
+                ;
+    }
 }

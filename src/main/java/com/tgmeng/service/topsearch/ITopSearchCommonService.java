@@ -38,4 +38,20 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getMangGuoTopSearch(SearchTypeMangGuoEnum searchTypeMangGuoEnum);
 
     ResultTemplateBean getMaoYanTopSearch(SearchTypeMaoYanEnum searchTypeMaoYanEnum);
+
+    ResultTemplateBean getJinRongJieSearch();
+
+    ResultTemplateBean getDiYiCaiJingSearch();
+
+    ResultTemplateBean getTongHuaShunSearch();
+
+    ResultTemplateBean getHuaErJieJianWenSearch();
+
+    ResultTemplateBean getCaiLianSheSearch();
+
+    ResultTemplateBean getGeLongHuiSearch();
+
+    ResultTemplateBean getFaBuSearch();
+
+    ResultTemplateBean getJinShiSearch();
 }

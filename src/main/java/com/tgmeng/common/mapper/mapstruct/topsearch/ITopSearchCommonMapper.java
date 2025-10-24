@@ -188,4 +188,14 @@ public interface ITopSearchCommonMapper {
         topSearchCommonVO.setUrl("https://so.mgtv.com/so?k=" + mangGuoDTO.getName());
     }
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "pcInfoUrl", target = "url")
+    TopSearchCommonVO.DataInfo topSearchJingRongJieDTOContentVO2TopSearchCommonVO(TopSearchJingRongJieDTO.ItemDTO content);
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "uri", target = "url")
+    TopSearchCommonVO.DataInfo topSearchHuaErJieJianWenDTOContentVO2TopSearchCommonVO(TopSearchHuaErJieJianWenDTO.ItemDTO content);
+
 }

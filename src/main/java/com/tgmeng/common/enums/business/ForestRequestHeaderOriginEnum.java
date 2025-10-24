@@ -35,7 +35,15 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     AI_QI_YI("AI_QI_YI", "https://www.iqiyi.com", "", true,4),
     YOU_KU("YOU_KU", "https://acz.youku.com", "", true,4),
     MANG_GUO("MANG_GUO", "https://so.mgtv.com", "", true,4),
-    MAO_YAN("MAO_YAN", "https://m.maoyan.com/asgard/board/aggregation", "", true,4);
+    MAO_YAN("MAO_YAN", "https://m.maoyan.com/asgard/board/aggregation", "", true,4),
+    JING_RONG_JIE("JING_RONG_JIE", "https://finance.jrj.com.cn", "", true,4),
+    DI_YI_CAI_JING("DI_YI_CAI_JING", "https://www.yicai.com/brief", "", true,4),
+    TONG_HUA_SHUN("TONG_HUA_SHUN", "https://news.10jqka.com.cn", "", true,4),
+    HUA_ER_JIE_JIAN_WEN("HUA_ER_JIE_JIAN_WEN", "https://wallstreetcn.com", "",true,5),
+    CAI_LIAN_SHE("CAI_LIAN_SHE", "https://www.cls.cn/detail/2179425", "",true,5),
+    GE_LONG_HUI("GE_LONG_HUI", "https://www.google.com", "",true,5),
+    FA_BU("FA_BU", "https://www.fastbull.com/cn", "",true,5),
+    JIN_SHI("JIN_SHI", "https://www.jin10.com", "",true,5);
 
     private final String key;
     private final String value;
