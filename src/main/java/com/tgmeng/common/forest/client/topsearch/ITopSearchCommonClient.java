@@ -132,4 +132,21 @@ public interface ITopSearchCommonClient {
 
     @Get("https://xnews.jin10.com/")
     ForestResponse getJinShi(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://m.cn.nytimes.com/world/")
+    ForestResponse getNewYueShiBao(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.bbc.com/zhongwen/simp/popular/read")
+    ForestResponse getBBC(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.rfi.fr/cn")
+    ForestResponse getFaGuang(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://cn.wsj.com/zh-hans/news/world?mod=nav_top_section")
+    ForestResponse getHuaErJieRiBao(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.epochtimes.com/gb/nsc418.htm")
+    ForestResponse getDaJiYuan(@Header ForestRequestHeader topSearchRequestHeader);
+
+
 }

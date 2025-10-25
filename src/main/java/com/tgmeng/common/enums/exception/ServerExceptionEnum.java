@@ -44,7 +44,12 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     CAI_LIAN_SHE_TOP_SEARCH_EXCEPTION(109, "财联社接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     GE_LONG_HUI_TOP_SEARCH_EXCEPTION(109, "格隆汇接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     FA_BU_TOP_SEARCH_EXCEPTION(109, "法布接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    JIN_SHI_TOP_SEARCH_EXCEPTION(109, "金十接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    JIN_SHI_TOP_SEARCH_EXCEPTION(109, "金十接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    NEW_YUE_SHI_BAO_TOP_SEARCH_EXCEPTION(109, "纽约时报接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    BBC_TOP_SEARCH_EXCEPTION(109, "BBC接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    FA_GUANG_TOP_SEARCH_EXCEPTION(109, "法广接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    HUA_ER_JIE_RI_BAO_TOP_SEARCH_EXCEPTION(109, "华尔街日报接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    DA_JI_YUAN_TOP_SEARCH_EXCEPTION(109, "大纪元接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
 
     private final Integer key;

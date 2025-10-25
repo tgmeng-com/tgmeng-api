@@ -52,7 +52,12 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     CAI_LIAN_SHE("财联社", "https://r2-trend.tgmeng.com/tgmeng-trend/cai-lian-she.png", "财经", true,5),
     GE_LONG_HUI("格隆汇", "https://r2-trend.tgmeng.com/tgmeng-trend/ge-long-hui.png", "财经", true,5),
     FA_BU("法布", "https://r2-trend.tgmeng.com/tgmeng-trend/fa-bu.png", "财经", true,5),
-    JIN_SHI("金十", "https://r2-trend.tgmeng.com/tgmeng-trend/jin-shi.png", "财经", true,5);
+    JIN_SHI("金十", "https://r2-trend.tgmeng.com/tgmeng-trend/jin-shi.png", "财经", true,5),
+    NEW_YUE_SHI_BAO("纽约时报", "https://r2-trend.tgmeng.com/tgmeng-trend/niu-yue-shi-bao.png", "新闻", true,5),
+    BBC("BBC", "https://r2-trend.tgmeng.com/tgmeng-trend/bbc.png", "新闻", true,5),
+    FA_GUANG("FA_GUANG", "https://r2-trend.tgmeng.com/tgmeng-trend/fa-guang.png", "新闻", true,5),
+    HUA_ER_JIE_RI_BAO("HUA_ER_JIE_RI_BAO", "https://r2-trend.tgmeng.com/tgmeng-trend/hua-er-jie-ri-bao.png", "新闻", true,5),
+    DA_JI_YUAN("DA_JI_YUAN", "https://r2-trend.tgmeng.com/tgmeng-trend/da-ji-yuan.png", "新闻", true,5);
 
     /** 这里key用作平台名称了，论枚举的灵活性，哈哈哈 */
     private final String key;

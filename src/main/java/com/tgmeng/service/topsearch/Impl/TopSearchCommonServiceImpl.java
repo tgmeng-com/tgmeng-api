@@ -719,4 +719,154 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             throw new ServerException(ServerExceptionEnum.JIN_SHI_TOP_SEARCH_EXCEPTION);
         }
     }
+
+    @Override
+    public ResultTemplateBean getNewYueShiBaoSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getNewYueShiBao(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.NEW_YUE_SHI_BAO.getValue(), ForestRequestHeaderOriginEnum.NEW_YUE_SHI_BAO.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.NEW_YUE_SHI_BAO_TOP_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getNewYueShiBao(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.NEW_YUE_SHI_BAO.getKey(),
+                    DataInfoCardEnum.NEW_YUE_SHI_BAO.getValue(),
+                    DataInfoCardEnum.NEW_YUE_SHI_BAO.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取纽约时报失败👺👺👺：平台；{}", DataInfoCardEnum.NEW_YUE_SHI_BAO.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.NEW_YUE_SHI_BAO_TOP_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getBBCSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getBBC(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.BBC.getValue(), ForestRequestHeaderOriginEnum.BBC.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.BBC_TOP_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getBBC(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.BBC.getKey(),
+                    DataInfoCardEnum.BBC.getValue(),
+                    DataInfoCardEnum.BBC.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取BBC失败👺👺👺：平台；{}", DataInfoCardEnum.BBC.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.BBC_TOP_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getFaGuangSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getFaGuang(
+                    ForestUtil.getRandomRequestHeaderForFaGuang()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.FA_GUANG_TOP_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getFaGuang(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.FA_GUANG.getKey(),
+                    DataInfoCardEnum.FA_GUANG.getValue(),
+                    DataInfoCardEnum.FA_GUANG.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取BBC失败👺👺👺：平台；{}", DataInfoCardEnum.FA_GUANG.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.FA_GUANG_TOP_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getHuaErJieRiBaoSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getHuaErJieRiBao(
+                    ForestUtil.getRandomRequestHeaderForHuaErJieRiBao()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.HUA_ER_JIE_RI_BAO_TOP_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getHuaErJieRiBao(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.HUA_ER_JIE_RI_BAO.getKey(),
+                    DataInfoCardEnum.HUA_ER_JIE_RI_BAO.getValue(),
+                    DataInfoCardEnum.HUA_ER_JIE_RI_BAO.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取BBC失败👺👺👺：平台；{}", DataInfoCardEnum.HUA_ER_JIE_RI_BAO.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.HUA_ER_JIE_RI_BAO_TOP_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getDaJiYuanSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getDaJiYuan(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.DA_JI_YUAN.getValue(), ForestRequestHeaderOriginEnum.DA_JI_YUAN.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.DA_JI_YUAN_TOP_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getDaJiYuan(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.DA_JI_YUAN.getKey(),
+                    DataInfoCardEnum.DA_JI_YUAN.getValue(),
+                    DataInfoCardEnum.DA_JI_YUAN.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取BBC失败👺👺👺：平台；{}", DataInfoCardEnum.DA_JI_YUAN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.DA_JI_YUAN_TOP_SEARCH_EXCEPTION);
+        }
+    }
 }

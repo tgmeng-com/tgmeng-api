@@ -125,7 +125,15 @@ public class ControllerApiSchedule {
             // 法布
             "/api/topsearch/fabu",
             // 金十
-            "/api/topsearch/jinshi"
+            "/api/topsearch/jinshi",
+            // 纽约时报
+            "/api/topsearch/newyueshibao",
+            // BBC
+            "/api/topsearch/bbc",
+            // 法广
+            "/api/topsearch/faguang",
+            // 大纪元
+            "/api/topsearch/dajiyuan"
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

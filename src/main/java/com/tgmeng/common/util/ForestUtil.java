@@ -176,4 +176,32 @@ public class ForestUtil {
                 .setOrigin(ForestRequestHeaderOriginEnum.GE_LONG_HUI.getValue())
                 ;
     }
+
+    public static ForestRequestHeader getRandomRequestHeaderForFaGuang() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                //.setUserAgent(userAgent)
+                //.setAccept("*/*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                //.setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.FA_GUANG.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.FA_GUANG.getValue())
+                ;
+    }
+
+    public static ForestRequestHeader getRandomRequestHeaderForHuaErJieRiBao() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setUserAgent(userAgent)
+                .setAccept("*/*")
+                .setAcceptEncoding("gzip, deflate, br, zstd")
+                .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                .setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.HUA_ER_JIE_RI_BAO.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.HUA_ER_JIE_RI_BAO.getValue())
+                ;
+    }
 }

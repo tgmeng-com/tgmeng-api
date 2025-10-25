@@ -54,4 +54,14 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getFaBuSearch();
 
     ResultTemplateBean getJinShiSearch();
+
+    ResultTemplateBean getNewYueShiBaoSearch();
+
+    ResultTemplateBean getBBCSearch();
+
+    ResultTemplateBean getFaGuangSearch();
+
+    ResultTemplateBean getHuaErJieRiBaoSearch();
+
+    ResultTemplateBean getDaJiYuanSearch();
 }
