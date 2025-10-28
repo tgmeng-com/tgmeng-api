@@ -95,7 +95,25 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_TOP_NEW_YUE_SHI_BAO("CACHE_TOP_SEARCH_TOP_NEW_YUE_SHI_BAO", "/topsearch/niuyueshibao", "", true,4),
     CACHE_TOP_SEARCH_TOP_BBC("CACHE_TOP_SEARCH_TOP_BBC", "/topsearch/bbc", "", true,4),
     CACHE_TOP_SEARCH_TOP_FA_GUANG("CACHE_TOP_SEARCH_TOP_FA_GUANG", "/topsearch/faguang", "", true,4),
-    CACHE_TOP_SEARCH_TOP_DA_JI_YUAN("CACHE_TOP_SEARCH_TOP_DA_JI_YUAN", "/topsearch/dajiyuan", "", true,4);
+    CACHE_TOP_SEARCH_TOP_DA_JI_YUAN("CACHE_TOP_SEARCH_TOP_DA_JI_YUAN", "/topsearch/dajiyuan", "", true,4),
+    CACHE_TOP_SEARCH_TOP_WO_SHI_PM("CACHE_TOP_SEARCH_TOP_WO_SHI_PM", "/topsearch/woshipm", "", true,4),
+    CACHE_TOP_SEARCH_TOP_YOU_SHE_WANG("CACHE_TOP_SEARCH_TOP_YOU_SHE_WANG", "/topsearch/youshewang", "", true,4),
+
+    CACHE_TOP_SEARCH_TOP_QIAN_LI_BANG_ZHAN_KU("CACHE_TOP_SEARCH_TOP_QIAN_LI_BANG_ZHAN_KU", "/topsearch/qianlibangzhanku", "", true,4),
+    CACHE_TOP_SEARCH_TOP_WEN_ZHANG_BANG_ZHAN_KU("CACHE_TOP_SEARCH_TOP_WEN_ZHANG_BANG_ZHAN_KU", "/topsearch/wenzhangbangzhanku", "", true,4),
+    CACHE_TOP_SEARCH_TOP_ZUO_PIN_BANG_ZHAN_KU("CACHE_TOP_SEARCH_TOP_ZUO_PIN_BANG_ZHAN_KU", "/topsearch/zuopinbangzhanku", "", true,4),
+
+    CACHE_TOP_SEARCH_TOP_RE_MEN_ZUO_PIN_TU_YA_WANG_GUO("CACHE_TOP_SEARCH_TOP_RE_MEN_ZUO_PIN_TU_YA_WANG_GUO", "/topsearch/remenzuopintuyawangguo", "", true,4),
+    CACHE_TOP_SEARCH_TOP_JING_XUAN_ZUO_PIN_TU_YA_WANG_GUO("CACHE_TOP_SEARCH_TOP_JING_XUAN_ZUO_PIN_TU_YA_WANG_GUO", "/topsearch/jingxuanzuopintuyawangguo", "", true,4),
+    CACHE_TOP_SEARCH_TOP_FA_XIAN_XIN_ZUO_TU_YA_WANG_GUO("CACHE_TOP_SEARCH_TOP_FA_XIAN_XIN_ZUO_TU_YA_WANG_GUO", "/topsearch/jinrixinzuotuyawangguo", "", true,4),
+    CACHE_TOP_SEARCH_TOP_JIN_RI_XIN_ZUO_TU_YA_WANG_GUO("CACHE_TOP_SEARCH_TOP_JIN_RI_XIN_ZUO_TU_YA_WANG_GUO", "/topsearch/faxianxinzuotuyawangguo", "", true,4),
+    CACHE_TOP_SEARCH_TOP_SHE_JI_DA_REN("CACHE_TOP_SEARCH_TOP_SHE_JI_DA_REN", "/topsearch/shejidaren", "", true,4),
+    CACHE_TOP_SEARCH_TOP_TOPYS("CACHE_TOP_SEARCH_TOP_TOPYS", "/topsearch/topys", "", true,4),
+    CACHE_TOP_SEARCH_TOP_ARCH_DAILY("CACHE_TOP_SEARCH_TOP_ARCH_DAILY", "/topsearch/archdaily", "", true,4),
+    CACHE_TOP_SEARCH_TOP_DRIBBBLE("CACHE_TOP_SEARCH_TOP_DRIBBBLE", "/topsearch/dribbble", "", true,4),
+    CACHE_TOP_SEARCH_TOP_AWWWARDS("CACHE_TOP_SEARCH_TOP_AWWWARDS", "/topsearch/awwwards", "", true,4),
+    CACHE_TOP_SEARCH_TOP_CORE77("CACHE_TOP_SEARCH_TOP_CORE77", "/topsearch/core77", "", true,4),
+    CACHE_TOP_SEARCH_TOP_ABDUZEEDO("CACHE_TOP_SEARCH_TOP_ABDUZEEDO", "/topsearch/abduzeedo", "", true,4);
 
     private final String key;
     private final String value;

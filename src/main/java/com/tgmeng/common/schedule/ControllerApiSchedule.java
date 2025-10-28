@@ -133,7 +133,39 @@ public class ControllerApiSchedule {
             // 法广
             "/api/topsearch/faguang",
             // 大纪元
-            "/api/topsearch/dajiyuan"
+            "/api/topsearch/dajiyuan",
+            // 人人都是产品囧里
+            "/api/topsearch/woshipm",
+            // 优设网
+            "/api/topsearch/youshewang",
+            // 站酷潜力榜
+            "/api/topsearch/qianlibangzhanku",
+            // 站酷作品榜
+            "/api/topsearch/zuopinbangzhanku",
+            // 站酷文章榜
+            "/api/topsearch/wenzhangbangzhanku",
+            // 涂鸦王国热门作品
+            "/api/topsearch/remenzuopintuyawangguo",
+            // 涂鸦王国精选作品
+            "/api/topsearch/jingxuanzuopintuyawangguo",
+            // 涂鸦王国发现新作
+            "/api/topsearch/jinrixinzuotuyawangguo",
+            // 涂鸦王国今日新作
+            "/api/topsearch/faxianxinzuotuyawangguo",
+            // 设计达人
+            "/api/topsearch/shejidaren",
+            // Topys
+            "/api/topsearch/topys",
+            // ArchDaily
+            "/api/topsearch/archdaily",
+            // Dribbble
+            "/api/topsearch/dribbble",
+            // Awwwards
+            "/api/topsearch/awwwards",
+            // Core77
+            "/api/topsearch/core77",
+            // Abduzeedo
+            "/api/topsearch/abduzeedo"
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

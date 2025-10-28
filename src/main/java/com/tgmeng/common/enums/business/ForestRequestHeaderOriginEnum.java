@@ -48,7 +48,18 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     BBC("BBC", "https://www.bbc.com", "",true,5),
     FA_GUANG("FA_GUANG", "https://www.rfi.fr", "",true,5),
     HUA_ER_JIE_RI_BAO("HUA_ER_JIE_RI_BAO", "https://cn.wsj.com/zh-hans/news/china?mod=nav_top_section", "",true,5),
-    DA_JI_YUAN("DA_JI_YUAN", "https://www.epochtimes.com/gb/instant-news.htm", "",true,5);
+    DA_JI_YUAN("DA_JI_YUAN", "https://www.epochtimes.com/gb/instant-news.htm", "",true,5),
+    WO_SHI_PM("WO_SHI_PM", "https://www.woshipm.com", "",true,5),
+    YOU_SHE_WANG("YOU_SHE_WANG", "https://hot.uisdc.com", "",true,5),
+    ZHAN_KU("ZHAN_KU", "https://www.zcool.com.cn", "",true,5),
+    TU_YA_WANG_GUO("TU_YA_WANG_GUO", "https://www.gracg.com", "",true,5),
+    SHE_JI_DA_REN("SHE_JI_DA_REN", "https://www.shejidaren.com", "",true,5),
+    TOPYS("TOPYS", "https://www.topys.cn", "",true,5),
+    ARCH_DAILY("ARCH_DAILY", "https://www.archdaily.cn", "",true,5),
+    DRIBBBLE("DRIBBBLE", "https://dribbble.com", "",true,5),
+    AWWWARDS("AWWWARDS", "https://www.behance.net", "",true,5),
+    CORE77("CORE77", "https://www.core77.com", "",true,5),
+    ABDUZEEDO("ABDUZEEDO", "https://abduzeedo.com", "",true,5);
 
     private final String key;
     private final String value;

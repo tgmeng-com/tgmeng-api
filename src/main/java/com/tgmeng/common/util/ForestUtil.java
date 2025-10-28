@@ -204,4 +204,34 @@ public class ForestUtil {
                 .setOrigin(ForestRequestHeaderOriginEnum.HUA_ER_JIE_RI_BAO.getValue())
                 ;
     }
+
+    public static ForestRequestHeader getRandomRequestHeaderForWoShiPM() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setHost("www.woshipm.com")
+                .setUserAgent(userAgent)
+                .setAccept("*/*")
+                .setAcceptEncoding("gzip, deflate, br, zstd")
+                .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                .setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.WO_SHI_PM.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.WO_SHI_PM.getValue())
+                ;
+    }
+
+    public static ForestRequestHeader getRandomRequestHeaderForAwwwards() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                //.setHost("www.behance.net")
+                //.setUserAgent(userAgent)
+                //.setAccept("*/*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                //.setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.AWWWARDS.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.AWWWARDS.getValue())
+                ;
+    }
 }

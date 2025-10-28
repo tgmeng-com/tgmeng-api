@@ -349,4 +349,84 @@ public class TopSearchCommonController {
         return topSearchCommonService.getDaJiYuanSearch();
     }
 
+    @RequestMapping("/woshipm")
+    public ResultTemplateBean getWoShiPMSearch() {
+        return topSearchCommonService.getWoShiPMSearch();
+    }
+
+    @RequestMapping("/youshewang")
+    public ResultTemplateBean getYouSheWangSearch() {
+        return topSearchCommonService.getYouSheWangSearch();
+    }
+
+    @RequestMapping("/wenzhangbangzhanku")
+    public ResultTemplateBean getWenZhangBangZhanKuSearch() {
+        return topSearchCommonService.getZhanKuSearch(SearchTypeZhanKuEnum.WEN_ZHANG_BANG_ZHAN_KU);
+    }
+
+    @RequestMapping("/qianlibangzhanku")
+    public ResultTemplateBean getQianLiBangZhanKuSearch() {
+        return topSearchCommonService.getZhanKuSearch(SearchTypeZhanKuEnum.QIAN_LI_BANG_ZHAN_KU);
+    }
+
+    @RequestMapping("/zuopinbangzhanku")
+    public ResultTemplateBean getZuoPinBangZhanKuSearch() {
+        return topSearchCommonService.getZhanKuSearch(SearchTypeZhanKuEnum.ZUO_PIN_BANG_ZHAN_KU);
+    }
+
+    @RequestMapping("/remenzuopintuyawangguo")
+    public ResultTemplateBean getReMenZuoPinTuYaWangGuoSearch() {
+        return topSearchCommonService.getZhanTuYaWangGuoSearch(SearchTypeTuYaWangGuoEnum.RE_MEN_ZUO_PIN_TU_YA_WANG_GUO);
+    }
+
+    @RequestMapping("/jingxuanzuopintuyawangguo")
+    public ResultTemplateBean getJingXuanZuoPinTuYaWangGuoSearch() {
+        return topSearchCommonService.getZhanTuYaWangGuoSearch(SearchTypeTuYaWangGuoEnum.JING_XUAN_ZUO_PIN_TU_YA_WANG_GUO);
+    }
+
+    @RequestMapping("/jinrixinzuotuyawangguo")
+    public ResultTemplateBean getJinRiXinZuoTuYaWangGuoSearch() {
+        return topSearchCommonService.getZhanTuYaWangGuoSearch(SearchTypeTuYaWangGuoEnum.JIN_RI_XIN_ZUO_TU_YA_WANG_GUO);
+    }
+
+    @RequestMapping("/faxianxinzuotuyawangguo")
+    public ResultTemplateBean getFaXianXinZuoTuYaWangGuoSearch() {
+        return topSearchCommonService.getZhanTuYaWangGuoSearch(SearchTypeTuYaWangGuoEnum.FA_XIAN_XIN_ZUO_TU_YA_WANG_GUO);
+    }
+
+    @RequestMapping("/shejidaren")
+    public ResultTemplateBean getSheJiDaRenSearch() {
+        return topSearchCommonService.getSheJiDaRenSearch();
+    }
+
+    @RequestMapping("/topys")
+    public ResultTemplateBean getTopysSearch() {
+        return topSearchCommonService.getTopysSearch();
+    }
+
+    @RequestMapping("/archdaily")
+    public ResultTemplateBean getArchDailySearch() {
+        return topSearchCommonService.getArchDailySearch();
+    }
+
+    @RequestMapping("/dribbble")
+    public ResultTemplateBean getDribbbleSearch() {
+        return topSearchCommonService.getDribbbleSearch();
+    }
+
+    @RequestMapping("/awwwards")
+    public ResultTemplateBean getAwwwardsSearch() {
+        return topSearchCommonService.getAwwwardsSearch();
+    }
+
+    @RequestMapping("/core77")
+    public ResultTemplateBean getCore77Search() {
+        return topSearchCommonService.getCore77Search();
+    }
+
+    @RequestMapping("/abduzeedo")
+    public ResultTemplateBean getAbduzeedoSearch() {
+        return topSearchCommonService.getAbduzeedoSearch();
+    }
+
 }

@@ -49,8 +49,18 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     BBC_TOP_SEARCH_EXCEPTION(109, "BBC接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     FA_GUANG_TOP_SEARCH_EXCEPTION(109, "法广接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     HUA_ER_JIE_RI_BAO_TOP_SEARCH_EXCEPTION(109, "华尔街日报接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    DA_JI_YUAN_TOP_SEARCH_EXCEPTION(109, "大纪元接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
-
+    DA_JI_YUAN_TOP_SEARCH_EXCEPTION(109, "大纪元接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    WO_SHI_PM_TOP_SEARCH_EXCEPTION(109, "人人都是产品经理接口查询异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YOU_SHE_WANG_TOP_SEARCH_EXCEPTION(109, "优设网", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    ZHAN_KU_TOP_SEARCH_EXCEPTION(109, "站酷", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    TU_YA_WANG_GUO_TOP_SEARCH_EXCEPTION(109, "涂鸦王国", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    SHE_JI_DA_REN_TOP_SEARCH_EXCEPTION(109, "设计达人", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    TOPYS_TOP_SEARCH_EXCEPTION(109, "Topys", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    ARCH_DAILY_SEARCH_EXCEPTION(109, "ArchDaily", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    DRIBBBLE_SEARCH_EXCEPTION(109, "Dribbble", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    AWWWARDS_SEARCH_EXCEPTION(109, "Awwwards", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    CORE77_SEARCH_EXCEPTION(109, "Core77", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    ABDUZEEDO_SEARCH_EXCEPTION(109, "Abduzeedo", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
     private final Integer key;
     private final String value;

@@ -198,4 +198,13 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "uri", target = "url")
     TopSearchCommonVO.DataInfo topSearchHuaErJieJianWenDTOContentVO2TopSearchCommonVO(TopSearchHuaErJieJianWenDTO.ItemDTO content);
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "articleTitle", target = "keyword")
+    TopSearchCommonVO.DataInfo topSearchWoShiPMDTOContentVO2TopSearchCommonVO(TopSearchWoShiPMDTO.Items items);
+    @AfterMapping
+    default void topSearchWoShiPMDTOContentVO2TopSearchCommonVOAfter(TopSearchWoShiPMDTO.Items items, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setHotScore(null);
+        topSearchCommonVO.setUrl("https://www.woshipm.com/" + items.getType() + "/" + items.getId() + ".html");
+    }
+
 }

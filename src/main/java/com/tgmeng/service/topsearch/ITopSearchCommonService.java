@@ -64,4 +64,26 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getHuaErJieRiBaoSearch();
 
     ResultTemplateBean getDaJiYuanSearch();
+
+    ResultTemplateBean getWoShiPMSearch();
+
+    ResultTemplateBean getYouSheWangSearch();
+
+    ResultTemplateBean getZhanKuSearch(SearchTypeZhanKuEnum searchTypeZhanKuEnum);
+
+    ResultTemplateBean getZhanTuYaWangGuoSearch(SearchTypeTuYaWangGuoEnum searchTypeTuYaWangGuoEnum);
+
+    ResultTemplateBean getSheJiDaRenSearch();
+
+    ResultTemplateBean getTopysSearch();
+
+    ResultTemplateBean getArchDailySearch();
+
+    ResultTemplateBean getDribbbleSearch();
+
+    ResultTemplateBean getAwwwardsSearch();
+
+    ResultTemplateBean getCore77Search();
+
+    ResultTemplateBean getAbduzeedoSearch();
 }

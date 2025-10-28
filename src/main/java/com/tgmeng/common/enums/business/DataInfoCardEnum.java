@@ -55,9 +55,22 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     JIN_SHI("金十", "https://r2-trend.tgmeng.com/tgmeng-trend/jin-shi.png", "财经", true,5),
     NEW_YUE_SHI_BAO("纽约时报", "https://r2-trend.tgmeng.com/tgmeng-trend/niu-yue-shi-bao.png", "新闻", true,5),
     BBC("BBC", "https://r2-trend.tgmeng.com/tgmeng-trend/bbc.png", "新闻", true,5),
-    FA_GUANG("FA_GUANG", "https://r2-trend.tgmeng.com/tgmeng-trend/fa-guang.png", "新闻", true,5),
-    HUA_ER_JIE_RI_BAO("HUA_ER_JIE_RI_BAO", "https://r2-trend.tgmeng.com/tgmeng-trend/hua-er-jie-ri-bao.png", "新闻", true,5),
-    DA_JI_YUAN("DA_JI_YUAN", "https://r2-trend.tgmeng.com/tgmeng-trend/da-ji-yuan.png", "新闻", true,5);
+    FA_GUANG("法广", "https://r2-trend.tgmeng.com/tgmeng-trend/fa-guang.png", "新闻", true,5),
+    HUA_ER_JIE_RI_BAO("华尔街日报", "https://r2-trend.tgmeng.com/tgmeng-trend/hua-er-jie-ri-bao.png", "新闻", true,5),
+    DA_JI_YUAN("大纪元", "https://r2-trend.tgmeng.com/tgmeng-trend/da-ji-yuan.png", "新闻", true,5),
+    WO_SHI_PM("人人都是产品经理", "https://r2-trend.tgmeng.com/tgmeng-trend/wo-shi-pm.png", "设计", true,5),
+    YOU_SHE_WANG("优设网", "https://r2-trend.tgmeng.com/tgmeng-trend/you-she-wang.png", "设计", true,5),
+    ZHAN_KU("站酷", "https://r2-trend.tgmeng.com/tgmeng-trend/zhan-ku.png", "设计", true,5),
+    TU_YA_WANG_GUO("涂鸦王国", "https://r2-trend.tgmeng.com/tgmeng-trend/tu-ya-wang-guo.png", "设计", true,5),
+    SHE_JI_DA_REN("设计达人", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    TOPYS("TOPYS", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    ARCH_DAILY("ArchDaily", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    DRIBBBLE("Dribbble", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    AWWWARDS("Awwwards", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    CORE77("Core77", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    ABDUZEEDO("Abduzeedo", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5);
+
+
 
     /** 这里key用作平台名称了，论枚举的灵活性，哈哈哈 */
     private final String key;

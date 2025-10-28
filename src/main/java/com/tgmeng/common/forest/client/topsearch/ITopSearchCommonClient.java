@@ -148,5 +148,37 @@ public interface ITopSearchCommonClient {
     @Get("https://www.epochtimes.com/gb/nsc418.htm")
     ForestResponse getDaJiYuan(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://www.woshipm.com/api2/app/article/popular/daily")
+    TopSearchWoShiPMDTO getWoShiPM(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://hot.uisdc.com/posts")
+    ForestResponse getYouSheWang(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.zcool.com.cn/{type}")
+    ForestResponse getZhanKu(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
+
+    @Get("https://www.gracg.com/showwork/{type}")
+    ForestResponse getTuYaWangGuo(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
+
+    @Get("https://www.shejidaren.com/")
+    ForestResponse getSheJiDaRen(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.topys.cn/category/12")
+    ForestResponse getTopys(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.archdaily.cn/cn?ad_source=jv-header")
+    ForestResponse getArchDaily(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://dribbble.com/")
+    ForestResponse getDribbble(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.awwwards.com/websites/sites_of_the_day/")
+    ForestResponse getAwwwards(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.core77.com/")
+    ForestResponse getCore77(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://abduzeedo.com/")
+    ForestResponse getAbduzeedo(@Header ForestRequestHeader topSearchRequestHeader);
 
 }
