@@ -7,6 +7,8 @@ import org.mapstruct.*;
 
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -201,10 +203,33 @@ public interface ITopSearchCommonMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "articleTitle", target = "keyword")
     TopSearchCommonVO.DataInfo topSearchWoShiPMDTOContentVO2TopSearchCommonVO(TopSearchWoShiPMDTO.Items items);
+
     @AfterMapping
     default void topSearchWoShiPMDTOContentVO2TopSearchCommonVOAfter(TopSearchWoShiPMDTO.Items items, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setHotScore(null);
         topSearchCommonVO.setUrl("https://www.woshipm.com/" + items.getType() + "/" + items.getId() + ".html");
+    }
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "name", target = "keyword")
+    TopSearchCommonVO.DataInfo topSearchMITDTOContentVO2TopSearchCommonVO(TopSearchMITDTO.ItemDTO items);
+
+    @AfterMapping
+    default void topSearchMITDTOContentVO2TopSearchCommonVOAfter(TopSearchMITDTO.ItemDTO items, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        String regex = "<a[^>]+href=[\"']([^\"']+)[\"']";
+        Matcher matcher = Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(items.getContent());
+        if (matcher.find()) {
+            topSearchCommonVO.setUrl(matcher.group(1));
+        }
+    }
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    TopSearchCommonVO.DataInfo topSearchJiQiZhiXinDTOContentVO2TopSearchCommonVO(TopSearchJiQiZhiXinDTO.DataInfo items);
+
+    @AfterMapping
+    default void topSearchJiQiZhiXinDTOContentVO2TopSearchCommonVOAfter(TopSearchJiQiZhiXinDTO.DataInfo items, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl("https://www.jiqizhixin.com/articles/" + items.getSlug());
     }
 
 }

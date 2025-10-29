@@ -59,7 +59,12 @@ public enum ForestRequestHeaderRefererEnum  implements INameValueEnum<String,Str
     DRIBBBLE("DRIBBBLE", "https://dribbble.com/", "",true,5),
     AWWWARDS("AWWWARDS", "https://www.behance.net/", "",true,5),
     CORE77("CORE77", "https://www.core77.com/", "",true,5),
-    ABDUZEEDO("ABDUZEEDO", "https://abduzeedo.com/", "",true,5);
+    ABDUZEEDO("ABDUZEEDO", "https://abduzeedo.com/", "",true,5),
+    MIT("MIT", "https://www.mittrchina.com/", "",true,5),
+    ZHONG_GUO_KE_XUE_YUAN("ZHONG_GUO_KE_XUE_YUAN", "https://www.cas.cn/", "",true,5),
+    EUREK_ALERT("EUREK_ALERT", "https://www.eurekalert.org/", "",true,5),
+    GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN", "https://www.ncsti.gov.cn/kjdt/", "",true,5),
+    JI_QI_ZHI_XIN("JI_QI_ZHI_XIN", "https://www.jiqizhixin.com/", "",true,5);
 
     private final String key;
     private final String value;

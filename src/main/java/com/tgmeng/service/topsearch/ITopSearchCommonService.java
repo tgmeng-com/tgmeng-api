@@ -86,4 +86,14 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getCore77Search();
 
     ResultTemplateBean getAbduzeedoSearch();
+
+    ResultTemplateBean getMITSearch();
+
+    ResultTemplateBean getZhongGuoKeXueYuanSearch();
+
+    ResultTemplateBean getEurekAlertSearch();
+
+    ResultTemplateBean getGuoJiKeJiChuangXinZhongXinSearch(SearchTypeGuoJiKeJiChuangXinZhongXinnum searchTypeGuoJiKeJiChuangXinZhongXinnum);
+
+    ResultTemplateBean getJiQiZhiXinSearch();
 }

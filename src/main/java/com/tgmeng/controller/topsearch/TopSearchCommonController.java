@@ -429,4 +429,34 @@ public class TopSearchCommonController {
         return topSearchCommonService.getAbduzeedoSearch();
     }
 
+    @RequestMapping("/mit")
+    public ResultTemplateBean getMITSearch() {
+        return topSearchCommonService.getMITSearch();
+    }
+
+    @RequestMapping("/zhongguokexueyuan")
+    public ResultTemplateBean getZhongGuoKeXueYuanSearch() {
+        return topSearchCommonService.getZhongGuoKeXueYuanSearch();
+    }
+
+    @RequestMapping("/eurekalert")
+    public ResultTemplateBean getEurekAlertSearch() {
+        return topSearchCommonService.getEurekAlertSearch();
+    }
+
+    @RequestMapping("/rengongzhinengguojikejichuangxinzhongxin")
+    public ResultTemplateBean getRenGongZhiNengGuoJiKeJiChuangXinZhongXinSearch() {
+        return topSearchCommonService.getGuoJiKeJiChuangXinZhongXinSearch(SearchTypeGuoJiKeJiChuangXinZhongXinnum.REN_GONG_ZHI_NENG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN);
+    }
+
+    @RequestMapping("/yiyaojiankangguojikejichuangxinzhongxin")
+    public ResultTemplateBean getYiYaoJianKangGuoJiKeJiChuangXinZhongXinSearch() {
+        return topSearchCommonService.getGuoJiKeJiChuangXinZhongXinSearch(SearchTypeGuoJiKeJiChuangXinZhongXinnum.YI_YAO_JIAN_KANG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN);
+    }
+
+    @RequestMapping("/jiqizhixin")
+    public ResultTemplateBean getJiQiZhiXinSearch() {
+        return topSearchCommonService.getJiQiZhiXinSearch();
+    }
+
 }

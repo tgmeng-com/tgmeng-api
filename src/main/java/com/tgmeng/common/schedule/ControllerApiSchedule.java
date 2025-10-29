@@ -165,7 +165,19 @@ public class ControllerApiSchedule {
             // Core77
             "/api/topsearch/core77",
             // Abduzeedo
-            "/api/topsearch/abduzeedo"
+            "/api/topsearch/abduzeedo",
+            // MIT
+            "/api/topsearch/mit",
+            // 中国科学院
+            "/api/topsearch/zhongguokexueyuan",
+            // EurekAlert
+            "/api/topsearch/eurekalert",
+            // 中国科学院人工智能国际科技创新中心
+            "/api/topsearch/zhongguokexueyuan/rengongzhinengguojikejichuangxinzhongxin",
+            // 中国科学院医药健康国际科技创新中心
+            "/api/topsearch/zhongguokexueyuan/yiyaojiankangguojikejichuangxinzhongxin",
+            // 机器之心
+            "/api/topsearch/jiqizhixin"
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

@@ -24,4 +24,23 @@ public class ForestRequestHeader {
     private String priority;
     private String Host;
 
+    @JsonProperty("Cache-Control")
+    private String CacheControl;
+    @JsonProperty("Sec-Ch-Ua")
+    private String SecChUa;
+    @JsonProperty("Sec-Ch-Ua-Mobile")
+    private String SecChUaMobile;
+    @JsonProperty("Sec-Ch-Ua-Platform")
+    private String SecChUaPlatform;
+    @JsonProperty("Sec-Fetch-Dest")
+    private String SecFetchDest;
+    @JsonProperty("Sec-Fetch-Mode")
+    private String SecFetchMode;
+    @JsonProperty("Sec-Fetch-Site")
+    private String SecFetchSite;
+    @JsonProperty("Sec-Fetch-User")
+    private String SecFetchUser;
+    @JsonProperty("Upgrade-Insecure-Requests")
+    private String UpgradeInsecureRequests;
+
 }

@@ -220,6 +220,21 @@ public class ForestUtil {
                 ;
     }
 
+    public static ForestRequestHeader getRandomRequestHeaderForMIT() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setHost("apii.web.mittrchina.com")
+                .setUserAgent(userAgent)
+                .setAccept("*/*")
+                .setAcceptEncoding("gzip, deflate, br, zstd")
+                .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                .setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.MIT.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.MIT.getValue())
+                ;
+    }
+
     public static ForestRequestHeader getRandomRequestHeaderForAwwwards() {
         String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
         return new ForestRequestHeader()
@@ -232,6 +247,31 @@ public class ForestUtil {
                 //.setXForwardedFor("114.114.114.114")
                 .setReferer(ForestRequestHeaderRefererEnum.AWWWARDS.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.AWWWARDS.getValue())
+                ;
+    }
+
+    public static ForestRequestHeader getRandomRequestHeaderForZhongGuoKeXueYuan() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                .setHost("www.cas.cn")
+                .setUserAgent(userAgent)
+                //.setCookie("")
+                .setAccept("text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+                .setAcceptEncoding("gzip, deflate, br, zstd")
+                .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                .setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.ZHONG_GUO_KE_XUE_YUAN.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.ZHONG_GUO_KE_XUE_YUAN.getValue())
+                //.setCacheControl("max-age=0")
+                //.setSecChUa("\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"")
+                //.setSecChUaMobile("?0")
+                //.setSecFetchSite("")
+                //.setSecFetchUser("?1")
+                //.setSecChUaPlatform("Windows")
+                //.setSecFetchDest("document")
+                //.setSecFetchMode("navigate")
+                //.setUpgradeInsecureRequests("1")
                 ;
     }
 }

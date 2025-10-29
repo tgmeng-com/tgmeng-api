@@ -946,7 +946,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             );
 
             return ResultTemplateBean.success(topSearchCommonVO);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("👺👺👺获取站酷失败👺👺👺：平台；{}", DataInfoCardEnum.ZHAN_KU.getKey(), e);
             throw new ServerException(ServerExceptionEnum.ZHAN_KU_TOP_SEARCH_EXCEPTION);
         }
@@ -976,7 +976,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             );
 
             return ResultTemplateBean.success(topSearchCommonVO);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("👺👺👺获取涂鸦王国失败👺👺👺：平台；{}", DataInfoCardEnum.TU_YA_WANG_GUO.getKey(), e);
             throw new ServerException(ServerExceptionEnum.TU_YA_WANG_GUO_TOP_SEARCH_EXCEPTION);
         }
@@ -1190,5 +1190,139 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             log.error("👺👺👺获取Core77失败👺👺👺：平台；{}", DataInfoCardEnum.ABDUZEEDO.getKey(), e);
             throw new ServerException(ServerExceptionEnum.ABDUZEEDO_SEARCH_EXCEPTION);
         }
+    }
+
+    @Override
+    public ResultTemplateBean getMITSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchMITDTO topSearchMITDTO = topSearchCommonClient.getMIT(
+                    ForestUtil.getRandomRequestHeaderForMIT());
+            for (TopSearchMITDTO.ItemDTO content : topSearchMITDTO.getData().getItems()) {
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchMITDTOContentVO2TopSearchCommonVO(content);
+                topSearchCommonVOS.add(dataInfo);
+            }
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取MIT失败👺👺👺：平台；{}", DataInfoCardEnum.MIT.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.MIT_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS,
+                DataInfoCardEnum.MIT.getKey(),
+                DataInfoCardEnum.MIT.getValue(),
+                DataInfoCardEnum.MIT.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
+
+    @Override
+    public ResultTemplateBean getZhongGuoKeXueYuanSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getZhongGuoKeXueYuan(
+                    ForestUtil.getRandomRequestHeaderForZhongGuoKeXueYuan()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.ZHONG_GUO_KE_XUE_YUAN_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getZhongGuoKeXueYuan(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.ZHONG_GUO_KE_XUE_YUAN.getKey(),
+                    DataInfoCardEnum.ZHONG_GUO_KE_XUE_YUAN.getValue(),
+                    DataInfoCardEnum.ZHONG_GUO_KE_XUE_YUAN.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取中国科学院失败👺👺👺：平台；{}", DataInfoCardEnum.ZHONG_GUO_KE_XUE_YUAN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.ZHONG_GUO_KE_XUE_YUAN_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getEurekAlertSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getEurekAlert(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.EUREK_ALERT.getValue(), ForestRequestHeaderOriginEnum.EUREK_ALERT.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.EUREK_ALERT_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getEurekAlert(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.EUREK_ALERT.getKey(),
+                    DataInfoCardEnum.EUREK_ALERT.getValue(),
+                    DataInfoCardEnum.EUREK_ALERT.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取EurekAlert失败👺👺👺：平台；{}", DataInfoCardEnum.EUREK_ALERT.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.EUREK_ALERT_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getGuoJiKeJiChuangXinZhongXinSearch(SearchTypeGuoJiKeJiChuangXinZhongXinnum searchTypeGuoJiKeJiChuangXinZhongXinnum) {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getGuoJiKeJiChuangXinZhongXin(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN.getValue(), ForestRequestHeaderOriginEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN.getValue()),
+                    searchTypeGuoJiKeJiChuangXinZhongXinnum.getValue()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getGuoJiKeJiChuangXinZhongXin(content, searchTypeGuoJiKeJiChuangXinZhongXinnum);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN.getKey(),
+                    DataInfoCardEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN.getValue(),
+                    DataInfoCardEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取国际科技创新中心失败👺👺👺：平台；{}", DataInfoCardEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getJiQiZhiXinSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchJiQiZhiXinDTO jiQiZhiXinDTO = topSearchCommonClient.getJiQiZhiXin(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.JI_QI_ZHI_XIN.getValue(), ForestRequestHeaderOriginEnum.JI_QI_ZHI_XIN.getValue()));
+            for (TopSearchJiQiZhiXinDTO.DataInfo content : jiQiZhiXinDTO.getArticles()) {
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchJiQiZhiXinDTOContentVO2TopSearchCommonVO(content);
+                topSearchCommonVOS.add(dataInfo);
+            }
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取机器之心失败👺👺👺：平台；{}", DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS,
+                DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getKey(),
+                DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getValue(),
+                DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

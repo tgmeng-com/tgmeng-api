@@ -181,4 +181,19 @@ public interface ITopSearchCommonClient {
     @Get("https://abduzeedo.com/")
     ForestResponse getAbduzeedo(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Post("https://apii.web.mittrchina.com/flash")
+    TopSearchMITDTO getMIT(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.cas.cn/syky")
+    ForestResponse getZhongGuoKeXueYuan(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.eurekalert.org/language/chinese/home")
+    ForestResponse getEurekAlert(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.ncsti.gov.cn/kjdt/kjrd/{type}")
+    ForestResponse getGuoJiKeJiChuangXinZhongXin(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
+
+    @Get("https://www.jiqizhixin.com/api/article_library/articles.json?sort=time&page=1&per=12")
+    TopSearchJiQiZhiXinDTO getJiQiZhiXin(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

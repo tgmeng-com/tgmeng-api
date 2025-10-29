@@ -113,7 +113,15 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_TOP_DRIBBBLE("CACHE_TOP_SEARCH_TOP_DRIBBBLE", "/topsearch/dribbble", "", true,4),
     CACHE_TOP_SEARCH_TOP_AWWWARDS("CACHE_TOP_SEARCH_TOP_AWWWARDS", "/topsearch/awwwards", "", true,4),
     CACHE_TOP_SEARCH_TOP_CORE77("CACHE_TOP_SEARCH_TOP_CORE77", "/topsearch/core77", "", true,4),
-    CACHE_TOP_SEARCH_TOP_ABDUZEEDO("CACHE_TOP_SEARCH_TOP_ABDUZEEDO", "/topsearch/abduzeedo", "", true,4);
+    CACHE_TOP_SEARCH_TOP_ABDUZEEDO("CACHE_TOP_SEARCH_TOP_ABDUZEEDO", "/topsearch/abduzeedo", "", true,4),
+    CACHE_TOP_SEARCH_TOP_MIT("CACHE_TOP_SEARCH_TOP_MIT", "/topsearch/mit", "", true,4),
+    CACHE_TOP_SEARCH_TOP_ZHONG_GUO_KE_XUE_YUAN("CACHE_TOP_SEARCH_TOP_ZHONG_GUO_KE_XUE_YUAN", "/topsearch/zhongguokexueyuan", "", true,4),
+    CACHE_TOP_SEARCH_TOP_EUREK_ALERT("CACHE_TOP_SEARCH_TOP_EUREK_ALERT", "/topsearch/eurekalert", "", true,4),
+    CACHE_TOP_SEARCH_TOP_REN_GONG_ZHI_NENG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("CACHE_TOP_SEARCH_TOP_REN_GONG_ZHI_NENG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN", "/topsearch/rengongzhinengguojikejichuangxinzhongxin", "", true,4),
+    CACHE_TOP_SEARCH_TOP_YI_YAO_JIAN_KANG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("CACHE_TOP_SEARCH_TOP_YI_YAO_JIAN_KANG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN", "/topsearch/yiyaojiankangguojikejichuangxinzhongxin", "", true,4),
+    CACHE_TOP_SEARCH_TOP_JI_QI_ZHI_XIN("CACHE_TOP_SEARCH_TOP_JI_QI_ZHI_XIN", "/topsearch/jiqizhixin", "", true,4);
+
+
 
     private final String key;
     private final String value;

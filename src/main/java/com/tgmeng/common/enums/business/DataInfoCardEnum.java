@@ -68,7 +68,12 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     DRIBBBLE("Dribbble", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
     AWWWARDS("Awwwards", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
     CORE77("Core77", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
-    ABDUZEEDO("Abduzeedo", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5);
+    ABDUZEEDO("Abduzeedo", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    MIT("MIT", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "设计", true,5),
+    ZHONG_GUO_KE_XUE_YUAN("中国科学院", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5),
+    EUREK_ALERT("EurekAlert", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5),
+    GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("国际科技创新中心", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5),
+    JI_QI_ZHI_XIN_SEARCH_EXCEPTION("机器之心", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5);
 
 
 
