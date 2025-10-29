@@ -1248,7 +1248,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
     public ResultTemplateBean getEurekAlertSearch() {
         try {
             ForestResponse forestResponse = topSearchCommonClient.getEurekAlert(
-                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.EUREK_ALERT.getValue(), ForestRequestHeaderOriginEnum.EUREK_ALERT.getValue())
+                    ForestUtil.getRandomRequestHeaderForEurekAlert()
             );
 
             String content = forestResponse.getContent();
