@@ -111,7 +111,7 @@ public class ControllerApiSchedule {
             "/api/topsearch/top100maoyan",
 
             // 金融界
-            "/api/topsearch/jingrongjie",
+            "/api/topsearch/jinrongjie",
             // 第一财经
             "/api/topsearch/diyicaijing",
             // 同花顺
@@ -173,11 +173,27 @@ public class ControllerApiSchedule {
             // EurekAlert
             "/api/topsearch/eurekalert",
             // 中国科学院人工智能国际科技创新中心
-            "/api/topsearch/zhongguokexueyuan/rengongzhinengguojikejichuangxinzhongxin",
+            "/api/topsearch/rengongzhinengguojikejichuangxinzhongxin",
             // 中国科学院医药健康国际科技创新中心
-            "/api/topsearch/zhongguokexueyuan/yiyaojiankangguojikejichuangxinzhongxin",
+            "/api/topsearch/yiyaojiankangguojikejichuangxinzhongxin",
             // 机器之心
-            "/api/topsearch/jiqizhixin"
+            "/api/topsearch/jiqizhixin",
+            // 虎扑
+            "/api/topsearch/huapu",
+            // 懂球帝
+            "/api/topsearch/dongqiudi",
+            // 新浪体育
+            "/api/topsearch/xinlangtiyu",
+            // 搜狐体育
+            "/api/topsearch/souhutiyu",
+            // 网易体育
+            "/api/topsearch/tiyuwangyi",
+            // 央视体育
+            "/api/topsearch/yangshitiyu",
+            // PP体育
+            "/api/topsearch/pptiyu",
+            // 直播吧
+            "/api/topsearch/zhiboba"
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

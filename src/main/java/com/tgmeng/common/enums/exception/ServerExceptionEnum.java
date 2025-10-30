@@ -65,7 +65,15 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     ZHONG_GUO_KE_XUE_YUAN_SEARCH_EXCEPTION(109, "中国科学院", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     EUREK_ALERT_SEARCH_EXCEPTION(109, "EurekAlert", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN_SEARCH_EXCEPTION(109, "国际科技创新中心", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    JI_QI_ZHI_XIN_SEARCH_EXCEPTION(109, "国际科技创新中心", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    JI_QI_ZHI_XIN_SEARCH_EXCEPTION(109, "国际科技创新中心", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    HU_PU_SEARCH_EXCEPTION(109, "虎扑", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    DONG_QIU_DI_SEARCH_EXCEPTION(109, "懂球帝", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    XIN_LANG_TI_YU_SEARCH_EXCEPTION(109, "新浪体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    SOU_HU_TI_YU_SEARCH_EXCEPTION(109, "搜狐体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    WANG_YI_TI_YU_SEARCH_EXCEPTION(109, "网易体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YANG_SHI_TI_YU_SEARCH_EXCEPTION(109, "央视体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    PP_TI_YU_SEARCH_EXCEPTION(109, "PP体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    ZHI_BO_BA_SEARCH_EXCEPTION(109, "直播吧", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
     private final Integer key;
     private final String value;

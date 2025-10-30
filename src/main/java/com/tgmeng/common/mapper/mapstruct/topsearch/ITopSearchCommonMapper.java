@@ -232,4 +232,9 @@ public interface ITopSearchCommonMapper {
         topSearchCommonVO.setUrl("https://www.jiqizhixin.com/articles/" + items.getSlug());
     }
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "title", target = "keyword")
+    @Mapping(source = "url", target = "url")
+    TopSearchCommonVO.DataInfo topSearchYangShiTiYuDTOContentVO2TopSearchCommonVO(TopSearchYangShiTiYuDTO.ItemDTO items);
+
 }

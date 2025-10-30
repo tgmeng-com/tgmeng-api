@@ -459,4 +459,44 @@ public class TopSearchCommonController {
         return topSearchCommonService.getJiQiZhiXinSearch();
     }
 
+    @RequestMapping("/hupu")
+    public ResultTemplateBean getHuPuSearch() {
+        return topSearchCommonService.getHuPuSearch();
+    }
+
+    @RequestMapping("/dongqiudi")
+    public ResultTemplateBean getDongQiuDiSearch() {
+        return topSearchCommonService.getDongQiuDiSearch();
+    }
+
+    @RequestMapping("/xinlangtiyu")
+    public ResultTemplateBean getXinLangTiYuSearch() {
+        return topSearchCommonService.getXinLangTiYuSearch();
+    }
+
+    @RequestMapping("/souhutiyu")
+    public ResultTemplateBean getSouHuTiYuSearch() {
+        return topSearchCommonService.getSouHuTiYuSearch();
+    }
+
+    @RequestMapping("/tiyuwangyi")
+    public ResultTemplateBean getWangYiTiYuSearch() {
+        return topSearchCommonService.getWangYiTiYuSearch();
+    }
+
+    @RequestMapping("/yangshitiyu")
+    public ResultTemplateBean getYangShiTiYuSearch() {
+        return topSearchCommonService.getYangShiTiYuSearch();
+    }
+
+    @RequestMapping("/pptiyu")
+    public ResultTemplateBean getPPTiYuSearch() {
+        return topSearchCommonService.getPPTiYuSearch();
+    }
+
+    @RequestMapping("/zhiboba")
+    public ResultTemplateBean getZhiBoBaSearch() {
+        return topSearchCommonService.getZhiBoBaSearch();
+    }
+
 }

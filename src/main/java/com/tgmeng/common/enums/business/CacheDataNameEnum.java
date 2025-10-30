@@ -119,7 +119,15 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_TOP_EUREK_ALERT("CACHE_TOP_SEARCH_TOP_EUREK_ALERT", "/topsearch/eurekalert", "", true,4),
     CACHE_TOP_SEARCH_TOP_REN_GONG_ZHI_NENG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("CACHE_TOP_SEARCH_TOP_REN_GONG_ZHI_NENG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN", "/topsearch/rengongzhinengguojikejichuangxinzhongxin", "", true,4),
     CACHE_TOP_SEARCH_TOP_YI_YAO_JIAN_KANG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("CACHE_TOP_SEARCH_TOP_YI_YAO_JIAN_KANG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN", "/topsearch/yiyaojiankangguojikejichuangxinzhongxin", "", true,4),
-    CACHE_TOP_SEARCH_TOP_JI_QI_ZHI_XIN("CACHE_TOP_SEARCH_TOP_JI_QI_ZHI_XIN", "/topsearch/jiqizhixin", "", true,4);
+    CACHE_TOP_SEARCH_TOP_JI_QI_ZHI_XIN("CACHE_TOP_SEARCH_TOP_JI_QI_ZHI_XIN", "/topsearch/jiqizhixin", "", true,4),
+    CACHE_TOP_SEARCH_TOP_HU_PU("CACHE_TOP_SEARCH_TOP_HU_PU", "/topsearch/hupu", "", true,4),
+    CACHE_TOP_SEARCH_TOP_DONG_QIU_DI("CACHE_TOP_SEARCH_TOP_DONG_QIU_DI", "/topsearch/dongqiudi", "", true,4),
+    CACHE_TOP_SEARCH_TOP_XIN_LANG_TI_YU("CACHE_TOP_SEARCH_TOP_XIN_LANG_TI_YU", "/topsearch/xinlangtiyu", "", true,4),
+    CACHE_TOP_SEARCH_TOP_SOU_HU_TI_YU("CACHE_TOP_SEARCH_TOP_SOU_HU_TI_YU", "/topsearch/souhutiyu", "", true,4),
+    CACHE_TOP_SEARCH_TOP_TI_YU_WANG_YI("CACHE_TOP_SEARCH_TOP_TI_YU_WANG_YI", "/topsearch/tiyuwangyi", "", true,4),
+    CACHE_TOP_SEARCH_TOP_YANG_SHI_TI_YU("CACHE_TOP_SEARCH_TOP_YANG_SHI_TI_YU", "/topsearch/yangshitiyu", "", true,4),
+    CACHE_TOP_SEARCH_TOP_PP_TI_YU("CACHE_TOP_SEARCH_TOP_PP_TI_YU", "/topsearch/pptiyu", "", true,4),
+    CACHE_TOP_SEARCH_TOP_ZHI_BO_BA("CACHE_TOP_SEARCH_TOP_ZHI_BO_BA", "/topsearch/zhiboba", "", true,4);
 
 
 

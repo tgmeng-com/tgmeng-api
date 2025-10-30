@@ -1316,13 +1316,246 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             }
 
         } catch (Exception e) {
-            log.error("👺👺👺获取机器之心失败👺👺👺：平台；{}", DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getKey(), e);
+            log.error("👺👺👺获取机器之心失败👺👺👺：平台；{}", DataInfoCardEnum.JI_QI_ZHI_XIN.getKey(), e);
             throw new ServerException(ServerExceptionEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS,
-                DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getKey(),
-                DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getValue(),
-                DataInfoCardEnum.JI_QI_ZHI_XIN_SEARCH_EXCEPTION.getDescription());
+                DataInfoCardEnum.JI_QI_ZHI_XIN.getKey(),
+                DataInfoCardEnum.JI_QI_ZHI_XIN.getValue(),
+                DataInfoCardEnum.JI_QI_ZHI_XIN.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
+    }
+
+    @Override
+    public ResultTemplateBean getHuPuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getHuPu(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.HU_PU.getValue(), ForestRequestHeaderOriginEnum.HU_PU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.HU_PU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getHuPu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.HU_PU.getKey(),
+                    DataInfoCardEnum.HU_PU.getValue(),
+                    DataInfoCardEnum.HU_PU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取虎扑失败👺👺👺：平台；{}", DataInfoCardEnum.HU_PU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.HU_PU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getDongQiuDiSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getDongQiuDi(
+                    ForestUtil.getRandomRequestHeaderForDongQiuDi()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.DONG_QIU_DI_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getDongQiuDi(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.DONG_QIU_DI.getKey(),
+                    DataInfoCardEnum.DONG_QIU_DI.getValue(),
+                    DataInfoCardEnum.DONG_QIU_DI.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取懂球帝失败👺👺👺：平台；{}", DataInfoCardEnum.DONG_QIU_DI.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.DONG_QIU_DI_SEARCH_EXCEPTION);
+        }
+
+    }
+
+    @Override
+    public ResultTemplateBean getXinLangTiYuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getXinLangTiYu(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.XIN_LANG_TI_YU.getValue(), ForestRequestHeaderOriginEnum.XIN_LANG_TI_YU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.XIN_LANG_TI_YU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getXinLangTiYu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.XIN_LANG_TI_YU.getKey(),
+                    DataInfoCardEnum.XIN_LANG_TI_YU.getValue(),
+                    DataInfoCardEnum.XIN_LANG_TI_YU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取新浪体育失败👺👺👺：平台；{}", DataInfoCardEnum.XIN_LANG_TI_YU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.XIN_LANG_TI_YU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getSouHuTiYuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getSouHuTiYu(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.SOU_HU_TI_YU.getValue(), ForestRequestHeaderOriginEnum.SOU_HU_TI_YU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.SOU_HU_TI_YU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getSouHuTiYu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.SOU_HU_TI_YU.getKey(),
+                    DataInfoCardEnum.SOU_HU_TI_YU.getValue(),
+                    DataInfoCardEnum.SOU_HU_TI_YU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取搜狐体育失败👺👺👺：平台；{}", DataInfoCardEnum.SOU_HU_TI_YU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.SOU_HU_TI_YU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getWangYiTiYuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getWangYiTiYu(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.WANG_YI_TI_YU.getValue(), ForestRequestHeaderOriginEnum.WANG_YI_TI_YU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.WANG_YI_TI_YU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getWangYiTiYu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.WANG_YI_TI_YU.getKey(),
+                    DataInfoCardEnum.WANG_YI_TI_YU.getValue(),
+                    DataInfoCardEnum.WANG_YI_TI_YU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取网易体育失败👺👺👺：平台；{}", DataInfoCardEnum.WANG_YI_TI_YU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.WANG_YI_TI_YU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getYangShiTiYuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getYangShiTiYu(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.YANG_SHI_TI_YU.getValue(), ForestRequestHeaderOriginEnum.YANG_SHI_TI_YU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.YANG_SHI_TI_YU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getYangShiTiYu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.YANG_SHI_TI_YU.getKey(),
+                    DataInfoCardEnum.YANG_SHI_TI_YU.getValue(),
+                    DataInfoCardEnum.YANG_SHI_TI_YU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取央视体育失败👺👺👺：平台；{}", DataInfoCardEnum.YANG_SHI_TI_YU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.YANG_SHI_TI_YU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getPPTiYuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getPPTiYu(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.PP_TI_YU.getValue(), ForestRequestHeaderOriginEnum.PP_TI_YU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.PP_TI_YU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getPPTiYu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.PP_TI_YU.getKey(),
+                    DataInfoCardEnum.PP_TI_YU.getValue(),
+                    DataInfoCardEnum.PP_TI_YU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取PP体育失败👺👺👺：平台；{}", DataInfoCardEnum.PP_TI_YU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.PP_TI_YU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getZhiBoBaSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getZhiBoBa(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.ZHI_BO_BA.getValue(), ForestRequestHeaderOriginEnum.ZHI_BO_BA.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.ZHI_BO_BA_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getZhiBoBa(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.ZHI_BO_BA.getKey(),
+                    DataInfoCardEnum.ZHI_BO_BA.getValue(),
+                    DataInfoCardEnum.ZHI_BO_BA.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取直播吧失败👺👺👺：平台；{}", DataInfoCardEnum.ZHI_BO_BA.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.ZHI_BO_BA_SEARCH_EXCEPTION);
+        }
     }
 }

@@ -73,7 +73,15 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     ZHONG_GUO_KE_XUE_YUAN("中国科学院", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5),
     EUREK_ALERT("EurekAlert", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5),
     GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("国际科技创新中心", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5),
-    JI_QI_ZHI_XIN_SEARCH_EXCEPTION("机器之心", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5);
+    JI_QI_ZHI_XIN("机器之心", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "科技", true,5),
+    HU_PU("机器之心", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    DONG_QIU_DI("懂球帝", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    XIN_LANG_TI_YU("新浪体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    SOU_HU_TI_YU("搜狐体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    WANG_YI_TI_YU("网易体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    YANG_SHI_TI_YU("央视体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    PP_TI_YU("PP体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    ZHI_BO_BA("直播吧", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5);
 
 
 

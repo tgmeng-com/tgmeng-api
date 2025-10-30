@@ -196,4 +196,28 @@ public interface ITopSearchCommonClient {
     @Get("https://www.jiqizhixin.com/api/article_library/articles.json?sort=time&page=1&per=12")
     TopSearchJiQiZhiXinDTO getJiQiZhiXin(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://www.hupu.com/")
+    ForestResponse getHuPu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.dongqiudi.com/")
+    ForestResponse getDongQiuDi(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://sports.sina.com.cn/")
+    ForestResponse getXinLangTiYu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://sports.sohu.com/")
+    ForestResponse getSouHuTiYu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://sports.163.com/")
+    ForestResponse getWangYiTiYu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://sports.cctv.com/")
+    ForestResponse getYangShiTiYu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.ppsport.com/")
+    ForestResponse getPPTiYu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.zhibo8.com/")
+    ForestResponse getZhiBoBa(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

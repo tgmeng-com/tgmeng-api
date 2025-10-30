@@ -96,4 +96,20 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getGuoJiKeJiChuangXinZhongXinSearch(SearchTypeGuoJiKeJiChuangXinZhongXinnum searchTypeGuoJiKeJiChuangXinZhongXinnum);
 
     ResultTemplateBean getJiQiZhiXinSearch();
+
+    ResultTemplateBean getHuPuSearch();
+
+    ResultTemplateBean getDongQiuDiSearch();
+
+    ResultTemplateBean getXinLangTiYuSearch();
+
+    ResultTemplateBean getSouHuTiYuSearch();
+
+    ResultTemplateBean getWangYiTiYuSearch();
+
+    ResultTemplateBean getYangShiTiYuSearch();
+
+    ResultTemplateBean getPPTiYuSearch();
+
+    ResultTemplateBean getZhiBoBaSearch();
 }

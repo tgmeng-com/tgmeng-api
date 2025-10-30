@@ -64,7 +64,15 @@ public enum ForestRequestHeaderRefererEnum  implements INameValueEnum<String,Str
     ZHONG_GUO_KE_XUE_YUAN("ZHONG_GUO_KE_XUE_YUAN", "https://www.cas.cn/", "",true,5),
     EUREK_ALERT("EUREK_ALERT", "https://www.eurekalert.org/", "",true,5),
     GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN", "https://www.ncsti.gov.cn/kjdt/", "",true,5),
-    JI_QI_ZHI_XIN("JI_QI_ZHI_XIN", "https://www.jiqizhixin.com/", "",true,5);
+    JI_QI_ZHI_XIN("JI_QI_ZHI_XIN", "https://www.jiqizhixin.com/", "",true,5),
+    HU_PU("HU_PU", "https://www.hupu.com/", "",true,5),
+    DONG_QIU_DI("DONG_QIU_DI", "https://www.dongqiudi.com/", "",true,5),
+    XIN_LANG_TI_YU("XIN_LANG_TI_YU", "https://sports.sina.com.cn/", "",true,5),
+    SOU_HU_TI_YU("SOU_HU_TI_YU", "https://sports.sohu.com/", "",true,5),
+    WANG_YI_TI_YU("WANG_YI_TI_YU", "https://sports.163.com/", "",true,5),
+    YANG_SHI_TI_YU("YANG_SHI_TI_YU", "https://sports.cctv.com/", "",true,5),
+    PP_TI_YU("PP_TI_YU", "https://www.ppsport.com/", "",true,5),
+    ZHI_BO_BA("ZHI_BO_BA", "https://www.zhibo8.com/", "",true,5);
 
     private final String key;
     private final String value;

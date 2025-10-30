@@ -96,7 +96,7 @@ public class TopSearchDataCache {
     }
 
     // 清除缓存中的某个数据
-    public void remove(CacheDataNameEnum key) {
+    public void remove( CacheDataNameEnum key) {
         cache.invalidate(key);
         log.info("清除缓存：key:{} ", key);
     }
