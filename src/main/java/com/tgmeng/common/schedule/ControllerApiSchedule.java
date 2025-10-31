@@ -127,7 +127,7 @@ public class ControllerApiSchedule {
             // 金十
             "/api/topsearch/jinshi",
             // 纽约时报
-            "/api/topsearch/newyueshibao",
+            "/api/topsearch/niuyueshibao",
             // BBC
             "/api/topsearch/bbc",
             // 法广
@@ -179,7 +179,7 @@ public class ControllerApiSchedule {
             // 机器之心
             "/api/topsearch/jiqizhixin",
             // 虎扑
-            "/api/topsearch/huapu",
+            "/api/topsearch/hupu",
             // 懂球帝
             "/api/topsearch/dongqiudi",
             // 新浪体育
