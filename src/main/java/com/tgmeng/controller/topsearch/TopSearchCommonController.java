@@ -514,6 +514,7 @@ public class TopSearchCommonController {
         return topSearchCommonService.getNgaPuSearch();
     }
 
+    // 前端暂时不展示
     @RequestMapping("/yimusanfendi")
     public ResultTemplateBean getYiMuSanFenDiSearch() {
         return topSearchCommonService.getYiMuSanFenDiSearch();
