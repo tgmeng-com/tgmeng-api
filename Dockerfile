@@ -1,5 +1,5 @@
 # 1. 选择基础镜像（使用 OpenJDK 运行环境）
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk
 
 # 2. 设置工作目录
 WORKDIR /app
