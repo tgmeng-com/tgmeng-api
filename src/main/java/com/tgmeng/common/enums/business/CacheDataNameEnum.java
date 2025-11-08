@@ -127,7 +127,14 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_TOP_TI_YU_WANG_YI("CACHE_TOP_SEARCH_TOP_TI_YU_WANG_YI", "/topsearch/tiyuwangyi", "", true,4),
     CACHE_TOP_SEARCH_TOP_YANG_SHI_TI_YU("CACHE_TOP_SEARCH_TOP_YANG_SHI_TI_YU", "/topsearch/yangshitiyu", "", true,4),
     CACHE_TOP_SEARCH_TOP_PP_TI_YU("CACHE_TOP_SEARCH_TOP_PP_TI_YU", "/topsearch/pptiyu", "", true,4),
-    CACHE_TOP_SEARCH_TOP_ZHI_BO_BA("CACHE_TOP_SEARCH_TOP_ZHI_BO_BA", "/topsearch/zhiboba", "", true,4);
+    CACHE_TOP_SEARCH_TOP_ZHI_BO_BA("CACHE_TOP_SEARCH_TOP_ZHI_BO_BA", "/topsearch/zhiboba", "", true,4),
+
+    CACHE_TOP_SEARCH_TOP_V2EX("CACHE_TOP_SEARCH_TOP_V2EX", "/topsearch/v2ex", "", true,4),
+    CACHE_TOP_SEARCH_TOP_BU_XING_JIE_HU_PU("CACHE_TOP_SEARCH_TOP_BU_XING_JIE_HU_PU", "/topsearch/buxingjiehupu", "", true,4),
+    CACHE_TOP_SEARCH_TOP_NGA("CACHE_TOP_SEARCH_TOP_NGA", "/topsearch/nga", "", true,4),
+    CACHE_TOP_SEARCH_TOP_YI_MU_SAN_FEN_DI("CACHE_TOP_SEARCH_TOP_YI_MU_SAN_FEN_DI", "/topsearch/yimusanfendi", "", true,4),
+    CACHE_TOP_SEARCH_TOP_WEN_ZHANG_JUE_JIN("CACHE_TOP_SEARCH_TOP_WEN_ZHANG_JUE_JIN", "/topsearch/wenzhangjuejin", "", true,4),
+    CACHE_TOP_SEARCH_TOP_HACKER_NEWS("CACHE_TOP_SEARCH_TOP_HACKER_NEWS", "/topsearch/hackernews", "", true,4);
 
 
 

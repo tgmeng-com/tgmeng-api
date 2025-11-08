@@ -499,4 +499,35 @@ public class TopSearchCommonController {
         return topSearchCommonService.getZhiBoBaSearch();
     }
 
+    @RequestMapping("/v2ex")
+    public ResultTemplateBean getV2exSearch() {
+        return topSearchCommonService.getV2exSearch();
+    }
+
+    @RequestMapping("/buxingjiehupu")
+    public ResultTemplateBean getBuXingJieHuPuSearch() {
+        return topSearchCommonService.getBuXingJieHuPuSearch();
+    }
+
+    @RequestMapping("/nga")
+    public ResultTemplateBean getNgaPuSearch() {
+        return topSearchCommonService.getNgaPuSearch();
+    }
+
+    @RequestMapping("/yimusanfendi")
+    public ResultTemplateBean getYiMuSanFenDiSearch() {
+        return topSearchCommonService.getYiMuSanFenDiSearch();
+    }
+
+    @RequestMapping("/wenzhangjuejin")
+    public ResultTemplateBean getWenZhangJueJinSearch() {
+        return topSearchCommonService.getWenZhangJueJinSearch();
+    }
+
+    @RequestMapping("/hackernews")
+    public ResultTemplateBean getHackerNewsSearch() {
+        return topSearchCommonService.getHackerNewsSearch();
+    }
+
+
 }

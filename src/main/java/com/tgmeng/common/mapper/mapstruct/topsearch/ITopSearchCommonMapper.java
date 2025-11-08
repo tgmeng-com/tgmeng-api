@@ -237,4 +237,14 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "url", target = "url")
     TopSearchCommonVO.DataInfo topSearchYangShiTiYuDTOContentVO2TopSearchCommonVO(TopSearchYangShiTiYuDTO.ItemDTO items);
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "content.title", target = "keyword")
+    @Mapping(source = "contentCounter.hotRank", target = "hotScore", qualifiedByName = "stringToLong")
+    TopSearchCommonVO.DataInfo topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVO(TopSearchWenZhangJueJinDTO.Content content,TopSearchWenZhangJueJinDTO.ContentCounter contentCounter);
+
+    @AfterMapping
+    default void topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVOAfter(TopSearchWenZhangJueJinDTO.Content content, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl("https://juejin.cn/post/" + content.getContentId());
+    }
+
 }

@@ -81,7 +81,13 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     WANG_YI_TI_YU("网易体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
     YANG_SHI_TI_YU("央视体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
     PP_TI_YU("PP体育", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
-    ZHI_BO_BA("直播吧", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5);
+    ZHI_BO_BA("直播吧", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "体育", true,5),
+    V2EX("V2EX", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5),
+    BU_XING_JIE_HU_PU("步行街虎扑", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5),
+    NGA("NGA", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5),
+    YI_MU_SAN_FEN_DI("一亩三分地", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5),
+    WEN_ZHANG_JUE_JIN("掘金文章", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5),
+    HACKER_NEWS("HACKER_NEWS", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5);
 
 
 

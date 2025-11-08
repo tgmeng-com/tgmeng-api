@@ -220,4 +220,22 @@ public interface ITopSearchCommonClient {
     @Get("https://www.zhibo8.com/")
     ForestResponse getZhiBoBa(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://www.v2ex.com/?tab=hot")
+    ForestResponse getV2EX(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://bbs.hupu.com/all-gambia")
+    ForestResponse getBuXingJieHuPu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://nga.cn/")
+    ForestResponse getNga(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.1point3acres.com/bbs/")
+    ForestResponse getYiMuSanFenDi(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot")
+    TopSearchWenZhangJueJinDTO getWenZhangJueJin(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://news.ycombinator.com/")
+    ForestResponse getHackerNews(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

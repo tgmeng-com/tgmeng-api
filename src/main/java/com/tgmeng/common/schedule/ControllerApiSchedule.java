@@ -193,7 +193,23 @@ public class ControllerApiSchedule {
             // PP体育
             "/api/topsearch/pptiyu",
             // 直播吧
-            "/api/topsearch/zhiboba"
+            "/api/topsearch/zhiboba",
+            // v2ex
+            "/api/topsearch/v2ex",
+            // 虎扑步行街
+            "/api/topsearch/buxingjiehupu",
+            // nga
+            "/api/topsearch/nga",
+            // 一亩三分地
+            "/api/topsearch/yimusanfendi",
+            // 掘金文章
+            "/api/topsearch/wenzhangjuejin",
+            // hackernews
+            "/api/topsearch/hackernews"
+
+
+
+
     );
 
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")

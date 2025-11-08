@@ -112,4 +112,16 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getPPTiYuSearch();
 
     ResultTemplateBean getZhiBoBaSearch();
+
+    ResultTemplateBean getV2exSearch();
+
+    ResultTemplateBean getBuXingJieHuPuSearch();
+
+    ResultTemplateBean getNgaPuSearch();
+
+    ResultTemplateBean getYiMuSanFenDiSearch();
+
+    ResultTemplateBean getWenZhangJueJinSearch();
+
+    ResultTemplateBean getHackerNewsSearch();
 }

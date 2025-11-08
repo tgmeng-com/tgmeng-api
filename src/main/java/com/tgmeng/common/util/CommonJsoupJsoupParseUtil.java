@@ -556,6 +556,90 @@ public class CommonJsoupJsoupParseUtil {
         return topSearchCommonVOS;
     }
 
+    public static List<TopSearchCommonVO.DataInfo> getV2EX(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".cell.item");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, ".topic-link", "href");
+            String title = safeText(element, ".topic-link");
+            String hotScore = safeText(element, ".count_livid");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://www.v2ex.com" + url, "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getBuXingJieHuPu(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".text-list-model > div");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, "a", "href");
+            String title = safeText(element, ".t-info");
+            String hotScore = safeText(element, ".t-lights")+"·"+safeText(element, ".t-replies");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://bbs.hupu.com" + url, "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getNGA(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select("#topic_ladder_cat_3 > li");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, "a", "href");
+            String title = safeText(element, "a");
+            //String hotScore = safeText(element, ".t-lights")+"·"+safeText(element, ".t-replies");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https:" + url, "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getYiMuSanFenDi(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select("#portal_block_439_content li");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, "a:first-of-type", "href");
+            String title = safeText(element, "a:first-of-type");
+            //String hotScore = safeText(element, ".t-lights")+"·"+safeText(element, ".t-replies");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.1point3acres.com/bbs/" + url, "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getHackerNews(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".athing.submission");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, ".titleline > a:first-of-type", "href");
+            String title = safeText(element, ".titleline > a:first-of-type");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "",  url, "", "", "", "", ""));
+            }
+        }
+
+        Elements elementsScore = parse.select(".score");
+        for (int i = 0; i < elementsScore.size() && i < topSearchCommonVOS.size(); i++) {
+            Element element = elementsScore.get(i);
+            String hotScore = safeText(element, ".score");
+            if (StrUtil.isNotBlank(hotScore)) {
+                topSearchCommonVOS.get(i).setHotScore(hotScore);
+            }
+        }
+
+        return topSearchCommonVOS;
+    }
+
 
     public static String safeText(Element parent, String selector) {
         Element el = parent.selectFirst(selector);

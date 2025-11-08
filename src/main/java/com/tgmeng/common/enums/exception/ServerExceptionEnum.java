@@ -73,7 +73,13 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     WANG_YI_TI_YU_SEARCH_EXCEPTION(109, "网易体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     YANG_SHI_TI_YU_SEARCH_EXCEPTION(109, "央视体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     PP_TI_YU_SEARCH_EXCEPTION(109, "PP体育", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    ZHI_BO_BA_SEARCH_EXCEPTION(109, "直播吧", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    ZHI_BO_BA_SEARCH_EXCEPTION(109, "直播吧", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    V2EX_SEARCH_EXCEPTION(109, "V2EX", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    BU_XING_JIE_HU_PU_SEARCH_EXCEPTION(109, "步行街虎扑", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    NGA_SEARCH_EXCEPTION(109, "NGA", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YI_MU_SAN_FEN_DI_SEARCH_EXCEPTION(109, "一亩三分地", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    JUE_JIN_WEN_ZHANG_SEARCH_EXCEPTION(109, "掘金文章", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    HACKER_NEWS_SEARCH_EXCEPTION(109, "HACKER_NEWS", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
     private final Integer key;
     private final String value;
