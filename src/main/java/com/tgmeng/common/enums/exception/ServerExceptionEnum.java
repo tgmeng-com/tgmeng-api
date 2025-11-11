@@ -79,7 +79,8 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     NGA_SEARCH_EXCEPTION(109, "NGA", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     YI_MU_SAN_FEN_DI_SEARCH_EXCEPTION(109, "一亩三分地", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     JUE_JIN_WEN_ZHANG_SEARCH_EXCEPTION(109, "掘金文章", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    HACKER_NEWS_SEARCH_EXCEPTION(109, "HACKER_NEWS", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    HACKER_NEWS_SEARCH_EXCEPTION(109, "HACKER_NEWS", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    XIAO_ZU_DOU_BAN_SEARCH_EXCEPTION(109, "小组豆瓣", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
     private final Integer key;
     private final String value;

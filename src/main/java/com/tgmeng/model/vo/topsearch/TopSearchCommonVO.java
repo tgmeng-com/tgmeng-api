@@ -51,6 +51,8 @@ public class TopSearchCommonVO {
         private String type;
         /** 发表/上映时间 */
         private String publishTime;
+        /** 评论数 */
+        private String commentCount;
     }
 
     public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String dataCardName,String dataCardLogo,String dataCardCategory){

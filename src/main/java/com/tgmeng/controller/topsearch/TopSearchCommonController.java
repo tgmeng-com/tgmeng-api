@@ -530,5 +530,29 @@ public class TopSearchCommonController {
         return topSearchCommonService.getHackerNewsSearch();
     }
 
+    @RequestMapping("/gouzudouban")
+    public ResultTemplateBean getGouZuDouBanSearch() {
+        return topSearchCommonService.getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum.GOU_ZU_DOU_BAN);
+    }
+
+    @RequestMapping("/maizudouban")
+    public ResultTemplateBean getMaiZuDouBanSearch() {
+        return topSearchCommonService.getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum.MAI_ZU_DOU_BAN);
+    }
+
+    @RequestMapping("/pinzudouban")
+    public ResultTemplateBean getPinZuDouBanSearch() {
+        return topSearchCommonService.getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum.PIN_ZU_DOU_BAN);
+    }
+
+    @RequestMapping("/aimaoshenghuodouban")
+    public ResultTemplateBean getAiMaoShengHuoDouBanSearch() {
+        return topSearchCommonService.getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum.AI_MAO_SHENG_HUO_DOU_BAN);
+    }
+
+    @RequestMapping("/aimaozaopendouban")
+    public ResultTemplateBean getAiMaoZaoPenDouBanSearch() {
+        return topSearchCommonService.getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum.AI_MAO_ZAO_PEN_DOU_BAN);
+    }
 
 }

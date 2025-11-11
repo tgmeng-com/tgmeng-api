@@ -238,4 +238,7 @@ public interface ITopSearchCommonClient {
     @Get("https://news.ycombinator.com/")
     ForestResponse getHackerNews(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://www.douban.com/group/{type}")
+    ForestResponse getXiaoZuDouBan(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
+
 }

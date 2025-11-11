@@ -16,6 +16,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CacheDataNameEnum implements INameValueEnum<String,String> {
+    // TODO 每次新增平台后，这里添加缓存名称，用于缓存数据
     CACHE_TOP_SEARCH_BILIBILI("CACHE_TOP_SEARCH_BILIBILI", "/topsearch/bilibili", "b站数据缓存名称", true,1),
     CACHE_TOP_SEARCH_BAIDU("CACHE_TOP_SEARCH_BAIDU", "/topsearch/baidu", "百度数据缓存名称", true,2),
     CACHE_TOP_SEARCH_WEIBO("CACHE_TOP_SEARCH_WEIBO", "/topsearch/weibo", "微博数据缓存名称", true,3),
@@ -134,8 +135,12 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_TOP_NGA("CACHE_TOP_SEARCH_TOP_NGA", "/topsearch/nga", "", true,4),
     CACHE_TOP_SEARCH_TOP_YI_MU_SAN_FEN_DI("CACHE_TOP_SEARCH_TOP_YI_MU_SAN_FEN_DI", "/topsearch/yimusanfendi", "", true,4),
     CACHE_TOP_SEARCH_TOP_WEN_ZHANG_JUE_JIN("CACHE_TOP_SEARCH_TOP_WEN_ZHANG_JUE_JIN", "/topsearch/wenzhangjuejin", "", true,4),
-    CACHE_TOP_SEARCH_TOP_HACKER_NEWS("CACHE_TOP_SEARCH_TOP_HACKER_NEWS", "/topsearch/hackernews", "", true,4);
-
+    CACHE_TOP_SEARCH_TOP_HACKER_NEWS("CACHE_TOP_SEARCH_TOP_HACKER_NEWS", "/topsearch/hackernews", "", true,4),
+    CACHE_TOP_SEARCH_TOP_MAI_ZU_DOU_BAN("CACHE_TOP_SEARCH_TOP_MAI_ZU_DOU_BAN", "/topsearch/maizudouban", "", true,4),
+    CACHE_TOP_SEARCH_TOP_PIN_ZU_DOU_BAN("CACHE_TOP_SEARCH_TOP_PIN_ZU_DOU_BAN", "/topsearch/pinzudouban", "", true,4),
+    CACHE_TOP_SEARCH_TOP_AI_MAO_SHENG_HUO_DOU_BAN("CACHE_TOP_SEARCH_TOP_AI_MAO_SHENG_HUO_DOU_BAN", "/topsearch/aimaoshenghuodouban", "", true,4),
+    CACHE_TOP_SEARCH_TOP_AI_MAO_ZAO_PEN_DOU_BAN("CACHE_TOP_SEARCH_TOP_AI_MAO_ZAO_PEN_DOU_BAN", "/topsearch/aimaozaopendouban", "", true,4),
+    CACHE_TOP_SEARCH_TOP_GOU_ZU_DOU_BAN("CACHE_TOP_SEARCH_TOP_GOU_ZU_DOU_BAN", "/topsearch/gouzudouban", "", true,4);
 
 
     private final String key;

@@ -1730,4 +1730,34 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             throw new ServerException(ServerExceptionEnum.HACKER_NEWS_SEARCH_EXCEPTION);
         }
     }
+
+    @Override
+    public ResultTemplateBean getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum searchTypeXiaoZuDouBanEnum) {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getXiaoZuDouBan(
+                    ForestUtil.getRandomRequestHeaderForXiaoZuDouBan(),
+                    searchTypeXiaoZuDouBanEnum.getValue()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.XIAO_ZU_DOU_BAN_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getXiaoZuDouBan(content, searchTypeXiaoZuDouBanEnum);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.XIAO_ZU_DOU_BAN.getKey(),
+                    DataInfoCardEnum.XIAO_ZU_DOU_BAN.getValue(),
+                    DataInfoCardEnum.XIAO_ZU_DOU_BAN.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取豆瓣小组失败👺👺👺：平台；{}", DataInfoCardEnum.XIAO_ZU_DOU_BAN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.XIAO_ZU_DOU_BAN_SEARCH_EXCEPTION);
+        }
+    }
 }

@@ -32,6 +32,7 @@ public class ControllerApiSchedule {
 
     // 将endpoints提取为常量，便于维护
     private static final List<String> ENDPOINTS = Arrays.asList(
+            // TODO 每次新增平台后，这里添加接口地址，用于定时调用
             // 国内热搜
             "/api/topsearch/baidu",
             "/api/topsearch/bilibili",
@@ -205,7 +206,17 @@ public class ControllerApiSchedule {
             // 掘金文章
             "/api/topsearch/wenzhangjuejin",
             // hackernews
-            "/api/topsearch/hackernews"
+            "/api/topsearch/hackernews",
+            // 豆瓣爱猫澡盆
+            "/api/topsearch/aimaozaopendouban",
+            // 豆瓣爱猫生活
+            "/api/topsearch/aimaoshenghuodouban",
+            // 豆瓣买组
+            "/api/topsearch/maizudouban",
+            // 豆瓣拼组
+            "/api/topsearch/pinzudouban",
+            // 豆瓣狗组
+            "/api/topsearch/gouzudouban"
 
 
 
