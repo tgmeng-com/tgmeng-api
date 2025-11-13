@@ -652,7 +652,7 @@ public class CommonJsoupJsoupParseUtil {
                 String url = safeAttr(element, ".title > a", "href");
                 String title = safeText(element, ".title > a");
                 title = title.contains("】") ? title.substring(title.indexOf("】") + 1).trim() : title.trim();
-                title = title.contains("｜") ? title.substring(title.indexOf("】") + 1).trim() : title.trim();
+                title = title.contains("｜") ? title.substring(title.indexOf("｜") + 1).trim() : title.trim();
                 String publishTime = safeText(element, ".time");
                 String commentCount = StrUtil.isNotBlank(safeText(element, ".r-count")) ? safeText(element, ".r-count") : "0";
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
