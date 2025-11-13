@@ -424,4 +424,30 @@ public class ForestUtil {
                 //.setUpgradeInsecureRequests("1")
                 ;
     }
+
+    public static ForestRequestHeader getRandomRequestHeaderForShenMeZhiDeMai() {
+        //String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        String userAgent = "";
+        return new ForestRequestHeader()
+                //.setHost("www.v2ex.com")
+                .setUserAgent(userAgent)
+                .setCookie(CommonSeleniumUtil.getShenMeZhiDeMaiCookie(userAgent))
+                //.setAccept("*/*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                //.setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                //.setReferer(ForestRequestHeaderRefererEnum.SHEN_ME_ZHI_DE_MAI.getValue())
+                //.setOrigin(ForestRequestHeaderOriginEnum.SHEN_ME_ZHI_DE_MAI.getValue())
+                //.setCacheControl("max-age=0")
+                //.setSecChUa("\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"")
+                //.setSecChUaMobile("?0")
+                //.setSecFetchSite("")
+                //.setSecFetchUser("?1")
+                //.setSecChUaPlatform("Windows")
+                //.setSecFetchDest("document")
+                //.setSecFetchMode("navigate")
+                //.setUpgradeInsecureRequests("1")
+                ;
+    }
 }

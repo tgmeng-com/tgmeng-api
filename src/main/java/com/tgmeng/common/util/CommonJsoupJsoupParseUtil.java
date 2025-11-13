@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.enums.business.SearchTypeGuoJiKeJiChuangXinZhongXinnum;
+import com.tgmeng.common.enums.business.SearchTypeShenMeZhiDeMaiEnum;
 import com.tgmeng.common.enums.business.SearchTypeXiaoZuDouBanEnum;
 import com.tgmeng.common.enums.exception.ServerExceptionEnum;
 import com.tgmeng.common.exception.ServerException;
@@ -643,6 +644,25 @@ public class CommonJsoupJsoupParseUtil {
     }
 
     public static List<TopSearchCommonVO.DataInfo> getXiaoZuDouBan(String content, SearchTypeXiaoZuDouBanEnum searchTypeXiaoZuDouBanEnum) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".olt tr");
+        for (Element element : elements) {
+            if (element.select("span[title=置顶]").isEmpty()) {
+                String url = safeAttr(element, ".title > a", "href");
+                String title = safeText(element, ".title > a");
+                title = title.contains("】") ? title.substring(title.indexOf("】") + 1).trim() : title.trim();
+                String publishTime = safeText(element, ".time");
+                String commentCount = StrUtil.isNotBlank(safeText(element, ".r-count")) ? safeText(element, ".r-count") : "0";
+                if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", publishTime, commentCount));
+                }
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getShenmeZhiDeMai(String content, SearchTypeShenMeZhiDeMaiEnum searchTypeShenMeZhiDeMaiEnum) {
         Document parse = Jsoup.parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         Elements elements = parse.select(".olt tr");

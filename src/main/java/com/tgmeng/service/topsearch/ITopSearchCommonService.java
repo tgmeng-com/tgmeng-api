@@ -126,4 +126,8 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getHackerNewsSearch();
 
     ResultTemplateBean getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum searchTypeXiaoZuDouBanEnum);
+
+    ResultTemplateBean getLiShiDiJiaShenMeZhiDeMaiSearch(SearchTypeShenMeZhiDeMaiEnum searchTypeShenMeZhiDeMaiEnum);
+
+    ResultTemplateBean getAiMaoZaoPenDouBanCommonSearch(SearchTypeXiaoZuDouBanEnum enumByKey);
 }

@@ -1686,7 +1686,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             TopSearchWenZhangJueJinDTO wenZhangJueJin = topSearchCommonClient.getWenZhangJueJin(
                     ForestUtil.getRandomRequestHeaderForWenZhangJueJin());
             for (TopSearchWenZhangJueJinDTO.DataInfo content : wenZhangJueJin.getData()) {
-                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVO(content.getContent(),content.getContentCounter());
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVO(content.getContent(), content.getContentCounter());
                 topSearchCommonVOS.add(dataInfo);
             }
 
@@ -1759,5 +1759,67 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             log.error("👺👺👺获取豆瓣小组失败👺👺👺：平台；{}", DataInfoCardEnum.XIAO_ZU_DOU_BAN.getKey(), e);
             throw new ServerException(ServerExceptionEnum.XIAO_ZU_DOU_BAN_SEARCH_EXCEPTION);
         }
+    }
+
+    @Override
+    public ResultTemplateBean getLiShiDiJiaShenMeZhiDeMaiSearch(SearchTypeShenMeZhiDeMaiEnum searchTypeShenMeZhiDeMaiEnum) {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getLiShiDiJiaShenMeZhiDeMai(
+                    ForestUtil.getRandomRequestHeaderForShenMeZhiDeMai(),
+                    searchTypeShenMeZhiDeMaiEnum.getValue()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.SHEN_ME_ZHI_DE_MAI_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getShenmeZhiDeMai(content, searchTypeShenMeZhiDeMaiEnum);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.SHEN_ME_ZHI_DE_MAI.getKey(),
+                    DataInfoCardEnum.SHEN_ME_ZHI_DE_MAI.getValue(),
+                    DataInfoCardEnum.SHEN_ME_ZHI_DE_MAI.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取什么值得买失败👺👺👺：平台；{}", DataInfoCardEnum.SHEN_ME_ZHI_DE_MAI.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.SHEN_ME_ZHI_DE_MAI_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getAiMaoZaoPenDouBanCommonSearch(SearchTypeXiaoZuDouBanEnum searchTypeXiaoZuDouBanEnum) {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getXiaoZuDouBan(
+                    ForestUtil.getRandomRequestHeaderForXiaoZuDouBan(),
+                    searchTypeXiaoZuDouBanEnum.getValue()
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.XIAO_ZU_DOU_BAN_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getXiaoZuDouBan(content, searchTypeXiaoZuDouBanEnum);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.XIAO_ZU_DOU_BAN.getKey(),
+                    DataInfoCardEnum.XIAO_ZU_DOU_BAN.getValue(),
+                    DataInfoCardEnum.XIAO_ZU_DOU_BAN.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取豆瓣小组失败👺👺👺：平台；{}", DataInfoCardEnum.XIAO_ZU_DOU_BAN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.XIAO_ZU_DOU_BAN_SEARCH_EXCEPTION);
+        }
+
+
     }
 }

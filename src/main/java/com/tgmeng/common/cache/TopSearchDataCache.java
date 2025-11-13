@@ -37,6 +37,13 @@ public class TopSearchDataCache {
     @Value("${my-config.data-cache.top-search.expire-time-wang-yi-yun-api-data-random-range:300}")
     private Long dataCacheExpireTimeWangYiYunApiDataRandomRange;
 
+    /** 豆瓣缓存过期时间，yml里找不到就用这里的默认值360秒 */
+    @Value("${my-config.data-cache.top-search.expire-time-dou-ban-api-data:360}")
+    private Long dataCacheExpireTimeDouBanApiData;
+    /** 豆瓣缓存过期时间浮动范围，yml里找不到就用这里的默认值240秒 */
+    @Value("${my-config.data-cache.top-search.expire-time-dou-ban-api-data-random-range:240}")
+    private Long dataCacheExpireTimeDouBanApiDataRandomRange;
+
     /** 最大缓存条数，默认100条 */
     @Value("${my-config.data-cache.top-search.max-size:100}")
     private Long dataCacheMaxSize;
@@ -61,6 +68,11 @@ public class TopSearchDataCache {
                             Random random = new Random();
                             Long randomOffset = random.nextLong(2 * dataCacheExpireTimeWangYiYunApiDataRandomRange + 1) - dataCacheExpireTimeWangYiYunApiDataRandomRange;
                             return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeWangYiYunApiData+randomOffset);
+                        }else if(StrUtil.contains(key.getKey(),"DOU_BAN")){
+                            // 豆瓣缓存的过期时间浮动区间
+                            Random random = new Random();
+                            Long randomOffset = random.nextLong(2 * dataCacheExpireTimeDouBanApiDataRandomRange + 1) - dataCacheExpireTimeDouBanApiDataRandomRange;
+                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeDouBanApiData+randomOffset);
                         } else {
                             return TimeUnit.SECONDS.toNanos(dataCacheExpireTime);
                         }

@@ -27,6 +27,8 @@
 		<twitter4j-core.version>4.0.7</twitter4j-core.version>
 		<jackson.version>2.19.1</jackson.version>
 		<logback.version>1.5.18</logback.version>
+		<seleniumJava.version>4.18.0</seleniumJava.version>
+		<webdrivermanager.version>5.5.3</webdrivermanager.version>
 	</properties>
 
 	<dependencies>
@@ -107,6 +109,19 @@
 			<artifactId>twitter4j-core</artifactId>
 			<version>${twitter4j-core.version}</version>
 		</dependency>
+
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${seleniumJava.version}</version>
+        </dependency>
+        <!-- WebDriverManager 自动管理驱动 -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
 
 		<!--logback	-->
 		<dependency>

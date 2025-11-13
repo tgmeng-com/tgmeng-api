@@ -241,4 +241,10 @@ public interface ITopSearchCommonClient {
     @Get("https://www.douban.com/group/{type}")
     ForestResponse getXiaoZuDouBan(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
+    @Get("https://faxian.smzdm.com/C2WF946J0/probev3.js")
+    ForestResponse getShenMeZhiDeMaiCookie(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://faxian.smzdm.com/{type}/")
+    ForestResponse getLiShiDiJiaShenMeZhiDeMai(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
+
 }

@@ -50,3 +50,5 @@ my-config:
       expire-time-github-api-data-random-range: 600  # GitHub缓存过期时间的浮动值，比如上面设置的是30分钟，这里设置10分钟，那么缓存过期时间会在20-40分钟之间随机
       expire-time-wang-yi-yun-api-data: 600  # 网易云音乐缓存过期时间 单位是秒
       expire-time-wang-yi-yun-api-data-random-range: 300 # 网易云音乐缓存过期时间的浮动值，比如上面设置的是10分钟，这里设置5分钟，那么缓存过期时间会在5-15分钟之间随机
+      expire-time-dou-ban-api-data: 360  # 网易云音乐缓存过期时间 单位是秒
+      expire-time-dou-ban-api-data-random-range: 240 # 网易云音乐缓存过期时间的浮动值，比如上面设置的是10分钟，这里设置5分钟，那么缓存过期时间会在5-15分钟之间随机

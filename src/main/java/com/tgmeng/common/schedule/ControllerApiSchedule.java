@@ -216,10 +216,29 @@ public class ControllerApiSchedule {
             // 豆瓣拼组
             "/api/topsearch/pinzudouban",
             // 豆瓣狗组
-            "/api/topsearch/gouzudouban"
+            "/api/topsearch/gouzudouban",
 
-
-
+            //豆瓣生活
+            "/api/topsearch/xiaozudouban/XIA_CHU_FANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIE_MAO_YE_KE_AI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_DE_CHENG_SHI_PAI_GEI_NI_KAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIA_PIAN_TUI_JIAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHE_CHU_MAI_FANG_GONG_JIN_HUI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/CUN_ZHUANG_AI_HAO_ZHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/YOU_YI_DE_XIAO_CHUAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHE_HUI_XING_SI_WANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/TAI_TOU_KAN_SHU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/LAN_REN_SHENG_HUO_ZHI_BEI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/KE_AI_SHI_WU_FEN_XIANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIN_TIAN_CHUAN_SHEN_ME_DOU_BAN",
+            "/api/topsearch/xiaozudouban/XIAO_FEI_ZHU_YI_NI_XING_ZHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_CHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_REN_QING_SHI_GU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/DOU_BAN_NIAO_ZU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN",
+            "/api/topsearch/xiaozudouban/ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIAO_SHI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN"
 
     );
 

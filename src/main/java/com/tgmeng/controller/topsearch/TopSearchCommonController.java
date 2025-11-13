@@ -2,8 +2,10 @@ package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.business.*;
+import com.tgmeng.common.enums.enumcommon.EnumUtils;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -553,6 +555,16 @@ public class TopSearchCommonController {
     @RequestMapping("/aimaozaopendouban")
     public ResultTemplateBean getAiMaoZaoPenDouBanSearch() {
         return topSearchCommonService.getXiaoZuDouBanSearch(SearchTypeXiaoZuDouBanEnum.AI_MAO_ZAO_PEN_DOU_BAN);
+    }
+
+    @RequestMapping("/lishidijiashenmezhidemai")
+    public ResultTemplateBean getLiShiDiJiaShenMeZhiDeMaiSearch() {
+        return topSearchCommonService.getLiShiDiJiaShenMeZhiDeMaiSearch(SearchTypeShenMeZhiDeMaiEnum.LI_SHI_DI_JIA_SHEN_ME_ZHI_DE_MAI);
+    }
+
+    @RequestMapping("/xiaozudouban/{type}")
+    public ResultTemplateBean getAiMaoZaoPenDouBanCommonSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getAiMaoZaoPenDouBanCommonSearch(EnumUtils.getEnumByKey(SearchTypeXiaoZuDouBanEnum.class, type));
     }
 
 }
