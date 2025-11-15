@@ -89,7 +89,15 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     GCORES("GCORES", "https://www.gcores.com", "",true,5),
     YOU_YAN_SHE("YOU_YAN_SHE", "https://www.yystv.cn", "",true,5),
     YI_QI_YI_QI_SAN("17173", "https://news.17173.com", "",true,5),
-    YOU_XIA_WANG("YOU_XIA_WANG", "https://www.ali213.net", "",true,5);
+    YOU_XIA_WANG("YOU_XIA_WANG", "https://www.ali213.net", "",true,5),
+    SHENG_WU_GU("SHENG_WU_GU", "https://www.ali213.net", "",true,5),
+    YI_YAO_MO_FANG("YI_YAO_MO_FANG", "https://bydrug.pharmcube.com", "",true,5),
+    DING_XIANG_YI_SHENG("DING_XIANG_YI_SHENG", "https://dxy.com", "",true,5),
+    DING_XIANG_YUAN_SHU_QU("DING_XIANG_YUAN_SHU_QU", "https://www.dxy.cn", "",true,5),
+    SHENG_MING_SHI_BAO("SHENG_MING_SHI_BAO", "https://www.lifetimes.cn", "",true,5),
+    JIA_YI_DA_JIAN_KANG("JIA_YI_DA_JIAN_KANG", "https://www.familydoctor.cn", "",true,5),
+    GUO_KE("GUO_KE", "https://www.guokr.com", "",true,5),
+    JIAN_KANG_SHI_BAO_WANG("JIAN_KANG_SHI_BAO_WANG", "https://www.jksb.com.cn", "",true,5);
 
     private final String key;
     private final String value;

@@ -274,4 +274,28 @@ public interface ITopSearchCommonClient {
     @Get("https://www.ali213.net/")
     ForestResponse getYouXiaWang(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://www.bioon.com/")
+    ForestResponse getShengWuGu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://bydrug.pharmcube.com/news")
+    ForestResponse getYiYaoMoFang(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://dxy.com/articles")
+    ForestResponse getDingXiangYiSheng(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.dxy.cn/bbs/newweb/pc/home?tab=3")
+    ForestResponse getDingXiangYuanSheQu(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.lifetimes.cn/news")
+    ForestResponse getShengMingShiBao(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.familydoctor.cn/article/")
+    ForestResponse getJiaYiDaJianKang(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.guokr.com/")
+    ForestResponse getGuoKe(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.jksb.com.cn/newslist/posid/8")
+    ForestResponse getJianKangShiBaoWang(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

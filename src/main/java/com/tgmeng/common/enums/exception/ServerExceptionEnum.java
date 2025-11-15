@@ -90,7 +90,15 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     GCORES_SEARCH_EXCEPTION(109, "GCORES机核", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     YOU_YAN_SHE_SEARCH_EXCEPTION(109, "游研社", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     YI_QI_YI_QI_SAN_SEARCH_EXCEPTION(109, "17173", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    YOU_XIA_WANG_SEARCH_EXCEPTION(109, "游侠网", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    YOU_XIA_WANG_SEARCH_EXCEPTION(109, "游侠网", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    SHENG_WU_GU_SEARCH_EXCEPTION(109, "生物谷", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YI_YAO_MO_FANG_SEARCH_EXCEPTION(109, "医药魔方", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    DING_XIANG_YI_SHENG_SEARCH_EXCEPTION(109, "丁香医生", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    DING_XIANG_YUAN_SHU_QU_SEARCH_EXCEPTION(109, "丁香园社区", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    SHENG_MING_SHI_BAO_SEARCH_EXCEPTION(109, "生命时报", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    JIA_YI_DA_JIAN_KANG_SEARCH_EXCEPTION(109, "家医大健康", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    GUO_KE_SEARCH_EXCEPTION(109, "果壳", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    JIAN_KANG_SHI_BAO_WANG_SEARCH_EXCEPTION(109, "健康时报网", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
     private final Integer key;
     private final String value;

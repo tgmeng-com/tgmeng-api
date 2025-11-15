@@ -249,7 +249,17 @@ public class ControllerApiSchedule {
             "/api/topsearch/gcores",
             "/api/topsearch/youyanshe",
             "/api/topsearch/17173",
-            "/api/topsearch/youxiawang"
+            "/api/topsearch/youxiawang",
+
+            //健康
+            "shengwugu",
+            "yiyaomofang",
+            "dingxiangyisheng",
+            "dingxiangyuanshequ",
+            "shengmingshibao",
+            "jiayidajiankang",
+            "guoke",
+            "jiankangshibaowang"
 
     );
 

@@ -172,8 +172,16 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_GCORES("CACHE_TOP_SEARCH_GCORES", "/topsearch/gcores", "", true,4),
     CACHE_TOP_SEARCH_YOU_YAN_SHE("CACHE_TOP_SEARCH_YOU_YAN_SHE", "/topsearch/youyanshe", "", true,4),
     CACHE_TOP_SEARCH_YI_QI_YI_QI_SAN("CACHE_TOP_SEARCH_YI_QI_YI_QI_SAN", "/topsearch/17173", "", true,4),
-    CACHE_TOP_SEARCH_YOU_XIA_WANG("CACHE_TOP_SEARCH_YOU_XIA_WANG", "/topsearch/youxiawang", "", true,4);
+    CACHE_TOP_SEARCH_YOU_XIA_WANG("CACHE_TOP_SEARCH_YOU_XIA_WANG", "/topsearch/youxiawang", "", true,4),
 
+    SHENG_WU_GU("SHENG_WU_GU", "/topsearch/shengwugu", "", true,4),
+    YI_YAO_MO_FANG("YI_YAO_MO_FANG", "/topsearch/yiyaomofang", "", true,4),
+    DING_XIANG_YI_SHENG("DING_XIANG_YI_SHENG", "/topsearch/dingxiangyisheng", "", true,4),
+    DING_XIANG_YUAN_SHU_QU("DING_XIANG_YUAN_SHU_QU", "/topsearch/dingxiangyuanshequ", "", true,4),
+    SHENG_MING_SHI_BAO("SHENG_MING_SHI_BAO", "/topsearch/shengmingshibao", "", true,4),
+    JIA_YI_DA_JIAN_KANG("JIA_YI_DA_JIAN_KANG", "/topsearch/jiayidajiankang", "", true,4),
+    GUO_KE("GUO_KE", "/topsearch/guoke", "", true,4),
+    JIAN_KANG_SHI_BAO_WANG("JIAN_KANG_SHI_BAO_WANG", "/topsearch/jiankangshibaowang", "", true,4);
 
     private final String key;
     private final String value;

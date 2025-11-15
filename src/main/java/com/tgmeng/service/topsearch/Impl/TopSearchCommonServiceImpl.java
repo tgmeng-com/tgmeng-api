@@ -2092,4 +2092,244 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             throw new ServerException(ServerExceptionEnum.YOU_XIA_WANG_SEARCH_EXCEPTION);
         }
     }
+
+    @Override
+    public ResultTemplateBean getShengWuGuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getShengWuGu(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.SHENG_WU_GU.getValue(), ForestRequestHeaderOriginEnum.SHENG_WU_GU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.SHENG_WU_GU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getShengWuGu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.SHENG_WU_GU.getKey(),
+                    DataInfoCardEnum.SHENG_WU_GU.getValue(),
+                    DataInfoCardEnum.SHENG_WU_GU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取生物谷失败👺👺👺：平台；{}", DataInfoCardEnum.SHENG_WU_GU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.SHENG_WU_GU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getYiYaoMoFangSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getYiYaoMoFang(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.YI_YAO_MO_FANG.getValue(), ForestRequestHeaderOriginEnum.YI_YAO_MO_FANG.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.YI_YAO_MO_FANG_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getYiYaoMoFang(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.YI_YAO_MO_FANG.getKey(),
+                    DataInfoCardEnum.YI_YAO_MO_FANG.getValue(),
+                    DataInfoCardEnum.YI_YAO_MO_FANG.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取医药魔方失败👺👺👺：平台；{}", DataInfoCardEnum.YI_YAO_MO_FANG.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.YI_YAO_MO_FANG_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getDingXiangYiShengSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getDingXiangYiSheng(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.DING_XIANG_YI_SHENG.getValue(), ForestRequestHeaderOriginEnum.DING_XIANG_YI_SHENG.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.DING_XIANG_YI_SHENG_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getDingXiangYiSheng(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.DING_XIANG_YI_SHENG.getKey(),
+                    DataInfoCardEnum.DING_XIANG_YI_SHENG.getValue(),
+                    DataInfoCardEnum.DING_XIANG_YI_SHENG.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取丁香医生失败👺👺👺：平台；{}", DataInfoCardEnum.DING_XIANG_YI_SHENG.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.DING_XIANG_YI_SHENG_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getDingXiangYuanSheQuSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getDingXiangYuanSheQu(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.DING_XIANG_YUAN_SHU_QU.getValue(), ForestRequestHeaderOriginEnum.DING_XIANG_YUAN_SHU_QU.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.DING_XIANG_YUAN_SHU_QU_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getDingXiangYuanSheQu(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.DING_XIANG_YUAN_SHU_QU.getKey(),
+                    DataInfoCardEnum.DING_XIANG_YUAN_SHU_QU.getValue(),
+                    DataInfoCardEnum.DING_XIANG_YUAN_SHU_QU.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取丁香园社区失败👺👺👺：平台；{}", DataInfoCardEnum.DING_XIANG_YUAN_SHU_QU.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.DING_XIANG_YUAN_SHU_QU_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getShengMingShiBaoSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getShengMingShiBao(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.SHENG_MING_SHI_BAO.getValue(), ForestRequestHeaderOriginEnum.SHENG_MING_SHI_BAO.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.SHENG_MING_SHI_BAO_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getShengMingShiBao(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.SHENG_MING_SHI_BAO.getKey(),
+                    DataInfoCardEnum.SHENG_MING_SHI_BAO.getValue(),
+                    DataInfoCardEnum.SHENG_MING_SHI_BAO.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取生命时报失败👺👺👺：平台；{}", DataInfoCardEnum.SHENG_MING_SHI_BAO.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.SHENG_MING_SHI_BAO_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getJiaYiDaJianKangSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getJiaYiDaJianKang(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.JIA_YI_DA_JIAN_KANG.getValue(), ForestRequestHeaderOriginEnum.JIA_YI_DA_JIAN_KANG.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.JIA_YI_DA_JIAN_KANG_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getJiaYiDaJianKang(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.JIA_YI_DA_JIAN_KANG.getKey(),
+                    DataInfoCardEnum.JIA_YI_DA_JIAN_KANG.getValue(),
+                    DataInfoCardEnum.JIA_YI_DA_JIAN_KANG.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取家医大健康失败👺👺👺：平台；{}", DataInfoCardEnum.JIA_YI_DA_JIAN_KANG.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.JIA_YI_DA_JIAN_KANG_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getGuoKeSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getGuoKe(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.GUO_KE.getValue(), ForestRequestHeaderOriginEnum.GUO_KE.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.GUO_KE_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getGuoKe(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.GUO_KE.getKey(),
+                    DataInfoCardEnum.GUO_KE.getValue(),
+                    DataInfoCardEnum.GUO_KE.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取果壳失败👺👺👺：平台；{}", DataInfoCardEnum.GUO_KE.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.GUO_KE_SEARCH_EXCEPTION);
+        }
+    }
+
+    @Override
+    public ResultTemplateBean getJianKangShiBaoWangSearch() {
+        try {
+            ForestResponse forestResponse = topSearchCommonClient.getJianKangShiBaoWang(
+                    //ForestUtil.getRandomRequestHeaderForYiMuSanFenDi()
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.JIAN_KANG_SHI_BAO_WANG.getValue(), ForestRequestHeaderOriginEnum.JIAN_KANG_SHI_BAO_WANG.getValue())
+            );
+
+            String content = forestResponse.getContent();
+            if (StrUtil.isBlank(content)) {
+                throw new ServerException(ServerExceptionEnum.JIAN_KANG_SHI_BAO_WANG_SEARCH_EXCEPTION);
+            }
+
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS;
+            topSearchCommonVOS = CommonJsoupJsoupParseUtil.getJianKangShiBaoWang(content);
+
+            TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    DataInfoCardEnum.JIAN_KANG_SHI_BAO_WANG.getKey(),
+                    DataInfoCardEnum.JIAN_KANG_SHI_BAO_WANG.getValue(),
+                    DataInfoCardEnum.JIAN_KANG_SHI_BAO_WANG.getDescription()
+            );
+
+            return ResultTemplateBean.success(topSearchCommonVO);
+        } catch (Exception e) {
+            log.error("👺👺👺获取健康时报网失败👺👺👺：平台；{}", DataInfoCardEnum.JIAN_KANG_SHI_BAO_WANG.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.JIAN_KANG_SHI_BAO_WANG_SEARCH_EXCEPTION);
+        }
+    }
 }

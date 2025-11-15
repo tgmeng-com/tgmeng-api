@@ -98,7 +98,15 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     GCORES("GCORES", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
     YOU_YAN_SHE("游研社", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
     YI_QI_YI_QI_SAN("17173", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
-    YOU_XIA_WANG("游侠网", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5);
+    YOU_XIA_WANG("游侠网", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    SHENG_WU_GU("生物谷", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
+    YI_YAO_MO_FANG("医药魔方", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
+    DING_XIANG_YI_SHENG("丁香医生", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
+    DING_XIANG_YUAN_SHU_QU("丁香园社区", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
+    SHENG_MING_SHI_BAO("生命时报", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
+    JIA_YI_DA_JIAN_KANG("家医大健康", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
+    GUO_KE("果壳", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
+    JIAN_KANG_SHI_BAO_WANG("健康时报网", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5);
 
 
 

@@ -148,4 +148,20 @@ public interface ITopSearchCommonService {
     ResultTemplateBean get17173Search();
 
     ResultTemplateBean getYouXiaWangSearch();
+
+    ResultTemplateBean getShengWuGuSearch();
+
+    ResultTemplateBean getYiYaoMoFangSearch();
+
+    ResultTemplateBean getDingXiangYiShengSearch();
+
+    ResultTemplateBean getDingXiangYuanSheQuSearch();
+
+    ResultTemplateBean getShengMingShiBaoSearch();
+
+    ResultTemplateBean getJiaYiDaJianKangSearch();
+
+    ResultTemplateBean getGuoKeSearch();
+
+    ResultTemplateBean getJianKangShiBaoWangSearch();
 }

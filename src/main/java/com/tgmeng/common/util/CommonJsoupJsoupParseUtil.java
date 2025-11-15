@@ -818,6 +818,118 @@ public class CommonJsoupJsoupParseUtil {
         return topSearchCommonVOS;
     }
 
+    public static List<TopSearchCommonVO.DataInfo> getShengWuGu(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".composs-blog-list > .item");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, "h2 > a", "href");
+            String title = safeText(element, "h2 > a");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getYiYaoMoFang(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".ant-spin-container > div");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, ".mf-font-600", "href");
+            String title = safeText(element, ".mf-font-600");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://bydrug.pharmcube.com" + url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getDingXiangYiSheng(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".article-card");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, "a", "href");
+            String title = safeText(element, "a");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getDingXiangYuanSheQu(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".HotPost_wrapper__7S2FG");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, ".HotPost_titleWrapper__PBxkk", "href");
+            String title = safeText(element, ".HotPost_titleWrapper__PBxkk");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.dxy.cn" + url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getShengMingShiBao(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".sUl > li");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, ".oP-txt a", "href");
+            String title = safeText(element, ".oP-txt a");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https:" + url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getJiaYiDaJianKang(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".news-item");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, ".news-title > a", "href");
+            String title = safeText(element, ".news-title > a");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.familydoctor.cn" + url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getGuoKe(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select(".FeedFloat__FeedFloatWrap-zt5yna-0 > a, " +
+                ".FeedFloat__FeedFloatWrap-zt5yna-0 > * > a");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, "a", "href");
+            String title = safeText(element, ".eAYHrP");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.guokr.com" + url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
+
+    public static List<TopSearchCommonVO.DataInfo> getJianKangShiBaoWang(String content) {
+        Document parse = Jsoup.parse(content);
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        Elements elements = parse.select("#list_url > li");
+        for (Element element : elements.subList(0, elements.size())) {
+            String url = safeAttr(element, "h1 > a", "href");
+            String title = safeText(element, "h1 > a");
+            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "",url, "", "", "", "", "", ""));
+            }
+        }
+        return topSearchCommonVOS;
+    }
 
     public static String safeText(Element parent, String selector) {
         Element el = parent.selectFirst(selector);
