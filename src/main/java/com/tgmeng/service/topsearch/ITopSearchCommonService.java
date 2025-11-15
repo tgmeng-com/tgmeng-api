@@ -130,4 +130,22 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getLiShiDiJiaShenMeZhiDeMaiSearch(SearchTypeShenMeZhiDeMaiEnum searchTypeShenMeZhiDeMaiEnum);
 
     ResultTemplateBean getAiMaoZaoPenDouBanCommonSearch(SearchTypeXiaoZuDouBanEnum enumByKey);
+
+    ResultTemplateBean getYouMinXingKongSearch();
+
+    ResultTemplateBean getThreeDmGameSearch();
+
+    ResultTemplateBean getA9VGSearch();
+
+    ResultTemplateBean getYouXiTuoLuoSearch();
+
+    ResultTemplateBean getIGNSearch();
+
+    ResultTemplateBean getGcoresSearch();
+
+    ResultTemplateBean getYouYanSheSearch();
+
+    ResultTemplateBean get17173Search();
+
+    ResultTemplateBean getYouXiaWangSearch();
 }

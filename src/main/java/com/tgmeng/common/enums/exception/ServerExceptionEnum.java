@@ -81,7 +81,16 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     JUE_JIN_WEN_ZHANG_SEARCH_EXCEPTION(109, "掘金文章", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     HACKER_NEWS_SEARCH_EXCEPTION(109, "HACKER_NEWS", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     XIAO_ZU_DOU_BAN_SEARCH_EXCEPTION(109, "小组豆瓣", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    SHEN_ME_ZHI_DE_MAI_SEARCH_EXCEPTION(109, "什么值得买", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    SHEN_ME_ZHI_DE_MAI_SEARCH_EXCEPTION(109, "什么值得买", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YOU_MIN_XING_KONG_SEARCH_EXCEPTION(109, "游民星空", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    THREE_DM_GAME_SEARCH_EXCEPTION(109, "3DMGAME", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    A9VG_SEARCH_EXCEPTION(109, "A9VG", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YOU_XI_TUO_LUO_SEARCH_EXCEPTION(109, "游戏陀螺", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    IGN_SEARCH_EXCEPTION(109, "IGN", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    GCORES_SEARCH_EXCEPTION(109, "GCORES机核", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YOU_YAN_SHE_SEARCH_EXCEPTION(109, "游研社", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YI_QI_YI_QI_SAN_SEARCH_EXCEPTION(109, "17173", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    YOU_XIA_WANG_SEARCH_EXCEPTION(109, "游侠网", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
     private final Integer key;
     private final String value;

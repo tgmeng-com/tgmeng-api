@@ -567,4 +567,52 @@ public class TopSearchCommonController {
         return topSearchCommonService.getAiMaoZaoPenDouBanCommonSearch(EnumUtils.getEnumByKey(SearchTypeXiaoZuDouBanEnum.class, type));
     }
 
+    @RequestMapping("/youminxingkong")
+    public ResultTemplateBean getYouMinXingKongSearch() {
+        return topSearchCommonService.getYouMinXingKongSearch();
+    }
+
+    @RequestMapping("/3dmgame")
+    public ResultTemplateBean getThreeDmGameSearch() {
+        return topSearchCommonService.getThreeDmGameSearch();
+    }
+
+    @RequestMapping("/a9vg")
+    public ResultTemplateBean getA9VGSearch() {
+        return topSearchCommonService.getA9VGSearch();
+    }
+
+    @RequestMapping("/youxituoluo")
+    public ResultTemplateBean getYouXiTuoLuoSearch() {
+        return topSearchCommonService.getYouXiTuoLuoSearch();
+    }
+
+    @RequestMapping("/ign")
+    public ResultTemplateBean getIGNSearch() {
+        return topSearchCommonService.getIGNSearch();
+    }
+
+    @RequestMapping("/gcores")
+    public ResultTemplateBean getGcoresSearch() {
+        return topSearchCommonService.getGcoresSearch();
+    }
+
+    @RequestMapping("/youyanshe")
+    public ResultTemplateBean getYouYanSheSearch() {
+        return topSearchCommonService.getYouYanSheSearch();
+    }
+
+    @RequestMapping("/17173")
+    public ResultTemplateBean get17173Search() {
+        return topSearchCommonService.get17173Search();
+    }
+
+    @RequestMapping("/youxiawang")
+    public ResultTemplateBean getYouXiaWangSearch() {
+        return topSearchCommonService.getYouXiaWangSearch();
+    }
+
+
+
+
 }

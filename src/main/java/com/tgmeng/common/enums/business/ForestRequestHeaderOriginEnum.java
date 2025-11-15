@@ -80,7 +80,16 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     WEN_ZHANG_JUE_JIN("WEN_ZHANG_JUE_JIN", "https://api.juejin.cn", "",true,5),
     HACKER_NEWS("HACKER_NEWS", "https://news.ycombinator.com", "",true,5),
     XIAO_ZU_DOU_BAN("XIAO_ZU_DOU_BAN", "https://www.douban.com", "",true,5),
-    SHEN_ME_ZHI_DE_MAI("SHEN_ME_ZHI_DE_MAI", "https://faxian.smzdm.com", "",true,5);
+    SHEN_ME_ZHI_DE_MAI("SHEN_ME_ZHI_DE_MAI", "https://faxian.smzdm.com", "",true,5),
+    YOU_MIN_XING_KONG("YOU_MIN_XING_KONG", "https://www.gamersky.com", "",true,5),
+    THREE_DM_GAME("THREE_DM_GAME", "https://www.3dmgame.com", "",true,5),
+    A9VG("A9VG", "https://www.a9vg.com", "",true,5),
+    YOU_XI_TUO_LUO("YOU_XI_TUO_LUO", "https://www.youxituoluo.com", "",true,5),
+    IGN("IGN", "https://www.ign.com.cn", "",true,5),
+    GCORES("GCORES", "https://www.gcores.com", "",true,5),
+    YOU_YAN_SHE("YOU_YAN_SHE", "https://www.yystv.cn", "",true,5),
+    YI_QI_YI_QI_SAN("17173", "https://news.17173.com", "",true,5),
+    YOU_XIA_WANG("YOU_XIA_WANG", "https://www.ali213.net", "",true,5);
 
     private final String key;
     private final String value;

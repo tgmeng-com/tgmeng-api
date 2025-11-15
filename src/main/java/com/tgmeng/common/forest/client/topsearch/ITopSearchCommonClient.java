@@ -247,4 +247,31 @@ public interface ITopSearchCommonClient {
     @Get("https://faxian.smzdm.com/{type}/")
     ForestResponse getLiShiDiJiaShenMeZhiDeMai(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type);
 
+    @Get("https://www.gamersky.com/")
+    ForestResponse getYouMinXingKong(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.3dmgame.com/")
+    ForestResponse getThreeDmGame(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.a9vg.com/")
+    ForestResponse getA9VG(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.youxituoluo.com/")
+    ForestResponse getYouXiTuoLuo(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.ign.com.cn/")
+    ForestResponse getIGN(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.gcores.com/news")
+    ForestResponse getGCores(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.yystv.cn/docs")
+    ForestResponse getYouYanShe(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://news.17173.com/")
+    ForestResponse get17173(@Header ForestRequestHeader topSearchRequestHeader);
+
+    @Get("https://www.ali213.net/")
+    ForestResponse getYouXiaWang(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

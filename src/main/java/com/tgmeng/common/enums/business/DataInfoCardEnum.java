@@ -89,7 +89,16 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     WEN_ZHANG_JUE_JIN("掘金文章", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5),
     HACKER_NEWS("HACKER_NEWS", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "社区", true,5),
     XIAO_ZU_DOU_BAN("小组豆瓣", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "羊毛", true,5),
-    SHEN_ME_ZHI_DE_MAI("什么值得买", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "羊毛", true,5);
+    SHEN_ME_ZHI_DE_MAI("什么值得买", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "羊毛", true,5),
+    YOU_MIN_XING_KONG("游民星空", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    THREE_DM_GAME("3DMGAME", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    A9VG("A9VG", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    YOU_XI_TUO_LUO("游戏陀螺", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    IGN("IGN", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    GCORES("GCORES", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    YOU_YAN_SHE("游研社", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    YI_QI_YI_QI_SAN("17173", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5),
+    YOU_XIA_WANG("游侠网", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "游戏", true,5);
 
 
 
