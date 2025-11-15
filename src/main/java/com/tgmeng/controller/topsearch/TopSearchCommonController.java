@@ -612,7 +612,4 @@ public class TopSearchCommonController {
         return topSearchCommonService.getYouXiaWangSearch();
     }
 
-
-
-
 }

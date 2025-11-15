@@ -161,7 +161,19 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CACHE_TOP_SEARCH_TOP_REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN("CACHE_TOP_SEARCH_TOP_REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN", "/topsearch/xiaozudouban/REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN", "", true,4),
     CACHE_TOP_SEARCH_TOP_ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN("CACHE_TOP_SEARCH_TOP_ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN", "/topsearch/xiaozudouban/ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN", "", true,4),
     CACHE_TOP_SEARCH_TOP_JIAO_SHI_DOU_BAN("CACHE_TOP_SEARCH_TOP_JIAO_SHI_DOU_BAN", "/topsearch/xiaozudouban/JIAO_SHI_DOU_BAN", "", true,4),
-    CACHE_TOP_SEARCH_TOP_SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN("CACHE_TOP_SEARCH_TOP_SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN", "/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN", "", true,4);
+    CACHE_TOP_SEARCH_TOP_SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN("CACHE_TOP_SEARCH_TOP_SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN", "/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN", "", true,4),
+
+
+    CACHE_TOP_SEARCH_YOU_MIN_XING_KONG("CACHE_TOP_SEARCH_YOU_MIN_XING_KONG", "/topsearch/youminxingkong", "", true,4),
+    CACHE_TOP_SEARCH_THREE_DM_GAME("CACHE_TOP_SEARCH_THREE_DM_GAME", "/topsearch/3dmgame", "", true,4),
+    CACHE_TOP_SEARCH_A9VG("CACHE_TOP_SEARCH_A9VG", "/topsearch/a9vg", "", true,4),
+    CACHE_TOP_SEARCH_YOU_XI_TUO_LUO("CACHE_TOP_SEARCH_YOU_XI_TUO_LUO", "/topsearch/youxituoluo", "", true,4),
+    CACHE_TOP_SEARCH_IGN("CACHE_TOP_SEARCH_IGN", "/topsearch/ign", "", true,4),
+    CACHE_TOP_SEARCH_GCORES("CACHE_TOP_SEARCH_GCORES", "/topsearch/gcores", "", true,4),
+    CACHE_TOP_SEARCH_YOU_YAN_SHE("CACHE_TOP_SEARCH_YOU_YAN_SHE", "/topsearch/youyanshe", "", true,4),
+    CACHE_TOP_SEARCH_YI_QI_YI_QI_SAN("CACHE_TOP_SEARCH_YI_QI_YI_QI_SAN", "/topsearch/17173", "", true,4),
+    CACHE_TOP_SEARCH_YOU_XIA_WANG("CACHE_TOP_SEARCH_YOU_XIA_WANG", "/topsearch/youxiawang", "", true,4);
+
 
     private final String key;
     private final String value;

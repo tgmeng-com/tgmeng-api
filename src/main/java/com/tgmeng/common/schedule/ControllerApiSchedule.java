@@ -238,7 +238,18 @@ public class ControllerApiSchedule {
             "/api/topsearch/xiaozudouban/REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN",
             "/api/topsearch/xiaozudouban/ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN",
             "/api/topsearch/xiaozudouban/JIAO_SHI_DOU_BAN",
-            "/api/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN"
+            "/api/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN",
+
+            // 游戏
+            "/api/topsearch/youminxingkong",
+            "/api/topsearch/3dmgame",
+            "/api/topsearch/a9vg",
+            "/api/topsearch/youxituoluo",
+            "/api/topsearch/ign",
+            "/api/topsearch/gcores",
+            "/api/topsearch/youyanshe",
+            "/api/topsearch/17173",
+            "/api/topsearch/youxiawang"
 
     );
 
