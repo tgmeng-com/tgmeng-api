@@ -20,6 +20,7 @@ public class ForestUtil {
                 .setReferer(referer)
                 .setOrigin(origin);
     }
+
     public static ForestRequestHeader getRandomRequestHeaderForDouYin() {
         String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
         return new ForestRequestHeader()
@@ -31,6 +32,7 @@ public class ForestUtil {
                 .setReferer(ForestRequestHeaderRefererEnum.DOUYIN.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.DOUYIN.getValue());
     }
+
     public static ForestRequestHeader getRandomRequestHeaderForDouBan() {
         String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
         return new ForestRequestHeader()
@@ -39,6 +41,7 @@ public class ForestUtil {
                 .setReferer(ForestRequestHeaderRefererEnum.DOUBAN.getValue())
                 .setOrigin(ForestRequestHeaderOriginEnum.DOUBAN.getValue());
     }
+
     public static ForestRequestHeader getRandomRequestHeaderForTouTiao() {
         String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
         return new ForestRequestHeader()
@@ -121,7 +124,7 @@ public class ForestUtil {
         String cookieString = cookies.stream()
                 .map(cookie -> cookie.getName() + "=" + cookie.getValue())
                 .collect(Collectors.joining("; "));
-        cookieString+=";isI18n=false";
+        cookieString += ";isI18n=false";
         return new ForestRequestHeader()
                 .setUserAgent(userAgent)
                 //.setAccept("application/json, text/plain, */*")
@@ -439,6 +442,31 @@ public class ForestUtil {
                 //.setXForwardedFor("114.114.114.114")
                 //.setReferer(ForestRequestHeaderRefererEnum.SHEN_ME_ZHI_DE_MAI.getValue())
                 //.setOrigin(ForestRequestHeaderOriginEnum.SHEN_ME_ZHI_DE_MAI.getValue())
+                //.setCacheControl("max-age=0")
+                //.setSecChUa("\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"")
+                //.setSecChUaMobile("?0")
+                //.setSecFetchSite("")
+                //.setSecFetchUser("?1")
+                //.setSecChUaPlatform("Windows")
+                //.setSecFetchDest("document")
+                //.setSecFetchMode("navigate")
+                //.setUpgradeInsecureRequests("1")
+                ;
+    }
+
+    public static ForestRequestHeader getRandomRequestHeaderForCCTV() {
+        String userAgent = UserAgentGeneratorUtil.generateRandomUserAgent();
+        return new ForestRequestHeader()
+                //.setHost("www.v2ex.com")
+                .setUserAgent(userAgent)
+                //.setCookie("")
+                //.setAccept("*/*")
+                //.setAcceptEncoding("gzip, deflate, br, zstd")
+                //.setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                //.setConnection("keep-alive")
+                //.setXForwardedFor("114.114.114.114")
+                .setReferer(ForestRequestHeaderRefererEnum.CCTV.getValue())
+                .setOrigin(ForestRequestHeaderOriginEnum.CCTV.getValue())
                 //.setCacheControl("max-age=0")
                 //.setSecChUa("\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"")
                 //.setSecChUaMobile("?0")

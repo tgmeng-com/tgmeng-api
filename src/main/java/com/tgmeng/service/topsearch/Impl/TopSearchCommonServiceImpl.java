@@ -5,6 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.dtflys.forest.http.ForestCookie;
 import com.dtflys.forest.http.ForestResponse;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
 import com.tgmeng.common.enums.business.*;
@@ -2331,5 +2333,41 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             log.error("👺👺👺获取健康时报网失败👺👺👺：平台；{}", DataInfoCardEnum.JIAN_KANG_SHI_BAO_WANG.getKey(), e);
             throw new ServerException(ServerExceptionEnum.JIAN_KANG_SHI_BAO_WANG_SEARCH_EXCEPTION);
         }
+    }
+
+    @Override
+    public ResultTemplateBean getCCTVCommonSearch(SearchTypeCCTVEnum searchTypeCCTVEnum) {
+
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            ForestResponse cctvdto = topSearchCommonClient.getCCTV(
+                    ForestUtil.getRandomRequestHeaderForCCTV(),
+                    searchTypeCCTVEnum.getValue(),
+                    TimeUtil.getCurrentTimeFormat("yyyyMMdd")
+            );
+            String result = cctvdto.getContent();
+            String json = result.replaceAll("^setItem1\\((.*)\\);$", "$1");
+            ObjectMapper mapper = new ObjectMapper();
+            // 1. 解析 JSON 树
+            JsonNode rootNode = mapper.readTree(json);
+            // 获取 cctv1.list 节点
+            JsonNode cctvNode = rootNode.path("data").path("cctv"+searchTypeCCTVEnum.getKey());
+            // 4转成 TopSearchCCTVDTO
+            TopSearchCCTVDTO channel = mapper.treeToValue(cctvNode, TopSearchCCTVDTO.class);
+            for (TopSearchCCTVDTO.DataInfo content : channel.getList()) {
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchCCTVDTOContentVO2TopSearchCommonVO(content);
+                dataInfo.setType(searchTypeCCTVEnum.getKey());
+                topSearchCommonVOS.add(dataInfo);
+            }
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取CCTV失败👺👺👺：平台；{}", DataInfoCardEnum.CCTV.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.CCTV_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS,
+                DataInfoCardEnum.CCTV.getKey(),
+                DataInfoCardEnum.CCTV.getValue(),
+                DataInfoCardEnum.CCTV.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
     }
 }

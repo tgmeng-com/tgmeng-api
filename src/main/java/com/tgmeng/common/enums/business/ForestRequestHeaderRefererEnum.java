@@ -97,7 +97,8 @@ public enum ForestRequestHeaderRefererEnum  implements INameValueEnum<String,Str
     SHENG_MING_SHI_BAO("SHENG_MING_SHI_BAO", "https://www.lifetimes.cn/", "",true,5),
     JIA_YI_DA_JIAN_KANG("JIA_YI_DA_JIAN_KANG", "https://www.familydoctor.cn/", "",true,5),
     GUO_KE("GUO_KE", "https://www.guokr.com/", "",true,5),
-    JIAN_KANG_SHI_BAO_WANG("JIAN_KANG_SHI_BAO_WANG", "https://www.jksb.com.cn/", "",true,5);
+    JIAN_KANG_SHI_BAO_WANG("JIAN_KANG_SHI_BAO_WANG", "https://www.jksb.com.cn/", "",true,5),
+    CCTV("CCTV", "https://www.cctv.com/", "",true,5);
 
     private final String key;
     private final String value;

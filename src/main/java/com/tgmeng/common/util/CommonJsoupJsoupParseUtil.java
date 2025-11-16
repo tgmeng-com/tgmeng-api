@@ -56,7 +56,7 @@ public class CommonJsoupJsoupParseUtil {
                 }
             }
             String title = safeText(element, "div:nth-of-type(1) > a ");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "", ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "", "", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -86,7 +86,7 @@ public class CommonJsoupJsoupParseUtil {
                                 movie.getShortDec(),
                                 movie.getCat(),
                                 movie.getPubDesc(),
-                                ""));
+                                "", null, null, ""));
                     }
                     break;
                 }
@@ -105,7 +105,7 @@ public class CommonJsoupJsoupParseUtil {
         for (Element element : elements.subList(0, elements.size())) {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "h2");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.yicai.com" + url, "", "", "", "", "", ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.yicai.com" + url, "", "", "", "", "", "", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -117,7 +117,7 @@ public class CommonJsoupJsoupParseUtil {
         for (Element element : elements.subList(0, elements.size())) {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -129,7 +129,7 @@ public class CommonJsoupJsoupParseUtil {
         for (Element element : elements.subList(0, elements.size())) {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.cls.cn" + url, "", "", "", "", "", ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.cls.cn" + url, "", "", "", "", "", "", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -141,7 +141,7 @@ public class CommonJsoupJsoupParseUtil {
         for (Element element : elements.subList(0, elements.size())) {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.gelonghui.com" + url, "", "", "", "", "", ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.gelonghui.com" + url, "", "", "", "", "", "", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -153,7 +153,7 @@ public class CommonJsoupJsoupParseUtil {
         for (Element element : elements.subList(0, elements.size())) {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "h4");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.fastbull.com" + url, "", "", "", "", "", ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.fastbull.com" + url, "", "", "", "", "", "", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -166,7 +166,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".jin10-news-list-item-info > a", "href");
             String title = safeText(element, "p");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -180,7 +180,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "h2");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -194,7 +194,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -208,7 +208,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.rfi.fr" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.rfi.fr" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -222,7 +222,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "", "href");
             String title = safeText(element, "");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.rfi.fr" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.rfi.fr" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -236,7 +236,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".text > .title > a", "href");
             String title = safeText(element, ".text > .title > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -251,7 +251,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, "h2 > a");
             String hotScore = safeText(element, ".meta-views");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -266,7 +266,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, ".cnxaX > a");
             String hotScore = safeText(element, ".rankBox > div:nth-of-type(4) .kFzKPV");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -281,7 +281,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, ".show-works-title");
             String hotScore = safeText(element, ".show-works-views > span");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://www.gracg.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://www.gracg.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -295,7 +295,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "h2 > a", "href");
             String title = safeText(element, "h2 > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -309,7 +309,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".title", "href");
             String title = safeText(element, ".title");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.topys.cn" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.topys.cn" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -323,7 +323,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "h3 a", "href");
             String title = safeText(element, "h3 span");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.archdaily.cn" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.archdaily.cn" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -338,7 +338,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, ".display-name");
             String hotScore = safeText(element, ".js-shot-views-count");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://dribbble.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://dribbble.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -352,7 +352,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".figure-rollover__link", "href");
             String title = safeText(element, ".avatar-name__title");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.awwwards.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.awwwards.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -366,7 +366,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "h1 > a", "href");
             String title = safeText(element, "h1 > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -380,7 +380,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "span > h2 > a", "href");
             String title = safeText(element, "span > h2 > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://abduzeedo.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://abduzeedo.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -394,7 +394,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.cas.cn/syky" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.cas.cn/syky" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -408,7 +408,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "h2");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.eurekalert.org" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.eurekalert.org" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -423,7 +423,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, "h2");
             title = title.replaceAll("^\\d{4}-\\d{2}-\\d{2}\\s*", "");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.ncsti.gov.cn/kjdt/kjrd/" + searchTypeGuoJiKeJiChuangXinZhongXinnum.getValue() + url.substring(1), "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.ncsti.gov.cn/kjdt/kjrd/" + searchTypeGuoJiKeJiChuangXinZhongXinnum.getValue() + url.substring(1), "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -437,7 +437,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".list-item-title", "href");
             String title = safeText(element, ".list-item-title");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -451,7 +451,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.dongqiudi.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.dongqiudi.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -465,7 +465,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -479,7 +479,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url.startsWith("//") ? "https:" + url : url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url.startsWith("//") ? "https:" + url : url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -493,7 +493,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url.startsWith("//") ? "https:" + url : url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url.startsWith("//") ? "https:" + url : url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -507,7 +507,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         Elements elements1 = parse.select("#SUBD1563933227337761 a");
@@ -515,7 +515,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url) && title.length() > 4) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -529,7 +529,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".tw-link", "href");
             String title = safeText(element, ".tw-link");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.ppsport.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.ppsport.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -543,7 +543,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
 
@@ -552,7 +552,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url) && title.length() > 4) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
 
@@ -568,7 +568,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, ".topic-link");
             String hotScore = safeText(element, ".count_livid");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://www.v2ex.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://www.v2ex.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -583,7 +583,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, ".t-info");
             String hotScore = safeText(element, ".t-lights") + "·" + safeText(element, ".t-replies");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://bbs.hupu.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://bbs.hupu.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -598,7 +598,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, "a");
             //String hotScore = safeText(element, ".t-lights")+"·"+safeText(element, ".t-replies");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https:" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https:" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -613,7 +613,7 @@ public class CommonJsoupJsoupParseUtil {
             String title = safeText(element, "a:first-of-type");
             //String hotScore = safeText(element, ".t-lights")+"·"+safeText(element, ".t-replies");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.1point3acres.com/bbs/" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.1point3acres.com/bbs/" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -627,7 +627,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".titleline > a:first-of-type", "href");
             String title = safeText(element, ".titleline > a:first-of-type");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
 
@@ -656,7 +656,7 @@ public class CommonJsoupJsoupParseUtil {
                 String publishTime = safeText(element, ".time");
                 String commentCount = StrUtil.isNotBlank(safeText(element, ".r-count")) ? safeText(element, ".r-count") : "0";
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", publishTime, commentCount));
+                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", publishTime, commentCount, null, null, ""));
                 }
             }
         }
@@ -675,7 +675,7 @@ public class CommonJsoupJsoupParseUtil {
                 String publishTime = safeText(element, ".time");
                 String commentCount = StrUtil.isNotBlank(safeText(element, ".r-count")) ? safeText(element, ".r-count") : "0";
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", publishTime, commentCount));
+                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", publishTime, commentCount, null, null, ""));
                 }
             }
         }
@@ -690,7 +690,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
 
@@ -699,7 +699,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -713,7 +713,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -727,7 +727,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.a9vg.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.a9vg.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -741,7 +741,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".title", "href");
             String title = safeText(element, ".title ");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.youxituoluo.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.youxituoluo.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -755,7 +755,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.youxituoluo.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.youxituoluo.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -769,7 +769,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "h3");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.gcores.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.gcores.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -783,7 +783,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "h2");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.yystv.cn" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.yystv.cn" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -797,7 +797,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".tit > a", "href");
             String title = safeText(element, ".tit > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -812,7 +812,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -826,7 +826,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "h2 > a", "href");
             String title = safeText(element, "h2 > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -840,7 +840,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".mf-font-600", "href");
             String title = safeText(element, ".mf-font-600");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://bydrug.pharmcube.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://bydrug.pharmcube.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -854,7 +854,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, "a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -868,7 +868,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".HotPost_titleWrapper__PBxkk", "href");
             String title = safeText(element, ".HotPost_titleWrapper__PBxkk");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.dxy.cn" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.dxy.cn" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -882,7 +882,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".oP-txt a", "href");
             String title = safeText(element, ".oP-txt a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https:" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https:" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -896,7 +896,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, ".news-title > a", "href");
             String title = safeText(element, ".news-title > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.familydoctor.cn" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.familydoctor.cn" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -911,7 +911,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "a", "href");
             String title = safeText(element, ".eAYHrP");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.guokr.com" + url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.guokr.com" + url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;
@@ -925,7 +925,7 @@ public class CommonJsoupJsoupParseUtil {
             String url = safeAttr(element, "h1 > a", "href");
             String title = safeText(element, "h1 > a");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "",url, "", "", "", "", "", ""));
+                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "",url, "", "", "", "", "", "", null, null, ""));
             }
         }
         return topSearchCommonVOS;

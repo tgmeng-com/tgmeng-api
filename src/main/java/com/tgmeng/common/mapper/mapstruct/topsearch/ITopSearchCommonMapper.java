@@ -242,6 +242,16 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "contentCounter.hotRank", target = "hotScore", qualifiedByName = "stringToLong")
     TopSearchCommonVO.DataInfo topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVO(TopSearchWenZhangJueJinDTO.Content content,TopSearchWenZhangJueJinDTO.ContentCounter contentCounter);
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "content.title", target = "keyword")
+    @Mapping(source = "content.startTime", target = "hotScore")
+    @Mapping(source = "content.columnBackvideourl", target = "url")
+    @Mapping(source = "content.startTime", target = "startTime")
+    @Mapping(source = "content.endTime", target = "endTime")
+    @Mapping(source = "content.showTime", target = "showTime")
+    TopSearchCommonVO.DataInfo topSearchCCTVDTOContentVO2TopSearchCommonVO(TopSearchCCTVDTO.DataInfo content);
+
+
     @AfterMapping
     default void topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVOAfter(TopSearchWenZhangJueJinDTO.Content content, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
         topSearchCommonVO.setUrl("https://juejin.cn/post/" + content.getContentId());

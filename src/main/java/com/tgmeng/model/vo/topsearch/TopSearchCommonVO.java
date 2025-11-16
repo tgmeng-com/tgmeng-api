@@ -53,6 +53,11 @@ public class TopSearchCommonVO {
         private String publishTime;
         /** 评论数 */
         private String commentCount;
+
+        private Long startTime;
+        private Long endTime;
+        private String showTime;
+
     }
 
     public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String dataCardName,String dataCardLogo,String dataCardCategory){

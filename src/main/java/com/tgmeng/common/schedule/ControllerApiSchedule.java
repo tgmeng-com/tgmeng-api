@@ -259,7 +259,29 @@ public class ControllerApiSchedule {
             "shengmingshibao",
             "jiayidajiankang",
             "guoke",
-            "jiankangshibaowang"
+            "jiankangshibaowang",
+
+            // CCTV
+            "/api/topsearch/cctv/1",
+            "/api/topsearch/cctv/2",
+            "/api/topsearch/cctv/3",
+            "/api/topsearch/cctv/4",
+            "/api/topsearch/cctv/europe",
+            "/api/topsearch/cctv/america",
+            "/api/topsearch/cctv/5",
+            "/api/topsearch/cctv/5plus",
+            "/api/topsearch/cctv/6",
+            "/api/topsearch/cctv/7",
+            "/api/topsearch/cctv/8",
+            "/api/topsearch/cctv/jilu",
+            "/api/topsearch/cctv/10",
+            "/api/topsearch/cctv/11",
+            "/api/topsearch/cctv/12",
+            "/api/topsearch/cctv/13",
+            "/api/topsearch/cctv/child",
+            "/api/topsearch/cctv/15",
+            "/api/topsearch/cctv/16",
+            "/api/topsearch/cctv/17"
 
     );
 

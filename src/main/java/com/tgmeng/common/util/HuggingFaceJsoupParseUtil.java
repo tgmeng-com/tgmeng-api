@@ -21,7 +21,7 @@ public class HuggingFaceJsoupParseUtil {
             String url = "https://huggingface.co" + safeAttr(element, "a", "href");
             String hotScore = safeText(element, "header > div:nth-of-type(2) span");
             String title = safeText(element, "main h4") + " " + safeText(element, "main > div > div:nth-of-type(1)");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "",""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "","", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -34,7 +34,7 @@ public class HuggingFaceJsoupParseUtil {
             String url = "https://huggingface.co" + safeAttr(element, "a", "href");
             String hotScore = extractLastLikeCount(Objects.requireNonNull(element.selectFirst("div:nth-of-type(1) > div:nth-of-type(1)")));
             String title = safeText(element, "h4:nth-of-type(1)");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "",""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "","", null, null, ""));
         }
         return topSearchCommonVOS;
     }
@@ -47,7 +47,7 @@ public class HuggingFaceJsoupParseUtil {
             String url = "https://huggingface.co" + safeAttr(element, "a", "href");
             String hotScore = extractLastLikeCount(Objects.requireNonNull(element.selectFirst("div:nth-of-type(1) > div:nth-of-type(1)")));
             String title = safeText(element, "h4:nth-of-type(1)");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "",""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "","", null, null, ""));
         }
         return topSearchCommonVOS;
     }

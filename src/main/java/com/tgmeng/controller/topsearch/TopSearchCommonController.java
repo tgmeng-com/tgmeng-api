@@ -652,4 +652,9 @@ public class TopSearchCommonController {
         return topSearchCommonService.getJianKangShiBaoWangSearch();
     }
 
+    @RequestMapping("/cctv/{type}")
+    public ResultTemplateBean getCCTVCommonSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getCCTVCommonSearch(EnumUtils.getEnumByKey(SearchTypeCCTVEnum.class, type));
+    }
+
 }

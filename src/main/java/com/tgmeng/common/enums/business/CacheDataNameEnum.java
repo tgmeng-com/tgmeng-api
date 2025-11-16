@@ -181,7 +181,30 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     SHENG_MING_SHI_BAO("SHENG_MING_SHI_BAO", "/topsearch/shengmingshibao", "", true,4),
     JIA_YI_DA_JIAN_KANG("JIA_YI_DA_JIAN_KANG", "/topsearch/jiayidajiankang", "", true,4),
     GUO_KE("GUO_KE", "/topsearch/guoke", "", true,4),
-    JIAN_KANG_SHI_BAO_WANG("JIAN_KANG_SHI_BAO_WANG", "/topsearch/jiankangshibaowang", "", true,4);
+    JIAN_KANG_SHI_BAO_WANG("JIAN_KANG_SHI_BAO_WANG", "/topsearch/jiankangshibaowang", "", true,4),
+
+
+    CCTV1("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/1", "", true,4),
+    CCTV2("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/2", "", true,4),
+    CCTV3("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/3", "", true,4),
+    CCTV4("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/4", "", true,4),
+    CCTV4_EUROPE("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/europe", "", true,4),
+    CCTV4_AMERICA("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/america", "", true,4),
+    CCTV5("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/5", "", true,4),
+    CCTV5_PLUS("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/5plus", "", true,4),
+    CCTV6("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/6", "", true,4),
+    CCTV7("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/7", "", true,4),
+    CCTV8("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/8", "", true,4),
+    CCTV9("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/jilu", "", true,4),
+    CCTV10("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/10", "", true,4),
+    CCTV11("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/11", "", true,4),
+    CCTV12("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/12", "", true,4),
+    CCTV13("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/13", "", true,4),
+    CCTV14("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/child", "", true,4),
+    CCTV15("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/15", "", true,4),
+    CCTV16("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/16", "", true,4),
+    CCTV17("JIAN_KANG_SHI_BAO_WANG", "/topsearch/cctv/17", "", true,4);
+
 
     private final String key;
     private final String value;

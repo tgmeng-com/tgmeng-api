@@ -298,4 +298,7 @@ public interface ITopSearchCommonClient {
     @Get("https://www.jksb.com.cn/newslist/posid/8")
     ForestResponse getJianKangShiBaoWang(@Header ForestRequestHeader topSearchRequestHeader);
 
+    @Get("https://api.cntv.cn/epg/getEpgInfoByChannelNew?c=cctv{type}&serviceId=tvcctv&d={time}&t=jsonp&cb=setItem1")
+    ForestResponse getCCTV(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type, @Var("time") String time);
+
 }
