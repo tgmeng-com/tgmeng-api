@@ -166,4 +166,6 @@ public interface ITopSearchCommonService {
     ResultTemplateBean getJianKangShiBaoWangSearch();
 
     ResultTemplateBean getCCTVCommonSearch(SearchTypeCCTVEnum enumByKey);
+
+    ResultTemplateBean getPengPaiXinWenCommonSearch();
 }

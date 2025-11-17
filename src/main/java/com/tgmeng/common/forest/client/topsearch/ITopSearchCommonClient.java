@@ -301,4 +301,7 @@ public interface ITopSearchCommonClient {
     @Get("https://api.cntv.cn/epg/getEpgInfoByChannelNew?c=cctv{type}&serviceId=tvcctv&d={time}&t=jsonp&cb=setItem1")
     ForestResponse getCCTV(@Header ForestRequestHeader topSearchRequestHeader, @Var("type") String type, @Var("time") String time);
 
+    @Get("https://cache.thepaper.cn/contentapi/wwwIndex/rightSidebar")
+    TopSearchPengPaiXinWenDTO pengPaiXinWen(@Header ForestRequestHeader topSearchRequestHeader);
+
 }

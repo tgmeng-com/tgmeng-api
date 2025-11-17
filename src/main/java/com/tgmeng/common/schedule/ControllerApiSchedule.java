@@ -281,7 +281,10 @@ public class ControllerApiSchedule {
             "/api/topsearch/cctv/child",
             "/api/topsearch/cctv/15",
             "/api/topsearch/cctv/16",
-            "/api/topsearch/cctv/17"
+            "/api/topsearch/cctv/17",
+
+            // 澎湃新闻
+            "/api/topsearch/pengpaixinwen"
 
     );
 

@@ -242,6 +242,11 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "contentCounter.hotRank", target = "hotScore", qualifiedByName = "stringToLong")
     TopSearchCommonVO.DataInfo topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVO(TopSearchWenZhangJueJinDTO.Content content,TopSearchWenZhangJueJinDTO.ContentCounter contentCounter);
 
+    @AfterMapping
+    default void topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVOAfter(TopSearchWenZhangJueJinDTO.Content content, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl("https://juejin.cn/post/" + content.getContentId());
+    }
+
     @BeanMapping(ignoreByDefault = true)
     @Mapping(source = "content.title", target = "keyword")
     @Mapping(source = "content.startTime", target = "hotScore")
@@ -251,10 +256,13 @@ public interface ITopSearchCommonMapper {
     @Mapping(source = "content.showTime", target = "showTime")
     TopSearchCommonVO.DataInfo topSearchCCTVDTOContentVO2TopSearchCommonVO(TopSearchCCTVDTO.DataInfo content);
 
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "content.name", target = "keyword")
+    TopSearchCommonVO.DataInfo topSearchPengPaiXinWenDTOContentVO2TopSearchCommonVO(TopSearchPengPaiXinWenDTO.ItemDTO content);
 
     @AfterMapping
-    default void topSearchWenZhangJueJinDTOContentVO2TopSearchCommonVOAfter(TopSearchWenZhangJueJinDTO.Content content, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
-        topSearchCommonVO.setUrl("https://juejin.cn/post/" + content.getContentId());
+    default void topSearchPengPaiXinWenDTOContentVO2TopSearchCommonVOAfter(TopSearchPengPaiXinWenDTO.ItemDTO content, @MappingTarget TopSearchCommonVO.DataInfo topSearchCommonVO) {
+        topSearchCommonVO.setUrl("https://www.thepaper.cn/newsDetail_forward_" + content.getContId());
     }
 
 }

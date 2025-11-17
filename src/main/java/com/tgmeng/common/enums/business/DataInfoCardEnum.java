@@ -107,7 +107,8 @@ public enum DataInfoCardEnum implements INameValueEnum<String,String> {
     JIA_YI_DA_JIAN_KANG("家医大健康", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
     GUO_KE("果壳", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
     JIAN_KANG_SHI_BAO_WANG("健康时报网", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "健康", true,5),
-    CCTV("CCTV", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "电视", true,5);
+    CCTV("CCTV", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "电视", true,5),
+    PENG_PAI_XIN_WEN("澎湃新闻", "https://r2-trend.tgmeng.com/tgmeng-trend/she-ji-da-ren.png", "新闻", true,5);
 
 
 

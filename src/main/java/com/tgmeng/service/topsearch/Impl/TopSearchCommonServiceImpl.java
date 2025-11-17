@@ -2370,4 +2370,23 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                 DataInfoCardEnum.CCTV.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
     }
+
+    @Override
+    public ResultTemplateBean getPengPaiXinWenCommonSearch() {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        try {
+            TopSearchPengPaiXinWenDTO topSearchPengPaiXinWenDTO = topSearchCommonClient.pengPaiXinWen(
+                    ForestUtil.getRandomRequestHeader(ForestRequestHeaderRefererEnum.PENG_PAI_XIN_WEN.getValue(), ForestRequestHeaderOriginEnum.PENG_PAI_XIN_WEN.getValue()));
+            for (TopSearchPengPaiXinWenDTO.ItemDTO content : topSearchPengPaiXinWenDTO.getData().getHotNews()) {
+                TopSearchCommonVO.DataInfo dataInfo = topSearchCommonMapper.topSearchPengPaiXinWenDTOContentVO2TopSearchCommonVO(content);
+                topSearchCommonVOS.add(dataInfo);
+            }
+
+        } catch (Exception e) {
+            log.error("👺👺👺获取澎湃新闻数据失败👺👺👺：平台；{}", DataInfoCardEnum.PENG_PAI_XIN_WEN.getKey(), e);
+            throw new ServerException(ServerExceptionEnum.PENG_PAI_XIN_WEN_SEARCH_EXCEPTION);
+        }
+        TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS, DataInfoCardEnum.PENG_PAI_XIN_WEN.getKey(), DataInfoCardEnum.HUA_ER_JIE_JIAN_WEN.getValue(), DataInfoCardEnum.HUA_ER_JIE_JIAN_WEN.getDescription());
+        return ResultTemplateBean.success(topSearchCommonVO);
+    }
 }

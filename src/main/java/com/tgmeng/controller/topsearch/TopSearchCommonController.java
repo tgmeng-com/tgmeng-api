@@ -657,4 +657,10 @@ public class TopSearchCommonController {
         return topSearchCommonService.getCCTVCommonSearch(EnumUtils.getEnumByKey(SearchTypeCCTVEnum.class, type));
     }
 
+    @RequestMapping("/pengpaixinwen")
+    public ResultTemplateBean getPengPaiXinWenCommonSearch() {
+        return topSearchCommonService.getPengPaiXinWenCommonSearch();
+    }
+
+
 }

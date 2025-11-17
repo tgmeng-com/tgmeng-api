@@ -183,6 +183,8 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     GUO_KE("GUO_KE", "/topsearch/guoke", "", true,4),
     JIAN_KANG_SHI_BAO_WANG("JIAN_KANG_SHI_BAO_WANG", "/topsearch/jiankangshibaowang", "", true,4),
 
+    PENG_PAI_XIN_WEN("PENG_PAI_XIN_WEN", "/topsearch/pengpaixinwen", "", true,4),
+
 
     CCTV1("CCTV1", "/topsearch/cctv/1", "", true,4),
     CCTV2("CCTV2", "/topsearch/cctv/2", "", true,4),
