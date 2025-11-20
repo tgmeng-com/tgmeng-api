@@ -1,5 +1,6 @@
 package com.tgmeng.common.schedule;
 
+import com.tgmeng.common.enums.system.RequestFromEnum;
 import com.tgmeng.common.forest.client.system.ISystemLocalClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -301,7 +302,7 @@ public class ControllerApiSchedule {
             CompletableFuture<?>[] futures = ENDPOINTS.stream()
                     .map(endpoint -> CompletableFuture.runAsync(() -> {
                         try {
-                            systemLocalClient.systemLocalClient(endpoint);
+                            systemLocalClient.systemLocalClient(RequestFromEnum.INTERNAL.getValue(), endpoint);
                             successCount.incrementAndGet();
                             log.info("🤖系统定时任务成功缓存: {}", endpoint);
                         } catch (Exception e) {

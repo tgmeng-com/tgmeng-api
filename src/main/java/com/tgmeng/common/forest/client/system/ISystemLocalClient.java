@@ -1,8 +1,9 @@
 package com.tgmeng.common.forest.client.system;
 
 import com.dtflys.forest.annotation.Get;
+import com.dtflys.forest.annotation.Header;
 import com.dtflys.forest.annotation.Var;
-import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
+import com.dtflys.forest.http.ForestResponse;
 
 /**
  * description: 这个用来做系统内部的一些调用，比如定时任务等等
@@ -15,5 +16,5 @@ import com.tgmeng.model.dto.topsearch.TopSearchWeiBoDTO;
 */
 public interface ISystemLocalClient {
     @Get("http://localhost:4399{url}")
-    TopSearchWeiBoDTO systemLocalClient(@Var("url") String url);
+    ForestResponse systemLocalClient(@Header("X-Source") String contentType, @Var("url") String url);
 }

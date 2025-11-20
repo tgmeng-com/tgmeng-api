@@ -12,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Data
 @Slf4j
@@ -58,21 +60,21 @@ public class TopSearchDataCache {
                     @Override
                     public long expireAfterCreate(CacheDataNameEnum key, Object value, long currentTime) {
                         // 根据不同的枚举类型设置不同的过期时间
-                        if(StrUtil.contains(key.getKey(),"CACHE_TOP_SEARCH_GITHUB")){
+                        if (StrUtil.contains(key.getKey(), "CACHE_TOP_SEARCH_GITHUB")) {
                             // github缓存的过期时间浮动区间
                             Random random = new Random();
                             Long randomOffset = random.nextLong(2 * dataCacheExpireTimeGithubApiDataRandomRange + 1) - dataCacheExpireTimeGithubApiDataRandomRange;
-                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeGithubApiData+randomOffset);
-                        }else if(StrUtil.contains(key.getKey(),"CACHE_TOP_SEARCH_WANG_YI_YUN")){
+                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeGithubApiData + randomOffset);
+                        } else if (StrUtil.contains(key.getKey(), "CACHE_TOP_SEARCH_WANG_YI_YUN")) {
                             // 网易云缓存的过期时间浮动区间
                             Random random = new Random();
                             Long randomOffset = random.nextLong(2 * dataCacheExpireTimeWangYiYunApiDataRandomRange + 1) - dataCacheExpireTimeWangYiYunApiDataRandomRange;
-                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeWangYiYunApiData+randomOffset);
-                        }else if(StrUtil.contains(key.getKey(),"DOU_BAN")){
+                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeWangYiYunApiData + randomOffset);
+                        } else if (StrUtil.contains(key.getKey(), "DOU_BAN")) {
                             // 豆瓣缓存的过期时间浮动区间
                             Random random = new Random();
                             Long randomOffset = random.nextLong(2 * dataCacheExpireTimeDouBanApiDataRandomRange + 1) - dataCacheExpireTimeDouBanApiDataRandomRange;
-                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeDouBanApiData+randomOffset);
+                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeDouBanApiData + randomOffset);
                         } else {
                             return TimeUnit.SECONDS.toNanos(dataCacheExpireTime);
                         }
@@ -107,8 +109,15 @@ public class TopSearchDataCache {
         return clazz.cast(value);  // 强制转换成目标类型并返回
     }
 
+    // 从缓存中获取全部数据
+    public <T> List<T> getAll(Class<T> clazz) {
+        return cache.asMap().values().stream()
+                .map(clazz::cast)
+                .collect(Collectors.toList());
+    }
+
     // 清除缓存中的某个数据
-    public void remove( CacheDataNameEnum key) {
+    public void remove(CacheDataNameEnum key) {
         cache.invalidate(key);
         log.info("清除缓存：key:{} ", key);
     }

@@ -5,6 +5,7 @@ import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.cache.TopSearchDataCache;
 import com.tgmeng.common.enums.business.CacheDataNameEnum;
 import com.tgmeng.common.enums.enumcommon.EnumUtils;
+import com.tgmeng.common.enums.system.RequestFromEnum;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -37,28 +38,47 @@ public class TopSearchDataCacheInterceptor {
     @Around("cachePointcut()")
     public Object aroundRequest(ProceedingJoinPoint joinPoint) throws Throwable {
         String url = getRequestUrl();
-        if (dataCacheEnabled){
+        if (dataCacheEnabled) {
             //获取缓存
             Object cachedData = getCachedData(url);
-            if (cachedData != null) {
-                log.info("❤️返回缓存：{}", ((TopSearchCommonVO)cachedData).getDataCardName());
-                return ResultTemplateBean.success(cachedData);
-            } else {
-                log.info("🤡缓存未命中，调用接口获取数据：{}", url);
-                // 执行接口请求数据
-                Object result = joinPoint.proceed();
-                // 新增缓存
-                if(result != null&&CollectionUtil.isNotEmpty((((ResultTemplateBean<TopSearchCommonVO>)result).getData().getDataInfo()))) {
-                    cacheData(url, ((ResultTemplateBean<TopSearchCommonVO>) result).getData());
+            String source = getRequestHeader("X-Source");
+            // 内部请求的处理逻辑，内部请求到数据的时候不用缓存
+            if (RequestFromEnum.INTERNAL.getValue().equals(source)) {
+                if (cachedData != null) {
+                    log.info("❤️内部请求，命中缓存：{}", ((TopSearchCommonVO)cachedData).getDataCardName());
+                    return cachedData;
+                } else {
+                    log.info("🤡内部请求，缓存未命中，未命中，调用接口获取数据：{}", url);
+                    // 执行接口请求数据
+                    Object result = joinPoint.proceed();
+                    // 新增缓存
+                    if (result != null && CollectionUtil.isNotEmpty((((ResultTemplateBean<TopSearchCommonVO>) result).getData().getDataInfo()))) {
+                        cacheData(url, ((ResultTemplateBean<TopSearchCommonVO>) result).getData());
+                    }
+                    return cachedData;
                 }
-                return result;
+                // 客户端请求的处理逻辑，返回缓存
+            } else {
+                // 客户端请求的处理逻辑
+                if (cachedData != null) {
+                    log.info("❤️客户端请求，命中缓存，返回缓存：{}", ((TopSearchCommonVO)cachedData).getDataCardName());
+                    return ResultTemplateBean.success(cachedData);
+                } else {
+                    log.info("🤡客户端请求，未命中缓存，调用接口获取数据：{}", url);
+                    // 执行接口请求数据
+                    Object result = joinPoint.proceed();
+                    // 新增缓存
+                    if(result != null&&CollectionUtil.isNotEmpty((((ResultTemplateBean<TopSearchCommonVO>)result).getData().getDataInfo()))) {
+                        cacheData(url, ((ResultTemplateBean<TopSearchCommonVO>) result).getData());
+                    }
+                    return result;
+                }
             }
-        }else {
+        } else {
             log.info("🤡缓存未开启，调用接口获取数据：{}", url);
             // 执行接口请求数据
             return joinPoint.proceed();
         }
-
     }
 
     // 获取缓存数据
@@ -69,6 +89,11 @@ public class TopSearchDataCacheInterceptor {
             }
         }
         return null;
+    }
+
+    // 获取全部缓存数据
+    public Object getCachedDataAll() {
+        return topSearchDataCache.getAll(TopSearchCommonVO.class);
     }
 
     // 新增缓存数据
@@ -89,5 +114,11 @@ public class TopSearchDataCacheInterceptor {
             url = request.getRequestURL().toString();
         }
         return url;
+    }
+
+    private String getRequestHeader(String headerName) {
+        // 获取当前请求的 HttpServletRequest
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return request.getHeader(headerName);  // 获取指定请求头
     }
 }
