@@ -87,8 +87,6 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                 return ResultTemplateBean.success(Collections.emptyList());
             }
 
-            log.info("共处理 {} 个原始关键词", allOriginalKeywords.size());
-
             // 3. 使用 HanLP 分词 + 词频统计
             Map<String, Integer> keywordFrequencyMap = new HashMap<>();
 

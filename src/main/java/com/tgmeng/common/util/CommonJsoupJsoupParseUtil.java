@@ -580,7 +580,7 @@ public class CommonJsoupJsoupParseUtil {
         Elements elements = parse.select(".text-list-model > div");
         for (Element element : elements.subList(0, elements.size())) {
             String url = safeAttr(element, "a", "href");
-            String title = safeText(element, ".t-info");
+            String title = safeText(element, ".t-title");
             String hotScore = safeText(element, ".t-lights") + "·" + safeText(element, ".t-replies");
             if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
                 topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, "https://bbs.hupu.com" + url, "", "", "", "", "", "", null, null, ""));
