@@ -18,26 +18,26 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchTypeCCTVEnum implements INameValueEnum<String, String> {
-    CCTV1("1", "1", "CCTV1", true, 2),
-    CCTV2("2", "2", "CCTV2", true, 2),
-    CCTV3("3", "3", "CCTV3", true, 2),
-    CCTV4("4", "4", "CCTV4", true, 2),
-    CCTV5("5", "5", "CCTV5", true, 2),
-    CCTV6("6", "6", "CCTV6", true, 2),
-    CCTV7("7", "7", "CCTV7", true, 2),
-    CCTV8("8", "8", "CCTV8", true, 2),
-    CCTV9("jilu", "jilu", "CCTV9", true, 2),
-    CCTV10("10", "10", "CCTV10", true, 2),
-    CCTV11("11", "11", "CCTV11", true, 2),
-    CCTV12("12", "12", "CCTV12", true, 2),
-    CCTV13("13", "13", "CCTV13", true, 2),
-    CCTV14("child", "child", "CCTV14", true, 2),
-    CCTV15("15", "15", "CCTV15", true, 2),
-    CCTV5_PLUS("5plus", "5plus", "CCTV5_PLUS", true, 2),
-    CCTV16("16", "16", "CCTV16", true, 2),
-    CCTV17("17", "17", "CCTV17", true, 2),
-    CCTV4_EUROPE("europe", "europe", "CCTV4欧洲", true, 2),
-    CCTV4_AMERICA("america", "america", "CCTV4每周", true, 2);
+    CCTV1("1", "1", "CCTV1 综合", true, 2),
+    CCTV2("2", "2", "CCTV2 财经", true, 2),
+    CCTV3("3", "3", "CCTV3 综艺", true, 2),
+    CCTV4("4", "4", "CCTV4 亚洲", true, 2),
+    CCTV5("5", "5", "CCTV5 体育", true, 2),
+    CCTV6("6", "6", "CCTV6 电影", true, 2),
+    CCTV7("7", "7", "CCTV7 国防教育", true, 2),
+    CCTV8("8", "8", "CCTV8 电视剧", true, 2),
+    CCTV9("jilu", "jilu", "CCTV9 纪录", true, 2),
+    CCTV10("10", "10", "CCTV10 科教", true, 2),
+    CCTV11("11", "11", "CCTV11 戏曲", true, 2),
+    CCTV12("12", "12", "CCTV12 社会与法", true, 2),
+    CCTV13("13", "13", "CCTV13 新闻", true, 2),
+    CCTV14("child", "child", "CCTV14 少儿", true, 2),
+    CCTV15("15", "15", "CCTV15 音乐", true, 2),
+    CCTV5_PLUS("5plus", "5plus", "CCTV5 体育赛事", true, 2),
+    CCTV16("16", "16", "CCTV16 奥林匹克", true, 2),
+    CCTV17("17", "17", "CCTV17 农业与村", true, 2),
+    CCTV4_EUROPE("europe", "europe", "CCTV4 欧洲", true, 2),
+    CCTV4_AMERICA("america", "america", "CCTV4 美洲", true, 2);
 
 
     private final String key;
