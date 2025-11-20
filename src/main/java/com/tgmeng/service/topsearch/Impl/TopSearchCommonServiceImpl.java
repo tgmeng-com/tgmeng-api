@@ -2365,7 +2365,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             throw new ServerException(ServerExceptionEnum.CCTV_SEARCH_EXCEPTION);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(topSearchCommonVOS,
-                DataInfoCardEnum.CCTV.getDescription(),
+                searchTypeCCTVEnum.getDescription(),
                 DataInfoCardEnum.CCTV.getValue(),
                 DataInfoCardEnum.CCTV.getDescription());
         return ResultTemplateBean.success(topSearchCommonVO);
