@@ -1,4 +1,4 @@
-package com.tgmeng.controller.cacheSearch;
+package com.tgmeng.controller.cachesearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
@@ -26,4 +26,10 @@ public class CacheSearchController {
     public ResultTemplateBean getCacheSearchWordCloud() {
         return cacheSearchService.getCacheSearchWordCloud();
     }
+
+    @RequestMapping("/realtimesummary")
+    public ResultTemplateBean getCacheSearchRealTimeSummary() {
+        return cacheSearchService.getCacheSearchRealTimeSummary();
+    }
+
 }

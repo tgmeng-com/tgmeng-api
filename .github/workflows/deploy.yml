@@ -31,6 +31,23 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}                # DockerHub 访问令牌
       DOCKER_IMAGE_NAME: tgmeng-api                                  # DockerHub 镜像名称（也就是dockerHub里面的仓库的名字）
       GHCR_IMAGE_NAME: tgmeng-api                                   # GHCR 镜像名称（建议是仓库名）
+      # 这里格式为
+      #  [
+      #    {
+      #      "platform":"OPENAI",  注意：这里填的是AIPlatFormEnum枚举类的key值
+      #      "model": "GPT3",      注意：这里填的是AIModelEnum枚举类的key值
+      #      "key": "sk-1234567890abcdef1234567890abcdef",
+      #      "from": "某某平台的某某老哥"
+      #    },
+      #    {
+      #      "platform":"DEEPSEEK",
+      #      "model": "DEEPSEEK",
+      #      "key": "sk-1234567890abcdef1234567890abcdef",
+      #      "from": "某某平台的某某老哥"
+      #    }
+      #   ......
+      #  ]
+      AI_PLATFORM_CONFIG: ${{ secrets.AI_PLATFORM_CONFIG }}
 
     steps:
       # 获取代码并构建项目

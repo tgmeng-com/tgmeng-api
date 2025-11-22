@@ -1,19 +1,22 @@
 package com.tgmeng.common.schedule;
 
+import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.enums.system.RequestFromEnum;
 import com.tgmeng.common.forest.client.system.ISystemLocalClient;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.Set;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -285,47 +288,141 @@ public class ControllerApiSchedule {
             "/api/topsearch/cctv/17",
 
             // 澎湃新闻
-            "/api/topsearch/pengpaixinwen"
+            "/api/topsearch/pengpaixinwen",
+            // AI时报
+            "/api/cachesearch/realtimesummary",
+            // 词云
+            "/api/cachesearch/wordcloud"
 
     );
 
+    /**
+     * 通用接口，都是一分钟刷新
+     */
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")
+    public void endpointsNormalRefresh() {
+        Set<String> exclude = Set.of(
+                "/api/cachesearch/wordcloud",
+                "/api/cachesearch/realtimesummary",
+                "/api/cachesearch/allbyword"
+        );
+        List<String> endpointsNormal = ENDPOINTS.stream()
+                .filter(endpoint -> !exclude.contains(endpoint))
+                .toList();
+        scanAndInvokeControllers(endpointsNormal);
+    }
+
+    /**
+     * 词云的定时刷新，目前设置的是每1分钟刷新一次
+     */
+    @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate-ci-yun}")
+    public void endpointsCiYunRefresh() {
+        List<String> endpointsCiYun = List.of(
+                "/api/cachesearch/wordcloud"
+        );
+        scanAndInvokeControllers(endpointsCiYun);
+    }
+
+    /**
+     * ai时报的定时刷新，目前设置的是每5分钟刷新一次
+     */
+    @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate-ai-shi-bao}")
+    // ai时报的定时刷新，目前设置的是每5分钟刷新一次
+    public void endpointsAiShiBaoRefresh() {
+        List<String> endpointsAiShiBao = List.of(
+                "/api/cachesearch/realtimesummary"
+        );
+        scanAndInvokeControllers(endpointsAiShiBao);
+    }
+
     public void scanAndInvokeControllers() {
+        scanAndInvokeControllers(ENDPOINTS);
+    }
+
+    public void scanAndInvokeControllers(List<String> endpoints) {
         long startTime = System.currentTimeMillis();
-        log.info("🤖🤖开始 系统定时缓存所有数据，共{}个接口👈👈", ENDPOINTS.size());
+        // 获取当前请求的端点（如果有的话，说明是主动调用这个来刷新所有缓存，这个主要是为了避免需要主动刷新所有缓存的接口死循环调用，目前主动刷新所有缓存的有词云、搜索、AI时报）
+        String currentEndpoint = getCurrentRequestEndpoint();
+        // 过滤掉会陷入死循环的，比如词云主动刷新缓存，那他会调用AI时报，AI时报会刷新缓存，他又会调用词云，导致死循环
+        Set<String> exclude = Set.of("/api/cachesearch/wordcloud", "/api/cachesearch/realtimesummary", "/api/cachesearch/allbyword");
+        List<String> endpointsToRefresh;
+        if (StrUtil.isNotEmpty(currentEndpoint)) {
+            // currentEndpoint 不为空 → 排除 exclude
+            endpointsToRefresh = endpoints.stream()
+                    .filter(endpoint -> !exclude.contains(endpoint))
+                    .toList();
+        } else {
+            // currentEndpoint 为空 → 不排除任何接口
+            endpointsToRefresh = endpoints;
+        }
+        String typeMessage = StrUtil.isBlank(currentEndpoint) ? "系统定时任务缓存数据" : "系统内部主动检测缓存并刷新已失效的接口";
+
+
+        log.info("🤖🤖开始:" + typeMessage + "，共{}个接口，👈👈", endpointsToRefresh.size());
 
         AtomicInteger successCount = new AtomicInteger(0);
         AtomicInteger failureCount = new AtomicInteger(0);
+        AtomicInteger timeoutCount = new AtomicInteger(0);
+        // 使用自定义线程池进行并行处理
+        CompletableFuture<?>[] futures = endpointsToRefresh.stream()
+                .map(endpoint -> CompletableFuture.runAsync(() -> {
+                    try {
+                        systemLocalClient.systemLocalClient(RequestFromEnum.INTERNAL.getValue(), endpoint);
+                        successCount.incrementAndGet();
+                        //log.info("🤖成功:" + typeMessage + ": {}", endpoint);
+                    } catch (Exception e) {
+                        failureCount.incrementAndGet();
+                        //log.error("🤖失败:" + typeMessage + ": {}, 错误: {}", endpoint, e.getMessage());
+                    }
+                }, executor))
+                .toArray(CompletableFuture[]::new);
 
         try {
-            // 使用自定义线程池进行并行处理
-            CompletableFuture<?>[] futures = ENDPOINTS.stream()
-                    .map(endpoint -> CompletableFuture.runAsync(() -> {
-                        try {
-                            systemLocalClient.systemLocalClient(RequestFromEnum.INTERNAL.getValue(), endpoint);
-                            successCount.incrementAndGet();
-                            log.info("🤖系统定时任务成功缓存: {}", endpoint);
-                        } catch (Exception e) {
-                            failureCount.incrementAndGet();
-                            log.error("🤖系统定时任务缓存失败: {}, 错误: {}", endpoint, e.getMessage());
-                        }
-                    }, executor))
-                    .toArray(CompletableFuture[]::new);
-
             // 等待所有任务完成，设置超时时间
             CompletableFuture.allOf(futures)
                     .orTimeout(300, TimeUnit.SECONDS) // 5分钟超时
                     .join();
 
+        } catch (CompletionException e) {
+            if (e.getCause() instanceof TimeoutException) {
+                // 处理超时情况
+                log.warn("🤖执行超时:" + typeMessage + "，取消未完成的任务");
+
+                // 取消所有未完成的任务
+                for (CompletableFuture<?> future : futures) {
+                    if (!future.isDone()) {
+                        future.cancel(true);
+                        timeoutCount.incrementAndGet();
+                    }
+                }
+            } else {
+                // 其他异常
+                log.error("🤖执行异常:" + typeMessage + ": {}", e.getMessage(), e);
+                failureCount.addAndGet(endpoints.size() - successCount.get() - timeoutCount.get());
+            }
         } catch (Exception e) {
-            log.error("🤖系统定时任务执行异常: {}", e.getMessage(), e);
+            log.error("🤖系执行异常:" + typeMessage + ": {}", e.getMessage(), e);
+            failureCount.addAndGet(endpoints.size() - successCount.get() - timeoutCount.get());
         }
 
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
 
-        log.info("🤖🤖完成 系统定时缓存所有数据👈👈 " +
-                        "成功: {}, 失败: {}, 总耗时: {}ms",
-                successCount.get(), failureCount.get(), duration);
+        log.info("🤖🤖完成:" + typeMessage + "👈👈 " +
+                        "成功: {}, 失败: {}, 超时: {}, 总耗时: {}ms",
+                successCount.get(), failureCount.get(), timeoutCount.get(), duration);
+    }
+
+    private String getCurrentRequestEndpoint() {
+        try {
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes instanceof ServletRequestAttributes) {
+                HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+                return request.getRequestURI();
+            }
+        } catch (Exception e) {
+            log.debug("无法获取当前请求端点，可能不在Web上下文");
+        }
+        return null;
     }
 }

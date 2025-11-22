@@ -7,4 +7,6 @@ public interface ICacheSearchService {
     ResultTemplateBean getCacheSearchAllByWord(String word);
 
     ResultTemplateBean getCacheSearchWordCloud();
+
+    ResultTemplateBean getCacheSearchRealTimeSummary();
 }

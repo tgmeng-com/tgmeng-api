@@ -205,7 +205,9 @@ public enum CacheDataNameEnum implements INameValueEnum<String,String> {
     CCTV14("CCTV14", "/topsearch/cctv/child", "", true,4),
     CCTV15("CCTV15", "/topsearch/cctv/15", "", true,4),
     CCTV16("CCTV16", "/topsearch/cctv/16", "", true,4),
-    CCTV17("CCTV17", "/topsearch/cctv/17", "", true,4);
+    CCTV17("CCTV17", "/topsearch/cctv/17", "", true,4),
+    WORD_CLOUD("WORD_CLOUD", "/cachesearch/wordcloud", "", true,4),
+    REALTIME_SUMMARY("REALTIME_SUMMARY", "/cachesearch/realtimesummary", "", true,4);
 
 
     private final String key;

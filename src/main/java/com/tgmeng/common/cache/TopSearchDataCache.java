@@ -5,7 +5,6 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Expiry;
 import com.tgmeng.common.enums.business.CacheDataNameEnum;
-import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,15 @@ public class TopSearchDataCache {
     @Value("${my-config.data-cache.top-search.expire-time-dou-ban-api-data-random-range:240}")
     private Long dataCacheExpireTimeDouBanApiDataRandomRange;
 
+    /** 网易云音乐缓存过期时间浮动范围，yml里找不到就用这里的默认值300秒 */
+    @Value("${my-config.data-cache.top-search.expire-time-ci-yun:172800}")
+    private Long dataCacheExpireTimeCiYun;
+
+    /** AI时报缓存过期时间，yml里找不到就用这里的默认值1800秒 */
+    @Value("${my-config.data-cache.top-search.expire-time-ai-shi-bao:172800}")
+    private Long dataCacheExpireTimeAiShiBao;
+
+
     /** 最大缓存条数，默认100条 */
     @Value("${my-config.data-cache.top-search.max-size:100}")
     private Long dataCacheMaxSize;
@@ -75,6 +85,12 @@ public class TopSearchDataCache {
                             Random random = new Random();
                             Long randomOffset = random.nextLong(2 * dataCacheExpireTimeDouBanApiDataRandomRange + 1) - dataCacheExpireTimeDouBanApiDataRandomRange;
                             return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeDouBanApiData + randomOffset);
+                        } else if (StrUtil.contains(key.getKey(), "WORD_CLOUD")) {
+                            // 词云过期时间
+                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeCiYun);
+                        } else if (StrUtil.contains(key.getKey(), "REALTIME_SUMMARY")) {
+                            // AI时报缓存的过期时间浮动区间
+                            return TimeUnit.SECONDS.toNanos(dataCacheExpireTimeAiShiBao);
                         } else {
                             return TimeUnit.SECONDS.toNanos(dataCacheExpireTime);
                         }
@@ -96,22 +112,20 @@ public class TopSearchDataCache {
     // 添加数据到缓存
     public <T> void put(CacheDataNameEnum key, T value) {
         cache.put(key, value);
-        log.info("🎁新增缓存:{}", ((TopSearchCommonVO) value).getDataCardName());
+        log.info("🎁新增缓存:{}", key);
     }
 
     // 从缓存中获取数据
-    public <T> T get(CacheDataNameEnum key, Class<T> clazz) {
-        Object value = cache.getIfPresent(key);
-        if (value == null) {
-            return null;
-        }
-        //log.info("命中缓存：key:{}", key);
-        return clazz.cast(value);  // 强制转换成目标类型并返回
+    public Object get(CacheDataNameEnum key) {
+        return cache.getIfPresent(key);
     }
 
     // 从缓存中获取全部数据
-    public <T> List<T> getAll(Class<T> clazz) {
-        return cache.asMap().values().stream()
+    public <T> List<T> getAll(Class<T> clazz, Set<CacheDataNameEnum> excludeEnums) {
+        return cache.asMap().entrySet().stream()
+                .filter(entry -> !excludeEnums.contains(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .filter(clazz::isInstance)
                 .map(clazz::cast)
                 .collect(Collectors.toList());
     }
