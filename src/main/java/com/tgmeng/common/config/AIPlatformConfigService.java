@@ -5,6 +5,7 @@ import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class AIPlatformConfigService {
-    //@Value("${AI_PLATFORM_CONFIG}")
+    @Value("${AI_PLATFORM_CONFIG:[]}")
     private String aiPlatformConfigJson;
 
     private List<AIPlatformConfig> aiPlatformConfigs;
