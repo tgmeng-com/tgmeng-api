@@ -1,5 +1,6 @@
 package com.tgmeng.common.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
 import jakarta.annotation.PostConstruct;
@@ -22,9 +23,11 @@ public class AIPlatformConfigService {
 
         // 直接从系统环境变量读取
         String aiPlatformConfigJson = System.getenv("AI_PLATFORM_CONFIG");
-        if (aiPlatformConfigJson == null || aiPlatformConfigJson.isEmpty()) {
+        if (StrUtil.isEmpty(aiPlatformConfigJson)) {
             log.warn("未读取到 AI_PLATFORM_CONFIG 环境变量");
             return;
+        }else{
+            log.info("读取到 AI_PLATFORM_CONFIG 环境变量：{}", aiPlatformConfigJson);
         }
 
         // 使用 ObjectMapper 来解析 JSON 字符串并转换为 PlatformConfig 数组
