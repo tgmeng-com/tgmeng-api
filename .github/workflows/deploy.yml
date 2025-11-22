@@ -180,7 +180,7 @@ jobs:
           username: ${{ env.SERVER_USER }}
           password: ${{ env.SERVER_PASSWORD }}
           port: ${{ env.SERVER_PORT }}
-          envs: REMOTE_JAR_DIR,JAR_NAME,PORT,JAVA_VERSION  # 传递环境变量
+          envs: REMOTE_JAR_DIR,JAR_NAME,PORT,JAVA_VERSION,AI_PLATFORM_CONFIG  # 传递环境变量
           script: |
             echo "[$(date)] 准备重启应用..."
             
