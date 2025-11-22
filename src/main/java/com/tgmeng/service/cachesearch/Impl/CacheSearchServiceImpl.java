@@ -137,7 +137,6 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         //String content = "帮我写一个笑话";
 
 
-        //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfig1, aiPlatformConfig));
         List<AIPlatformConfig> aiPlatformConfigs = aiPlatformConfigService.getAiPlatformConfigs();
         AiChatModelResponseContentTemplateDTO aiChatResult = aiRequestUtil.aiChat(content, aiPlatformConfigs);
         return ResultTemplateBean.success(aiChatResult);
