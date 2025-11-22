@@ -91,7 +91,11 @@ public class AIRequestUtil {
                     }
                     // 5. 构建结果
                     List<AiChatModelResponseContentTemplateDTO.Result> resultList = MAPPER.readValue(messageContent, RESULT_TYPE);
-                    AiChatModelResponseContentTemplateDTO result = new AiChatModelResponseContentTemplateDTO().setResult(resultList).setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern)).setAiPlatForm(platformName).setAiModel(aimodenEnum.getValue());
+                    AiChatModelResponseContentTemplateDTO result = new AiChatModelResponseContentTemplateDTO()
+                            .setResult(resultList)
+                            .setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern))
+                            .setAiPlatForm(platformName).setAiModel(aimodenEnum.getValue())
+                            .setFrom(from);
                     log.info("[{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒", platformName, attempt, (System.currentTimeMillis() - startTime) / 1000.0);
                     return result;
                 } catch (Exception e) {
@@ -123,7 +127,7 @@ public class AIRequestUtil {
                                 .setContent(content)))
                 .setInput(
                         CollectionUtil.toList(new AICommonChatModelRequestDTO.Input().setRole("user")
-                        .setContent(content)))
+                                .setContent(content)))
                 .setResponseFormat(new AICommonChatModelRequestDTO.ResponseFormat().setType("json_object"));
     }
 

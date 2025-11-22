@@ -27,7 +27,7 @@ public class AIPlatformConfigService {
             log.warn("未读取到 AI_PLATFORM_CONFIG 环境变量");
             return;
         }else{
-            log.info("读取到 AI_PLATFORM_CONFIG 环境变量：{}", aiPlatformConfigJson);
+            log.info("读取到 AI_PLATFORM_CONFIG 环境变量");
         }
 
         // 使用 ObjectMapper 来解析 JSON 字符串并转换为 PlatformConfig 数组

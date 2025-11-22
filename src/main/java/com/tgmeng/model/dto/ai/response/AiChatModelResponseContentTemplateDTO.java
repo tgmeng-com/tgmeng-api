@@ -12,6 +12,7 @@ public class AiChatModelResponseContentTemplateDTO {
     private String time;
     private String aiPlatForm;
     private String aiModel;
+    private String from;
 
     @Data
     public static class Result {
