@@ -1,5 +1,6 @@
 package com.tgmeng.model.dto.ai.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,21 +18,21 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class AICommonChatModelResponseDTO<
-        K extends AICommonChatModelResponseDTO.Choice,
-        V extends AICommonChatModelResponseDTO.Usage> {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class AICommonChatModelResponseDTO {
 
     private String id;
     private String object;
     private Long created;
     private String model;
-    private List<K> choices;
-    private V usage;
+    private List<Choice> choices;
+    private Usage usage;
     @JsonProperty("system_fingerprint")
     private String systemFingerprint;
 
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Choice {
         private Long index;
         private Message message;
@@ -42,9 +43,12 @@ public class AICommonChatModelResponseDTO<
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Message {
         private String role;
         private String content;
+        @JsonProperty("reasoning_content")
+        private String reasoningContent;
     }
 
     @Data
@@ -61,9 +65,12 @@ public class AICommonChatModelResponseDTO<
         private Long promptCacheHitTokens;
         @JsonProperty("prompt_cache_miss_tokens")
         private Long promptCacheMissTokens;
+        @JsonProperty("reasoning_tokens")
+        private Long reasoningTokens;
     }
 
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class PromptTokensDetails {
         @JsonProperty("cached_tokens")
         private Long cachedTokens;

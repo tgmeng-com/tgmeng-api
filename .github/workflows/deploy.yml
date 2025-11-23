@@ -34,19 +34,20 @@ jobs:
       # 这里格式为
       #  [
       #    {
-      #      "platform":"OPENAI",  注意：这里填的是AIPlatFormEnum枚举类的key值
-      #      "model": "GPT3",      注意：这里填的是AIModelEnum枚举类的key值
-      #      "key": "sk-1234567890abcdef1234567890abcdef",
-      #      "from": "某某平台的某某老哥"
-      #    },
-      #    {
-      #      "platform":"DEEPSEEK",
-      #      "model": "DEEPSEEK",
-      #      "key": "sk-1234567890abcdef1234567890abcdef",
-      #      "from": "某某平台的某某老哥"
+      #      "platform": "NVIDIA",
+      #      "api":"https://integrate.api.nvidia.com/v1/chat/completions",
+      #      "key": "nvapi-tg8HLdW",
+      #      "from": "LinuxDo公益站 黑与白站长大佬推荐"
+      #      "models":
+      #          [
+      #          "deepseek-ai/deepseek-v3.1",""
+      #          ]
       #    }
-      #   ......
+      #     ...
       #  ]
+      #
+      #
+      #
       AI_PLATFORM_CONFIG: ${{ secrets.AI_PLATFORM_CONFIG }}
 
     steps:

@@ -3,6 +3,7 @@ package com.tgmeng.common.schedule;
 import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.enums.system.RequestFromEnum;
 import com.tgmeng.common.forest.client.system.ISystemLocalClient;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -295,6 +296,13 @@ public class ControllerApiSchedule {
             "/api/cachesearch/wordcloud"
 
     );
+
+    @PostConstruct
+    public void init() {
+        log.info("🚀 程序启动，立即执行AI时报、词云刷新任务");
+        endpointsCiYunRefresh();
+        endpointsAiShiBaoRefresh();
+    }
 
     /**
      * 通用接口，都是一分钟刷新
