@@ -84,7 +84,7 @@ public class AIRequestUtil {
                                         .setAiPlatForm(platform)
                                         .setAiModel(model)
                                         .setFrom(from);
-                                log.info("[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒", platform, model, attempt, (System.currentTimeMillis() - startTime) / 1000.0);
+                                log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒", platform, model, attempt, (System.currentTimeMillis() - startTime) / 1000.0);
                                 return result;
                             } catch (Exception e) {
                                 if (e.getCause() instanceof SocketTimeoutException) {

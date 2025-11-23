@@ -24,7 +24,7 @@ public class AIPlatformConfigService {
         // 直接从系统环境变量读取
         String aiPlatformConfigJson = System.getenv("AI_PLATFORM_CONFIG");
         if (StrUtil.isEmpty(aiPlatformConfigJson)) {
-            log.warn("未读取到 AI_PLATFORM_CONFIG 环境变量");
+            log.warn("未读取到 AI_PLATFORM_CONFIG 环境变量：{}", aiPlatformConfigJson);
             return;
         }else{
             log.info("读取到 AI_PLATFORM_CONFIG 环境变量");
@@ -34,7 +34,7 @@ public class AIPlatformConfigService {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             aiPlatformConfigs = objectMapper.readValue(aiPlatformConfigJson, objectMapper.getTypeFactory().constructCollectionType(List.class, AIPlatformConfig.class));
-            log.info("AI平台配置文件解析成功");
+            log.info("AI平台配置文件解析成功：{}", aiPlatformConfigs);
         }catch (Exception e){
             log.info("AI平台配置文件解析失败："+e.getMessage());
         }

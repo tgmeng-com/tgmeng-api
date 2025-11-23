@@ -140,9 +140,11 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         //AIPlatformConfig aiPlatformConfig = new AIPlatformConfig()
         //        .setPlatform("NVIDIA")
         //        .setApi("https://integrate.api.nvidia.com/v1/chat/completions")
-        //        .setKey("nvapi-tg8HLdW")
+        //        .setKey("nvapi-tg8HLdWOQZ8NWJ0PgoLR")
         //        .setFrom("LinuxDo公益站 黑与白站长大佬推荐")
-        //        .setModels(List.of("deepseek-ai/deepseek-v3.1"));
+        //        .setModels(List.of(
+        //                "deepseek-ai/deepseek-v3.1",
+        //                "openai/gpt-oss-120b"));
         //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfig));
 
         // 生产数据

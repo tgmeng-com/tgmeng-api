@@ -43,7 +43,7 @@ my-config:
       enabled: true                 #是否开启定时任务，不开启的话，所有数据都是从接口获取，下面的其他这些配置就没用了
       schedule-rate: "0 0/1 * * * ?"  # 系统定时缓存所有数据的周期,这个是通用的，除下面特殊的，其他都按照这个
       schedule-rate-ci-yun: "0 0/1 * * * ?"  # 系统定时刷新你缓存词云数据的周期
-      schedule-rate-ai-shi-bao: "0 0/5 * * * ?"  # 系统定时刷新缓存AI时报数据的周期
+      schedule-rate-ai-shi-bao: "0 0/2 * * * ?"  # 系统定时刷新缓存AI时报数据的周期
   data-cache:
     top-search:
       enabled: true           #是否开启缓存，不开启的话，所有数据都是从接口获取，下面的其他这些配置就没用了
