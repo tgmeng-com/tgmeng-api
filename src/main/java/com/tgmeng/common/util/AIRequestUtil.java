@@ -81,8 +81,8 @@ public class AIRequestUtil {
                                 AiChatModelResponseContentTemplateDTO result = new AiChatModelResponseContentTemplateDTO()
                                         .setResult(resultList)
                                         .setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern))
-                                        .setAiPlatForm(platform)
-                                        .setAiModel(model)
+                                        .setPlatform(platform)
+                                        .setModel(model)
                                         .setFrom(from);
                                 log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒", platform, model, attempt, (System.currentTimeMillis() - startTime) / 1000.0);
                                 return result;

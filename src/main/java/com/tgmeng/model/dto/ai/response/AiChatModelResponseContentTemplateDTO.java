@@ -10,8 +10,8 @@ import java.util.List;
 public class AiChatModelResponseContentTemplateDTO {
     private List<Result> result;
     private String time;
-    private String aiPlatForm;
-    private String aiModel;
+    private String platform;
+    private String model;
     private String from;
 
     @Data
