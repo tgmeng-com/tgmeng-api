@@ -16,8 +16,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AIModelEnum implements INameValueEnum<String,String> {
+    // 添加新的模型后，在这里添加枚举
     GPT_35("GPT_35", "gpt-3.5-turbo", "", true,1),
     GPT_4("GPT_4", "gpt-4", "", true,2),
+    GPT_4_1_MINI("GPT_4_1_MINI", "gpt-4.1-mini", "", true,2),
     DEEPSEEK_CHAT("DEEPSEEK_CHAT", "deepseek-chat", "DeepSeek非思考模式", true,3),
     DEEPSEEK_REASONER("DEEPSEEK_REASONER", "deepseek-reasoner", "DeepSeek思考模式", true,4),
     QWEN_32B("QWEN_32B", "Qwen/QwQ-32B", "", true,4);

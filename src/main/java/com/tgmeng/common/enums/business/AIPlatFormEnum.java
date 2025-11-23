@@ -16,11 +16,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AIPlatFormEnum implements INameValueEnum<String,String> {
+    // TODO 添加新的平台后，在这里添加个枚举
     OPENAI("OPENAI", "https://api.openai.com/v1/chat/completions", "open ai", true,1),
     GUI_JI_LIU_DONG("GUI_JI_LIU_DONG", "https://api.siliconflow.cn/v1/chat/completions", "硅基流动", true,1),
     DEEPSEEK("DEEPSEEK", "https://api.deepseek.com/chat/completions", "", true,2),
     GROK("GROK", "https://api.grok.cn/v1/chat/completions", "", true,3),
     CLAUDE("CLAUDE", "https://api.claude.cn/v1/chat/completions", "", true,4),
+    ELYSIVER("MISTRAL", "https://elysiver.h-e.top/v1/chat/completions", "LinuxDo上的公益站", true,4),
     MISTRAL("MISTRAL", "", "", true,4),
     LLAMA("LLAMA", "", "", true,4),
     ERNIE("ERNIE", "", "百度文心一言", true,4),
@@ -29,6 +31,7 @@ public enum AIPlatFormEnum implements INameValueEnum<String,String> {
     QIAN_WEN("QIANWEN", "", "阿里通义千问", true,4),
     PANGU("CLAUDE", "", "华为盘古", true,4),
     GEMINI("GEMINI", "", "Google", true,5);
+
 
     private final String key;
     private final String value;

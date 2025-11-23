@@ -47,7 +47,8 @@ public class AIRequestUtil {
     private static final Map<AIPlatFormEnum, Class<? extends AICommonChatModelResponseDTO>> platformResponseMap = Map.of(
             AIPlatFormEnum.OPENAI, AIOpenAIChatModelResponseDTO.class,
             AIPlatFormEnum.DEEPSEEK, AIDeepSeekChatModelResponseDTO.class,
-            AIPlatFormEnum.GUI_JI_LIU_DONG, AIGuiJiLiuDongChatModelResponseDTO.class
+            AIPlatFormEnum.GUI_JI_LIU_DONG, AIGuiJiLiuDongChatModelResponseDTO.class,
+            AIPlatFormEnum.ELYSIVER, AIOpenAIChatModelResponseDTO.class
             // TODO 可以继续添加其他平台和它们的响应类映射
     );
 
