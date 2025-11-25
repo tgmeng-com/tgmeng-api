@@ -71,8 +71,11 @@ public class TopSearchDataCacheInterceptor {
                     }
                 }
             } else {
-                if (noCacheInternalEndpoints.stream().anyMatch(url::contains)) {
-                    // 外部请求，特定接口，直接返回缓存，数据这几个接口的数据只通过内部定时器定时刷新缓存
+                if (noCacheInternalEndpoints.stream().anyMatch(url::contains)
+                        || url.contains("douban")
+
+                ) {
+                    // 外部请求，特定接口，直接返回缓存数据，这几个接口的数据只通过内部定时器定时刷新缓存
                     log.info("🙆🏻外部请求，特定接口，直接返回缓存，接口:{}", url);
                     return ResultTemplateBean.success(cachedData);
                 } else {

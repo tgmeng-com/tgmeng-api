@@ -14,6 +14,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -33,6 +34,41 @@ public class ControllerApiSchedule {
 
     // 使用自定义线程池，避免使用ForkJoinPool
     private final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
+
+    // 这个豆瓣的，不参与每分钟调用
+    List<String> excludeDouBan = Arrays.asList(
+            // 豆瓣爱猫澡盆
+            "/api/topsearch/aimaozaopendouban",
+            // 豆瓣爱猫生活
+            "/api/topsearch/aimaoshenghuodouban",
+            // 豆瓣买组
+            "/api/topsearch/maizudouban",
+            // 豆瓣拼组
+            "/api/topsearch/pinzudouban",
+            // 豆瓣狗组
+            "/api/topsearch/gouzudouban",
+            "/api/topsearch/xiaozudouban/XIA_CHU_FANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIE_MAO_YE_KE_AI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_DE_CHENG_SHI_PAI_GEI_NI_KAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIA_PIAN_TUI_JIAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHE_CHU_MAI_FANG_GONG_JIN_HUI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/CUN_ZHUANG_AI_HAO_ZHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/YOU_YI_DE_XIAO_CHUAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHE_HUI_XING_SI_WANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/TAI_TOU_KAN_SHU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/LAN_REN_SHENG_HUO_ZHI_BEI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/KE_AI_SHI_WU_FEN_XIANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIN_TIAN_CHUAN_SHEN_ME_DOU_BAN",
+            "/api/topsearch/xiaozudouban/XIAO_FEI_ZHU_YI_NI_XING_ZHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_CHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_REN_QING_SHI_GU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/DOU_BAN_NIAO_ZU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN",
+            "/api/topsearch/xiaozudouban/ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIAO_SHI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN"
+    );
+
 
     // 将endpoints提取为常量，便于维护
     private static final List<String> ENDPOINTS = Arrays.asList(
@@ -222,27 +258,27 @@ public class ControllerApiSchedule {
             // 豆瓣狗组
             "/api/topsearch/gouzudouban",
 
-            //豆瓣生活，豆瓣这个ip限制比较强，所以先不加豆瓣生活里面的东西了
-            //"/api/topsearch/xiaozudouban/XIA_CHU_FANG_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/JIE_MAO_YE_KE_AI_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/WO_DE_CHENG_SHI_PAI_GEI_NI_KAN_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/JIA_PIAN_TUI_JIAN_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/SHE_CHU_MAI_FANG_GONG_JIN_HUI_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/CUN_ZHUANG_AI_HAO_ZHE_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/YOU_YI_DE_XIAO_CHUAN_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/SHE_HUI_XING_SI_WANG_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/TAI_TOU_KAN_SHU_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/LAN_REN_SHENG_HUO_ZHI_BEI_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/KE_AI_SHI_WU_FEN_XIANG_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/JIN_TIAN_CHUAN_SHEN_ME_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/XIAO_FEI_ZHU_YI_NI_XING_ZHE_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_CHE_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_REN_QING_SHI_GU_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/DOU_BAN_NIAO_ZU_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/JIAO_SHI_DOU_BAN",
-            //"/api/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN",
+            //豆瓣生活，豆瓣这个ip限制比较强
+            "/api/topsearch/xiaozudouban/XIA_CHU_FANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIE_MAO_YE_KE_AI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_DE_CHENG_SHI_PAI_GEI_NI_KAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIA_PIAN_TUI_JIAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHE_CHU_MAI_FANG_GONG_JIN_HUI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/CUN_ZHUANG_AI_HAO_ZHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/YOU_YI_DE_XIAO_CHUAN_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHE_HUI_XING_SI_WANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/TAI_TOU_KAN_SHU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/LAN_REN_SHENG_HUO_ZHI_BEI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/KE_AI_SHI_WU_FEN_XIANG_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIN_TIAN_CHUAN_SHEN_ME_DOU_BAN",
+            "/api/topsearch/xiaozudouban/XIAO_FEI_ZHU_YI_NI_XING_ZHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_CHE_DOU_BAN",
+            "/api/topsearch/xiaozudouban/WO_MEN_DOU_BU_DONG_REN_QING_SHI_GU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/DOU_BAN_NIAO_ZU_DOU_BAN",
+            "/api/topsearch/xiaozudouban/REN_JIAN_QING_LV_GUAN_CHA_DOU_BAN",
+            "/api/topsearch/xiaozudouban/ZHI_CHANG_TU_CAO_DA_HUI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/JIAO_SHI_DOU_BAN",
+            "/api/topsearch/xiaozudouban/SHANG_BAN_ZHE_JIAN_SHI_DOU_BAN",
 
             // 游戏
             "/api/topsearch/youminxingkong",
@@ -301,11 +337,12 @@ public class ControllerApiSchedule {
      */
     @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate}")
     public void endpointsNormalRefresh() {
-        Set<String> exclude = Set.of(
+        List<String> exclude = Arrays.asList(
                 "/api/cachesearch/wordcloud",
                 "/api/cachesearch/realtimesummary",
                 "/api/cachesearch/allbyword"
         );
+        exclude.addAll(excludeDouBan);
         List<String> endpointsNormal = ENDPOINTS.stream()
                 .filter(endpoint -> !exclude.contains(endpoint))
                 .toList();
@@ -333,6 +370,21 @@ public class ControllerApiSchedule {
                 "/api/cachesearch/realtimesummary"
         );
         scanAndInvokeControllers(endpointsAiShiBao);
+    }
+
+    // 豆瓣的定时刷新，目前设置的是每5分钟刷新一次，每个接口调用延迟10秒钟
+    @Scheduled(cron = "${my-config.schedule.controller-api-top-search.schedule-rate-dou-ban}")
+    public void endpointsDouBanRefresh() {
+        excludeDouBan.forEach(endpoint -> {
+            try {
+                Thread.sleep(10000);
+                scanAndInvokeControllers(Collections.singletonList(endpoint));
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.error("豆瓣请求失败，接口：{}，异常信息：{}", endpoint, e.getMessage());
+            }
+
+        });
     }
 
     public void scanAndInvokeControllers() {

@@ -44,6 +44,7 @@ my-config:
       schedule-rate: "0 0/1 * * * ?"  # 系统定时缓存所有数据的周期,这个是通用的，除下面特殊的，其他都按照这个
       schedule-rate-ci-yun: "0 0/1 * * * ?"  # 系统定时刷新你缓存词云数据的周期
       schedule-rate-ai-shi-bao: "0 0/5 * * * ?"  # 系统定时刷新缓存AI时报数据的周期
+      schedule-rate-dou-ban: "0 0/5 * * * ?"  # 系统定时刷新缓存豆瓣数据的周期
   data-cache:
     top-search:
       enabled: true           #是否开启缓存，不开启的话，所有数据都是从接口获取，下面的其他这些配置就没用了
@@ -53,8 +54,8 @@ my-config:
       expire-time-github-api-data-random-range: 600  # GitHub缓存过期时间的浮动值，比如上面设置的是30分钟，这里设置10分钟，那么缓存过期时间会在20-40分钟之间随机
       expire-time-wang-yi-yun-api-data: 600  # 网易云音乐缓存过期时间 单位是秒
       expire-time-wang-yi-yun-api-data-random-range: 300 # 网易云音乐缓存过期时间的浮动值，比如上面设置的是10分钟，这里设置5分钟，那么缓存过期时间会在5-15分钟之间随机
-      expire-time-dou-ban-api-data: 360  # 网易云音乐缓存过期时间 单位是秒
-      expire-time-dou-ban-api-data-random-range: 240 # 网易云音乐缓存过期时间的浮动值，比如上面设置的是10分钟，这里设置5分钟，那么缓存过期时间会在5-15分钟之间随机
+      expire-time-dou-ban-api-data: 172800  # 豆瓣的缓存过期时间,这里默认缓存个48小时，期间由系统定时主动去刷新，每5刷新一次
+      expire-time-dou-ban-api-data-random-range: 0 # 豆瓣缓存过期时间的浮动值，比如上面设置的是10分钟，这里设置5分钟，那么缓存过期时间会在5-15分钟之间随机
       expire-time-ai-shi-bao: 172800 # 词云过期时间，这里默认缓存个48小时，期间由系统定时主动去刷新，每分钟刷新一次
       expire-time-ci-yun: 172800 # AI时报过期时间，这里默认缓存个48小时，期间由系统定时主动去刷新，每分钟刷新一次
 
