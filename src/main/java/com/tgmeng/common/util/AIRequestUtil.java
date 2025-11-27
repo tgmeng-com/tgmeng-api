@@ -72,6 +72,7 @@ public class AIRequestUtil {
                                 AICommonChatModelResponseDTO response = MAPPER.readValue(forestResponse.getContent(), AICommonChatModelResponseDTO.class);
                                 // 4. 提取消息内容并转换
                                 String messageContent = extractMessageContent(response);
+                                Long totalTokens = response.getUsage().getTotalTokens();
                                 if (messageContent == null) {
                                     log.warn("[{},{}] 未识别的响应类型: {}", platform, model, response.getClass().getName());
                                     return null;
@@ -83,8 +84,9 @@ public class AIRequestUtil {
                                         .setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern))
                                         .setPlatform(platform)
                                         .setModel(model)
-                                        .setFrom(from);
-                                log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒", platform, model, attempt, (System.currentTimeMillis() - startTime) / 1000.0);
+                                        .setFrom(from)
+                                        .setTotalTokens(totalTokens);
+                                log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒，消耗Token: {}", platform, model, attempt, (System.currentTimeMillis() - startTime) / 1000.0, totalTokens);
                                 return result;
                             } catch (Exception e) {
                                 if (e.getCause() instanceof SocketTimeoutException) {

@@ -13,6 +13,7 @@ public class AiChatModelResponseContentTemplateDTO {
     private String platform;
     private String model;
     private String from;
+    private Long totalTokens;
 
     @Data
     public static class Result {
