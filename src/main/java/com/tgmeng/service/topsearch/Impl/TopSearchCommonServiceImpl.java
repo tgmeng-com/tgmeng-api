@@ -8,16 +8,12 @@ import com.dtflys.forest.http.ForestResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.cache.TopSearchDataCache;
 import com.tgmeng.common.enums.business.*;
 import com.tgmeng.common.enums.exception.ServerExceptionEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient;
 import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchCommonMapper;
-import com.tgmeng.common.util.CommonJsoupJsoupParseUtil;
-import com.tgmeng.common.util.ForestUtil;
-import com.tgmeng.common.util.StringUtil;
-import com.tgmeng.common.util.TimeUtil;
+import com.tgmeng.common.util.*;
 import com.tgmeng.model.dto.topsearch.*;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.topsearch.ITopSearchCommonService;
@@ -37,7 +33,6 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
 
     private final ITopSearchCommonClient topSearchCommonClient;
     private final ITopSearchCommonMapper topSearchCommonMapper;
-    private final TopSearchDataCache topSearchDataCache;
 
     /**
      * description: 百度热搜

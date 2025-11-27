@@ -1,18 +1,16 @@
 package com.tgmeng.service.cachesearch.Impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.seg.common.Term;
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.cache.TopSearchDataCache;
 import com.tgmeng.common.config.AIPlatformConfigService;
 import com.tgmeng.common.forest.client.ai.IAIClient;
-import com.tgmeng.common.schedule.ControllerApiSchedule;
 import com.tgmeng.common.util.AIRequestUtil;
 import com.tgmeng.common.util.CacheUtil;
 import com.tgmeng.common.util.FileUtil;
 import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
 import com.tgmeng.model.dto.ai.response.AiChatModelResponseContentTemplateDTO;
-import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +27,6 @@ import java.util.stream.Collectors;
 public class CacheSearchServiceImpl implements ICacheSearchService {
 
     @Autowired
-    private TopSearchDataCache topSearchDataCache;
-
-    @Autowired
-    private ControllerApiSchedule controllerApiSchedule;
-
-    @Autowired
     private AIPlatformConfigService aiPlatformConfigService;
 
     private final IAIClient aiClient;
@@ -47,27 +39,33 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
     @Override
     public ResultTemplateBean getCacheSearchAllByWord(String word) {
 
-        cacheUtil.refreshCache();
+        Collection<Object> cacheValue = cacheUtil.getValue();
+        if (CollectionUtil.isEmpty(cacheValue)) {
+            return ResultTemplateBean.success(new ArrayList<>());
+        }
+        List<Map<String, Object>> resultList = new ArrayList<>();
 
-        // 1 获取所有缓存
-        List<TopSearchCommonVO> allCacheSearchData = cacheUtil.getAllCache();
-        List<TopSearchCommonVO> collect = allCacheSearchData.stream()
-                .map(vo -> {
-                    if (vo.getDataInfo() == null) return null;
-
-                    List<TopSearchCommonVO.DataInfo> filtered = vo.getDataInfo().stream()
-                            .filter(data -> data.getKeyword() != null &&
-                                    data.getKeyword().contains(word))
-                            .collect(Collectors.toList());
-
-                    return filtered.isEmpty() ? null :
-                            new TopSearchCommonVO(filtered, vo.getDataCardName(),
-                                    vo.getDataCardLogo(), vo.getDataCardCategory());
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-
-        return ResultTemplateBean.success(collect);
+        cacheValue.forEach(t -> {
+            if (t instanceof Map<?, ?> map) {
+                Object dataInfoObj = map.get("dataInfo");
+                if (dataInfoObj instanceof List<?> dataInfoList) {
+                    dataInfoList.forEach(item -> {
+                        if (item instanceof Map<?, ?> itemMap) {
+                            Object keyword = itemMap.get("keyword");
+                            Object url = itemMap.get("url");
+                            if (keyword instanceof String s && ((String) keyword).contains(word)) {
+                                HashMap<String, Object> resultMap = new HashMap<>();
+                                resultMap.put("keyword", keyword);
+                                resultMap.put("dataCardName", map.get("dataCardName"));
+                                resultMap.put("url", url);
+                                resultList.add(resultMap);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        return ResultTemplateBean.success(resultList);
     }
 
     /**
@@ -76,17 +74,8 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
     @Override
     public ResultTemplateBean getCacheSearchWordCloud() {
         try {
-            // 刷新缓存
-            cacheUtil.refreshCache();
-            // 1 获取所有缓存
-            List<TopSearchCommonVO> allCacheSearchData = cacheUtil.getAllCache();
-
-            if (allCacheSearchData == null || allCacheSearchData.isEmpty()) {
-                return ResultTemplateBean.success(Collections.emptyList());
-            }
-
             // 2. 收集所有 keyword 文本
-            List<String> allOriginalKeywords = cacheUtil.getAllCacheTitle(allCacheSearchData);
+            List<String> allOriginalKeywords = cacheUtil.getAllCacheTitle();
             if (allOriginalKeywords.isEmpty()) {
                 return ResultTemplateBean.success(Collections.emptyList());
             }
@@ -119,16 +108,8 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
 
     @Override
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
-        // 刷新缓存
-        cacheUtil.refreshCache();
-        // 1 获取所有缓存
-        List<TopSearchCommonVO> allCacheSearchData = cacheUtil.getAllCache();
-
-        if (allCacheSearchData == null || allCacheSearchData.isEmpty()) {
-            return ResultTemplateBean.success(Collections.emptyList());
-        }
         // 2. 收集所有 keyword 文本
-        List<String> allOriginalKeywords = cacheUtil.getAllCacheTitle(allCacheSearchData);
+        List<String> allOriginalKeywords = cacheUtil.getAllCacheTitle();
         if (allOriginalKeywords.isEmpty()) {
             return ResultTemplateBean.success(Collections.emptyList());
         }

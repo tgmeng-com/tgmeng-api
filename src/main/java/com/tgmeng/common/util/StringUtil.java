@@ -3,6 +3,7 @@ package com.tgmeng.common.util;
 import com.tgmeng.model.dto.topsearch.TopSearchShaoShuPaiDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchZhiHuDTO;
 
+import java.net.URI;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -136,6 +137,15 @@ public class StringUtil {
             return (long)(Double.parseDouble(str.replace("b", "")) * 1_000_000_000);
         } else {
             return Long.parseLong(str.replaceAll("[^\\d]", ""));
+        }
+    }
+
+    public static String getUri(String url) {
+        try {
+            URI uri = new URI(url);
+            return uri.getPath();  // 永远只返回路径
+        } catch (Exception e) {
+            return url;  // URL 非法时原样返回
         }
     }
 }

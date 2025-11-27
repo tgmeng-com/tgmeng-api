@@ -3,7 +3,7 @@ package com.tgmeng.common.forest.client.system;
 import com.dtflys.forest.annotation.Get;
 import com.dtflys.forest.annotation.Header;
 import com.dtflys.forest.annotation.Var;
-import com.dtflys.forest.http.ForestResponse;
+import com.tgmeng.common.bean.ResultTemplateBean;
 
 /**
  * description: 这个用来做系统内部的一些调用，比如定时任务等等
@@ -15,6 +15,6 @@ import com.dtflys.forest.http.ForestResponse;
  * @since 2025/7/3 13:37
 */
 public interface ISystemLocalClient {
-    @Get("http://localhost:4399{url}")
-    ForestResponse systemLocalClient(@Header("X-Source") String contentType, @Var("url") String url);
+    @Get("http://127.0.0.1:4399{url}")
+    ResultTemplateBean systemLocalClient(@Header("X-Source") String contentType, @Var("url") String url);
 }

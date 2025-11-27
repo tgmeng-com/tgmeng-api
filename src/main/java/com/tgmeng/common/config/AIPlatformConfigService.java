@@ -36,7 +36,7 @@ public class AIPlatformConfigService {
             aiPlatformConfigs = objectMapper.readValue(aiPlatformConfigJson, objectMapper.getTypeFactory().constructCollectionType(List.class, AIPlatformConfig.class));
             log.info("AI平台配置文件解析成功：{}", aiPlatformConfigs);
         }catch (Exception e){
-            log.info("AI平台配置文件解析失败："+e.getMessage());
+            log.error("AI平台配置文件解析失败："+e.getMessage());
         }
     }
 }
