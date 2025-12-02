@@ -18,10 +18,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchTypeTuYaWangGuoEnum implements INameValueEnum<String,String> {
-    RE_MEN_ZUO_PIN_TU_YA_WANG_GUO("RE_MEN_ZUO_PIN_TU_YA_WANG_GUO", "hot", "涂鸦王国热门作品", true,1),
-    JING_XUAN_ZUO_PIN_TU_YA_WANG_GUO("JING_XUAN_ZUO_PIN_TU_YA_WANG_GUO", "best", "涂鸦王国精选作品", true,2),
-    JIN_RI_XIN_ZUO_TU_YA_WANG_GUO("JIN_RI_XIN_ZUO_TU_YA_WANG_GUO", "new", "涂鸦王国今日新作", true,2),
-    FA_XIAN_XIN_ZUO_TU_YA_WANG_GUO("FA_XIAN_XIN_ZUO_TU_YA_WANG_GUO", "fx", "涂鸦王国发现新作", true,2);
+    RE_MEN_ZUO_PIN_TU_YA_WANG_GUO("hot", "hot", "涂鸦王国热门作品", true,1),
+    JING_XUAN_ZUO_PIN_TU_YA_WANG_GUO("best", "best", "涂鸦王国精选作品", true,2),
+    JIN_RI_XIN_ZUO_TU_YA_WANG_GUO("new", "new", "涂鸦王国今日新作", true,2),
+    FA_XIAN_XIN_ZUO_TU_YA_WANG_GUO("fx", "fx", "涂鸦王国发现新作", true,2);
 
     private final String key;
     private final String value;

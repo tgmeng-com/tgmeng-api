@@ -18,11 +18,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchTypeTengXunShiPinEnum implements INameValueEnum<String,String> {
-    DIAN_SHI_JU_TENG_XUN("DIAN_SHI_JU_TENG_XUN", "2", "腾讯视频电视剧", true,1),
-    DIAN_YING_TENG_XUN("DIAN_YING_TENG_XUN", "1", "腾讯视频电影", true,2),
-    DONG_MAN_TENG_XUN("DONG_MAN_TENG_XUN", "3", "腾讯视频动漫", true,2),
-    ZONG_YI_TENG_XUN("ZONG_YI_TENG_XUN", "10", "腾讯视频综艺", true,2),
-    ZONG_BANG_TENG_XUN("ZONG_BANG_TENG_XUN", "0", "腾讯视频总榜", true,2);
+    DIAN_SHI_JU_TENG_XUN("dianshiju", "2", "腾讯视频电视剧", true,1),
+    DIAN_YING_TENG_XUN("dianying", "1", "腾讯视频电影", true,2),
+    DONG_MAN_TENG_XUN("dongman", "3", "腾讯视频动漫", true,2),
+    ZONG_YI_TENG_XUN("zongyi", "10", "腾讯视频综艺", true,2),
+    ZONG_BANG_TENG_XUN("zongbang", "0", "腾讯视频总榜", true,2);
 
     private final String key;
     private final String value;

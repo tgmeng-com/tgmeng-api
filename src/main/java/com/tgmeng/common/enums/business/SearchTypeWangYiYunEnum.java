@@ -18,10 +18,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchTypeWangYiYunEnum implements INameValueEnum<String,String> {
-    BIAO_SHENG_WANG_YI_YUN("BIAO_SHENG_WANG_YI_YUN", "19723756", "网易云飙升榜", true,1),
-    XIN_GE_WANG_YI_YUN("XIN_GE_WANG_YI_YUN", "3779629", "网易云新歌榜", true,2),
-    YUAN_CHUANG_WANG_YI_YUN("YUAN_CHUANG_WANG_YI_YUN", "2884035", "网易云原创榜", true,2),
-    RE_GE_WANG_YI_YUN("RE_GE_WANG_YI_YUN", "3778678", "网易云热歌榜", true,2);
+    BIAO_SHENG_WANG_YI_YUN("biaoshengbang", "19723756", "网易云飙升榜", true,1),
+    XIN_GE_WANG_YI_YUN("xingebang", "3779629", "网易云新歌榜", true,2),
+    YUAN_CHUANG_WANG_YI_YUN("yuanchuangbang", "2884035", "网易云原创榜", true,2),
+    RE_GE_WANG_YI_YUN("regebang", "3778678", "网易云热歌榜", true,2);
 
     private final String key;
     private final String value;

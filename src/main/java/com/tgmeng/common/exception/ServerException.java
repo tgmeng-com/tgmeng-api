@@ -26,6 +26,10 @@ public class ServerException extends BossException {
         super(HTTP_STATUS, ServerExceptionEnum.SYSTEM_EXCEPTION.getKey(), ServerExceptionEnum.SYSTEM_EXCEPTION.getValue(), null);
     }
 
+    public ServerException(String message) {
+        super(HTTP_STATUS, ServerExceptionEnum.SYSTEM_EXCEPTION.getKey(), message, null);
+    }
+
     /**
      * description: 最常用的一个
      * method: ServerException

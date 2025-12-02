@@ -61,11 +61,11 @@ public class TopSearchCommonVO {
     }
 
     public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String dataCardName,String dataCardLogo,String dataCardCategory){
-        this.dataInfo = dataInfo;
         this.dataCardName = dataCardName;
         this.dataCardLogo = dataCardLogo;
         this.dataCardCategory = dataCardCategory;
         this.setDataSize((long)dataInfo.size());
         this.setDataUpdateTime(TimeUtil.getCurrentTimeFormat("yyyy-MM-dd HH:mm:ss"));
+        this.dataInfo = dataInfo;
     }
 }

@@ -1,4 +1,4 @@
-package com.tgmeng.common.enums.business;
+package com.tgmeng.common.forest.httptype;
 
 import com.tgmeng.common.enums.enumcommon.INameValueEnum;
 import lombok.AllArgsConstructor;
@@ -17,9 +17,9 @@ import lombok.Getter;
 */
 @Getter
 @AllArgsConstructor
-public enum SearchTypeGuoJiKeJiChuangXinZhongXinnum implements INameValueEnum<String,String> {
-    REN_GONG_ZHI_NENG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("rengongzhineng", "rgzn_kjrd", "人工智能国际科技创新中心", true,1),
-    YI_YAO_JIAN_KANG_GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN("yiyaojiankang", "yyjk_kjrd", "医药健康国际科技创新中心", true,2);
+public enum ForestRequestTypeEnum implements INameValueEnum<String,String> {
+    GET("GET", "GET", "GET请求", true,1),
+    POST("POST", "POST", "POST请求", true,2);
 
     private final String key;
     private final String value;

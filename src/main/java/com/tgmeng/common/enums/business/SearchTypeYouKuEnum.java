@@ -18,11 +18,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchTypeYouKuEnum implements INameValueEnum<String,String> {
-    DIAN_SHI_JU_YOU_KU("DIAN_SHI_JU_YOU_KU", "电视剧", "优酷电视剧", true,1),
-    DIAN_YING_YOU_KU("DIAN_YING_YOU_KU", "电影", "优酷电影", true,2),
-    DONG_MAN_YOU_KU("DONG_MAN_YOU_KU", "动漫", "优酷动漫", true,2),
-    ZONG_YI_YOU_KU("ZONG_YI_YOU_KU", "综艺", "优酷综艺", true,2),
-    ZONG_BANG_YOU_KU("ZONG_BANG_YOU_KU", "热门搜索", "优酷总榜", true,2);
+    DIAN_SHI_JU_YOU_KU("dianshiju", "电视剧", "优酷电视剧", true,1),
+    DIAN_YING_YOU_KU("dianying", "电影", "优酷电影", true,2),
+    DONG_MAN_YOU_KU("dongman", "动漫", "优酷动漫", true,2),
+    ZONG_YI_YOU_KU("zongyi", "综艺", "优酷综艺", true,2),
+    ZONG_BANG_YOU_KU("zongbang", "热门搜索", "优酷总榜", true,2);
 
     private final String key;
     private final String value;

@@ -1,5 +1,6 @@
 package com.tgmeng.common.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.tgmeng.model.dto.topsearch.TopSearchShaoShuPaiDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchZhiHuDTO;
 
@@ -128,6 +129,9 @@ public class StringUtil {
 
 
     public static Long stringParseToLong(String str) {
+        if(StrUtil.isBlank(str)){
+            return 0L;
+        }
         str = str.trim().toLowerCase();
         if (str.endsWith("k")) {
             return (long)(Double.parseDouble(str.replace("k", "")) * 1_000);

@@ -1,0 +1,481 @@
+package com.tgmeng.controller.topsearch;
+
+import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
+import com.tgmeng.service.topsearch.ITopSearchCommonService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * description: 社交媒体
+ * package: com.tgmeng.controller.topsearch
+ * className: TopSearchCommonController
+ *
+ * @author tgmeng
+ * @version v1.0
+ * @since 2025/6/29 0:29
+*/
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/topsearch")
+public class TopSearchNormalController {
+
+    private final ITopSearchCommonService topSearchCommonService;
+    /**
+     * description: 百度热搜
+     * method: getBaiDuTopSearch
+     *
+     * @author tgmeng
+     * @since 2025/6/29 0:52
+    */
+    @RequestMapping("/baidu")
+    public ResultTemplateBean getBaiDuTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+    /**
+     * description: B站热搜
+     * method: getBilibiliTopSearch
+     *
+     * @author tgmeng
+     * @since 2025/6/29 15:32
+    */
+    @RequestMapping("/bilibili")
+    public ResultTemplateBean getBilibiliTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    /**
+     * description: 微博热搜
+     * method: getWeiBoTopSearch
+     *
+     * @author tgmeng
+     * @since 2025/6/29 18:49
+    */
+    @RequestMapping("/weibo")
+    public ResultTemplateBean getWeiBoTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    /**
+     * description: 抖音热搜
+     * method: getDouYinTopSearch
+     *
+     * @author tgmeng
+     * @since 2025/6/29 22:39
+    */
+    @RequestMapping("/douyin")
+    public ResultTemplateBean getDouYinTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/douban")
+    public ResultTemplateBean getDouBanTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tencent")
+    public ResultTemplateBean getTencentTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/toutiao")
+    public ResultTemplateBean getTouTiaoTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/wangyi")
+    public ResultTemplateBean getWangYiTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/wangyiyun/{type}")
+    public ResultTemplateBean getWangYiYunBiaoShengSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xingegwangyiyun")
+    public ResultTemplateBean getWangYiYunXinGeSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/yuanchuangwangyiyun")
+    public ResultTemplateBean getWangYiYunYuanChuangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/regewangyiyun")
+    public ResultTemplateBean getWangYiYunReGeSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tiebabaidu")
+    public ResultTemplateBean getBaiDuTieBaSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/shaoshupai")
+    public ResultTemplateBean getShaoShuPaiSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/baidu/{type}")
+    public ResultTemplateBean getDianShiJuBaiDuSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zhihu")
+    public ResultTemplateBean getZhiHuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tencent/{type}")
+    public ResultTemplateBean getDianShiJuTengXunShiPinSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/aiqiyi/{type}")
+    public ResultTemplateBean getDianShiJuAiQiYiSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/youku/{type}")
+    public ResultTemplateBean getDianShiJuYouKuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/mangguo/{type}")
+    public ResultTemplateBean getDianShiJuMangGuoSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/maoyan/{type}")
+    public ResultTemplateBean getZhouPiaoFangBangMaoYanSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jinrongjie")
+    public ResultTemplateBean getJinRongJieSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/diyicaijing")
+    public ResultTemplateBean getDiYiCaiJingSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tonghuashun")
+    public ResultTemplateBean getTongHuaShunSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/huaerjiejianwen")
+    public ResultTemplateBean getHuaErJieJianWenSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/cailianshe")
+    public ResultTemplateBean getCaiLianSheSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/gelonghui")
+    public ResultTemplateBean getGeLongHuiSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/fabu")
+    public ResultTemplateBean getFaBuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jinshi")
+    public ResultTemplateBean getJinShiSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/niuyueshibao")
+    public ResultTemplateBean getNewYueShiBaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/bbc")
+    public ResultTemplateBean getBBCSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/faguang")
+    public ResultTemplateBean getFaGuangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/huaerjieribao")
+    public ResultTemplateBean getHuaErJieRiBaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/woshipm")
+    public ResultTemplateBean getWoShiPMSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/youshewang")
+    public ResultTemplateBean getYouSheWangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zhanku/{type}")
+    public ResultTemplateBean getWenZhangBangZhanKuSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/qianlibangzhanku")
+    public ResultTemplateBean getQianLiBangZhanKuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zuopinbangzhanku")
+    public ResultTemplateBean getZuoPinBangZhanKuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tuyawangguo/{type}")
+    public ResultTemplateBean getReMenZuoPinTuYaWangGuoSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/shejidaren")
+    public ResultTemplateBean getSheJiDaRenSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/topys")
+    public ResultTemplateBean getTopysSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/archdaily")
+    public ResultTemplateBean getArchDailySearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/dribbble")
+    public ResultTemplateBean getDribbbleSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/awwwards")
+    public ResultTemplateBean getAwwwardsSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/core77")
+    public ResultTemplateBean getCore77Search() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/abduzeedo")
+    public ResultTemplateBean getAbduzeedoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/mit")
+    public ResultTemplateBean getMITSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/eurekalert")
+    public ResultTemplateBean getEurekAlertSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/guojikejichuangxinzhongxin/{type}")
+    public ResultTemplateBean getRenGongZhiNengGuoJiKeJiChuangXinZhongXinSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+
+    @RequestMapping("/jiqizhixin")
+    public ResultTemplateBean getJiQiZhiXinSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/hupu")
+    public ResultTemplateBean getHuPuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/dongqiudi")
+    public ResultTemplateBean getDongQiuDiSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xinlangtiyu")
+    public ResultTemplateBean getXinLangTiYuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/souhutiyu")
+    public ResultTemplateBean getSouHuTiYuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tiyuwangyi")
+    public ResultTemplateBean getWangYiTiYuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/yangshitiyu")
+    public ResultTemplateBean getYangShiTiYuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/pptiyu")
+    public ResultTemplateBean getPPTiYuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zhiboba")
+    public ResultTemplateBean getZhiBoBaSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/v2ex")
+    public ResultTemplateBean getV2exSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/buxingjiehupu")
+    public ResultTemplateBean getBuXingJieHuPuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/nga")
+    public ResultTemplateBean getNgaPuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    // 前端暂时不展示
+    @RequestMapping("/yimusanfendi")
+    public ResultTemplateBean getYiMuSanFenDiSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/wenzhangjuejin")
+    public ResultTemplateBean getWenZhangJueJinSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/hackernews")
+    public ResultTemplateBean getHackerNewsSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xiaozudouban/{type}")
+    public ResultTemplateBean getAiMaoZaoPenDouBanCommonSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/youminxingkong")
+    public ResultTemplateBean getYouMinXingKongSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/3dmgame")
+    public ResultTemplateBean getThreeDmGameSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/a9vg")
+    public ResultTemplateBean getA9VGSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/youxituoluo")
+    public ResultTemplateBean getYouXiTuoLuoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/ign")
+    public ResultTemplateBean getIGNSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/gcores")
+    public ResultTemplateBean getGcoresSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/youyanshe")
+    public ResultTemplateBean getYouYanSheSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/17173")
+    public ResultTemplateBean get17173Search() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/youxiawang")
+    public ResultTemplateBean getYouXiaWangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/shengwugu")
+    public ResultTemplateBean getShengWuGuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/yiyaomofang")
+    public ResultTemplateBean getYiYaoMoFangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/dingxiangyisheng")
+    public ResultTemplateBean getDingXiangYiShengSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/dingxiangyuanshequ")
+    public ResultTemplateBean getDingXiangYuanSheQuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/shengmingshibao")
+    public ResultTemplateBean getShengMingShiBaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jiayidajiankang")
+    public ResultTemplateBean getJiaYiDaJianKangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/guoke")
+    public ResultTemplateBean getGuoKeSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jiankangshibaowang")
+    public ResultTemplateBean getJianKangShiBaoWangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/cctv/{type}")
+    public ResultTemplateBean getCCTVCommonSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/pengpaixinwen")
+    public ResultTemplateBean<TopSearchCommonVO> getPengPaiXinWenCommonSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zhitongcaijing")
+    public ResultTemplateBean<TopSearchCommonVO> getZhiTongCaiJing() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+
+}

@@ -1,9 +1,9 @@
 package com.tgmeng.controller.topsearch;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.enums.business.SearchTypeHuggingFaceEnum;
-import com.tgmeng.service.topsearch.ITopSearchGlobalService;
+import com.tgmeng.service.topsearch.ITopSearchCommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,41 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/topsearch/global")
 public class TopSearchGlobalController {
-    private final ITopSearchGlobalService topSearchGlobalService;
+    private final ITopSearchCommonService topSearchCommonService;
 
     @RequestMapping("/youtube")
     public ResultTemplateBean getYoutubeTopSearchAllStars() {
-        return topSearchGlobalService.getYoutubeSortByTopSearch();
+        return topSearchCommonService.getTopSearchCommonService();
     }
 
-
-    @RequestMapping("/huggingfacespacestrending")
-    public ResultTemplateBean getHuggingFaceTopSearchSpacesTrending() {
-        return topSearchGlobalService.getHuggingFaceTopSearch(SearchTypeHuggingFaceEnum.SPACE_TRENDING_HUGGING_FACE);
-    }
-
-    @RequestMapping("/huggingfacespaceslikes")
-    public ResultTemplateBean getHuggingFaceTopSearchSpacesLikes() {
-        return topSearchGlobalService.getHuggingFaceTopSearch(SearchTypeHuggingFaceEnum.SPACE_LIKES_HUGGING_FACE);
-    }
-
-    @RequestMapping("/huggingfacemodelstrending")
-    public ResultTemplateBean getHuggingFaceTopSearchModelTrending() {
-        return topSearchGlobalService.getHuggingFaceTopSearch(SearchTypeHuggingFaceEnum.MODELS_TRENDING_HUGGING_FACE);
-    }
-
-    @RequestMapping("/huggingfacemodellikes")
-    public ResultTemplateBean getHuggingFaceTopSearchModelLikes() {
-        return topSearchGlobalService.getHuggingFaceTopSearch(SearchTypeHuggingFaceEnum.MODELS_LIKES_HUGGING_FACE);
-    }
-
-    @RequestMapping("/huggingfacedatasetstrending")
-    public ResultTemplateBean getHuggingFaceTopSearchDatasetTrending() {
-        return topSearchGlobalService.getHuggingFaceTopSearch(SearchTypeHuggingFaceEnum.DATASETS_TRENDING_HUGGING_FACE);
-    }
-
-    @RequestMapping("/huggingfacedatasetslikes")
-    public ResultTemplateBean getHuggingFaceTopSearchDatasetLikes() {
-        return topSearchGlobalService.getHuggingFaceTopSearch(SearchTypeHuggingFaceEnum.DATASETS_LIKES_HUGGING_FACE);
+    @RequestMapping("/huggingface/{type}")
+    public ResultTemplateBean getHuggingFaceTopSearchDatasetLikes(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
     }
 }

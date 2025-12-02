@@ -1,5 +1,7 @@
 package com.tgmeng.common.util;
 
+import com.tgmeng.common.enums.business.SearchTypeHuggingFaceEnum;
+import com.tgmeng.common.enums.enumcommon.EnumUtils;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -8,18 +10,44 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-
 public class HuggingFaceJsoupParseUtil {
+
+    public static List<TopSearchCommonVO.DataInfo> parseContent(String content) {
+        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+        String requestPathLastWord = HttpRequestUtil.getRequestPathLastWord();
+        SearchTypeHuggingFaceEnum enumByKey = EnumUtils.getEnumByKey(SearchTypeHuggingFaceEnum.class, requestPathLastWord);
+        switch (enumByKey) {
+            case SearchTypeHuggingFaceEnum.SPACE_TRENDING_HUGGING_FACE:
+            case SearchTypeHuggingFaceEnum.SPACE_LIKES_HUGGING_FACE:
+                topSearchCommonVOS = HuggingFaceJsoupParseUtil.space(content);
+                break;
+            case SearchTypeHuggingFaceEnum.MODELS_TRENDING_HUGGING_FACE:
+            case SearchTypeHuggingFaceEnum.MODELS_LIKES_HUGGING_FACE:
+                topSearchCommonVOS = com.tgmeng.common.util.HuggingFaceJsoupParseUtil.models(content);
+                break;
+            case SearchTypeHuggingFaceEnum.DATASETS_TRENDING_HUGGING_FACE:
+            case SearchTypeHuggingFaceEnum.DATASETS_LIKES_HUGGING_FACE:
+                topSearchCommonVOS = com.tgmeng.common.util.HuggingFaceJsoupParseUtil.datasets(content);
+                break;
+            default:
+                topSearchCommonVOS = Collections.emptyList();
+                break;
+        }
+        return topSearchCommonVOS;
+    }
+
+
     public static List<TopSearchCommonVO.DataInfo> space(String content) {
         Document parse = Jsoup.parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         Elements elements = parse.select(".pb-12 > .grid > .relative");
         for (Element element : elements) {
             String url = "https://huggingface.co" + safeAttr(element, "a", "href");
-            String hotScore = safeText(element, "header > div:nth-of-type(2) span");
+            String hotScore = safeText(element, "header > div:nth-of-type(2) > div:nth-of-type(2) span");
             String title = safeText(element, "main h4") + " " + safeText(element, "main > div > div:nth-of-type(1)");
             topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "","", null, null, ""));
         }

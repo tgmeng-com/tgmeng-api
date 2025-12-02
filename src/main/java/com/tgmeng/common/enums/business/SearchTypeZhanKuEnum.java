@@ -18,9 +18,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchTypeZhanKuEnum implements INameValueEnum<String,String> {
-    QIAN_LI_BANG_ZHAN_KU("QIAN_LI_BANG_ZHAN_KU", "potential#tab_anchor", "站酷潜力榜", true,1),
-    WEN_ZHANG_BANG_ZHAN_KU("WEN_ZHANG_BANG_ZHAN_KU", "top/article.do?rankType=8#tab_anchor", "站酷文章榜", true,2),
-    ZUO_PIN_BANG_ZHAN_KU("ZUO_PIN_BANG_ZHAN_KU", "top/index.do#tab_anchor", "站酷作品榜", true,2);
+    QIAN_LI_BANG_ZHAN_KU("qianlibang", "potential#tab_anchor", "站酷潜力榜", true,1),
+    WEN_ZHANG_BANG_ZHAN_KU("wenzhangbang", "top/article.do?rankType=8#tab_anchor", "站酷文章榜", true,2),
+    ZUO_PIN_BANG_ZHAN_KU("zuopinbang", "top/index.do#tab_anchor", "站酷作品榜", true,2);
 
     private final String key;
     private final String value;

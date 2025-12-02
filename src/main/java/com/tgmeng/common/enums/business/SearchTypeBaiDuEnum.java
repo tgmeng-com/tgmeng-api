@@ -18,15 +18,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchTypeBaiDuEnum implements INameValueEnum<String,String> {
-    DIAN_SHI_JU_BAIDU("DIAN_SHI_JU_BAIDU", "teleplay", "百度电视剧", true,1),
-    XIAO_SHUO_BAIDU("XIAO_SHUO_BAIDU", "novel", "百度小说", true,2),
-    DIAN_YING_BAIDU("DIAN_YING_BAIDU", "movie", "百度电影", true,2),
-    NEWS_BAIDU("NEWS_BAIDU", "realtime", "百度热搜", true,2),
-    YOU_XI_BAIDU("YOU_XI_BAIDU", "game", "百度游戏", true,2),
-    QI_CHE_BAIDU("QI_CHE_BAIDU", "car", "百度汽车", true,2),
-    REGENG_BAIDU("REGENG_BAIDU", "phrase", "百度热梗", true,2),
-    CAIJING_BAIDU("CAIJING_BAIDU", "finance", "百度财经", true,2),
-    MINSHENG_BAIDU("MINSHENG_BAIDU", "livelihood", "百度民生", true,2);
+    DIAN_SHI_JU_BAIDU("dianshiju", "teleplay", "百度电视剧", true,1),
+    XIAO_SHUO_BAIDU("xiaoshuo", "novel", "百度小说", true,2),
+    DIAN_YING_BAIDU("dianying", "movie", "百度电影", true,2),
+    NEWS_BAIDU("resou", "realtime", "百度热搜", true,2),
+    YOU_XI_BAIDU("youxi", "game", "百度游戏", true,2),
+    QI_CHE_BAIDU("qiche", "car", "百度汽车", true,2),
+    REGENG_BAIDU("regeng", "phrase", "百度热梗", true,2),
+    CAIJING_BAIDU("caijing", "finance", "百度财经", true,2),
+    MINSHENG_BAIDU("minsheng", "livelihood", "百度民生", true,2);
 
     private final String key;
     private final String value;
