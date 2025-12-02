@@ -360,6 +360,7 @@ public class RequestInfoManager {
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("智通财经")
                 .platformCategory("财经")
+                .hotScoreUrlPrefix("https://www.zhitongcaijing.com")
                 .interfaceUrl("/api/topsearch/zhitongcaijing")
                 .addArea()
                 .rootSelector("#news-article-box > .shadow-wrap-box")

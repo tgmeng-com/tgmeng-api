@@ -216,6 +216,7 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/pengpaixinwen", PlatformConfig.builder().build());
         configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(300L).build());
         configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key
