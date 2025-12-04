@@ -217,6 +217,20 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(300L).build());
         configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
+
+        configs.put("/api/topsearch/wuaipojie", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/shuimushequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/chongbuluo", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/xianzhishequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/kdsshanghaitoutiao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/kanxue", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/tongxinrenjiayuan", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/emacschina", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/rubychina", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/kaidiwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/trend_zhiwubuyankuajingdianshangshequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/kaiyuanzixun", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/jingguanzhijia", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key
