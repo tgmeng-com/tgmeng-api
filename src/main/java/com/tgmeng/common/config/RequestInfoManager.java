@@ -1056,7 +1056,7 @@ public class RequestInfoManager {
                 .interfaceUrl("/api/topsearch/bbc")
                 .hotTitleUrlPrefix("")
                 .addArea()
-                .rootSelector(".bbc-wb0d4t > li")
+                .rootSelector("main[role='main']  li[role='listitem']")
                 .keywordSelector("a")
                 .urlSelector("a")
 
