@@ -228,7 +228,7 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/emacschina", PlatformConfig.builder().build());
         configs.put("/api/topsearch/rubychina", PlatformConfig.builder().build());
         configs.put("/api/topsearch/kaidiwang", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/trend_zhiwubuyankuajingdianshangshequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/zhiwubuyankuajingdianshangshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/kaiyuanzixun", PlatformConfig.builder().build());
         configs.put("/api/topsearch/jingguanzhijia", PlatformConfig.builder().build());
     }
