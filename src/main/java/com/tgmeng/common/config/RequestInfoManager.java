@@ -1749,6 +1749,170 @@ public class RequestInfoManager {
                 .showTimeSelector("$.showTime")
                 .register();
 
+        addDomConfig("https://www.52pojie.cn/forum.php?mod=guide&view=hot")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("吾爱破解")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/wuaipojie")
+                .hotTitleUrlPrefix("https://www.52pojie.cn/")
+                .addArea()
+                .rootSelector(".bm_c tbody")
+                .keywordSelector(".xst")
+                .hotScoreSelector(".xi1")
+                .urlSelector(".xst")
+                .register();
+
+        addDomConfig("https://www.newsmth.net/nForum/mainpage?ajax")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("水木社区")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/shuimushequ")
+                .hotTitleUrlPrefix("https://www.newsmth.net")
+                .addArea()
+                .rootSelector("#top10 > ul > li")
+                .keywordSelector("a:nth-of-type(2)")
+                .urlSelector("a:nth-of-type(2)")
+                .register();
+
+        addDomConfig("https://www.chongbuluo.com/forum.php?mod=guide&view=hot")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("虫部落")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/chongbuluo")
+                .hotTitleUrlPrefix("https://www.chongbuluo.com/")
+                .addArea()
+                .rootSelector(".bm_c tbody")
+                .keywordSelector(".common > a")
+                .urlSelector(".common > a")
+                .hotScoreSelector(".common > .xi1")
+                .register();
+
+        addDomConfig("https://xz.aliyun.com/news")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("先知社区")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/xianzhishequ")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".hot_news2 > ul > li")
+                .keywordSelector("div > a")
+                .urlSelector("div > a")
+                .register();
+
+        addJsonConfig("https://service.kdslife.com/v1/news?channel_id=689073ce0406f87cd1b07b66&page=1&page_size=60")
+                .requestType(ForestRequestTypeEnum.GET)
+                .hotTitleUrlNeedDeal(true)
+                .platformName("KDS上海头条")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/kdsshanghaitoutiao")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("$.data.list")
+                .keywordSelector("$.title")
+                .hotScoreSelector("$.views")
+                .register();
+
+        addDomConfig("https://bbs.kanxue.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("看雪")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/kanxue")
+                .hotTitleUrlPrefix("https://bbs.kanxue.com/")
+                .addArea()
+                .rootSelector(".bbs_home_page_three_col > div:nth-of-type(2) > div:nth-of-type(2) > div")
+                .keywordSelector(".bbs_home_page_list_title")
+                .urlSelector(".bbs_home_page_list_title")
+                .register();
+
+        addDomConfig("https://www.txrjy.com/forum.php")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("通信人家园")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/tongxinrenjiayuan")
+                .hotTitleUrlPrefix("https://www.txrjy.com/")
+                .addArea()
+                .rootSelector("#review li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://emacs-china.org/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("Emacs China")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/emacschina")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".topic-list .topic-list-item")
+                .keywordSelector(".link-top-line > a")
+                .urlSelector(".link-top-line > a")
+                .hotScoreSelector(".views span")
+                .register();
+
+        addDomConfig("https://ruby-china.org/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("Ruby China")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/rubychina")
+                .hotTitleUrlPrefix("https://ruby-china.org")
+                .addArea()
+                .rootSelector(".card-body.item-list > div")
+                .keywordSelector(".title.media-heading > a")
+                .urlSelector(".title.media-heading > a")
+                .hotScoreSelector(".count")
+                .register();
+
+        addDomConfig("https://www.9kd.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("凯迪网")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/kaidiwang")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".hot-news-list-wrap > ul >li")
+                .keywordSelector("a > p")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://www.wearesellers.com/headline/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("知无不言跨境电商社区")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/zhiwubuyankuajingdianshangshequ")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".tab_new.tab-list-explore > .conlist > dl")
+                .keywordSelector("dd > h2 > a")
+                .urlSelector("dd > h2 > a")
+                .register();
+
+        addDomConfig("https://www.oschina.net/news")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("开源资讯")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/kaiyuanzixun")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".section.articles-list > .items > .item")
+                .keywordSelector(".content > a")
+                .urlSelector(".content > a")
+                .register();
+
+        addDomConfig("https://bbs.pinggu.org/z_index.php?type=3")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("经管之家")
+                .platformCategory("社区")
+                .interfaceUrl("/api/topsearch/jingguanzhijia")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("#ct > .mn tbody > tr:not(:first-child)")
+                .keywordSelector("th > a")
+                .urlSelector("th > a")
+                .hotScoreSelector(".num > a")
+                .register();
+
+
+
 
     }
 }

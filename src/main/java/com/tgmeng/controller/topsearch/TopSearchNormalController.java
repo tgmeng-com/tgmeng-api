@@ -477,5 +477,73 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/wuaipojie")
+    public ResultTemplateBean<TopSearchCommonVO> getWuAiPojieSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/shuimushequ")
+    public ResultTemplateBean<TopSearchCommonVO> getShuimushEquSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/chongbuluo")
+    public ResultTemplateBean<TopSearchCommonVO> getChongBuluoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xianzhishequ")
+    public ResultTemplateBean<TopSearchCommonVO> getXianzhishequSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/kdsshanghaitoutiao")
+    public ResultTemplateBean<TopSearchCommonVO> getKdsshanghaitoutiaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/kanxue")
+    public ResultTemplateBean<TopSearchCommonVO> getKanxueSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tongxinrenjiayuan")
+    public ResultTemplateBean<TopSearchCommonVO> getTongXinrenjiayuanSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/emacschina")
+    public ResultTemplateBean<TopSearchCommonVO> getEmacsChinaSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/rubychina")
+    public ResultTemplateBean<TopSearchCommonVO> getRubyChinaSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/kaidiwang")
+    public ResultTemplateBean<TopSearchCommonVO> getkaidiwangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zhiwubuyankuajingdianshangshequ")
+    public ResultTemplateBean<TopSearchCommonVO> getZhiWuBuyankuajingdianshangshequSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/kaiyuanzixun")
+    public ResultTemplateBean<TopSearchCommonVO> getKiyuanzixunSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jingguanzhijia")
+    public ResultTemplateBean<TopSearchCommonVO> getjingguanzhijiaSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+
+
+
 
 }

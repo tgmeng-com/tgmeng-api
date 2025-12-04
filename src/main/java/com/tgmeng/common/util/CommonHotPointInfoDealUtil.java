@@ -75,6 +75,11 @@ public class CommonHotPointInfoDealUtil {
                 String nsticUrl = safeAttr(element, "a", "href");
                 hotTitleUrl = "https://www.ncsti.gov.cn/kjdt/kjrd/" + EnumUtils.getValueByKey(SearchTypeGuoJiKeJiChuangXinZhongXinnum.class,HttpRequestUtil.getRequestPathLastWord()) + nsticUrl.substring(1);
                 break;
+
+            case "/api/topsearch/kdsshanghaitoutiao":
+                String id = itemCtx.read("$.id");
+                hotTitleUrl = "https://www.kdslife.com/news/detail?_cid=689073ce0406f87cd1b07b66&_nid=" + id;
+                break;
             default:
                 hotTitleUrl = "https://tgmeng.com";
         }
