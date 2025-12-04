@@ -1760,6 +1760,13 @@ public class RequestInfoManager {
                 .keywordSelector(".xst")
                 .hotScoreSelector(".xi1")
                 .urlSelector(".xst")
+                .forestRequestHeader(new ForestRequestHeader()
+                        .setUserAgent(UserAgentGeneratorUtil.generateRandomUserAgent())
+                        .setAcceptLanguage("zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+                        .setXForwardedFor("114.114.114.114")
+                        .setReferer("https://www.52pojie.cn/")
+                        .setOrigin("https://www.52pojie.cn")
+                )
                 .register();
 
         addDomConfig("https://www.newsmth.net/nForum/mainpage?ajax")
