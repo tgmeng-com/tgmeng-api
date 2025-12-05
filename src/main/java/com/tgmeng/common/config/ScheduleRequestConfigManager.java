@@ -231,6 +231,28 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/zhiwubuyankuajingdianshangshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/kaiyuanzixun", PlatformConfig.builder().build());
         configs.put("/api/topsearch/jingguanzhijia", PlatformConfig.builder().build());
+
+
+        configs.put("/api/topsearch/36ke", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/itzhijia", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/jikegongyuan", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/readhub", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/taimeiti", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/zhongguancunzaixian", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/landianwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/chuangyebang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/iheima", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/leifengwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/quantianhoukeji", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/wulianwangzhiku", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/kuaikeji", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/techweb", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/lixiangshenghuoshiyanshi", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/duozhi", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/jiemodui", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/aimeiwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/zhanzhangzhijia", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/lieyunwang", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key

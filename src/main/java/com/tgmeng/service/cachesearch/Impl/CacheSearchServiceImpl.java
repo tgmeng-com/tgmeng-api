@@ -53,7 +53,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                         if (item instanceof Map<?, ?> itemMap) {
                             Object keyword = itemMap.get("keyword");
                             Object url = itemMap.get("url");
-                            if (keyword instanceof String s && ((String) keyword).contains(word)) {
+                            if (keyword instanceof String s && s.toLowerCase().contains(word.toLowerCase())) {
                                 HashMap<String, Object> resultMap = new HashMap<>();
                                 resultMap.put("keyword", keyword);
                                 resultMap.put("dataCardName", map.get("dataCardName"));
