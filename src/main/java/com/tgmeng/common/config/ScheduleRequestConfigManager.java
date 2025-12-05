@@ -253,6 +253,18 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/aimeiwang", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhanzhangzhijia", PlatformConfig.builder().build());
         configs.put("/api/topsearch/lieyunwang", PlatformConfig.builder().build());
+
+        configs.put("/api/topsearch/weixindushu", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/acfun", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/meimanbaike", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/shiguangwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/jiandan", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/dianwanbang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/dianshimao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/zhongguoxinwenwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/zaker", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/xinjingbao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/xingdaohuanqiu", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key

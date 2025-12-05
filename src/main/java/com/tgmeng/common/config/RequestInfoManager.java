@@ -863,7 +863,6 @@ public class RequestInfoManager {
                 .addArea()
                 .rootSelector("$.data.items")
                 .keywordSelector("$.name")
-
                 .forestRequestHeader(new ForestRequestHeader()
                         .setHost("apii.web.mittrchina.com")
                         .setAccept("*/*")
@@ -2165,6 +2164,146 @@ public class RequestInfoManager {
                 .keywordSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .register();
+
+        addDomConfig("https://weread.qq.com/web/category/all")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("微信读书")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/weixindushu")
+                .hotTitleUrlPrefix("https://weread.qq.com")
+                .addArea()
+                .rootSelector(".ranking_content_bookList > li")
+                .keywordSelector(".wr_bookList_item_title")
+                .urlSelector("a")
+                .hotScoreSelector(".wr_bookList_item_readingCountText")
+                .register();
+
+        addJsonConfig("https://www.acfun.cn/rest/pc-direct/rank/channel?channelId=&subChannelId=&rankLimit=30&rankPeriod=DAY")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("acfun")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/acfun")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("$.rankList")
+                .keywordSelector("$.contentTitle")
+                .urlSelector("$.shareUrl")
+                .hotScoreSelector("$.viewCount")
+                .register();
+
+        addDomConfig("https://www.mmfen.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("美漫百科")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/meimanbaike")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".main-inner.group .pad.group article")
+                .keywordSelector(".post-title > a")
+                .urlSelector(".post-title > a")
+                .register();
+
+        addDomConfig("http://news.mtime.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("时光网")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/shiguangwang")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".left-cont.fix > li")
+                .keywordSelector("h4 > a")
+                .urlSelector("h4 > a")
+                .register();
+
+        addDomConfig("https://jandan.net/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("煎蛋")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/jiandan")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".post-list > div")
+                .keywordSelector("h2 > a")
+                .urlSelector("h2 > a")
+                .register();
+
+        addDomConfig("https://www.vgover.com/news")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("电玩帮")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/dianwanbang")
+                .hotTitleUrlPrefix("https://www.vgover.com")
+                .addArea()
+                .rootSelector(".vg-list.vg-list--8 > li")
+                .keywordSelector("h3 > a")
+                .urlSelector("h3 > a")
+                .register();
+
+        addDomConfig("https://www.tvmao.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("电视猫")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/dianshimao")
+                .hotTitleUrlPrefix("https://www.tvmao.com")
+                .addArea()
+                .rootSelector(".rtive.f_drama")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .addArea()
+                .rootSelector(".r_hot_drama > li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://www.chinanews.com.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("中国新闻网")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/zhongguoxinwenwang")
+                .hotTitleUrlPrefix("https:")
+                .addArea()
+                .rootSelector("#YwNes > .news-left:nth-of-type(2) .rdph-list2:nth-of-type(2) li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://www.myzaker.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("ZAKER")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/zaker")
+                .hotTitleUrlPrefix("https:")
+                .addArea()
+                .rootSelector(".seo-list > div")
+                .keywordSelector("h2")
+                .urlSelector(".article-wrap > a")
+                .register();
+
+        addDomConfig("https://www.bjnews.com.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("新京报")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/xinjingbao")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".hotComment.ranking > ul > li")
+                .keywordSelector("h3 > a")
+                .urlSelector("h3 > a")
+                .register();
+
+        addDomConfig("https://www.stnn.cc/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("星岛环球")
+                .platformCategory("媒体")
+                .interfaceUrl("/api/topsearch/xingdaohuanqiu")
+                .hotTitleUrlPrefix("https://www.stnn.cc")
+                .addArea()
+                .rootSelector(".n_left_l > .hs li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+
 
 
 

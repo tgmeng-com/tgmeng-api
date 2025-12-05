@@ -642,7 +642,60 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/weixindushu")
+    public ResultTemplateBean<TopSearchCommonVO> getweixindushuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
 
+    @RequestMapping("/acfun")
+    public ResultTemplateBean<TopSearchCommonVO> getacfunSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/meimanbaike")
+    public ResultTemplateBean<TopSearchCommonVO> getmeimanbaikeSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/shiguangwang")
+    public ResultTemplateBean<TopSearchCommonVO> getshiguangwangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jiandan")
+    public ResultTemplateBean<TopSearchCommonVO> getjiandanSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/dianwanbang")
+    public ResultTemplateBean<TopSearchCommonVO> getdianwanbangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/dianshimao")
+    public ResultTemplateBean<TopSearchCommonVO> getdianshimaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zhongguoxinwenwang")
+    public ResultTemplateBean<TopSearchCommonVO> getzhongguoxinwenwangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zaker")
+    public ResultTemplateBean<TopSearchCommonVO> getzakerSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xinjingbao")
+    public ResultTemplateBean<TopSearchCommonVO> getxinjingbaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xingdaohuanqiu")
+    public ResultTemplateBean<TopSearchCommonVO> getxingdaohuanqiuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
 
 
 

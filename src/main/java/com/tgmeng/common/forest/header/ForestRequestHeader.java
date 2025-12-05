@@ -13,6 +13,8 @@ public class ForestRequestHeader {
     private String AcceptEncoding;
     @JsonProperty("Accept-Language")
     private String AcceptLanguage;
+    @JsonProperty("Accept-Charset")
+    private String AcceptCharset;
     private String Accept;
     private String Connection;
     private String Referer;
