@@ -265,6 +265,23 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/zaker", PlatformConfig.builder().build());
         configs.put("/api/topsearch/xinjingbao", PlatformConfig.builder().build());
         configs.put("/api/topsearch/xingdaohuanqiu", PlatformConfig.builder().build());
+
+        configs.put("/api/topsearch/21jingjiwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/dongfangcaifuwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/mbazhiku", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/jingjiguanchawang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/shidaizaixian", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/jingsecaijing", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/xinlangcaijing", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/kuaijitoutiao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/laohucaijing", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/blockbeats", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/huitongcaijing", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/meijingwang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/xuangutong", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/chaincatcher", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/kechuangbanribao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/tengxunshejikaifangpingtai", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key

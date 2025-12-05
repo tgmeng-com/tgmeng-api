@@ -697,6 +697,93 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/21jingjiwang")
+    public ResultTemplateBean<TopSearchCommonVO> get21jingjiwangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/dongfangcaifuwang")
+    public ResultTemplateBean<TopSearchCommonVO> getdongfangcaifuwangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/mbazhiku")
+    public ResultTemplateBean<TopSearchCommonVO> getmbazhikuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jingjiguanchawang")
+    public ResultTemplateBean<TopSearchCommonVO> getjingjiguanchawangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/shidaizaixian")
+    public ResultTemplateBean<TopSearchCommonVO> getshidaizaixianSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/jingsecaijing")
+    public ResultTemplateBean<TopSearchCommonVO> getjingsecaijingSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xinlangcaijing")
+    public ResultTemplateBean<TopSearchCommonVO> getxinlangcaijingSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/kuaijitoutiao")
+    public ResultTemplateBean<TopSearchCommonVO> getkuaijitoutiaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/laohucaijing")
+    public ResultTemplateBean<TopSearchCommonVO> getlaohucaijingSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/blockbeats")
+    public ResultTemplateBean<TopSearchCommonVO> getblockbeats() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/huitongcaijing")
+    public ResultTemplateBean<TopSearchCommonVO> gethuitongcaijingSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/meijingwang")
+    public ResultTemplateBean<TopSearchCommonVO> getmeijingwangSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xuangutong")
+    public ResultTemplateBean<TopSearchCommonVO> getxuangutongSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/chaincatcher")
+    public ResultTemplateBean<TopSearchCommonVO> getchaincatcherSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/kechuangbanribao")
+    public ResultTemplateBean<TopSearchCommonVO> getkechuangbanribaoSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/tengxunshejikaifangpingtai")
+    public ResultTemplateBean<TopSearchCommonVO> gettengxunshejikaifangpingtai() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+
+
+
+
+
+
+
 
 
 

@@ -2303,6 +2303,210 @@ public class RequestInfoManager {
                 .urlSelector("a")
                 .register();
 
+        addDomConfig("https://www.21jingji.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("21经济网")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/21jingjiwang")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".hot-list > li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://finance.eastmoney.com/yaowen.html")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("东方财富网")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/dongfangcaifuwang")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("#artitileList1 > ul > li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://news.mbalib.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("MBA智库")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/mbazhiku")
+                .hotTitleUrlPrefix("https://news.mbalib.com")
+                .addArea()
+                .rootSelector(".latest-article")
+                .keywordSelector("h3 > a")
+                .urlSelector("h3 > a")
+                .register();
+
+        addDomConfig("https://www.eeo.com.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("经济观察网")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/jingjiguanchawang")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".box_R_item.line.news > div li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://www.time-weekly.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("时代在线")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/shidaizaixian")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".t4_left > a")
+                .keywordSelector(".t4_block_text")
+                .urlSelector(":root")
+                .register();
+
+        addDomConfig("https://www.jinse.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("金色财经")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/jingsecaijing")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".js-main__l .js-article_item")
+                .keywordSelector(".js-article_item__title")
+                .urlSelector(".js-article_item__title")
+                .register();
+
+        addDomConfig("https://finance.sina.com.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("新浪财经")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/xinlangcaijing")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("#blk_hdline_01 a")
+                .keywordSelector(":root")
+                .urlSelector(":root")
+                .rootSelector(".m-p1-mb1-list.m-list-container a")
+                .keywordSelector(":root")
+                .urlSelector(":root")
+                .register();
+
+        addJsonConfig("https://apim.ningmengyun.com/api/News/AppNewsListV3?index=0&pageSize=20&column=1010")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("会计头条")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/kuaijitoutiao")
+                .hotTitleUrlPrefix("https://www.kuaijitoutiao.com/article/")
+                .addArea()
+                .rootSelector("$.data.data")
+                .keywordSelector("$.appNews.title")
+                .urlSelector("$.appNews.articleID")
+                .register();
+
+        addDomConfig("http://www.laohucaijing.com/news_index/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("老虎财经")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/laohucaijing")
+                .hotTitleUrlPrefix("http://www.laohucaijing.com")
+                .addArea()
+                .rootSelector(".Recommend a")
+                .keywordSelector(":root")
+                .urlSelector(":root")
+                .addArea()
+                .rootSelector(".content_list h3")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://www.theblockbeats.info/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("BlockBeats")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/blockbeats")
+                .hotTitleUrlPrefix("https://www.theblockbeats.info")
+                .addArea()
+                .rootSelector(".home-page-ctr-contain  .title-item")
+                .keywordSelector(":root")
+                .urlSelector(":root")
+                .register();
+
+        addDomConfig("https://news.fx678.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("汇通财经")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/huitongcaijing")
+                .hotTitleUrlPrefix("https://news.fx678.com")
+                .addArea()
+                .rootSelector(".col4_r_txts.l  li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addJsonConfig("https://www.nbd.com.cn/news-rank-nr-h5/rank_index/news")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("每经网")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/meijingwang")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("$.data.list")
+                .keywordSelector("$.title")
+                .urlSelector("$.url")
+                .hotScoreSelector("$.score_num")
+                .register();
+
+        addDomConfig("https://xuangutong.com.cn/jingxuan")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("选股通")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/xuangutong")
+                .hotTitleUrlPrefix("https://xuangutong.com.cn")
+                .addArea()
+                .rootSelector(".article-wrapper_iIO5l")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://www.chaincatcher.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("Chain Catcher")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/chaincatcher")
+                .hotTitleUrlPrefix("https://www.chaincatcher.com")
+                .addArea()
+                .rootSelector(".left_area.pr-2.col-lg-9.col-12 .article_left")
+                .keywordSelector("a > h3")
+                .urlSelector("a")
+                .register();
+
+        addDomConfig("https://www.chinastarmarket.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("科创板日报")
+                .platformCategory("财经")
+                .interfaceUrl("/api/topsearch/kechuangbanribao")
+                .hotTitleUrlPrefix("https://www.chinastarmarket.cn")
+                .addArea()
+                .rootSelector(".d-f.m-t-30.m-b-30")
+                .keywordSelector(".d-b.o-h.f-s-20.f-w-b.l-h-15.c-000.w-s-n.t-o-el.list-link")
+                .urlSelector(".d-b.o-h.f-s-20.f-w-b.l-h-15.c-000.w-s-n.t-o-el.list-link")
+                .register();
+
+        addDomConfig("https://topd.tencent.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("腾讯设计开放平台")
+                .platformCategory("设计")
+                .interfaceUrl("/api/topsearch/tengxunshejikaifangpingtai")
+                .hotTitleUrlPrefix("https://topd.tencent.com")
+                .addArea()
+                .rootSelector(".li-work")
+                .keywordSelector(".title")
+                .urlSelector(".title")
+                .register();
+
+
+
+
+
 
 
 
