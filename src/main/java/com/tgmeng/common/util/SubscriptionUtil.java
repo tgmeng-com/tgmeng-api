@@ -88,7 +88,8 @@ public class SubscriptionUtil {
                 newHashes.add(hashBase64);
             }
             if (!newHotList.isEmpty()) {
-                pushToChannel(subscriptionBean, newHotList, newHashes, file);
+                updateFileContent(subscriptionBean, newHashes, file);
+                pushToChannel(subscriptionBean, newHotList);
             }
         } catch (Exception e) {
             throw new ServerException(e.getMessage());
@@ -124,7 +125,7 @@ public class SubscriptionUtil {
     }
 
     // 执行订阅操作
-    public void pushToChannel(SubscriptionBean subscriptionBean, List<Map<String, Object>> newHotList, List<String> newHashes, File file) {
+    public void pushToChannel(SubscriptionBean subscriptionBean, List<Map<String, Object>> newHotList) {
         for (SubscriptionBean.PushConfig push : subscriptionBean.getPlatforms()) {
             List<String> keywords = subscriptionBean.getKeywords();
             switch (push.getType()) {
@@ -144,7 +145,6 @@ public class SubscriptionUtil {
                     break;
             }
         }
-        updateFileContent(subscriptionBean, newHashes, file);
     }
 
     // TODO 生成初始化订阅文件，这个只有站长后台手动触发，为的是保证站里订阅key是手动下发
