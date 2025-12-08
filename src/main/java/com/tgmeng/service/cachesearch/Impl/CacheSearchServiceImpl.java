@@ -75,7 +75,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                                 String[] wordsMerged = merged.toArray(new String[0]);
 
                                 // 匹配关键词
-                                if (wordsMerged.length == 0 || StrUtil.containsAny(s,wordsMerged)){
+                                if (StrUtil.containsAny(s,wordsMerged)){
                                     HashMap<String, Object> resultMap = new HashMap<>();
                                     resultMap.put("keyword", keyword);
                                     resultMap.put("dataCardName", map.get("dataCardName"));
