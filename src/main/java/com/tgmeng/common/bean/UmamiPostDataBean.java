@@ -27,6 +27,6 @@ public class UmamiPostDataBean {
     @Data
     public static class DataInfo {
         private Integer value;
-        private Long timestamp = System.currentTimeMillis();
+        private Long timestamp = System.currentTimeMillis() / 1000;
     }
 }
