@@ -53,14 +53,18 @@ public class SubscriptionUtil {
 
     // 遍历订阅文件列表
     public void cycleFile(File[] subscriptionFiles) {
+        int successCount = 0;
+        int failCount = 0;
         for (File file : subscriptionFiles) {
             try {
                 startSubscriptionOption(file);
+                successCount++;
             } catch (Exception e) {
-                log.error("订阅推送异常：{},异常信息：{}",file.getName(),e.getMessage());
-                continue;
+                failCount++;
+                log.error("订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
             }
         }
+        log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount, failCount, subscriptionFiles.length);
     }
 
     // 开始遍历热点去订阅
@@ -70,19 +74,17 @@ public class SubscriptionUtil {
             List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, subscriptionBean.getKeywords()).getData();
             List<Map<String, Object>> newHotList = new ArrayList<Map<String, Object>>();
 
+            Set<String> sentSet = new HashSet<>(subscriptionBean.getSent());
+            List<String> newHashes = new ArrayList<>();
+
             for (Map<String, Object> hotItem : hotList) {
-                // 生成 MD5 二进制
-                byte[] hashBinary = SecureUtil.md5().digest(
-                        (hotItem.get("keyword").toString() + hotItem.get("dataCardName").toString())
-                                .getBytes(StandardCharsets.UTF_8)
-                );
-                // 转 Base64（22 个字符左右）
-                String hashBase64 = Base64.getEncoder().encodeToString(hashBinary);
-                if (subscriptionBean.getSent().contains(hashBase64)) continue;
+                String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
+                if (sentSet.contains(hashBase64)) continue;
                 newHotList.add(hotItem);
-                updateFileContent(subscriptionBean, hashBase64, file);
+                newHashes.add(hashBase64);
             }
             if (!newHotList.isEmpty()) {
+                updateFileContent(subscriptionBean, newHashes, file);
                 pushToChannel(subscriptionBean, newHotList);
             }
         } catch (Exception e) {
@@ -90,21 +92,31 @@ public class SubscriptionUtil {
         }
     }
 
-    public void updateFileContent(SubscriptionBean subscriptionBean, String hashBase64, File file) {
+    private String generateHash(String keyword, String dataCardName) {
+        // 生成 MD5 二进制
+        byte[] hashBinary = SecureUtil.md5().digest(
+                (keyword + dataCardName).getBytes(StandardCharsets.UTF_8)
+        );
+        // 转 Base64（22 个字符左右）
+        return Base64.getEncoder().encodeToString(hashBinary);
+    }
+
+    public void updateFileContent(SubscriptionBean subscriptionBean, List<String> hashBase64, File file) {
         try {
-            subscriptionBean.getSent().add(hashBase64); // 记录已推送,添加到记录值里
-            // 超过上限，批量删除最早的 excess 条
-            int excess = subscriptionBean.getSent().size() - maxHotNumber;
+            Set<String> sent = subscriptionBean.getSent();
+            sent.addAll(hashBase64);
+            int excess = sent.size() - maxHotNumber;
             if (excess > 0) {
-                Iterator<String> it = subscriptionBean.getSent().iterator();
+                Iterator<String> it = sent.iterator();
                 for (int i = 0; i < excess && it.hasNext(); i++) {
                     it.next();
                     it.remove();
                 }
+                log.debug("清理了 {} 条最早的记录", excess);
             }
             FileUtil.writeToFile(file, subscriptionBean);
         } catch (Exception e) {
-            throw new ServerException("重写文件失败");
+            throw new ServerException("重写文件失败 - 文件: " + file.getName() + ", 错误: " + e.getMessage());
         }
     }
 
@@ -134,8 +146,8 @@ public class SubscriptionUtil {
     public List<String> generateSubscriptionFile(Integer count) {
         log.info("开始创建初始化文件，数量为：" + count);
         List<String> newFileList = new ArrayList<>();
+        Set<String> allFileNamesInPath = new HashSet<>(FileUtil.getAllFileNamesInPath(subscriptionDir));
         for (int i = 0; i < count; i++) {
-            List<String> allFileNamesInPath = FileUtil.getAllFileNamesInPath(subscriptionDir);
             String fileName = generateRandomFileName();
             if (allFileNamesInPath.contains(fileName)) {
                 continue;
