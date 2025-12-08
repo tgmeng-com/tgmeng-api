@@ -54,7 +54,12 @@ public class SubscriptionUtil {
     // 遍历订阅文件列表
     public void cycleFile(File[] subscriptionFiles) {
         for (File file : subscriptionFiles) {
-            startSubscriptionOption(file);
+            try {
+                startSubscriptionOption(file);
+            } catch (Exception e) {
+                log.error("订阅推送异常：{},异常信息：{}",file.getName(),e.getMessage());
+                continue;
+            }
         }
     }
 
@@ -111,10 +116,10 @@ public class SubscriptionUtil {
                     dingTalkWebHook.sendMessage(newHotList, push, sub.getKeywords());
                     break;
                 case SubscriptionChannelTypeEnum.FEISHU:
-                    //feiShuWebHook.sendMessage(newHotList, push, sub.getKeywords());
+                    feiShuWebHook.sendMessage(newHotList, push, sub.getKeywords());
                     break;
                 case SubscriptionChannelTypeEnum.TELEGRAM:
-                    //telegramWebHook.sendMessage(newHotList, push, sub.getKeywords());
+                    telegramWebHook.sendMessage(newHotList, push, sub.getKeywords());
                     break;
                 case SubscriptionChannelTypeEnum.EMAIL:
                     System.out.println("EMAIL");
