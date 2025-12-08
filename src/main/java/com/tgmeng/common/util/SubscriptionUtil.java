@@ -65,7 +65,7 @@ public class SubscriptionUtil {
                 successCount++;
             } catch (Exception e) {
                 failCount++;
-                log.error("订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
+                log.error("✈️✈️✈️✈️✈️✈️订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
             }
         }
         log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount, failCount, subscriptionFiles.length);
@@ -132,13 +132,13 @@ public class SubscriptionUtil {
             List<String> keywords = subscriptionBean.getKeywords();
             switch (push.getType()) {
                 case SubscriptionChannelTypeEnum.DINGDING:
-                    dingTalkWebHook.sendMessage(newHotList, push, keywords);
+                    //dingTalkWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.FEISHU:
                     feiShuWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.TELEGRAM:
-                    telegramWebHook.sendMessage(newHotList, push, keywords);
+                    //telegramWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.EMAIL:
                     System.out.println("EMAIL");
