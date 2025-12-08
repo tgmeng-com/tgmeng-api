@@ -90,6 +90,8 @@ public class SubscriptionUtil {
             if (!newHotList.isEmpty()) {
                 updateFileContent(subscriptionBean, newHashes, file);
                 pushToChannel(subscriptionBean, newHotList);
+            }else {
+                throw new ServerException("关键字为空");
             }
         } catch (Exception e) {
             throw new ServerException(e.getMessage());
