@@ -31,12 +31,12 @@ public class DingTalkWebHook {
     @Autowired
     private UmamiUtil umamiUtil;
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push,  List<String> keywords) {
+    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
         String webHook = getWebHook(push);
         log.info("🎠开始推送钉钉");
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content);
-        sendPost(webHook, postJsonBody,newHotList.size());
+        sendPost(webHook, postJsonBody, newHotList.size());
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {
@@ -52,12 +52,12 @@ public class DingTalkWebHook {
                 byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
                 sign = URLEncoder.encode(Base64.getEncoder().encodeToString(signData), "UTF-8");
                 webhook += "&timestamp=" + timestamp + "&sign=" + sign;
-            }else {
+            } else {
                 throw new ServerException("webHook配置无效");
             }
             return webhook;
         } catch (Exception e) {
-            throw new ServerException("webHook配置无效");
+            throw new ServerException("webHook配置无效:" + e.getMessage());
         }
     }
 
@@ -101,11 +101,11 @@ public class DingTalkWebHook {
             return postBodys;
 
         } catch (Exception e) {
-            throw new ServerException("钉钉组装请求postBody失败");
+            throw new ServerException("钉钉组装请求postBody失败:" + e.getMessage());
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys,Integer count) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
         for (String postJsonBody : postJsonBodys) {
             iWebHookClient.sendMessage(webHook, postJsonBody);
         }

@@ -28,12 +28,12 @@ public class TelegramWebHook {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push,  List<String> keywords) {
+    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
         String webHook = getWebHook(push);
         log.info("🎠开始推送Telegram");
         List<String> content = getHotContent(newHotList, keywords);
-        List<String> postJsonBody = getPostBody(content,push);
-        sendPost(webHook, postJsonBody,newHotList.size());
+        List<String> postJsonBody = getPostBody(content, push);
+        sendPost(webHook, postJsonBody, newHotList.size());
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {
@@ -41,11 +41,11 @@ public class TelegramWebHook {
             String webhook = "https://api.telegram.org/bot" + push.getWebhook() + "/sendMessage";
             if (StrUtil.isNotBlank(webhook) && StrUtil.isNotBlank(push.getSecret())) {
                 return webhook;
-            }else {
+            } else {
                 throw new ServerException("webHook配置无效");
             }
         } catch (Exception e) {
-            throw new ServerException("webHook配置无效");
+            throw new ServerException("webHook配置无效:" + e.getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ public class TelegramWebHook {
         return jsonBodys;
     }
 
-    public List<String> getPostBody(List<String> hotContent,SubscriptionBean.PushConfig push) {
+    public List<String> getPostBody(List<String> hotContent, SubscriptionBean.PushConfig push) {
         try {
             List<String> postBodys = new ArrayList<>();
             for (String subHotContent : hotContent) {
@@ -91,11 +91,11 @@ public class TelegramWebHook {
             }
             return postBodys;
         } catch (Exception e) {
-            throw new ServerException("Telegram组装请求postBody失败");
+            throw new ServerException("Telegram组装请求postBody失败:" + e.getMessage());
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys,Integer count) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
         for (String postJsonBody : postJsonBodys) {
             iWebHookClient.sendMessage(webHook, postJsonBody);
         }

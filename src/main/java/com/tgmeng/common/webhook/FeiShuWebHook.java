@@ -32,7 +32,7 @@ public class FeiShuWebHook {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push,  List<String> keywords) {
+    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
         String webHook = getWebHook(push);
         log.info("🎠开始推送飞书");
         List<List<List<WebHookFeiShuBean.TagItem>>> content = getHotContent(newHotList, keywords);
@@ -49,7 +49,7 @@ public class FeiShuWebHook {
                 throw new ServerException("webHook配置无效");
             }
         } catch (Exception e) {
-            throw new ServerException("webHook配置无效");
+            throw new ServerException("webHook配置无效:" + e.getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ public class FeiShuWebHook {
             }
             return sign;
         } catch (Exception e) {
-            throw new ServerException("获取飞书签名失败");
+            throw new ServerException("获取飞书签名失败:" + e.getMessage());
         }
     }
 
@@ -136,11 +136,11 @@ public class FeiShuWebHook {
             }
             return result;
         } catch (Exception e) {
-            throw new ServerException("飞书组装请求postBody失败");
+            throw new ServerException("飞书组装请求postBody失败:" + e.getMessage());
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys,Integer count) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
         for (String postJsonBody : postJsonBodys) {
             iWebHookClient.sendMessage(webHook, postJsonBody);
         }
