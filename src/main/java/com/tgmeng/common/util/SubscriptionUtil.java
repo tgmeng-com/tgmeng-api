@@ -132,13 +132,13 @@ public class SubscriptionUtil {
             List<String> keywords = subscriptionBean.getKeywords();
             switch (push.getType()) {
                 case SubscriptionChannelTypeEnum.DINGDING:
-                    //dingTalkWebHook.sendMessage(newHotList, push, keywords);
+                    dingTalkWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.FEISHU:
                     feiShuWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.TELEGRAM:
-                    //telegramWebHook.sendMessage(newHotList, push, keywords);
+                    telegramWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.EMAIL:
                     System.out.println("EMAIL");
