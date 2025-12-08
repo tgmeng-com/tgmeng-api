@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,8 +18,8 @@ public class CacheSearchController {
 
     // 根据type查询所有缓存热搜数据
     @RequestMapping("/allbyword")
-    public ResultTemplateBean getCacheSearchAllByWord(@RequestBody Map<String, String> requestBody) {
-        return cacheSearchService.getCacheSearchAllByWord(requestBody.get("word"));
+    public ResultTemplateBean<List<Map<String, Object>>> getCacheSearchAllByWord(@RequestBody Map<String, String> requestBody) {
+        return cacheSearchService.getCacheSearchAllByWord(requestBody.get("word"),null);
     }
 
     // 查询所有缓存热搜数据的词云

@@ -46,4 +46,8 @@ my-config:
       enabled: true           #是否开启缓存，不开启的话，所有数据都是从接口获取，下面的其他这些配置就没用了
       max-size: 5000         #最大缓存条数
       expire-time: 172800       # 通用缓存过期时间 单位是秒,里默认缓存个48小时
+  subscription:
+    dir: ./data/subscritions/       # 订阅文件所在的文件夹
+    file-suffix: .json             # 文件后缀
+    max-hot-number: 10000          # 每个人最多存10000条
 

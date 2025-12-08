@@ -6,6 +6,7 @@ import com.tgmeng.common.config.ScheduleRequestConfigManager;
 import com.tgmeng.common.enums.system.RequestFromEnum;
 import com.tgmeng.common.forest.client.system.ISystemLocalClient;
 import com.tgmeng.common.util.CacheUtil;
+import com.tgmeng.common.util.SubscriptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,6 +34,7 @@ public class ControllerApiSchedule {
     // 所有接口的配置
     private final ScheduleRequestConfigManager scheduleRequestConfigManager;
     private final CacheUtil cacheUtil;
+    private final SubscriptionUtil subscriptionUtil;
 
     // 启动后10s执行一次，完成后，每隔1分钟执行一次
     @Scheduled(fixedDelay = 60_000, initialDelay = 5_000)
@@ -94,5 +96,6 @@ public class ControllerApiSchedule {
         } catch (Exception e) {
             log.error("🤖系执行异常: {}", e.getMessage(), e);
         }
+        subscriptionUtil.subscriptionOption();
     }
 }

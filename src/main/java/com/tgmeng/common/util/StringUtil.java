@@ -5,6 +5,7 @@ import com.tgmeng.model.dto.topsearch.TopSearchShaoShuPaiDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchZhiHuDTO;
 
 import java.net.URI;
+import java.util.Random;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -151,5 +152,20 @@ public class StringUtil {
         } catch (Exception e) {
             return url;  // URL 非法时原样返回
         }
+    }
+
+    public static String generateRandomFileName() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 24; i++) {
+            // 每4位添加一个-分隔符（但不在开头和结尾）
+            if (i > 0 && i % 4 == 0) {
+                sb.append("-");
+            }
+            int index = random.nextInt(chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb + ".json";
     }
 }

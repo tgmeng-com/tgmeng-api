@@ -1,6 +1,8 @@
 package com.tgmeng.service.cachesearch.Impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.seg.common.Term;
 import com.tgmeng.common.bean.ResultTemplateBean;
@@ -37,7 +39,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
      * 按关键词检索缓存
      */
     @Override
-    public ResultTemplateBean getCacheSearchAllByWord(String word) {
+    public ResultTemplateBean<List<Map<String, Object>>> getCacheSearchAllByWord(String word,List<String>  words) {
 
         Collection<Object> cacheValue = cacheUtil.getValue();
         if (CollectionUtil.isEmpty(cacheValue)) {
@@ -53,12 +55,33 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                         if (item instanceof Map<?, ?> itemMap) {
                             Object keyword = itemMap.get("keyword");
                             Object url = itemMap.get("url");
-                            if (keyword instanceof String s && s.toLowerCase().contains(word.toLowerCase())) {
-                                HashMap<String, Object> resultMap = new HashMap<>();
-                                resultMap.put("keyword", keyword);
-                                resultMap.put("dataCardName", map.get("dataCardName"));
-                                resultMap.put("url", url);
-                                resultList.add(resultMap);
+                            if (keyword instanceof String s){
+                                s = keyword.toString().trim().toLowerCase();   // 确保 keyword 转成小写字符串
+                                // 合并 words 和 word
+                                List<String> merged = new ArrayList<>();
+                                if (CollUtil.isNotEmpty(words)) {
+                                    // 统一小写
+                                    merged.addAll(words.stream()
+                                            .filter(StrUtil::isNotBlank)
+                                            .map(String::trim)
+                                            .map(String::toLowerCase)
+                                            .toList()
+                                    );
+                                }
+                                if (StrUtil.isNotBlank(word)) {
+                                    merged.add(word.trim().toLowerCase());
+                                }
+                                // 最终数组
+                                String[] wordsMerged = merged.toArray(new String[0]);
+
+                                // 匹配关键词
+                                if (wordsMerged.length == 0 || StrUtil.containsAny(s,wordsMerged)){
+                                    HashMap<String, Object> resultMap = new HashMap<>();
+                                    resultMap.put("keyword", keyword);
+                                    resultMap.put("dataCardName", map.get("dataCardName"));
+                                    resultMap.put("url", url);
+                                    resultList.add(resultMap);
+                                }
                             }
                         }
                     });

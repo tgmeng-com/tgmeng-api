@@ -1,0 +1,22 @@
+{
+  "accessKey":"",
+  "keywords": [],
+  "platforms": [
+    {
+      "type": "DINGDING",
+      "webhook": "",
+      "secret": ""
+    },
+    {
+      "type": "TELEGRAM",
+      "webhook": "",
+      "secret": ""
+    },
+    {
+      "type": "FEISHU",
+      "webhook": "",
+      "secret": ""
+    }
+  ],
+  "sent": []
+ }
