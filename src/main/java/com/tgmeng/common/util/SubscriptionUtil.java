@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -26,10 +27,13 @@ import static com.tgmeng.common.util.StringUtil.generateRandomFileName;
 @RequiredArgsConstructor
 public class SubscriptionUtil {
 
+    @Lazy
     @Autowired
     private DingTalkWebHook dingTalkWebHook;
+    @Lazy
     @Autowired
     private FeiShuWebHook feiShuWebHook;
+    @Lazy
     @Autowired
     private TelegramWebHook telegramWebHook;
 
@@ -84,11 +88,10 @@ public class SubscriptionUtil {
                 newHashes.add(hashBase64);
             }
             if (!newHotList.isEmpty()) {
-                updateFileContent(subscriptionBean, newHashes, file);
-                pushToChannel(subscriptionBean, newHotList);
+                pushToChannel(subscriptionBean, newHotList, newHashes, file);
             }
         } catch (Exception e) {
-            throw new ServerException("推送订阅失败");
+            throw new ServerException(e.getMessage());
         }
     }
 
@@ -121,17 +124,18 @@ public class SubscriptionUtil {
     }
 
     // 执行订阅操作
-    public void pushToChannel(SubscriptionBean sub, List<Map<String, Object>> newHotList) {
-        for (SubscriptionBean.PushConfig push : sub.getPlatforms()) {
+    public void pushToChannel(SubscriptionBean subscriptionBean, List<Map<String, Object>> newHotList, List<String> newHashes, File file) {
+        for (SubscriptionBean.PushConfig push : subscriptionBean.getPlatforms()) {
+            List<String> keywords = subscriptionBean.getKeywords();
             switch (push.getType()) {
                 case SubscriptionChannelTypeEnum.DINGDING:
-                    dingTalkWebHook.sendMessage(newHotList, push, sub.getKeywords());
+                    dingTalkWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.FEISHU:
-                    feiShuWebHook.sendMessage(newHotList, push, sub.getKeywords());
+                    feiShuWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.TELEGRAM:
-                    telegramWebHook.sendMessage(newHotList, push, sub.getKeywords());
+                    telegramWebHook.sendMessage(newHotList, push, keywords);
                     break;
                 case SubscriptionChannelTypeEnum.EMAIL:
                     System.out.println("EMAIL");
@@ -140,6 +144,7 @@ public class SubscriptionUtil {
                     break;
             }
         }
+        updateFileContent(subscriptionBean, newHashes, file);
     }
 
     // TODO 生成初始化订阅文件，这个只有站长后台手动触发，为的是保证站里订阅key是手动下发
