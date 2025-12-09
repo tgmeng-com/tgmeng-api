@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.SubscriptionBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
-import com.tgmeng.common.webhook.DingTalkWebHook;
-import com.tgmeng.common.webhook.FeiShuWebHook;
-import com.tgmeng.common.webhook.QiYeWeiXinWebHook;
-import com.tgmeng.common.webhook.TelegramWebHook;
+import com.tgmeng.common.webhook.*;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +37,9 @@ public class SubscriptionUtil {
     @Lazy
     @Autowired
     private QiYeWeiXinWebHook qiYeWeiXinWebHook;
+    @Lazy
+    @Autowired
+    private NtfyWebHook ntfyWebHook;
 
     @Value("${my-config.subscription.dir}")
     private String subscriptionDir;
@@ -145,6 +145,9 @@ public class SubscriptionUtil {
                         break;
                     case SubscriptionChannelTypeEnum.QIYEWEIXIN:
                         qiYeWeiXinWebHook.sendMessage(newHotList, push, keywords);
+                        break;
+                    case SubscriptionChannelTypeEnum.NTFY:
+                        ntfyWebHook.sendMessage(newHotList, push, keywords);
                         break;
                     default:
                         break;

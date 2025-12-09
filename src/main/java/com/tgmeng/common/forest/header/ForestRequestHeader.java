@@ -44,5 +44,8 @@ public class ForestRequestHeader {
     private String SecFetchUser;
     @JsonProperty("Upgrade-Insecure-Requests")
     private String UpgradeInsecureRequests;
+    private String Markdown;
+    @JsonProperty("Content-Type")
+    private String ContentType;
 
 }

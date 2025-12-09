@@ -8,6 +8,7 @@ import com.tgmeng.common.bean.SubscriptionBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
+import com.tgmeng.common.forest.header.ForestRequestHeader;
 import com.tgmeng.common.util.TimeUtil;
 import com.tgmeng.common.util.UmamiUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +30,9 @@ public class QiYeWeiXinWebHook {
     public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
         String webHook = getWebHook(push);
         String contentType = push.getSecret();
-        log.info("🎠开始推送企业微信：{}条",newHotList.size());
-        List<String> content = getHotContent(newHotList, keywords,contentType);
-        List<String> postJsonBody = getPostBody(content,contentType);
+        log.info("🎠开始推送企业微信：{}条", newHotList.size());
+        List<String> content = getHotContent(newHotList, keywords, contentType);
+        List<String> postJsonBody = getPostBody(content, contentType);
         sendPost(webHook, postJsonBody, newHotList.size());
     }
 
@@ -43,13 +44,13 @@ public class QiYeWeiXinWebHook {
         }
     }
 
-    public List<String> getHotContent(List<Map<String, Object>> newHotList, List<String> keywords,String contentType) {
+    public List<String> getHotContent(List<Map<String, Object>> newHotList, List<String> keywords, String contentType) {
 
         List<List<Map<String, Object>>> splitNewHotList = CollUtil.split(newHotList, 20);
         List<String> jsonBodys = new ArrayList<>();
 
         for (List<Map<String, Object>> subNewHots : splitNewHotList) {
-            if (StrUtil.equals(contentType,"markdown")){
+            if (StrUtil.equals(contentType, "markdown")) {
                 StringBuilder md = new StringBuilder("## 🍭 糖果梦热榜 🍭\n\n\n");
                 for (int i = 0; i < subNewHots.size(); i++) {
                     Map<String, Object> hot = subNewHots.get(i);
@@ -65,7 +66,7 @@ public class QiYeWeiXinWebHook {
                 md.append("⏰ 时间：").append(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern)).append("\n");
                 md.append("🙋🏻‍♂️ 来源：").append("[糖果梦热榜：https://tgmeng.com](https://tgmeng.com)\n");
                 jsonBodys.add(md.toString());
-            }else {
+            } else {
                 StringBuilder md = new StringBuilder("🍭 糖果梦热榜 🍭\n\n");
                 for (int i = 0; i < subNewHots.size(); i++) {
                     Map<String, Object> hot = subNewHots.get(i);
@@ -86,17 +87,17 @@ public class QiYeWeiXinWebHook {
         return jsonBodys;
     }
 
-    public List<String> getPostBody(List<String> hotContent,String contentType) {
+    public List<String> getPostBody(List<String> hotContent, String contentType) {
         try {
             List<String> postBodys = new ArrayList<>();
             for (String subHotContent : hotContent) {
                 ObjectMapper mapper = new ObjectMapper();
                 ObjectNode root = mapper.createObjectNode();
                 ObjectNode objectNodeContent;
-                if (StrUtil.equals(contentType,"markdown")){
+                if (StrUtil.equals(contentType, "markdown")) {
                     root.put("msgtype", "markdown");
                     objectNodeContent = root.putObject("markdown");
-                }else {
+                } else {
                     root.put("msgtype", "text");
                     objectNodeContent = root.putObject("text");
                 }
@@ -111,7 +112,8 @@ public class QiYeWeiXinWebHook {
 
     public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
         for (String postJsonBody : postJsonBodys) {
-            iWebHookClient.sendMessage(webHook, postJsonBody);
+            ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
+            iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
         log.info("企业微信成功推送：{}条", count);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.DINGDING.getDescription(), count);
