@@ -88,6 +88,6 @@ public class NtfyWebHook {
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
         log.info("NTFY成功推送：{}条", count);
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.DINGDING.getDescription(), count);
+        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.NTFY.getDescription(), count);
     }
 }
