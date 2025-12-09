@@ -40,6 +40,9 @@ public class SubscriptionUtil {
     @Lazy
     @Autowired
     private NtfyWebHook ntfyWebHook;
+    @Lazy
+    @Autowired
+    private GotifyWebHook gotifyWebHook;
 
     @Value("${my-config.subscription.dir}")
     private String subscriptionDir;
@@ -149,11 +152,14 @@ public class SubscriptionUtil {
                     case SubscriptionChannelTypeEnum.NTFY:
                         ntfyWebHook.sendMessage(newHotList, push, keywords);
                         break;
+                    //case SubscriptionChannelTypeEnum.GOTIFY:
+                    //    gotifyWebHook.sendMessage(newHotList, push, keywords);
+                    //    break;
                     default:
                         break;
                 }
-            }catch (Exception e) {
-                log.error("推送异常：{}",e.getMessage());
+            } catch (Exception e) {
+                log.error("推送异常：{}", e.getMessage());
             }
         }
     }

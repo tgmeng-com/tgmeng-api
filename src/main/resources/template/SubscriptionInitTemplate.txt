@@ -21,6 +21,11 @@
       "type": "QIYEWEIXIN",
       "webhook": "",
       "secret": ""
+    },
+    {
+      "type": "NTFY",
+      "webhook": "",
+      "secret": ""
     }
   ],
   "sent": []

@@ -23,7 +23,8 @@ public enum SubscriptionChannelTypeEnum implements INameValueEnum<String,String>
     EMAIL("EMAIL", "EMAIL", "订阅推送-邮箱", true,3),
     QIYEWEIXIN("QIYEWEIXIN", "QIYEWEIXIN", "订阅推送-企业微信", true,3),
     FEISHU("FEISHU", "FEISHU", "订阅推送-飞书", true,4),
-    NTFY("NTFY", "NTFY", "订阅推送-NTFY", true,4);
+    NTFY("NTFY", "NTFY", "订阅推送-NTFY", true,4),
+    GOTIFY("GOTIFY", "GOTIFY", "订阅推送-GOTIFY", true,4);
 
     private final String key;
     private final String value;
