@@ -33,7 +33,7 @@ public class DingTalkWebHook {
 
     public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
         String webHook = getWebHook(push);
-        log.info("🎠开始推送钉钉");
+        log.info("🎠开始推送钉钉：{}条",newHotList.size());
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content);
         sendPost(webHook, postJsonBody, newHotList.size());
@@ -67,7 +67,7 @@ public class DingTalkWebHook {
         List<String> jsonBodys = new ArrayList<>();
 
         for (List<Map<String, Object>> subNewHots : splitNewHotList) {
-            StringBuilder md = new StringBuilder("### 🍭糖果梦热榜🍭\n<br>");
+            StringBuilder md = new StringBuilder("### 🍭 糖果梦热榜 🍭\n<br>");
             for (int i = 0; i < subNewHots.size(); i++) {
                 Map<String, Object> hot = subNewHots.get(i);
                 md.append(i + 1).append(". ")
@@ -109,6 +109,7 @@ public class DingTalkWebHook {
         for (String postJsonBody : postJsonBodys) {
             iWebHookClient.sendMessage(webHook, postJsonBody);
         }
+        log.info("钉钉成功推送：{}条", count);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.DINGDING.getDescription(), count);
     }
 }

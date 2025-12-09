@@ -7,6 +7,7 @@ import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.webhook.DingTalkWebHook;
 import com.tgmeng.common.webhook.FeiShuWebHook;
+import com.tgmeng.common.webhook.QiYeWeiXinWebHook;
 import com.tgmeng.common.webhook.TelegramWebHook;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,9 @@ public class SubscriptionUtil {
     @Lazy
     @Autowired
     private TelegramWebHook telegramWebHook;
+    @Lazy
+    @Autowired
+    private QiYeWeiXinWebHook qiYeWeiXinWebHook;
 
     @Value("${my-config.subscription.dir}")
     private String subscriptionDir;
@@ -139,8 +143,8 @@ public class SubscriptionUtil {
                     case SubscriptionChannelTypeEnum.TELEGRAM:
                         telegramWebHook.sendMessage(newHotList, push, keywords);
                         break;
-                    case SubscriptionChannelTypeEnum.EMAIL:
-                        System.out.println("EMAIL");
+                    case SubscriptionChannelTypeEnum.QIYEWEIXIN:
+                        qiYeWeiXinWebHook.sendMessage(newHotList, push, keywords);
                         break;
                     default:
                         break;

@@ -30,7 +30,7 @@ public class TelegramWebHook {
 
     public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
         String webHook = getWebHook(push);
-        log.info("🎠开始推送Telegram");
+        log.info("🎠开始推送Telegram：{}条",newHotList.size());
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content, push);
         sendPost(webHook, postJsonBody, newHotList.size());
@@ -99,6 +99,7 @@ public class TelegramWebHook {
         for (String postJsonBody : postJsonBodys) {
             iWebHookClient.sendMessage(webHook, postJsonBody);
         }
+        log.info("Telegram成功推送：{}条", count);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.TELEGRAM.getDescription(), count);
     }
 }

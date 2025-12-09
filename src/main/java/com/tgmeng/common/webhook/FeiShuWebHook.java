@@ -34,7 +34,7 @@ public class FeiShuWebHook {
 
     public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
         String webHook = getWebHook(push);
-        log.info("🎠开始推送飞书");
+        log.info("🎠开始推送飞书：{}条",newHotList.size());
         List<List<List<WebHookFeiShuBean.TagItem>>> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(push, content);
         sendPost(webHook, postJsonBody, newHotList.size());
@@ -144,6 +144,7 @@ public class FeiShuWebHook {
         for (String postJsonBody : postJsonBodys) {
             iWebHookClient.sendMessage(webHook, postJsonBody);
         }
+        log.info("飞书成功推送：{}条", count);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.FEISHU.getDescription(), count);
     }
 

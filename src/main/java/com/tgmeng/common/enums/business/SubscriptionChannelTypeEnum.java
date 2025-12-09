@@ -21,6 +21,7 @@ public enum SubscriptionChannelTypeEnum implements INameValueEnum<String,String>
     DINGDING("DINGDING", "DINGDING", "订阅推送-钉钉", true,1),
     TELEGRAM("TELEGRAM", "TELEGRAM", "订阅推送-TG", true,2),
     EMAIL("EMAIL", "EMAIL", "订阅推送-邮箱", true,3),
+    QIYEWEIXIN("QIYEWEIXIN", "QIYEWEIXIN", "订阅推送-企业微信", true,3),
     FEISHU("FEISHU", "FEISHU", "订阅推送-飞书", true,4);
 
     private final String key;

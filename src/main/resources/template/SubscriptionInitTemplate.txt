@@ -16,6 +16,11 @@
       "type": "FEISHU",
       "webhook": "",
       "secret": ""
+    },
+    {
+      "type": "QIYEWEIXIN",
+      "webhook": "",
+      "secret": ""
     }
   ],
   "sent": []
