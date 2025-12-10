@@ -26,5 +26,7 @@ public class SubscriptionBean implements Serializable {
         private SubscriptionChannelTypeEnum type;
         private String webhook;
         private String secret;
+        private List<String> platformKeywords;
+        private String remark;
     }
 }

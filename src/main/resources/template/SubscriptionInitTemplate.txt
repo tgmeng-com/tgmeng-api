@@ -5,27 +5,37 @@
     {
       "type": "DINGDING",
       "webhook": "",
-      "secret": ""
+      "secret": "",
+      "platformKeywords": [],
+      "remark": ""
     },
     {
       "type": "TELEGRAM",
       "webhook": "",
-      "secret": ""
+      "secret": "",
+      "platformKeywords": [],
+      "remark": ""
     },
     {
       "type": "FEISHU",
       "webhook": "",
-      "secret": ""
+      "secret": "",
+      "platformKeywords": [],
+      "remark": ""
     },
     {
       "type": "QIYEWEIXIN",
       "webhook": "",
-      "secret": ""
+      "secret": "",
+      "platformKeywords": [],
+      "remark": ""
     },
     {
       "type": "NTFY",
       "webhook": "",
-      "secret": ""
+      "secret": "",
+      "platformKeywords": [],
+      "remark": ""
     }
   ],
   "sent": []

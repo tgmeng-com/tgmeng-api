@@ -82,24 +82,71 @@ public class SubscriptionUtil {
     public void startSubscriptionOption(File file) {
         try {
             SubscriptionBean subscriptionBean = MAPPER.readValue(file, SubscriptionBean.class);
-            List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, subscriptionBean.getKeywords()).getData();
-            List<Map<String, Object>> newHotList = new ArrayList<Map<String, Object>>();
-
-            Set<String> sentSet = new HashSet<>(subscriptionBean.getSent());
-            List<String> newHashes = new ArrayList<>();
-
-            for (Map<String, Object> hotItem : hotList) {
-                String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
-                if (sentSet.contains(hashBase64)) continue;
-                newHotList.add(hotItem);
-                newHashes.add(hashBase64);
-            }
-            if (!newHotList.isEmpty()) {
-                updateFileContent(subscriptionBean, newHashes, file);
-                pushToChannel(subscriptionBean, newHotList);
-            }
+            List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, null).getData();
+            pushToChannel(subscriptionBean, hotList, file);
         } catch (Exception e) {
             throw new ServerException(e.getMessage());
+        }
+    }
+
+    // 执行订阅操作
+    public void pushToChannel(SubscriptionBean subscriptionBean, List<Map<String, Object>> hotList, File file) {
+        // 全局关键词
+        List<String> keywords = subscriptionBean.getKeywords();
+        // 已发送的哈希集合
+        Set<String> sentSet = new HashSet<>(subscriptionBean.getSent());
+        for (SubscriptionBean.PushConfig push : subscriptionBean.getPlatforms()) {
+            try {
+                // 独立关键词
+                List<String> platformKeywords = push.getPlatformKeywords();
+                // 合并关键词
+                List<String> mergedKeywords = new ArrayList<>(keywords);
+                mergedKeywords.addAll(platformKeywords);
+
+                // 筛选平台关键词和独立关键词合并后符合的热点，并且过滤掉已推送的
+                List<Map<String, Object>> newHotList = hotList.stream()
+                        .filter(map -> {
+                            String keyWord = String.valueOf(map.get("keyword"));
+                            String hashBase64 = generateHash(keyWord, String.valueOf(map.get("dataCardName")));
+                            return mergedKeywords.stream().anyMatch(keyWord::contains) && !sentSet.contains(hashBase64);
+                        }).toList();
+
+                if (!newHotList.isEmpty()) {
+                    // 记录新推送的哈希，用于后续更新文件
+                    List<String> newHashes = new ArrayList<>();
+                    for (Map<String, Object> hotItem : newHotList) {
+                        String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
+                        newHashes.add(hashBase64);
+                    }
+                    sentSet.addAll(newHashes);
+
+                    updateFileContent(subscriptionBean, file);
+                    switch (push.getType()) {
+                        case SubscriptionChannelTypeEnum.DINGDING:
+                            dingTalkWebHook.sendMessage(newHotList, push, mergedKeywords);
+                            break;
+                        case SubscriptionChannelTypeEnum.FEISHU:
+                            feiShuWebHook.sendMessage(newHotList, push, mergedKeywords);
+                            break;
+                        case SubscriptionChannelTypeEnum.TELEGRAM:
+                            telegramWebHook.sendMessage(newHotList, push, mergedKeywords);
+                            break;
+                        case SubscriptionChannelTypeEnum.QIYEWEIXIN:
+                            qiYeWeiXinWebHook.sendMessage(newHotList, push, mergedKeywords);
+                            break;
+                        case SubscriptionChannelTypeEnum.NTFY:
+                            ntfyWebHook.sendMessage(newHotList, push, mergedKeywords);
+                            break;
+                        //case SubscriptionChannelTypeEnum.GOTIFY:
+                        //    gotifyWebHook.sendMessage(newHotList, push, mergedKeywords);
+                        //    break;
+                        default:
+                            break;
+                    }
+                }
+            } catch (Exception e) {
+                log.error("推送异常：{}", e.getMessage());
+            }
         }
     }
 
@@ -112,10 +159,9 @@ public class SubscriptionUtil {
         return Base64.getEncoder().encodeToString(hashBinary);
     }
 
-    public void updateFileContent(SubscriptionBean subscriptionBean, List<String> hashBase64, File file) {
+    public void updateFileContent(SubscriptionBean subscriptionBean,File file) {
         try {
             Set<String> sent = subscriptionBean.getSent();
-            sent.addAll(hashBase64);
             int excess = sent.size() - maxHotNumber;
             if (excess > 0) {
                 Iterator<String> it = sent.iterator();
@@ -128,39 +174,6 @@ public class SubscriptionUtil {
             FileUtil.writeToFile(file, subscriptionBean);
         } catch (Exception e) {
             throw new ServerException("重写文件失败 - 文件: " + file.getName() + ", 错误: " + e.getMessage());
-        }
-    }
-
-    // 执行订阅操作
-    public void pushToChannel(SubscriptionBean subscriptionBean, List<Map<String, Object>> newHotList) {
-        for (SubscriptionBean.PushConfig push : subscriptionBean.getPlatforms()) {
-            try {
-                List<String> keywords = subscriptionBean.getKeywords();
-                switch (push.getType()) {
-                    case SubscriptionChannelTypeEnum.DINGDING:
-                        dingTalkWebHook.sendMessage(newHotList, push, keywords);
-                        break;
-                    case SubscriptionChannelTypeEnum.FEISHU:
-                        feiShuWebHook.sendMessage(newHotList, push, keywords);
-                        break;
-                    case SubscriptionChannelTypeEnum.TELEGRAM:
-                        telegramWebHook.sendMessage(newHotList, push, keywords);
-                        break;
-                    case SubscriptionChannelTypeEnum.QIYEWEIXIN:
-                        qiYeWeiXinWebHook.sendMessage(newHotList, push, keywords);
-                        break;
-                    case SubscriptionChannelTypeEnum.NTFY:
-                        ntfyWebHook.sendMessage(newHotList, push, keywords);
-                        break;
-                    //case SubscriptionChannelTypeEnum.GOTIFY:
-                    //    gotifyWebHook.sendMessage(newHotList, push, keywords);
-                    //    break;
-                    default:
-                        break;
-                }
-            } catch (Exception e) {
-                log.error("推送异常：{}", e.getMessage());
-            }
         }
     }
 
