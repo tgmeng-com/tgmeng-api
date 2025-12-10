@@ -129,9 +129,9 @@ public class SubscriptionUtil {
         // 全局关键词
         List<String> keywords = subscriptionBean.getKeywords() == null ? new ArrayList<>() : subscriptionBean.getKeywords();
         // 已发送的哈希集合
-        Set<String> sentSet = new HashSet<>(subscriptionBean.getSent());
+        Set<String> sentSet = subscriptionBean.getSent();
         // 存储新推送的哈希，用于后续更新文件
-        List<String> newHashes = new ArrayList<>();
+        Set<String> newHashes = new LinkedHashSet<>();
 
         // 使用 CompletableFuture 并行处理每个平台
         List<CompletableFuture<Void>> futures = subscriptionBean.getPlatforms().stream()
