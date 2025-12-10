@@ -96,9 +96,9 @@ public class SubscriptionUtil {
         // 使用 CompletableFuture 来并行处理每个文件
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (File file : subscriptionFiles) {
-            log.info("✈️开始处理订阅文件: {}", file.getName());
             // 提交每个文件处理的任务
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+                log.info("✈️开始处理订阅文件: {}", file.getName());
                 try {
                     startSubscriptionOption(file, hotList);
                     successCount.incrementAndGet();  // 线程安全地增加成功计数
