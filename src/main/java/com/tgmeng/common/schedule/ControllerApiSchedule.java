@@ -89,7 +89,7 @@ public class ControllerApiSchedule {
         try {
             // 使用 CompletableFuture.allOf() 等待所有任务完成
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                    .orTimeout(600, TimeUnit.SECONDS) // 60秒超时
+                    .orTimeout(300, TimeUnit.SECONDS) // 60秒超时
                     .join(); // 等待任务完成
 
             // 如果需要的话，执行后续操作
