@@ -33,7 +33,7 @@ public class ControllerApiSchedule {
     private final ISystemLocalClient systemLocalClient;
 
     private final ThreadPoolTaskExecutor executor;
-    private final ScheduledExecutorService timeoutScheduler = Executors.newScheduledThreadPool(32);
+    private final ScheduledExecutorService timeoutScheduler = Executors.newScheduledThreadPool(4);
     // 所有接口的配置
     private final ScheduleRequestConfigManager scheduleRequestConfigManager;
     private final CacheUtil cacheUtil;

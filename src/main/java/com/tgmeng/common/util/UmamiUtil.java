@@ -25,7 +25,7 @@ public class UmamiUtil {
         ForestRequestHeader forestRequestHeader = new ForestRequestHeader();
         forestRequestHeader.setUserAgent(HttpRequestUtil.getRequestRandomUserAgent());
         umamiClient.sendEvent(forestRequestHeader, "https://umaminew.tgmeng.com/api/send", umamiPostEventData);
-        log.info("Umami统计数据发送完毕");
+        log.info("Umami统计数据发送完毕:{}", metricName);
     }
 
     // 拼装请求数据体
