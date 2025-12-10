@@ -78,28 +78,28 @@ public class ControllerApiSchedule {
                                     if (result.getData() != null) {
                                         cacheUtil.put(endpointKey, result.getData());
                                     } else {
-                                        log.warn("🤖接口数据异常: {}，数据：{}", endpointKey, result.getData());
+                                        log.warn("🚨🚨🚨 接口数据异常: {}，数据：{}", endpointKey, result.getData());
                                     }
 
                                     long elapsed = System.currentTimeMillis() - startTime;
                                     log.info("🕒 接口 {} 执行结束，耗时 {}ms", endpointKey, elapsed);
                                     if (elapsed > 60_000) {
-                                        log.warn("⚠️ 接口 {} 执行结束，超过1分钟: {}ms", endpointKey, elapsed);
+                                        log.warn("⚠️⚠️⚠️ 接口 {} 执行结束，超过1分钟: {}ms", endpointKey, elapsed);
                                     }
 
                                 } catch (InterruptedException e) {
                                     Thread.currentThread().interrupt();
-                                    log.error("任务被中断: {}", endpointKey, e);
+                                    log.error("🚨🚨🚨 任务被中断: {}", endpointKey, e);
                                 } catch (Exception e) {
-                                    log.error("🤖接口异常: {}", endpointKey, e);
+                                    log.error("🚨🚨🚨 接口异常: {}", endpointKey, e);
                                 }
                             }, executor)
                             .orTimeout(timeoutSeconds, TimeUnit.SECONDS)
                             .exceptionally(ex -> {
                                 if (ex instanceof TimeoutException) {
-                                    log.warn("⚠️ 接口 {} 超时（{}秒）", endpointKey, timeoutSeconds);
+                                    log.warn("🚨🚨🚨 接口 {} 超时（{}秒）", endpointKey, timeoutSeconds);
                                 } else {
-                                    log.error("🤖接口执行异常: {}", endpointKey, ex);
+                                    log.error("🚨🚨🚨 接口执行异常: {}", endpointKey, ex);
                                 }
                                 return null;
                             });
