@@ -96,13 +96,13 @@ public class SubscriptionUtil {
         // 使用 CompletableFuture 来并行处理每个文件
         for (File file : subscriptionFiles) {
             // 提交每个文件处理的任务
-            log.info("✈️开始处理订阅文件: {}", file.getName());
+            log.info("✈️ 开始处理订阅文件: {}", file.getName());
             try {
                 startSubscriptionOption(file, hotList);
                 successCount.incrementAndGet();  // 线程安全地增加成功计数
             } catch (Exception e) {
                 failCount.incrementAndGet();  // 线程安全地增加失败计数
-                log.error("✈️订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
+                log.error("✈️ 订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
             }
         }
         // 打印最终统计结果

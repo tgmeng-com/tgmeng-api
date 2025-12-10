@@ -1,6 +1,7 @@
 package com.tgmeng.common.webhook;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.SubscriptionBean;
@@ -34,11 +35,15 @@ public class FeiShuWebHook {
     ObjectMapper mapper = new ObjectMapper();
 
     public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords,String accessKey) {
+        StopWatch stopWatch = new StopWatch(accessKey);
+        stopWatch.start();
         String webHook = getWebHook(push);
         log.info("🎠开始推送飞书：{}条，accessKey:{}", newHotList.size(),accessKey);
         List<List<List<WebHookFeiShuBean.TagItem>>> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(push, content);
         sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
+        stopWatch.stop();
+        log.info("飞书成功推送：{}条，accessKey:{},耗时:{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {
@@ -146,7 +151,6 @@ public class FeiShuWebHook {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        log.info("飞书成功推送：{}条，accessKey:{}", count,accessKey);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.FEISHU.getDescription(), count);
     }
 
