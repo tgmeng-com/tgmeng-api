@@ -100,6 +100,11 @@ public class SubscriptionUtil {
         // 使用 CompletableFuture 来并行处理每个文件
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (File file : subscriptionFiles) {
+            // 打印线程池状态
+            java.util.concurrent.ThreadPoolExecutor tp = executor.getThreadPoolExecutor();
+            log.info("🧵线程池状态 - 核心: {}, 最大: {}, 当前: {}, 活跃: {}, 队列: {}",
+                    tp.getCorePoolSize(), tp.getMaximumPoolSize(), tp.getPoolSize(), tp.getActiveCount(), tp.getQueue().size());
+
             // 提交每个文件处理的任务
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                 try {

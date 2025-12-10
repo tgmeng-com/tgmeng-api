@@ -12,11 +12,13 @@ public class ThreadPoolConfig {
     public ThreadPoolTaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
-        // 核心线程数，保持的最小线程数
-        executor.setCorePoolSize(10);
+        int cpuCount = Runtime.getRuntime().availableProcessors();
+        // 核心线程数，保持的最小线程数 (CPU核数的2倍)
+        int corePoolSize = cpuCount * 2;
+        executor.setCorePoolSize(corePoolSize);
 
-        // 最大线程数
-        executor.setMaxPoolSize(100);
+        // 最大线程数 (核心线程数的2倍)
+        executor.setMaxPoolSize(corePoolSize * 2);
 
         // 队列容量
         executor.setQueueCapacity(Integer.MAX_VALUE);
