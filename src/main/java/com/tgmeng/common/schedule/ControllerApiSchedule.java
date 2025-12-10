@@ -1,5 +1,6 @@
 package com.tgmeng.common.schedule;
 
+import cn.hutool.core.date.StopWatch;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.config.ScheduleRequestConfigManager;
 import com.tgmeng.common.enums.system.RequestFromEnum;
@@ -15,10 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Service
 @Slf4j
@@ -33,7 +31,18 @@ public class ControllerApiSchedule {
     private final ISystemLocalClient systemLocalClient;
 
     private final ThreadPoolTaskExecutor executor;
-    private final ScheduledExecutorService timeoutScheduler = Executors.newScheduledThreadPool(4);
+
+    // 自定义调度线程池（七大参数说明：ScheduledThreadPoolExecutor 内部固定了 队列=DelayedWorkQueue, 最大线程数=Integer.MAX_VALUE）
+    private final ScheduledExecutorService timeoutScheduler = new ScheduledThreadPoolExecutor(
+            Math.max(2, Runtime.getRuntime().availableProcessors() * 2), // 1. 核心线程数 (corePoolSize)
+            r -> { // 6. 线程工厂 (threadFactory)
+                Thread t = new Thread(r);
+                t.setName("timeout-scheduler-" + t.getId());
+                t.setDaemon(true);
+                return t;
+            },
+            new ThreadPoolExecutor.CallerRunsPolicy() // 7. 拒绝策略 (handler)
+    );
     // 所有接口的配置
     private final ScheduleRequestConfigManager scheduleRequestConfigManager;
     private final CacheUtil cacheUtil;
@@ -66,16 +75,11 @@ public class ControllerApiSchedule {
                     long timeoutSeconds = config.getTimeout();
                     long delayMillis = config.getRequestDelay();
 
-                    // 异步执行任务
-                    CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                        long start = System.currentTimeMillis();
-
+                    // 定义实际执行的任务逻辑（不包含 Thread.sleep）
+                    Runnable taskLogic = () -> {
+                        StopWatch stopWatch = new StopWatch(endpointKey);
+                        stopWatch.start();
                         try {
-                            // 执行前延迟
-                            if (delayMillis > 0) {
-                                Thread.sleep(delayMillis);
-                            }
-
                             // 调用接口
                             ResultTemplateBean result = systemLocalClient.systemLocalClient(
                                     RequestFromEnum.INTERNAL.getValue(),
@@ -87,24 +91,31 @@ public class ControllerApiSchedule {
                             } else {
                                 log.warn("🚨🚨🚨 接口 {} 返回异常，data = null", endpointKey);
                             }
-
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                            log.warn("⛔⛔⛔ 接口 {} 被强制中断（超时可能触发）", endpointKey);
-
                         } catch (Exception e) {
                             log.error("🚨🚨🚨 接口 {} 执行异常", endpointKey, e);
-
                         } finally {
-                            long cost = System.currentTimeMillis() - start;
+                            stopWatch.stop();
+                            long cost = stopWatch.getTotalTimeMillis();
                             log.info("🕒🕒🕒 接口 {} 执行结束，耗时 {} ms", endpointKey, cost);
 
                             if (cost > 60_000) {
                                 log.warn("⚠️⚠️⚠️ 接口 {} 执行超过 1 分钟，用时 {} ms", endpointKey, cost);
                             }
                         }
+                    };
 
-                    }, executor);
+                    CompletableFuture<Void> future;
+                    // 异步延迟处理，替代 Thread.sleep
+                    if (delayMillis > 0) {
+                        CompletableFuture<Void> delayedStart = new CompletableFuture<>();
+                        // 使用 timeoutScheduler 进行非阻塞延迟
+                        timeoutScheduler.schedule(() -> delayedStart.complete(null), delayMillis, TimeUnit.MILLISECONDS);
+                        // 延迟结束后在 executor 中执行任务
+                        future = delayedStart.thenRunAsync(taskLogic, executor);
+                    } else {
+                        // 无延迟直接执行
+                        future = CompletableFuture.runAsync(taskLogic, executor);
+                    }
 
                     // 【关键修复】使用独立调度线程池执行“超时中断”
                     timeoutScheduler.schedule(() -> {
