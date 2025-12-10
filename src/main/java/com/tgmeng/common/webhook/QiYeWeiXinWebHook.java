@@ -27,13 +27,13 @@ public class QiYeWeiXinWebHook {
     @Autowired
     private UmamiUtil umamiUtil;
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
+    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords,String accessKey) {
         String webHook = getWebHook(push);
         String contentType = push.getSecret();
-        log.info("🎠开始推送企业微信：{}条", newHotList.size());
+        log.info("🎠开始推送企业微信：{}条，accessKey:{}", newHotList.size(),accessKey);
         List<String> content = getHotContent(newHotList, keywords, contentType);
         List<String> postJsonBody = getPostBody(content, contentType);
-        sendPost(webHook, postJsonBody, newHotList.size());
+        sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {
@@ -110,12 +110,12 @@ public class QiYeWeiXinWebHook {
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count,String accessKey) {
         for (String postJsonBody : postJsonBodys) {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        log.info("企业微信成功推送：{}条", count);
+        log.info("企业微信成功推送：{}条，accessKey:{}", count,accessKey);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.QIYEWEIXIN.getDescription(), count);
     }
 }

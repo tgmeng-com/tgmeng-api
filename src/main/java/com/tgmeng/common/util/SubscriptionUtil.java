@@ -75,7 +75,7 @@ public class SubscriptionUtil {
             log.info("✈️✈️✈️开始处理订阅");
             FileUtil.checkDirExitAndMake(subscriptionDir);
             File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
-            log.info("✈️✈️✈️共 {} 个订阅文件", subscriptionFileList.length);
+            log.info("✈️✈️共 {} 个订阅文件", subscriptionFileList.length);
             cycleFile(subscriptionFileList);
         } catch (Exception e) {
             log.error("订阅处理失败: {}", e.getMessage());
@@ -96,6 +96,7 @@ public class SubscriptionUtil {
         // 使用 CompletableFuture 来并行处理每个文件
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (File file : subscriptionFiles) {
+            log.info("✈️开始处理订阅文件: {}", file.getName());
             // 提交每个文件处理的任务
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                 try {
@@ -151,7 +152,7 @@ public class SubscriptionUtil {
                                     String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
                                     newHashes.add(hashBase64);
                                 }
-                                sendToPlatform(push, newHotList, mergedKeywords);
+                                sendToPlatform(push, newHotList, mergedKeywords,subscriptionBean.getAccessKey());
                             }
                         }
                     } catch (Exception e) {
@@ -168,7 +169,9 @@ public class SubscriptionUtil {
             // 将新推送的哈希添加到已发送的集合中
             sentSet.addAll(newHashes);
             // 更新文件内容
+            log.info("✈️开始更新订阅文件: {}", file.getName());
             updateFileContent(subscriptionBean, file);
+            log.info("✈️完成更新订阅文件: {}", file.getName());
         }
     }
 
@@ -200,22 +203,22 @@ public class SubscriptionUtil {
                 .toList();
     }
 
-    private void sendToPlatform(SubscriptionBean.PushConfig push, List<Map<String, Object>> newHotList, List<String> mergedKeywords) {
+    private void sendToPlatform(SubscriptionBean.PushConfig push, List<Map<String, Object>> newHotList, List<String> mergedKeywords,String accessKey) {
         switch (push.getType()) {
             case SubscriptionChannelTypeEnum.DINGDING:
-                dingTalkWebHook.sendMessage(newHotList, push, mergedKeywords);
+                dingTalkWebHook.sendMessage(newHotList, push, mergedKeywords,accessKey);
                 break;
             case SubscriptionChannelTypeEnum.FEISHU:
-                feiShuWebHook.sendMessage(newHotList, push, mergedKeywords);
+                feiShuWebHook.sendMessage(newHotList, push, mergedKeywords,accessKey);
                 break;
             case SubscriptionChannelTypeEnum.TELEGRAM:
-                telegramWebHook.sendMessage(newHotList, push, mergedKeywords);
+                telegramWebHook.sendMessage(newHotList, push, mergedKeywords,accessKey);
                 break;
             case SubscriptionChannelTypeEnum.QIYEWEIXIN:
-                qiYeWeiXinWebHook.sendMessage(newHotList, push, mergedKeywords);
+                qiYeWeiXinWebHook.sendMessage(newHotList, push, mergedKeywords,accessKey);
                 break;
             case SubscriptionChannelTypeEnum.NTFY:
-                ntfyWebHook.sendMessage(newHotList, push, mergedKeywords);
+                ntfyWebHook.sendMessage(newHotList, push, mergedKeywords,accessKey);
                 break;
             //case SubscriptionChannelTypeEnum.GOTIFY:
             //    gotifyWebHook.sendMessage(newHotList, push, mergedKeywords);

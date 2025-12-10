@@ -33,12 +33,12 @@ public class FeiShuWebHook {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
+    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords,String accessKey) {
         String webHook = getWebHook(push);
-        log.info("🎠开始推送飞书：{}条", newHotList.size());
+        log.info("🎠开始推送飞书：{}条，accessKey:{}", newHotList.size(),accessKey);
         List<List<List<WebHookFeiShuBean.TagItem>>> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(push, content);
-        sendPost(webHook, postJsonBody, newHotList.size());
+        sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {
@@ -141,12 +141,12 @@ public class FeiShuWebHook {
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count,String accessKey) {
         for (String postJsonBody : postJsonBodys) {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        log.info("飞书成功推送：{}条", count);
+        log.info("飞书成功推送：{}条，accessKey:{}", count,accessKey);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.FEISHU.getDescription(), count);
     }
 

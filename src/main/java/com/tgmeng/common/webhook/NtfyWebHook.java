@@ -25,12 +25,12 @@ public class NtfyWebHook {
     @Autowired
     private UmamiUtil umamiUtil;
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords) {
+    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords,String accessKey) {
         String webHook = getWebHook(push);
-        log.info("🎠开始推送NTFY：{}条", newHotList.size());
+        log.info("🎠开始推送NTFY：{}条，accessKey:{}", newHotList.size(),accessKey);
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content);
-        sendPost(webHook, postJsonBody, newHotList.size());
+        sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {
@@ -80,14 +80,14 @@ public class NtfyWebHook {
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count,String accessKey) {
         for (String postJsonBody : postJsonBodys) {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader()
                     .setContentType("application/json;charset=UTF-8")
                     .setMarkdown("yes");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        log.info("NTFY成功推送：{}条", count);
+        log.info("NTFY成功推送：{}条，accessKey:{}", count,accessKey);
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.NTFY.getDescription(), count);
     }
 }
