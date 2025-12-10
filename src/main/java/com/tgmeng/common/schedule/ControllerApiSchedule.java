@@ -58,54 +58,62 @@ public class ControllerApiSchedule {
 
     public void scanAndInvokeControllers(Map<String, ScheduleRequestConfigManager.PlatformConfig> configs) {
 
-        log.info("🤖开始:系统定时任务缓存数据，共{}个接口，👈👈", configs.size());
-        // 使用自定义线程池进行并行处理
-        // 将每个任务提交到线程池
+        log.info("🤖开始:系统定时任务缓存数据，共{}个接口", configs.size());
+
+        // 提交任务
         List<CompletableFuture<Void>> futures = configs.entrySet().stream()
-                .map(endpoint -> CompletableFuture.runAsync(() -> {
-                    try {
-                        // 模拟延迟
-                        Thread.sleep(endpoint.getValue().getRequestDelay());
+                .map(entry -> {
+                    String endpointKey = entry.getKey();
+                    ScheduleRequestConfigManager.PlatformConfig config = entry.getValue();
+                    long timeoutSeconds = config.getTimeout(); // 每个接口独立超时
 
-                        // 调用远程接口获取数据
-                        ResultTemplateBean resultTemplateBean = systemLocalClient.systemLocalClient(RequestFromEnum.INTERNAL.getValue(), endpoint.getKey());
+                    return CompletableFuture.runAsync(() -> {
+                                long startTime = System.currentTimeMillis();
+                                try {
+                                    Thread.sleep(config.getRequestDelay());
 
-                        // 处理返回的结果
-                        if (resultTemplateBean.getData() != null) {
-                            cacheUtil.put(endpoint.getKey(), resultTemplateBean.getData());
-                            log.info("🤖成功缓存数据: {}", endpoint.getKey());
-                        } else {
-                            log.info("🤖❌定时任务，接口数据异常: {}，数据：{}", endpoint.getKey(), resultTemplateBean.getData());
-                        }
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        log.error("任务被中断: {}", endpoint.getKey(), e);
-                    } catch (Exception e) {
-                        log.error("🤖❌定时任务，接口数据异常: {}", endpoint.getKey(), e);
-                    }
-                }, executor)) // 提交任务到线程池
+                                    ResultTemplateBean result = systemLocalClient.systemLocalClient(
+                                            RequestFromEnum.INTERNAL.getValue(), endpointKey);
+
+                                    if (result.getData() != null) {
+                                        cacheUtil.put(endpointKey, result.getData());
+                                    } else {
+                                        log.warn("🤖接口数据异常: {}，数据：{}", endpointKey, result.getData());
+                                    }
+
+                                    long elapsed = System.currentTimeMillis() - startTime;
+                                    log.info("🕒 接口 {} 执行结束，耗时 {}ms", endpointKey, elapsed);
+                                    if (elapsed > 60_000) {
+                                        log.warn("⚠️ 接口 {} 执行结束，超过1分钟: {}ms", endpointKey, elapsed);
+                                    }
+
+                                } catch (InterruptedException e) {
+                                    Thread.currentThread().interrupt();
+                                    log.error("任务被中断: {}", endpointKey, e);
+                                } catch (Exception e) {
+                                    log.error("🤖接口异常: {}", endpointKey, e);
+                                }
+                            }, executor)
+                            .orTimeout(timeoutSeconds, TimeUnit.SECONDS)
+                            .exceptionally(ex -> {
+                                if (ex instanceof TimeoutException) {
+                                    log.warn("⚠️ 接口 {} 超时（{}秒）", endpointKey, timeoutSeconds);
+                                } else {
+                                    log.error("🤖接口执行异常: {}", endpointKey, ex);
+                                }
+                                return null;
+                            });
+                })
                 .toList();
-        // 等待所有任务完成，设置超时
-        try {
-            // 使用 CompletableFuture.allOf() 等待所有任务完成
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                    .orTimeout(300, TimeUnit.SECONDS) // 60秒超时
-                    .join(); // 等待任务完成
 
-            // 如果需要的话，执行后续操作
+        // 全局等待所有任务完成
+        try {
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+                    .join(); // 等待全部完成
         } catch (CompletionException e) {
-            // 判断是否超时
-            if (e.getCause() instanceof TimeoutException) {
-                log.warn("🤖任务超时，未能完成所有任务");
-                // 超时后取消未完成的任务
-                futures.stream()
-                        .filter(future -> !future.isDone())
-                        .forEach(future -> future.cancel(true));
-            } else {
-                log.error("🤖执行异常: {}", e.getMessage(), e);
-            }
+            log.error("🤖全局任务异常: {}", e.getMessage(), e);
         } catch (Exception e) {
-            log.error("🤖执行异常: {}", e.getMessage(), e);
+            log.error("🤖全局任务异常: {}", e.getMessage(), e);
         } finally {
             // 确保订阅操作始终执行
             try {

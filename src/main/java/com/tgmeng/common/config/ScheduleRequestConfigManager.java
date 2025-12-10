@@ -31,7 +31,7 @@ public class ScheduleRequestConfigManager {
         private Integer retryTimes = 3;
         // 超时时间，单位：秒（单次请求的超时时间）
         @Builder.Default
-        private Long timeout = 30L;
+        private Long timeout = 60L;
         // 描述信息
         @Builder.Default
         private String description = "";
@@ -214,7 +214,7 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/cctv/16", PlatformConfig.builder().build());
         configs.put("/api/topsearch/cctv/17", PlatformConfig.builder().build());
         configs.put("/api/topsearch/pengpaixinwen", PlatformConfig.builder().build());
-        configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(300L).build());
+        configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(300L).timeout(300L).build());
         configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
 
