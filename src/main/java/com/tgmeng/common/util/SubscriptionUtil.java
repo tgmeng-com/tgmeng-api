@@ -8,6 +8,7 @@ import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.webhook.*;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,12 @@ public class SubscriptionUtil {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private final ICacheSearchService cacheSearchService;
+
+
+    @PostConstruct
+    public void init() {
+        log.info("✅ ControllerApiSchedule 已加载，配置检查通过！");
+    }
 
 
     public void subscriptionOption() {
