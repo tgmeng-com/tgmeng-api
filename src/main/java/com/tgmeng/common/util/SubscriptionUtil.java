@@ -1,5 +1,6 @@
 package com.tgmeng.common.util;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.SubscriptionBean;
@@ -12,11 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static com.tgmeng.common.util.StringUtil.generateRandomFileName;
 
@@ -25,6 +30,11 @@ import static com.tgmeng.common.util.StringUtil.generateRandomFileName;
 @RequiredArgsConstructor
 public class SubscriptionUtil {
 
+    // 定义一个 ReentrantLock 锁
+    private final ReentrantLock lock = new ReentrantLock();
+
+    @Autowired
+    private ThreadPoolTaskExecutor executor;
     @Lazy
     @Autowired
     private DingTalkWebHook dingTalkWebHook;
@@ -57,32 +67,57 @@ public class SubscriptionUtil {
 
 
     public void subscriptionOption() {
-        FileUtil.checkDirExitAndMake(subscriptionDir);
-        File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
-        cycleFile(subscriptionFileList);
+        // 如果当前有线程持有锁，其他线程会被阻塞，直到该锁被释放
+        lock.lock();
+        try {
+            // 订阅操作的逻辑
+            FileUtil.checkDirExitAndMake(subscriptionDir);
+            File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
+            cycleFile(subscriptionFileList);
+        } catch (Exception e) {
+            log.error("订阅处理失败: {}", e.getMessage());
+        } finally {
+            // 确保在操作完成后释放锁
+            lock.unlock();
+        }
     }
 
     // 遍历订阅文件列表
     public void cycleFile(File[] subscriptionFiles) {
-        int successCount = 0;
-        int failCount = 0;
+        // 使用 AtomicInteger 来保证线程安全地统计成功和失败的次数
+        AtomicInteger successCount = new AtomicInteger(0);
+        AtomicInteger failCount = new AtomicInteger(0);
+
+        // 从缓存中获取热点数据
+        List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, null).getData();
+        // 使用 CompletableFuture 来并行处理每个文件
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (File file : subscriptionFiles) {
-            try {
-                startSubscriptionOption(file);
-                successCount++;
-            } catch (Exception e) {
-                failCount++;
-                log.error("✈️订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
-            }
+            // 提交每个文件处理的任务
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+                try {
+                    startSubscriptionOption(file, hotList);
+                    successCount.incrementAndGet();  // 线程安全地增加成功计数
+                } catch (Exception e) {
+                    failCount.incrementAndGet();  // 线程安全地增加失败计数
+                    log.error("✈️订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
+                }
+            }, executor);  // 提交任务到线程池
+
+            futures.add(future);
         }
-        log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount, failCount, subscriptionFiles.length);
+
+        // 等待所有任务完成
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+        // 打印最终统计结果
+        log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount.get(), failCount.get(), subscriptionFiles.length);
     }
 
     // 开始遍历热点去订阅
-    public void startSubscriptionOption(File file) {
+    public void startSubscriptionOption(File file, List<Map<String, Object>> hotList) {
         try {
             SubscriptionBean subscriptionBean = MAPPER.readValue(file, SubscriptionBean.class);
-            List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, null).getData();
             pushToChannel(subscriptionBean, hotList, file);
         } catch (Exception e) {
             throw new ServerException(e.getMessage());
@@ -92,61 +127,87 @@ public class SubscriptionUtil {
     // 执行订阅操作
     public void pushToChannel(SubscriptionBean subscriptionBean, List<Map<String, Object>> hotList, File file) {
         // 全局关键词
-        List<String> keywords = subscriptionBean.getKeywords();
+        List<String> keywords = subscriptionBean.getKeywords() == null ? new ArrayList<>() : subscriptionBean.getKeywords();
         // 已发送的哈希集合
         Set<String> sentSet = new HashSet<>(subscriptionBean.getSent());
-        for (SubscriptionBean.PushConfig push : subscriptionBean.getPlatforms()) {
-            try {
-                // 独立关键词
-                List<String> platformKeywords = push.getPlatformKeywords();
-                // 合并关键词
-                List<String> mergedKeywords = new ArrayList<>(keywords);
-                mergedKeywords.addAll(platformKeywords);
+        // 存储新推送的哈希，用于后续更新文件
+        List<String> newHashes = new ArrayList<>();
 
-                // 筛选平台关键词和独立关键词合并后符合的热点，并且过滤掉已推送的
-                List<Map<String, Object>> newHotList = hotList.stream()
-                        .filter(map -> {
-                            String keyWord = String.valueOf(map.get("keyword"));
-                            String hashBase64 = generateHash(keyWord, String.valueOf(map.get("dataCardName")));
-                            return mergedKeywords.stream().anyMatch(keyWord::contains) && !sentSet.contains(hashBase64);
-                        }).toList();
-
-                if (!newHotList.isEmpty()) {
-                    // 记录新推送的哈希，用于后续更新文件
-                    List<String> newHashes = new ArrayList<>();
-                    for (Map<String, Object> hotItem : newHotList) {
-                        String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
-                        newHashes.add(hashBase64);
+        // 使用 CompletableFuture 并行处理每个平台
+        List<CompletableFuture<Void>> futures = subscriptionBean.getPlatforms().stream()
+                .map(push -> CompletableFuture.runAsync(() -> {
+                    try {
+                        // 合并关键词
+                        List<String> mergedKeywords = mergeKeywords(keywords, push.getPlatformKeywords());
+                        // 筛选平台关键词和独立关键词合并后符合的热点，并且过滤掉已推送的
+                        if (CollUtil.isNotEmpty(mergedKeywords)) {
+                            List<Map<String, Object>> newHotList = getNewHotList(hotList, mergedKeywords, sentSet);
+                            if (CollUtil.isNotEmpty(newHotList)) {
+                                // 记录新推送的哈希
+                                for (Map<String, Object> hotItem : newHotList) {
+                                    String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
+                                    newHashes.add(hashBase64);
+                                }
+                                sendToPlatform(push, newHotList, mergedKeywords);
+                            }
+                        }
+                    } catch (Exception e) {
+                        log.error("推送异常：{}", e.getMessage());
                     }
-                    sentSet.addAll(newHashes);
+                }))
+                .toList();
 
-                    updateFileContent(subscriptionBean, file);
-                    switch (push.getType()) {
-                        case SubscriptionChannelTypeEnum.DINGDING:
-                            dingTalkWebHook.sendMessage(newHotList, push, mergedKeywords);
-                            break;
-                        case SubscriptionChannelTypeEnum.FEISHU:
-                            feiShuWebHook.sendMessage(newHotList, push, mergedKeywords);
-                            break;
-                        case SubscriptionChannelTypeEnum.TELEGRAM:
-                            telegramWebHook.sendMessage(newHotList, push, mergedKeywords);
-                            break;
-                        case SubscriptionChannelTypeEnum.QIYEWEIXIN:
-                            qiYeWeiXinWebHook.sendMessage(newHotList, push, mergedKeywords);
-                            break;
-                        case SubscriptionChannelTypeEnum.NTFY:
-                            ntfyWebHook.sendMessage(newHotList, push, mergedKeywords);
-                            break;
-                        //case SubscriptionChannelTypeEnum.GOTIFY:
-                        //    gotifyWebHook.sendMessage(newHotList, push, mergedKeywords);
-                        //    break;
-                        default:
-                            break;
-                    }
-                }
-            } catch (Exception e) {
-                log.error("推送异常：{}", e.getMessage());
-            }
+        // 等待所有的推送任务完成
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+        // 推送完成后，统一更新文件内容
+        if (!newHashes.isEmpty()) {
+            // 将新推送的哈希添加到已发送的集合中
+            sentSet.addAll(newHashes);
+            // 更新文件内容
+            updateFileContent(subscriptionBean, file);
+        }
+    }
+
+    private List<String> mergeKeywords(List<String> keywords, List<String> platformKeywords) {
+        platformKeywords = platformKeywords == null ? new ArrayList<>() : platformKeywords;
+        // 合并关键词
+        List<String> mergedKeywords = new ArrayList<>(keywords);
+        mergedKeywords.addAll(platformKeywords);
+        return mergedKeywords;
+    }
+
+    private List<Map<String, Object>> getNewHotList(List<Map<String, Object>> hotList, List<String> mergedKeywords, Set<String> sentSet) {
+        return hotList.stream()
+                .filter(map -> {
+                    String keyWord = String.valueOf(map.get("keyword"));
+                    String hashBase64 = generateHash(keyWord, String.valueOf(map.get("dataCardName")));
+                    return mergedKeywords.stream().anyMatch(keyWord::contains) && !sentSet.contains(hashBase64);
+                }).toList();
+    }
+
+    private void sendToPlatform(SubscriptionBean.PushConfig push, List<Map<String, Object>> newHotList, List<String> mergedKeywords) {
+        switch (push.getType()) {
+            case SubscriptionChannelTypeEnum.DINGDING:
+                dingTalkWebHook.sendMessage(newHotList, push, mergedKeywords);
+                break;
+            case SubscriptionChannelTypeEnum.FEISHU:
+                feiShuWebHook.sendMessage(newHotList, push, mergedKeywords);
+                break;
+            case SubscriptionChannelTypeEnum.TELEGRAM:
+                telegramWebHook.sendMessage(newHotList, push, mergedKeywords);
+                break;
+            case SubscriptionChannelTypeEnum.QIYEWEIXIN:
+                qiYeWeiXinWebHook.sendMessage(newHotList, push, mergedKeywords);
+                break;
+            case SubscriptionChannelTypeEnum.NTFY:
+                ntfyWebHook.sendMessage(newHotList, push, mergedKeywords);
+                break;
+            //case SubscriptionChannelTypeEnum.GOTIFY:
+            //    gotifyWebHook.sendMessage(newHotList, push, mergedKeywords);
+            //    break;
+            default:
+                break;
         }
     }
 
@@ -159,7 +220,7 @@ public class SubscriptionUtil {
         return Base64.getEncoder().encodeToString(hashBinary);
     }
 
-    public void updateFileContent(SubscriptionBean subscriptionBean,File file) {
+    public void updateFileContent(SubscriptionBean subscriptionBean, File file) {
         try {
             Set<String> sent = subscriptionBean.getSent();
             int excess = sent.size() - maxHotNumber;
