@@ -43,11 +43,9 @@ public class TopSearchDataCacheInterceptor {
                 log.info("🙋🏻‍♂️外部请求，检索数据，走正常程序:{}", url);
                 return joinPoint.proceed();
             } else if (!RequestFromEnum.INTERNAL.getValue().equals(source)) {
-                log.info("🙋🏻‍♂️外部请求，返回缓存：{}", url);
                 Object cachedData = cacheUtil.getValue(StringUtil.getUri(url));
                 return ResultTemplateBean.success(cachedData);
             } else {
-                log.info("❤️内部请求，强制刷新缓存:{}", url);
                 return joinPoint.proceed();
             }
         } else {

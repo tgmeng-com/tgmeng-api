@@ -68,6 +68,7 @@ public class CacheUtil {
 
     // 获取value(单个)
     public Object getValue(String key) {
+        log.info("🙋🏻‍♂️查询缓存:{}", key);
         return cache.getIfPresent(key);
     }
     //获取value(批量)
