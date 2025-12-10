@@ -8,7 +8,6 @@ import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.webhook.*;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,25 +65,19 @@ public class SubscriptionUtil {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private final ICacheSearchService cacheSearchService;
 
-
-    @PostConstruct
-    public void init() {
-        log.info("✅ ControllerApiSchedule 已加载，配置检查通过！");
-    }
-
-
     public void subscriptionOption() {
         // 如果当前有线程持有锁，其他线程会被阻塞，直到该锁被释放
         lock.lock();
+        long subStart = System.currentTimeMillis();
         try {
-            // 订阅操作的逻辑
+            log.info("开始处理订阅");
             FileUtil.checkDirExitAndMake(subscriptionDir);
             File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
             cycleFile(subscriptionFileList);
         } catch (Exception e) {
             log.error("订阅处理失败: {}", e.getMessage());
         } finally {
-            // 确保在操作完成后释放锁
+            log.info("✅ 订阅操作完成，耗时 {} ms", System.currentTimeMillis() - subStart);
             lock.unlock();
         }
     }
@@ -100,11 +93,6 @@ public class SubscriptionUtil {
         // 使用 CompletableFuture 来并行处理每个文件
         List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (File file : subscriptionFiles) {
-            // 打印线程池状态
-            java.util.concurrent.ThreadPoolExecutor tp = executor.getThreadPoolExecutor();
-            log.info("🧵线程池状态 - 核心: {}, 最大: {}, 当前: {}, 活跃: {}, 队列: {}",
-                    tp.getCorePoolSize(), tp.getMaximumPoolSize(), tp.getPoolSize(), tp.getActiveCount(), tp.getQueue().size());
-
             // 提交每个文件处理的任务
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                 try {

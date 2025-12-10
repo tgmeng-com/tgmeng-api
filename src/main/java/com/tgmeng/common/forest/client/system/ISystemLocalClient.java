@@ -16,9 +16,7 @@ import com.tgmeng.common.bean.ResultTemplateBean;
 */
 public interface ISystemLocalClient {
     @Get(
-            url = "http://127.0.0.1:4399{url}",
-            connectTimeout = 300000, //
-            readTimeout = 300000
+            url = "http://127.0.0.1:4399{url}"
     )
     ResultTemplateBean systemLocalClient(@Header("X-Source") String contentType, @Var("url") String url);
 }

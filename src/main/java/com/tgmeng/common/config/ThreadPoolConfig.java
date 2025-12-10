@@ -21,7 +21,7 @@ public class ThreadPoolConfig {
         executor.setMaxPoolSize(corePoolSize * 2);
 
         // 队列容量
-        executor.setQueueCapacity(Integer.MAX_VALUE);
+        executor.setQueueCapacity(0);
 
         // 线程空闲时间，超过该时间的空闲线程将被销毁
         executor.setKeepAliveSeconds(60);

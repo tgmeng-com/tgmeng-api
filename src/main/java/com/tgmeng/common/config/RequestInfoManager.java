@@ -468,19 +468,6 @@ public class RequestInfoManager {
 
                 .register();
 
-        addDomConfig("https://www.dxy.cn/bbs/newweb/pc/home?tab=3")
-                .requestType(ForestRequestTypeEnum.GET)
-                .platformName("丁香园社区")
-                .platformCategory("健康")
-                .interfaceUrl("/api/topsearch/dingxiangyuanshequ")
-                .hotTitleUrlPrefix("https://www.dxy.cn")
-                .addArea()
-                .rootSelector(".HotPost_wrapper__7S2FG")
-                .keywordSelector(".HotPost_titleWrapper__PBxkk")
-                .urlSelector(".HotPost_titleWrapper__PBxkk")
-
-                .register();
-
         addDomConfig("https://dxy.com/articles")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("丁香医生")
@@ -661,19 +648,6 @@ public class RequestInfoManager {
                 .keywordSelector("$.content.title")
                 .urlSelector("$.content.content_id")
                 .hotScoreSelector("$.content_counter.hot_rank")
-
-                .register();
-
-        addDomConfig("https://www.1point3acres.com/bbs/")
-                .requestType(ForestRequestTypeEnum.GET)
-                .platformName("一亩三分地")
-                .platformCategory("社区")
-                .interfaceUrl("/api/topsearch/yimusanfendi")
-                .hotTitleUrlPrefix("https://www.1point3acres.com/bbs/")
-                .addArea()
-                .rootSelector("#portal_block_439_content li")
-                .keywordSelector("a:first-of-type")
-                .urlSelector("a:first-of-type")
 
                 .register();
 

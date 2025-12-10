@@ -31,7 +31,7 @@ public class ScheduleRequestConfigManager {
         private Integer retryTimes = 3;
         // 超时时间，单位：秒（单次请求的超时时间）
         @Builder.Default
-        private Long timeout = 60L;
+        private Long timeout = 30L;
         // 描述信息
         @Builder.Default
         private String description = "";
@@ -148,7 +148,6 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/v2ex", PlatformConfig.builder().build());
         configs.put("/api/topsearch/buxingjiehupu", PlatformConfig.builder().build());
         configs.put("/api/topsearch/nga", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/yimusanfendi", PlatformConfig.builder().build());
         configs.put("/api/topsearch/wenzhangjuejin", PlatformConfig.builder().build());
         configs.put("/api/topsearch/hackernews", PlatformConfig.builder().build());
         configs.put("/api/topsearch/xiaozudouban/aimaozaopen", PlatformConfig.builder().requestCycle(300L).requestDelay(10L).build());
@@ -188,7 +187,6 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/shengwugu", PlatformConfig.builder().build());
         configs.put("/api/topsearch/yiyaomofang", PlatformConfig.builder().build());
         configs.put("/api/topsearch/dingxiangyisheng", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/dingxiangyuanshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/shengmingshibao", PlatformConfig.builder().build());
         configs.put("/api/topsearch/jiayidajiankang", PlatformConfig.builder().build());
         configs.put("/api/topsearch/guoke", PlatformConfig.builder().build());

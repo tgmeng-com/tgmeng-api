@@ -638,21 +638,6 @@ public class CommonJsoupUtil {
         return topSearchCommonVOS;
     }
 
-    public static List<TopSearchCommonVO.DataInfo> getYiMuSanFenDi(String content) {
-        Document parse = Jsoup.parse(content);
-        List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
-        Elements elements = parse.select("#portal_block_439_content li");
-        for (Element element : elements.subList(0, elements.size())) {
-            String url = safeAttr(element, "a:first-of-type", "href");
-            String title = safeText(element, "a:first-of-type");
-            //String hotScore = safeText(element, ".t-lights")+"·"+safeText(element, ".t-replies");
-            if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", "https://www.1point3acres.com/bbs/" + url, "", "", "", "", "", "", null, null, ""));
-            }
-        }
-        return topSearchCommonVOS;
-    }
-
     public static List<TopSearchCommonVO.DataInfo> getHackerNews(String content) {
         Document parse = Jsoup.parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();

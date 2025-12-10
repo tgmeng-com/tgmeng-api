@@ -64,6 +64,11 @@ public class ControllerApiSchedule {
         scanAndInvokeControllers(scheduleRequestConfigManager.getAllEnabledConfigsByRequestCycle(1200L));
     }
 
+    @Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
+    public void subscriptionSchedule() {
+        subscriptionUtil.subscriptionOption();
+    }
+
     public void scanAndInvokeControllers(Map<String, ScheduleRequestConfigManager.PlatformConfig> configs) {
         long globalStart = System.currentTimeMillis();
         log.info("🤖 开始系统定时任务缓存数据，共 {} 个接口", configs.size());
@@ -133,16 +138,9 @@ public class ControllerApiSchedule {
         try {
             CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
             log.info("✅ 所有接口执行完成，耗时 {} ms", System.currentTimeMillis() - globalStart);
-
-            long subStart = System.currentTimeMillis();
-            subscriptionUtil.subscriptionOption();
-            log.info("✅ 订阅操作完成，耗时 {} ms", System.currentTimeMillis() - subStart);
-
         } catch (Exception ex) {
             log.error("🚨🚨🚨 任务执行异常", ex);
         }
-
         log.info("🎉 本次定时任务全部完成，总耗时 {} ms", System.currentTimeMillis() - globalStart);
-
     }
 }

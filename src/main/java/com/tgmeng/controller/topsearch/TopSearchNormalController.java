@@ -356,12 +356,6 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    // 前端暂时不展示
-    @RequestMapping("/yimusanfendi")
-    public ResultTemplateBean getYiMuSanFenDiSearch() {
-        return topSearchCommonService.getTopSearchCommonService();
-    }
-
     @RequestMapping("/wenzhangjuejin")
     public ResultTemplateBean getWenZhangJueJinSearch() {
         return topSearchCommonService.getTopSearchCommonService();
@@ -434,11 +428,6 @@ public class TopSearchNormalController {
 
     @RequestMapping("/dingxiangyisheng")
     public ResultTemplateBean getDingXiangYiShengSearch() {
-        return topSearchCommonService.getTopSearchCommonService();
-    }
-
-    @RequestMapping("/dingxiangyuanshequ")
-    public ResultTemplateBean getDingXiangYuanSheQuSearch() {
         return topSearchCommonService.getTopSearchCommonService();
     }
 

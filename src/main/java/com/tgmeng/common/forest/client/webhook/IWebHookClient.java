@@ -18,8 +18,6 @@ import com.tgmeng.common.forest.header.ForestRequestHeader;
  */
 public interface IWebHookClient {
     @Post(
-            url = "{url}",
-            connectTimeout = 60000, //调用WebHook超时时间设置为5分钟
-            readTimeout = 60000)
+            url = "{url}")
     ForestResponse sendMessage(@Header ForestRequestHeader topSearchRequestHeader, @Var("url") String url, @Body String jsonBody);
 }
