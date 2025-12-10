@@ -20,8 +20,10 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 import static com.tgmeng.common.util.StringUtil.generateRandomFileName;
 
@@ -73,6 +75,7 @@ public class SubscriptionUtil {
             log.info("✈️✈️✈️开始处理订阅");
             FileUtil.checkDirExitAndMake(subscriptionDir);
             File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
+            log.info("✈️✈️✈️共 {} 个订阅文件", subscriptionFileList.length);
             cycleFile(subscriptionFileList);
         } catch (Exception e) {
             log.error("订阅处理失败: {}", e.getMessage());
@@ -131,7 +134,7 @@ public class SubscriptionUtil {
         // 已发送的哈希集合
         Set<String> sentSet = subscriptionBean.getSent();
         // 存储新推送的哈希，用于后续更新文件
-        Set<String> newHashes = new LinkedHashSet<>();
+        Set<String> newHashes = ConcurrentHashMap.newKeySet();
 
         // 使用 CompletableFuture 并行处理每个平台
         List<CompletableFuture<Void>> futures = subscriptionBean.getPlatforms().stream()
@@ -154,7 +157,7 @@ public class SubscriptionUtil {
                     } catch (Exception e) {
                         log.error("推送异常：{}", e.getMessage());
                     }
-                }))
+                },executor))
                 .toList();
 
         // 等待所有的推送任务完成
@@ -183,7 +186,18 @@ public class SubscriptionUtil {
                     String keyWord = String.valueOf(map.get("keyword"));
                     String hashBase64 = generateHash(keyWord, String.valueOf(map.get("dataCardName")));
                     return mergedKeywords.stream().anyMatch(keyWord::contains) && !sentSet.contains(hashBase64);
-                }).toList();
+                }).collect(Collectors.toMap(
+                        map -> generateHash(
+                                String.valueOf(map.get("keyword")),
+                                String.valueOf(map.get("dataCardName"))
+                        ),
+                        map -> map,
+                        (existing, replacement) -> replacement,  // 保留最后一个
+                        LinkedHashMap::new
+                ))
+                .values()
+                .stream()
+                .toList();
     }
 
     private void sendToPlatform(SubscriptionBean.PushConfig push, List<Map<String, Object>> newHotList, List<String> mergedKeywords) {

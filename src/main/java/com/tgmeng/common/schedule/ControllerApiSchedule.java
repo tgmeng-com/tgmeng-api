@@ -14,9 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
 
 @Service
 @Slf4j
@@ -32,17 +30,6 @@ public class ControllerApiSchedule {
 
     private final ThreadPoolTaskExecutor executor;
 
-    // 自定义调度线程池（七大参数说明：ScheduledThreadPoolExecutor 内部固定了 队列=DelayedWorkQueue, 最大线程数=Integer.MAX_VALUE）
-    private final ScheduledExecutorService timeoutScheduler = new ScheduledThreadPoolExecutor(
-            Math.max(2, Runtime.getRuntime().availableProcessors() * 2), // 1. 核心线程数 (corePoolSize)
-            r -> { // 6. 线程工厂 (threadFactory)
-                Thread t = new Thread(r);
-                t.setName("timeout-scheduler-" + t.getId());
-                t.setDaemon(true);
-                return t;
-            },
-            new ThreadPoolExecutor.CallerRunsPolicy() // 7. 拒绝策略 (handler)
-    );
     // 所有接口的配置
     private final ScheduleRequestConfigManager scheduleRequestConfigManager;
     private final CacheUtil cacheUtil;
@@ -70,77 +57,47 @@ public class ControllerApiSchedule {
     }
 
     public void scanAndInvokeControllers(Map<String, ScheduleRequestConfigManager.PlatformConfig> configs) {
-        long globalStart = System.currentTimeMillis();
         log.info("🤖 开始系统定时任务缓存数据，共 {} 个接口", configs.size());
-        List<CompletableFuture<Void>> futures = configs.entrySet().stream()
-                .map(entry -> {
-                    String endpointKey = entry.getKey();
-                    ScheduleRequestConfigManager.PlatformConfig config = entry.getValue();
+        // 所有接口异步并行执行，互不阻塞
+        configs.forEach((endpointKey, config) -> {
+            long delayMillis = config.getRequestDelay();
 
-                    long timeoutSeconds = config.getTimeout();
-                    long delayMillis = config.getRequestDelay();
-
-                    // 定义实际执行的任务逻辑（不包含 Thread.sleep）
-                    Runnable taskLogic = () -> {
-                        StopWatch stopWatch = new StopWatch(endpointKey);
-                        stopWatch.start();
-                        try {
-                            // 调用接口
-                            ResultTemplateBean result = systemLocalClient.systemLocalClient(
-                                    RequestFromEnum.INTERNAL.getValue(),
-                                    endpointKey
-                            );
-
-                            if (result.getData() != null) {
-                                cacheUtil.put(endpointKey, result.getData());
-                            } else {
-                                log.warn("🚨🚨🚨 接口 {} 返回异常，data = null", endpointKey);
-                            }
-                        } catch (Exception e) {
-                            log.error("🚨🚨🚨 接口 {} 执行异常", endpointKey, e);
-                        } finally {
-                            stopWatch.stop();
-                            long cost = stopWatch.getTotalTimeMillis();
-                            log.info("🕒🕒🕒 接口 {} 执行结束，耗时 {} ms", endpointKey, cost);
-
-                            if (cost > 60_000) {
-                                log.warn("⚠️⚠️⚠️ 接口 {} 执行超过 1 分钟，用时 {} ms", endpointKey, cost);
-                            }
-                        }
-                    };
-
-                    CompletableFuture<Void> future;
-                    // 异步延迟处理，替代 Thread.sleep
-                    if (delayMillis > 0) {
-                        CompletableFuture<Void> delayedStart = new CompletableFuture<>();
-                        // 使用 timeoutScheduler 进行非阻塞延迟
-                        timeoutScheduler.schedule(() -> delayedStart.complete(null), delayMillis, TimeUnit.MILLISECONDS);
-                        // 延迟结束后在 executor 中执行任务
-                        future = delayedStart.thenRunAsync(taskLogic, executor);
-                    } else {
-                        // 无延迟直接执行
-                        future = CompletableFuture.runAsync(taskLogic, executor);
+            executor.execute(() -> {
+                // 如果配置了延迟，先 sleep
+                if (delayMillis > 0) {
+                    try {
+                        Thread.sleep(delayMillis);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        log.warn("接口 {} 延迟被中断", endpointKey);
+                        return;
                     }
+                }
+                StopWatch stopWatch = new StopWatch(endpointKey);
+                stopWatch.start();
+                try {
+                    ResultTemplateBean result = systemLocalClient.systemLocalClient(
+                            RequestFromEnum.INTERNAL.getValue(),
+                            endpointKey
+                    );
 
-                    // 【关键修复】使用独立调度线程池执行“超时中断”
-                    timeoutScheduler.schedule(() -> {
-                        if (!future.isDone()) {
-                            log.warn("⛔⛔⛔ 接口 {} 超时（{} 秒），强制中断线程", endpointKey, timeoutSeconds);
-                            future.cancel(true);
-                        }
-                    }, timeoutSeconds, TimeUnit.SECONDS);
+                    if (result.getData() != null) {
+                        cacheUtil.put(endpointKey, result.getData());
+                    } else {
+                        log.warn("🚨 接口 {} 返回异常，data = null", endpointKey);
+                    }
+                } catch (Exception e) {
+                    log.error("🚨 接口 {} 执行异常", endpointKey, e);
+                } finally {
+                    stopWatch.stop();
+                    long cost = stopWatch.getTotalTimeMillis();
+                    log.info("🕒 接口 {} 执行结束，耗时 {} ms", endpointKey, cost);
 
-                    return future;
-                })
-                .toList();
-
-
-        try {
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-            log.info("✅ 所有接口执行完成，耗时 {} ms", System.currentTimeMillis() - globalStart);
-        } catch (Exception ex) {
-            log.error("🚨🚨🚨 任务执行异常", ex);
-        }
-        log.info("🎉 本次定时任务全部完成，总耗时 {} ms", System.currentTimeMillis() - globalStart);
+                    if (cost > 60_000) {
+                        log.warn("⚠️ 接口 {} 执行超过 1 分钟，用时 {} ms", endpointKey, cost);
+                    }
+                }
+            });
+        });
     }
 }
