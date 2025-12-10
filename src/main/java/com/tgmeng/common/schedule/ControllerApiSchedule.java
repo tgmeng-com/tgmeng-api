@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 @Service
 @Slf4j
@@ -33,7 +30,18 @@ public class ControllerApiSchedule {
     private final ISystemLocalClient systemLocalClient;
 
     private final ThreadPoolTaskExecutor executor;
-    private final ScheduledExecutorService timeoutScheduler = Executors.newScheduledThreadPool(32);
+
+    // 自定义调度线程池（七大参数说明：ScheduledThreadPoolExecutor 内部固定了 队列=DelayedWorkQueue, 最大线程数=Integer.MAX_VALUE）
+    private final ScheduledExecutorService timeoutScheduler = new ScheduledThreadPoolExecutor(
+            Math.max(2, Runtime.getRuntime().availableProcessors() * 2), // 1. 核心线程数 (corePoolSize)
+            r -> { // 6. 线程工厂 (threadFactory)
+                Thread t = new Thread(r);
+                t.setName("timeout-scheduler-" + t.getId());
+                t.setDaemon(true);
+                return t;
+            },
+            new ThreadPoolExecutor.CallerRunsPolicy() // 7. 拒绝策略 (handler)
+    );
     // 所有接口的配置
     private final ScheduleRequestConfigManager scheduleRequestConfigManager;
     private final CacheUtil cacheUtil;
