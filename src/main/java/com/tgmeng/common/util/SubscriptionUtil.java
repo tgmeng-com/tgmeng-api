@@ -70,14 +70,14 @@ public class SubscriptionUtil {
         lock.lock();
         long subStart = System.currentTimeMillis();
         try {
-            log.info("开始处理订阅");
+            log.info("✈️✈️✈️开始处理订阅");
             FileUtil.checkDirExitAndMake(subscriptionDir);
             File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
             cycleFile(subscriptionFileList);
         } catch (Exception e) {
             log.error("订阅处理失败: {}", e.getMessage());
         } finally {
-            log.info("✅ 订阅操作完成，耗时 {} ms", System.currentTimeMillis() - subStart);
+            log.info("✈️✈️✈️ ✅ 订阅操作完成，耗时 {} ms", System.currentTimeMillis() - subStart);
             lock.unlock();
         }
     }
