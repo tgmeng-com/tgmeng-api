@@ -56,9 +56,8 @@ public class ControllerApiSchedule {
     }
 
     public void scanAndInvokeControllers(Map<String, ScheduleRequestConfigManager.PlatformConfig> configs) {
-
+        long globalStart = System.currentTimeMillis();
         log.info("🤖 开始系统定时任务缓存数据，共 {} 个接口", configs.size());
-
         List<CompletableFuture<Void>> futures = configs.entrySet().stream()
                 .map(entry -> {
                     String endpointKey = entry.getKey();
@@ -120,19 +119,19 @@ public class ControllerApiSchedule {
                 .toList();
 
 
-        // 全部接口执行完后执行订阅操作
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .whenComplete((v, ex) -> {
-                    if (ex != null) {
-                        log.error("🚨🚨🚨 全局任务执行异常", ex);
-                    }
+        try {
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+            log.info("✅ 所有接口执行完成，耗时 {} ms", System.currentTimeMillis() - globalStart);
 
-                    try {
-                        subscriptionUtil.subscriptionOption();
-                    } catch (Exception e) {
-                        log.error("🚨🚨🚨 订阅操作执行失败", e);
-                    }
-                });
+            long subStart = System.currentTimeMillis();
+            subscriptionUtil.subscriptionOption();
+            log.info("✅ 订阅操作完成，耗时 {} ms", System.currentTimeMillis() - subStart);
+
+        } catch (Exception ex) {
+            log.error("🚨🚨🚨 任务执行异常", ex);
+        }
+
+        log.info("🎉 本次定时任务全部完成，总耗时 {} ms", System.currentTimeMillis() - globalStart);
 
     }
 }
