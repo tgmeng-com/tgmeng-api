@@ -229,11 +229,13 @@ public class SubscriptionUtil {
             throw new ServerException("重写文件失败 - 文件: " + file.getName() + ", 错误: " + e.getMessage());
         }
     }
+
     private void pushNewHashToSent(List<Map<String, Object>> newHotList, SubscriptionBean subscriptionBean){
         // 记录新推送的哈希
+        Set<String> sent = subscriptionBean.getSent();
         for (Map<String, Object> hotItem : newHotList) {
             String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
-            subscriptionBean.getSent().add(hashBase64);
+            sent.add(hashBase64);
         }
     }
 
@@ -241,7 +243,7 @@ public class SubscriptionUtil {
     public List<String> generateSubscriptionFile(Integer count) {
         log.info("开始创建初始化文件，数量为：" + count);
         List<String> newFileList = new ArrayList<>();
-        Set<String> allFileNamesInPath = new HashSet<>(FileUtil.getAllFileNamesInPath(subscriptionDir));
+        Set<String> allFileNamesInPath = new LinkedHashSet<>(FileUtil.getAllFileNamesInPath(subscriptionDir));
         for (int i = 0; i < count; i++) {
             String fileName = generateRandomFileName();
             if (allFileNamesInPath.contains(fileName)) {

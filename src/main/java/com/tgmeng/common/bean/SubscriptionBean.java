@@ -1,6 +1,7 @@
 package com.tgmeng.common.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,6 +19,7 @@ public class SubscriptionBean implements Serializable {
     private String accessKey;
     private List<String> keywords;
     private List<PushConfig> platforms;
+    @JsonDeserialize(as = LinkedHashSet.class)
     private Set<String> sent = new LinkedHashSet<>();
 
     @Data
