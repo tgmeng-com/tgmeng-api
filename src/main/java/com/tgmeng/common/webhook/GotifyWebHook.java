@@ -59,20 +59,20 @@ public class GotifyWebHook {
         List<String> jsonBodys = new ArrayList<>();
 
         for (List<Map<String, Object>> subNewHots : splitNewHotList) {
-            StringBuilder md = new StringBuilder("### 🍭 糖果梦热榜 🍭\n<br>");
+            StringBuilder md = new StringBuilder("### 🍭 糖果梦热榜 🍭\n\n");
             for (int i = 0; i < subNewHots.size(); i++) {
                 Map<String, Object> hot = subNewHots.get(i);
                 md.append(i + 1).append(". ")
                         .append("[").append(hot.get("keyword")).append("](")
                         .append(hot.get("url")).append(")")
                         .append("       --").append(hot.get("dataCardName"))
-                        .append("<br>");
+                        .append("\n");
             }
-            md.append("<br>");
-            md.append("📱 共计：").append(subNewHots.size()).append(" 条<br>");
-            md.append("📰 订阅：").append(String.join(", ", keywords)).append("<br>");
-            md.append("⏰ 时间：").append(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern)).append("<br>");
-            md.append("🙋🏻‍♂️ 来源：").append("[糖果梦热榜：https://tgmeng.com](https://tgmeng.com)<br>");
+            md.append("\n");
+            md.append("📱 共计：").append(subNewHots.size()).append(" 条\n\n");
+            md.append("📰 订阅：").append(String.join(", ", keywords)).append("\n\n");
+            md.append("⏰ 时间：").append(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern)).append("\n\n");
+            md.append("🙋🏻‍♂️ 来源：").append("[糖果梦热榜：https://tgmeng.com](https://tgmeng.com)\n\n");
             jsonBodys.add(md.toString());
         }
         return jsonBodys;
@@ -86,6 +86,14 @@ public class GotifyWebHook {
                 Map<String,Object> postbody = new HashMap();
                 postbody.put("message", subHotContent);
                 postbody.put("title", "糖果梦热榜");
+                // 👇 关键：启用 Markdown 显示
+                Map<String, Object> display = new HashMap<>();
+                display.put("contentType", "text/markdown");
+
+                Map<String, Object> extras = new HashMap<>();
+                extras.put("client::display", display);
+
+                postbody.put("extras", extras);
                 postBodys.add(MAPPER.writeValueAsString(postbody));
             }
             return postBodys;

@@ -210,9 +210,9 @@ public class SubscriptionUtil {
             case SubscriptionChannelTypeEnum.NTFY:
                 ntfyWebHook.sendMessage(newHotList, push, mergedKeywords, accessKey);
                 break;
-            //case SubscriptionChannelTypeEnum.GOTIFY:
-            //    gotifyWebHook.sendMessage(newHotList, push, mergedKeywords);
-            //    break;
+            case SubscriptionChannelTypeEnum.GOTIFY:
+                gotifyWebHook.sendMessage(newHotList, push, mergedKeywords);
+                break;
             default:
                 break;
         }

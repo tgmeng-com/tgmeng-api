@@ -36,6 +36,13 @@
       "secret": "",
       "platformKeywords": [],
       "remark": ""
+    },
+    {
+      "type": "GOTIFY",
+      "webhook": "",
+      "secret": "",
+      "platformKeywords": [],
+      "remark": ""
     }
   ],
   "sent": []
