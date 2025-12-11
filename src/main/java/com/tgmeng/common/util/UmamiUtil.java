@@ -30,7 +30,7 @@ public class UmamiUtil {
         forestRequestHeader.setUserAgent(HttpRequestUtil.getRequestRandomUserAgent());
         umamiClient.sendEvent(forestRequestHeader, "https://umaminew.tgmeng.com/api/send", umamiPostEventData);
         stopWatch.stop();
-        log.info("Umami统计数据发送完毕:{}，耗时：{} ms", metricName, stopWatch.getTotalTimeMillis());
+        log.info("Umami统计数据发送完毕: {}，耗时: {} ms", metricName, stopWatch.getTotalTimeMillis());
     }
 
     // 拼装请求数据体

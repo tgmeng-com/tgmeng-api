@@ -1,6 +1,8 @@
 package com.tgmeng.common.util;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.StopWatch;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.SubscriptionBean;
@@ -70,17 +72,19 @@ public class SubscriptionUtil {
     public void subscriptionOption() {
         // 如果当前有线程持有锁，其他线程会被阻塞，直到该锁被释放
         lock.lock();
-        long subStart = System.currentTimeMillis();
+        StopWatch stopWatch = new StopWatch(RandomUtil.randomString(10));
+        stopWatch.start();
         try {
-            log.info("✈️✈️✈️开始处理订阅");
+            log.info("✈️✈️✈️ 开始处理订阅");
             FileUtil.checkDirExitAndMake(subscriptionDir);
             File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
-            log.info("✈️✈️共 {} 个订阅文件", subscriptionFileList.length);
+            log.info("✈️✈️ 共 {} 个订阅文件", subscriptionFileList.length);
             cycleFile(subscriptionFileList);
         } catch (Exception e) {
             log.error("订阅处理失败: {}", e.getMessage());
         } finally {
-            log.info("✈️✈️✈️ ✅ 订阅操作完成，耗时 {} ms", System.currentTimeMillis() - subStart);
+            stopWatch.stop();
+            log.info("✈️✈️✈️ ✅ 订阅操作完成，耗时: {} ms", stopWatch.getTotalTimeMillis());
             lock.unlock();
         }
     }
@@ -151,7 +155,6 @@ public class SubscriptionUtil {
                     }
                 }, executor))
                 .toList();
-
         // 等待所有的推送任务完成
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
@@ -160,9 +163,12 @@ public class SubscriptionUtil {
             // 将新推送的哈希添加到已发送的集合中
             sentSet.addAll(newHashes);
             // 更新文件内容
-            log.info("✈️开始更新订阅文件: {}", file.getName());
+            StopWatch stopWatch = new StopWatch(file.getName() + RandomUtil.randomString(10));
+            stopWatch.start();
+            log.info("✈️ 开始更新订阅文件: {}", file.getName());
             updateFileContent(subscriptionBean, file);
-            log.info("✈️完成更新订阅文件: {}", file.getName());
+            stopWatch.stop();
+            log.info("✈️ 完成更新订阅文件: {}，耗时: {} ms", file.getName(), stopWatch.getTotalTimeMillis());
         }
     }
 
