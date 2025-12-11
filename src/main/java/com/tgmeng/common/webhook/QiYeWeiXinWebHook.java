@@ -33,12 +33,12 @@ public class QiYeWeiXinWebHook {
         stopWatch.start();
         String webHook = getWebHook(push);
         String contentType = push.getSecret();
-        log.info("🎠开始推送企业微信：{}条，accessKey:{}", newHotList.size(),accessKey);
+        log.info("🎠 开始推送企业微信：{}条，accessKey:{}", newHotList.size(),accessKey);
         List<String> content = getHotContent(newHotList, keywords, contentType);
         List<String> postJsonBody = getPostBody(content, contentType);
         sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
         stopWatch.stop();
-        log.info("企业微信成功推送：{}条，accessKey:{},耗时:{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
+        log.info("🎉 企业微信成功推送：{}条，accessKey:{},耗时:{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {

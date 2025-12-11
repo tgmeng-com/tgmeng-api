@@ -30,12 +30,12 @@ public class NtfyWebHook {
         StopWatch stopWatch = new StopWatch(accessKey);
         stopWatch.start();
         String webHook = getWebHook(push);
-        log.info("🎠开始推送NTFY：{}条，accessKey:{}", newHotList.size(),accessKey);
+        log.info("🎠 开始推送NTFY：{}条，accessKey:{}", newHotList.size(),accessKey);
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content);
         sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
         stopWatch.stop();
-        log.info("NTFY成功推送：{}条，accessKey:{},耗时:{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
+        log.info("🎉 NTFY成功推送：{}条，accessKey:{},耗时:{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.NTFY.getDescription(), newHotList.size());
     }
 

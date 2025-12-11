@@ -34,12 +34,12 @@ public class TelegramWebHook {
         StopWatch stopWatch = new StopWatch(accessKey);
         stopWatch.start();
         String webHook = getWebHook(push);
-        log.info("🎠开始推送Telegram：{}条，accessKey:{}", newHotList.size(),accessKey);
+        log.info("🎠 开始推送Telegram：{}条，accessKey:{}", newHotList.size(),accessKey);
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content, push);
         sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
         stopWatch.stop();
-        log.info("Telegram成功推送：{}条，accessKey:{},耗时:{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
+        log.info("🎉 Telegram成功推送：{}条，accessKey:{},耗时:{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {

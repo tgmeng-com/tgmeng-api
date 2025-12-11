@@ -1,5 +1,7 @@
 package com.tgmeng.common.util;
 
+import cn.hutool.core.date.StopWatch;
+import cn.hutool.core.util.RandomUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.UmamiPostDataBean;
 import com.tgmeng.common.forest.client.umami.IUmamiClient;
@@ -21,11 +23,14 @@ public class UmamiUtil {
 
     // 事件名和数据值
     public void sendEvent(String metricName, Integer value) {
+        StopWatch stopWatch = new StopWatch(metricName + value + RandomUtil.randomString(10));
+        stopWatch.start();
         UmamiPostDataBean umamiPostEventData = getUmamiPostEventData(metricName, value);
         ForestRequestHeader forestRequestHeader = new ForestRequestHeader();
         forestRequestHeader.setUserAgent(HttpRequestUtil.getRequestRandomUserAgent());
         umamiClient.sendEvent(forestRequestHeader, "https://umaminew.tgmeng.com/api/send", umamiPostEventData);
-        log.info("Umami统计数据发送完毕:{}", metricName);
+        stopWatch.stop();
+        log.info("Umami统计数据发送完毕:{}，耗时：{} ms", metricName, stopWatch.getTotalTimeMillis());
     }
 
     // 拼装请求数据体
