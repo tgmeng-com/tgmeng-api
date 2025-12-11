@@ -151,16 +151,19 @@ public class SubscriptionUtil {
             }
         });
         // 推送完成后，统一更新文件内容
+        StopWatch stopWatch = new StopWatch(file.getName() + RandomUtil.randomString(10));
+        stopWatch.start();
         if (!newHashes.isEmpty()) {
             // 将新推送的哈希添加到已发送的集合中
             sentSet.addAll(newHashes);
             // 更新文件内容
-            StopWatch stopWatch = new StopWatch(file.getName() + RandomUtil.randomString(10));
-            stopWatch.start();
             log.info("✈️ 开始更新订阅文件: {}", file.getName());
             updateFileContent(subscriptionBean, file);
             stopWatch.stop();
             log.info("✈️ 完成更新订阅文件: {}，耗时: {} ms", file.getName(), stopWatch.getTotalTimeMillis());
+        }else {
+            stopWatch.stop();
+            log.info("✈️ 完成更新订阅文件: {}，耗时: {} ms，未推送新数据", file.getName(), stopWatch.getTotalTimeMillis());
         }
     }
 
