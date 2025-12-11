@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -98,24 +97,17 @@ public class SubscriptionUtil {
         // 从缓存中获取热点数据
         List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, null).getData();
         // 使用 CompletableFuture 来并行处理每个文件
-        List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (File file : subscriptionFiles) {
             // 提交每个文件处理的任务
-            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-                log.info("✈️开始处理订阅文件: {}", file.getName());
-                try {
-                    startSubscriptionOption(file, hotList);
-                    successCount.incrementAndGet();  // 线程安全地增加成功计数
-                } catch (Exception e) {
-                    failCount.incrementAndGet();  // 线程安全地增加失败计数
-                    log.error("✈️订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
-                }
-            }, executor);  // 提交任务到线程池
-
-            futures.add(future);
+            log.info("✈️ 开始处理订阅文件: {}", file.getName());
+            try {
+                startSubscriptionOption(file, hotList);
+                successCount.incrementAndGet();  // 线程安全地增加成功计数
+            } catch (Exception e) {
+                failCount.incrementAndGet();  // 线程安全地增加失败计数
+                log.error("✈️ 订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
+            }
         }
-        // 等待所有任务完成
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         // 打印最终统计结果
         log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount.get(), failCount.get(), subscriptionFiles.length);
     }
@@ -138,33 +130,26 @@ public class SubscriptionUtil {
         Set<String> sentSet = subscriptionBean.getSent();
         // 存储新推送的哈希，用于后续更新文件
         Set<String> newHashes = ConcurrentHashMap.newKeySet();
-
-        // 使用 CompletableFuture 并行处理每个平台
-        List<CompletableFuture<Void>> futures = subscriptionBean.getPlatforms().stream()
-                .map(push -> CompletableFuture.runAsync(() -> {
-                    try {
-                        // 合并关键词
-                        List<String> mergedKeywords = mergeKeywords(keywords, push.getPlatformKeywords());
-                        // 筛选平台关键词和独立关键词合并后符合的热点，并且过滤掉已推送的
-                        if (CollUtil.isNotEmpty(mergedKeywords)) {
-                            List<Map<String, Object>> newHotList = getNewHotList(hotList, mergedKeywords, sentSet);
-                            if (CollUtil.isNotEmpty(newHotList)) {
-                                // 记录新推送的哈希
-                                for (Map<String, Object> hotItem : newHotList) {
-                                    String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
-                                    newHashes.add(hashBase64);
-                                }
-                                sendToPlatform(push, newHotList, mergedKeywords, subscriptionBean.getAccessKey());
-                            }
+        subscriptionBean.getPlatforms().forEach(push -> {
+            try {
+                // 合并关键词
+                List<String> mergedKeywords = mergeKeywords(keywords, push.getPlatformKeywords());
+                // 筛选平台关键词和独立关键词合并后符合的热点，并且过滤掉已推送的
+                if (CollUtil.isNotEmpty(mergedKeywords)) {
+                    List<Map<String, Object>> newHotList = getNewHotList(hotList, mergedKeywords, sentSet);
+                    if (CollUtil.isNotEmpty(newHotList)) {
+                        // 记录新推送的哈希
+                        for (Map<String, Object> hotItem : newHotList) {
+                            String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
+                            newHashes.add(hashBase64);
                         }
-                    } catch (Exception e) {
-                        log.error("推送异常：{}", e.getMessage());
+                        sendToPlatform(push, newHotList, mergedKeywords, subscriptionBean.getAccessKey());
                     }
-                }, executor))
-                .toList();
-        // 等待所有的推送任务完成
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-
+                }
+            } catch (Exception e) {
+                log.error("推送异常：{}", e.getMessage());
+            }
+        });
         // 推送完成后，统一更新文件内容
         if (!newHashes.isEmpty()) {
             // 将新推送的哈希添加到已发送的集合中
