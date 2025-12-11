@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
@@ -127,6 +128,8 @@ public class SubscriptionUtil {
         List<String> keywords = subscriptionBean.getKeywords() == null ? new ArrayList<>() : subscriptionBean.getKeywords();
         // 已发送的哈希集合
         Set<String> sentSet = subscriptionBean.getSent();
+        // 存储新推送的哈希，用于后续更新文件
+        Set<String> newHashes = ConcurrentHashMap.newKeySet();
         subscriptionBean.getPlatforms().forEach(push -> {
             try {
                 // 合并关键词
@@ -135,8 +138,11 @@ public class SubscriptionUtil {
                 if (CollUtil.isNotEmpty(mergedKeywords)) {
                     List<Map<String, Object>> newHotList = getNewHotList(hotList, mergedKeywords, sentSet);
                     if (CollUtil.isNotEmpty(newHotList)) {
-                        pushNewHashToSent(newHotList, subscriptionBean);
-                        updateFileContent(subscriptionBean, file, push.getType());
+                        // 记录新推送的哈希
+                        for (Map<String, Object> hotItem : newHotList) {
+                            String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
+                            newHashes.add(hashBase64);
+                        }
                         sendToPlatform(push, newHotList, mergedKeywords, subscriptionBean.getAccessKey());
                     }
                 }
@@ -144,6 +150,19 @@ public class SubscriptionUtil {
                 log.error("推送异常：{}", e.getMessage());
             }
         });
+        // 推送完成后，统一更新文件内容
+        StopWatch stopWatch = new StopWatch(file.getName() + RandomUtil.randomString(10));
+        stopWatch.start();
+        if (!newHashes.isEmpty()) {
+            // 将新推送的哈希添加到已发送的集合中
+            sentSet.addAll(newHashes);
+            // 更新文件内容
+            updateFileContent(subscriptionBean, file);
+            stopWatch.stop();
+        }else {
+            stopWatch.stop();
+            log.info("✈️ 完成更新订阅文件: {}，未推送新数据", file.getName());
+        }
     }
 
     private List<String> mergeKeywords(List<String> keywords, List<String> platformKeywords) {
@@ -208,7 +227,7 @@ public class SubscriptionUtil {
         return Base64.getEncoder().encodeToString(hashBinary);
     }
 
-    public void updateFileContent(SubscriptionBean subscriptionBean, File file, SubscriptionChannelTypeEnum type) {
+    public void updateFileContent(SubscriptionBean subscriptionBean, File file) {
         StopWatch stopWatch = new StopWatch(file.getName() + RandomUtil.randomString(10));
         stopWatch.start();
         try {
@@ -224,7 +243,7 @@ public class SubscriptionUtil {
             }
             FileUtil.writeToFile(file, subscriptionBean);
             stopWatch.stop();
-            log.info("✈️ 完成更新订阅文件: {}，类型: {}，耗时: {} ms", file.getName(), type.getKey(), stopWatch.getTotalTimeMillis());
+            log.info("✈️ 完成更新订阅文件: {}，耗时: {} ms", file.getName(), stopWatch.getTotalTimeMillis());
         } catch (Exception e) {
             throw new ServerException("重写文件失败 - 文件: " + file.getName() + ", 错误: " + e.getMessage());
         }
