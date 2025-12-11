@@ -98,17 +98,24 @@ public class SubscriptionUtil {
         // 从缓存中获取热点数据
         List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, null).getData();
         // 使用 CompletableFuture 来并行处理每个文件
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
         for (File file : subscriptionFiles) {
             // 提交每个文件处理的任务
-            log.info("✈️ 开始处理订阅文件: {}", file.getName());
-            try {
-                startSubscriptionOption(file, hotList);
-                successCount.incrementAndGet();  // 线程安全地增加成功计数
-            } catch (Exception e) {
-                failCount.incrementAndGet();  // 线程安全地增加失败计数
-                log.error("✈️ 订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
-            }
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+                log.info("✈️开始处理订阅文件: {}", file.getName());
+                try {
+                    startSubscriptionOption(file, hotList);
+                    successCount.incrementAndGet();  // 线程安全地增加成功计数
+                } catch (Exception e) {
+                    failCount.incrementAndGet();  // 线程安全地增加失败计数
+                    log.error("✈️订阅推送异常：{},异常信息：{}", file.getName(), e.getMessage());
+                }
+            }, executor);  // 提交任务到线程池
+
+            futures.add(future);
         }
+        // 等待所有任务完成
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         // 打印最终统计结果
         log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount.get(), failCount.get(), subscriptionFiles.length);
     }

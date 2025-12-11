@@ -18,6 +18,7 @@ import com.tgmeng.common.forest.header.ForestRequestHeader;
  */
 public interface IWebHookClient {
     @Post(
-            url = "{url}")
+            url = "{url}",
+            async = true)
     ForestResponse sendMessage(@Header ForestRequestHeader topSearchRequestHeader, @Var("url") String url, @Body String jsonBody);
 }
