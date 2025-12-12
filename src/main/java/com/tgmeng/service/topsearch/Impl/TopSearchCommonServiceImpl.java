@@ -120,7 +120,8 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         } else if (StrUtil.equals(platformCategory, "xiaozudouban")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeXiaoZuDouBanEnum.class, HttpRequestUtil.getRequestPathLastWord()));
         } else if (StrUtil.equals(platformCategory, "cctv")) {
-            url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeCCTVEnum.class, HttpRequestUtil.getRequestPathLastWord()));
+            url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeCCTVEnum.class, HttpRequestUtil.getRequestPathLastWord()))
+                    .replace("{time}", TimeUtil.getCurrentTimeFormat("yyyyMMdd"));
         } else if (StrUtil.equals(platformCategory, "tuyawangguo")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeTuYaWangGuoEnum.class, HttpRequestUtil.getRequestPathLastWord()));
         }else if (StrUtil.equals(platformCategory, "guojikejichuangxinzhongxin")) {

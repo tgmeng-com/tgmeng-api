@@ -6,7 +6,6 @@ import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
 import com.tgmeng.common.forest.httptype.ForestRequestTypeEnum;
 import com.tgmeng.common.util.HttpRequestUtil;
-import com.tgmeng.common.util.TimeUtil;
 import com.tgmeng.common.util.UserAgentGeneratorUtil;
 import lombok.Builder;
 import lombok.Data;
@@ -1706,7 +1705,7 @@ public class RequestInfoManager {
                 )
                 .register();
 
-        addJsonConfig("https://api.cntv.cn/epg/getEpgInfoByChannelNew?c=cctv{type}&serviceId=tvcctv&d="+ TimeUtil.getCurrentTimeFormat("yyyyMMdd")+"&t=jsonp&cb=setItem1")
+        addJsonConfig("https://api.cntv.cn/epg/getEpgInfoByChannelNew?c=cctv{type}&serviceId=tvcctv&d={time}&t=jsonp&cb=setItem1")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("央视电视台")
                 .platformCategory("cctv")
