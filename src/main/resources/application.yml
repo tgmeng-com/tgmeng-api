@@ -1,5 +1,10 @@
 spring:
   application.name: tgmeng-api
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: tgment-test
+    password: tgment-test
+    url: jdbc:mysql://yiqiquhuxi.cn:3306/tgment-test?serverTimezone=UTC
 
 server:
   port: 4399

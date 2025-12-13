@@ -1,0 +1,417 @@
+2025-12-11 11:12:41.004 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-12-11 11:12:41.012 [main] INFO  c.tgmeng.TgmengApiApplicationTests - Starting TgmengApiApplicationTests using Java 21.0.8 with PID 66091 (started by bjsttlp317 in /Users/bjsttlp317/IdeaProjects/tgmeng-api)
+2025-12-11 11:12:41.012 [main] INFO  c.tgmeng.TgmengApiApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-12-11 11:12:41.587 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'IAIClient' and Proxy of 'com.tgmeng.common.forest.client.ai.IAIClient' client interface
+2025-12-11 11:12:41.587 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'ISystemLocalClient' and Proxy of 'com.tgmeng.common.forest.client.system.ISystemLocalClient' client interface
+2025-12-11 11:12:41.588 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'ITopSearchCommonClient' and Proxy of 'com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient' client interface
+2025-12-11 11:12:41.588 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'IUmamiClient' and Proxy of 'com.tgmeng.common.forest.client.umami.IUmamiClient' client interface
+2025-12-11 11:12:41.588 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'IWebHookClient' and Proxy of 'com.tgmeng.common.forest.client.webhook.IWebHookClient' client interface
+2025-12-11 11:12:41.627 [main] INFO  com.tgmeng.common.util.CacheUtil - Initializing cache with expireTime=172800 seconds and maxSize=5000
+2025-12-11 11:12:41.670 [main] INFO  c.t.common.util.SubscriptionUtil - ✅ ControllerApiSchedule 已加载，配置检查通过！
+2025-12-11 11:12:42.031 [main] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@78830d9a
+2025-12-11 11:12:42.187 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-11 11:12:42.219 [main] INFO  c.tgmeng.TgmengApiApplicationTests - Started TgmengApiApplicationTests in 1.373 seconds (process running for 1.748)
+2025-12-11 11:13:22.990 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-12-11 11:13:23.026 [main] INFO  c.tgmeng.TgmengApiApplicationTests - Starting TgmengApiApplicationTests using Java 21.0.8 with PID 66260 (started by bjsttlp317 in /Users/bjsttlp317/IdeaProjects/tgmeng-api)
+2025-12-11 11:13:23.027 [main] INFO  c.tgmeng.TgmengApiApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-12-11 11:13:24.049 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'IAIClient' and Proxy of 'com.tgmeng.common.forest.client.ai.IAIClient' client interface
+2025-12-11 11:13:24.049 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'ISystemLocalClient' and Proxy of 'com.tgmeng.common.forest.client.system.ISystemLocalClient' client interface
+2025-12-11 11:13:24.049 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'ITopSearchCommonClient' and Proxy of 'com.tgmeng.common.forest.client.topsearch.ITopSearchCommonClient' client interface
+2025-12-11 11:13:24.049 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'IUmamiClient' and Proxy of 'com.tgmeng.common.forest.client.umami.IUmamiClient' client interface
+2025-12-11 11:13:24.049 [main] INFO  c.d.f.scanner.ClassPathClientScanner - [Forest] Created Forest Client Bean with name 'IWebHookClient' and Proxy of 'com.tgmeng.common.forest.client.webhook.IWebHookClient' client interface
+2025-12-11 11:13:24.103 [main] INFO  com.tgmeng.common.util.CacheUtil - Initializing cache with expireTime=172800 seconds and maxSize=5000
+2025-12-11 11:13:24.161 [main] INFO  c.t.common.util.SubscriptionUtil - ✅ ControllerApiSchedule 已加载，配置检查通过！
+2025-12-11 11:13:24.748 [main] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@387bf2d9
+2025-12-11 11:13:24.982 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-11 11:13:25.933 [main] INFO  c.tgmeng.TgmengApiApplicationTests - Started TgmengApiApplicationTests in 3.311 seconds (process running for 4.076)
+2025-12-11 11:13:40.110 [scheduling-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🤖 开始系统定时任务缓存数据，共 195 个接口
+2025-12-11 11:13:40.465 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/4
+2025-12-11 11:13:40.465 [taskExecutor-1] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/2
+2025-12-11 11:13:40.466 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/4 执行结束，耗时 344 ms
+2025-12-11 11:13:40.466 [taskExecutor-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/2 执行结束，耗时 347 ms
+2025-12-11 11:13:40.466 [taskExecutor-6] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/6
+2025-12-11 11:13:40.466 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/6 执行结束，耗时 341 ms
+2025-12-11 11:13:40.546 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-11 11:13:40.630 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jingsecaijing
+2025-12-11 11:13:40.630 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jingsecaijing 执行结束，耗时 501 ms
+2025-12-11 11:13:40.631 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tencent/dianying
+2025-12-11 11:13:40.631 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tencent/dianying 执行结束，耗时 504 ms
+2025-12-11 11:13:40.644 [taskExecutor-5] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/3
+2025-12-11 11:13:40.644 [taskExecutor-5] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/3 执行结束，耗时 520 ms
+2025-12-11 11:13:40.669 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tencent/dianshiju
+2025-12-11 11:13:40.669 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tencent/dianshiju 执行结束，耗时 542 ms
+2025-12-11 11:13:40.695 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/7
+2025-12-11 11:13:40.696 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/7 执行结束，耗时 26 ms
+2025-12-11 11:13:40.702 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/minsheng
+2025-12-11 11:13:40.702 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/minsheng 执行结束，耗时 574 ms
+2025-12-11 11:13:40.724 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/qiche
+2025-12-11 11:13:40.724 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/qiche 执行结束，耗时 598 ms
+2025-12-11 11:13:40.745 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/yangshitiyu
+2025-12-11 11:13:40.746 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/yangshitiyu 执行结束，耗时 620 ms
+2025-12-11 11:13:40.751 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/dongfangcaifuwang
+2025-12-11 11:13:40.751 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/dongfangcaifuwang 执行结束，耗时 625 ms
+2025-12-11 11:13:40.786 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/dingxiangyisheng
+2025-12-11 11:13:40.786 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/dingxiangyisheng 执行结束，耗时 659 ms
+2025-12-11 11:13:40.793 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/wangyi
+2025-12-11 11:13:40.793 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/wangyi 执行结束，耗时 327 ms
+2025-12-11 11:13:40.816 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/5
+2025-12-11 11:13:40.816 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/5 执行结束，耗时 691 ms
+2025-12-11 11:13:40.817 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/1
+2025-12-11 11:13:40.817 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/1 执行结束，耗时 698 ms
+2025-12-11 11:13:40.890 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/gelonghui
+2025-12-11 11:13:40.890 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youku/zongbang
+2025-12-11 11:13:40.890 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/gelonghui 执行结束，耗时 766 ms
+2025-12-11 11:13:40.890 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youku/zongbang 执行结束，耗时 763 ms
+2025-12-11 11:13:40.903 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhiboba
+2025-12-11 11:13:40.903 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhiboba 执行结束，耗时 775 ms
+2025-12-11 11:13:40.974 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/8
+2025-12-11 11:13:40.974 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/8 执行结束，耗时 342 ms
+2025-12-11 11:13:40.976 [taskExecutor-1] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/lieyunwang
+2025-12-11 11:13:40.977 [taskExecutor-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/lieyunwang 执行结束，耗时 510 ms
+2025-12-11 11:13:41.013 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/kechuangbanribao
+2025-12-11 11:13:41.013 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/kechuangbanribao 执行结束，耗时 382 ms
+2025-12-11 11:13:41.056 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/weibo
+2025-12-11 11:13:41.056 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/weibo 执行结束，耗时 310 ms
+2025-12-11 11:13:41.109 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/child
+2025-12-11 11:13:41.109 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/child 执行结束，耗时 218 ms
+2025-12-11 11:13:41.146 [taskExecutor-5] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/iheima
+2025-12-11 11:13:41.146 [taskExecutor-5] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/iheima 执行结束，耗时 501 ms
+2025-12-11 11:13:41.154 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tuyawangguo/best
+2025-12-11 11:13:41.154 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tuyawangguo/best 执行结束，耗时 458 ms
+2025-12-11 11:13:41.173 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/hupu
+2025-12-11 11:13:41.174 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/hupu 执行结束，耗时 270 ms
+2025-12-11 11:13:41.247 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhongguoxinwenwang
+2025-12-11 11:13:41.248 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhongguoxinwenwang 执行结束，耗时 523 ms
+2025-12-11 11:13:41.283 [taskExecutor-1] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/maoyan/goupiaopingfenbang
+2025-12-11 11:13:41.283 [taskExecutor-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/maoyan/goupiaopingfenbang 执行结束，耗时 306 ms
+2025-12-11 11:13:41.296 [taskExecutor-6] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/xingdaohuanqiu
+2025-12-11 11:13:41.296 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/xingdaohuanqiu 执行结束，耗时 829 ms
+2025-12-11 11:13:41.389 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu
+2025-12-11 11:13:41.390 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu 执行结束，耗时 281 ms
+2025-12-11 11:13:41.392 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youshewang
+2025-12-11 11:13:41.392 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youshewang 执行结束，耗时 379 ms
+2025-12-11 11:13:41.404 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/mbazhiku
+2025-12-11 11:13:41.405 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/mbazhiku 执行结束，耗时 653 ms
+2025-12-11 11:13:41.413 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhongguancunzaixian
+2025-12-11 11:13:41.413 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhongguancunzaixian 执行结束，耗时 626 ms
+2025-12-11 11:13:41.419 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/emacschina
+2025-12-11 11:13:41.419 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/emacschina 执行结束，耗时 1291 ms
+2025-12-11 11:13:41.434 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/shuimushequ
+2025-12-11 11:13:41.434 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/shuimushequ 执行结束，耗时 617 ms
+2025-12-11 11:13:41.455 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/acfun
+2025-12-11 11:13:41.455 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/acfun 执行结束，耗时 399 ms
+2025-12-11 11:13:41.503 [taskExecutor-5] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/topys
+2025-12-11 11:13:41.503 [taskExecutor-5] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/topys 执行结束，耗时 357 ms
+2025-12-11 11:13:41.609 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/shengmingshibao
+2025-12-11 11:13:41.609 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/shengmingshibao 执行结束，耗时 204 ms
+2025-12-11 11:13:41.610 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/21jingjiwang
+2025-12-11 11:13:41.610 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/21jingjiwang 执行结束，耗时 219 ms
+2025-12-11 11:13:41.610 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tencent/dongman
+2025-12-11 11:13:41.610 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tencent/dongman 执行结束，耗时 197 ms
+2025-12-11 11:13:41.635 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/guojikejichuangxinzhongxin/yiyaojiankang
+2025-12-11 11:13:41.635 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/guojikejichuangxinzhongxin/yiyaojiankang 执行结束，耗时 841 ms
+2025-12-11 11:13:41.636 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/guojikejichuangxinzhongxin/rengongzhineng
+2025-12-11 11:13:41.636 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/guojikejichuangxinzhongxin/rengongzhineng 执行结束，耗时 819 ms
+2025-12-11 11:13:41.637 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tengxunshejikaifangpingtai
+2025-12-11 11:13:41.637 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tengxunshejikaifangpingtai 执行结束，耗时 463 ms
+2025-12-11 11:13:41.673 [taskExecutor-6] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/17173
+2025-12-11 11:13:41.673 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/17173 执行结束，耗时 377 ms
+2025-12-11 11:13:41.678 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/3dmgame
+2025-12-11 11:13:41.678 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/3dmgame 执行结束，耗时 430 ms
+2025-12-11 11:13:41.734 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tuyawangguo/new
+2025-12-11 11:13:41.735 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tuyawangguo/new 执行结束，耗时 315 ms
+2025-12-11 11:13:41.736 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tonghuashun
+2025-12-11 11:13:41.736 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tonghuashun 执行结束，耗时 301 ms
+2025-12-11 11:13:41.757 [taskExecutor-1] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/chuangyebang
+2025-12-11 11:13:41.757 [taskExecutor-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/chuangyebang 执行结束，耗时 474 ms
+2025-12-11 11:13:41.761 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/aiqiyi/zongbang
+2025-12-11 11:13:41.761 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/aiqiyi/zongbang 执行结束，耗时 305 ms
+2025-12-11 11:13:41.850 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhiwubuyankuajingdianshangshequ
+2025-12-11 11:13:41.850 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhiwubuyankuajingdianshangshequ 执行结束，耗时 1148 ms
+2025-12-11 11:13:41.851 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhanzhangzhijia
+2025-12-11 11:13:41.851 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhanzhangzhijia 执行结束，耗时 240 ms
+2025-12-11 11:13:41.900 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youxituoluo
+2025-12-11 11:13:41.900 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youxituoluo 执行结束，耗时 265 ms
+2025-12-11 11:13:41.932 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zaker
+2025-12-11 11:13:41.933 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zaker 执行结束，耗时 322 ms
+2025-12-11 11:13:41.940 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/meimanbaike
+2025-12-11 11:13:41.940 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/meimanbaike 执行结束，耗时 330 ms
+2025-12-11 11:13:41.996 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jingjiguanchawang
+2025-12-11 11:13:41.996 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jingjiguanchawang 执行结束，耗时 841 ms
+2025-12-11 11:13:42.006 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jinrongjie
+2025-12-11 11:13:42.006 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jinrongjie 执行结束，耗时 155 ms
+2025-12-11 11:13:42.020 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/youxi
+2025-12-11 11:13:42.020 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/youxi 执行结束，耗时 169 ms
+2025-12-11 11:13:42.042 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/bbc
+2025-12-11 11:13:42.042 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/bbc 执行结束，耗时 649 ms
+2025-12-11 11:13:42.044 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/buxingjiehupu
+2025-12-11 11:13:42.044 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/buxingjiehupu 执行结束，耗时 407 ms
+2025-12-11 11:13:42.101 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/aimeiwang
+2025-12-11 11:13:42.101 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/aimeiwang 执行结束，耗时 1211 ms
+2025-12-11 11:13:42.149 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jiemodui
+2025-12-11 11:13:42.149 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jiemodui 执行结束，耗时 106 ms
+2025-12-11 11:13:42.158 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jikegongyuan
+2025-12-11 11:13:42.158 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jikegongyuan 执行结束，耗时 520 ms
+2025-12-11 11:13:42.227 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/mangguo/dianying
+2025-12-11 11:13:42.227 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/mangguo/dianying 执行结束，耗时 207 ms
+2025-12-11 11:13:42.231 [taskExecutor-6] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tuyawangguo/hot
+2025-12-11 11:13:42.231 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tuyawangguo/hot 执行结束，耗时 557 ms
+2025-12-11 11:13:42.246 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/aiqiyi/dianshiju
+2025-12-11 11:13:42.246 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/aiqiyi/dianshiju 执行结束，耗时 568 ms
+2025-12-11 11:13:42.255 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tiyuwangyi
+2025-12-11 11:13:42.255 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tiyuwangyi 执行结束，耗时 315 ms
+2025-12-11 11:13:42.267 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/dingxiangyuanshequ
+2025-12-11 11:13:42.267 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/dingxiangyuanshequ 执行结束，耗时 223 ms
+2025-12-11 11:13:42.285 [taskExecutor-1] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/quantianhoukeji
+2025-12-11 11:13:42.285 [taskExecutor-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/quantianhoukeji 执行结束，耗时 528 ms
+2025-12-11 11:13:42.285 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/aiqiyi/dianying
+2025-12-11 11:13:42.286 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/aiqiyi/dianying 执行结束，耗时 385 ms
+2025-12-11 11:13:42.315 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tencent/zongbang
+2025-12-11 11:13:42.315 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tencent/zongbang 执行结束，耗时 156 ms
+2025-12-11 11:13:42.316 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/mangguo/zongbang
+2025-12-11 11:13:42.317 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/mangguo/zongbang 执行结束，耗时 61 ms
+2025-12-11 11:13:42.322 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/kuaikeji
+2025-12-11 11:13:42.322 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/kuaikeji 执行结束，耗时 315 ms
+2025-12-11 11:13:42.346 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tongxinrenjiayuan
+2025-12-11 11:13:42.347 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tongxinrenjiayuan 执行结束，耗时 413 ms
+2025-12-11 11:13:42.351 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/europe
+2025-12-11 11:13:42.352 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/europe 执行结束，耗时 202 ms
+2025-12-11 11:13:42.369 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tencent/zongyi
+2025-12-11 11:13:42.369 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tencent/zongyi 执行结束，耗时 46 ms
+2025-12-11 11:13:42.369 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/mangguo/dongman
+2025-12-11 11:13:42.369 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/mangguo/dongman 执行结束，耗时 52 ms
+2025-12-11 11:13:42.371 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/shiguangwang
+2025-12-11 11:13:42.371 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/shiguangwang 执行结束，耗时 103 ms
+2025-12-11 11:13:42.424 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/mangguo/zongyi
+2025-12-11 11:13:42.424 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/mangguo/zongyi 执行结束，耗时 53 ms
+2025-12-11 11:13:42.433 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/kaiyuanzixun
+2025-12-11 11:13:42.434 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/kaiyuanzixun 执行结束，耗时 698 ms
+2025-12-11 11:13:42.494 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/blockbeats
+2025-12-11 11:13:42.494 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/blockbeats 执行结束，耗时 758 ms
+2025-12-11 11:13:42.495 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/weixindushu
+2025-12-11 11:13:42.495 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/weixindushu 执行结束，耗时 734 ms
+2025-12-11 11:13:42.501 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youku/dianying
+2025-12-11 11:13:42.501 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youku/dianying 执行结束，耗时 255 ms
+2025-12-11 11:13:42.559 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/global/youtube
+2025-12-11 11:13:42.560 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/global/youtube 执行结束，耗时 563 ms
+2025-12-11 11:13:42.594 [taskExecutor-12] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/awwwards
+2025-12-11 11:13:42.594 [taskExecutor-12] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/awwwards 执行结束，耗时 2468 ms
+2025-12-11 11:13:42.621 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/wenzhangjuejin
+2025-12-11 11:13:42.622 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/wenzhangjuejin 执行结束，耗时 335 ms
+2025-12-11 11:13:42.641 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youminxingkong
+2025-12-11 11:13:42.641 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youminxingkong 执行结束，耗时 294 ms
+2025-12-11 11:13:42.662 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/dianshiju
+2025-12-11 11:13:42.662 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/dianshiju 执行结束，耗时 292 ms
+2025-12-11 11:13:42.664 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/nga
+2025-12-11 11:13:42.664 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/nga 执行结束，耗时 437 ms
+2025-12-11 11:13:42.701 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/regeng
+2025-12-11 11:13:42.701 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/regeng 执行结束，耗时 205 ms
+2025-12-11 11:13:42.715 [taskExecutor-12] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/dianshimao
+2025-12-11 11:13:42.716 [taskExecutor-12] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/dianshimao 执行结束，耗时 121 ms
+2025-12-11 11:13:42.720 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@75a5a912
+2025-12-11 11:13:42.734 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-11 11:13:42.763 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/5plus
+2025-12-11 11:13:42.763 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/5plus 执行结束，耗时 141 ms
+2025-12-11 11:13:42.790 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/leifengwang
+2025-12-11 11:13:42.790 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/leifengwang 执行结束，耗时 365 ms
+2025-12-11 11:13:42.823 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/readhub
+2025-12-11 11:13:42.823 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/readhub 执行结束，耗时 507 ms
+2025-12-11 11:13:42.844 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/kdsshanghaitoutiao
+2025-12-11 11:13:42.844 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/kdsshanghaitoutiao 执行结束，耗时 410 ms
+2025-12-11 11:13:42.857 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tencent
+2025-12-11 11:13:42.857 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tencent 执行结束，耗时 355 ms
+2025-12-11 11:13:42.907 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/america
+2025-12-11 11:13:42.907 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/america 执行结束，耗时 206 ms
+2025-12-11 11:13:46.607 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/souhutiyu
+2025-12-11 11:13:46.607 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/xinjingbao
+2025-12-11 11:13:46.607 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/xinjingbao 执行结束，耗时 3700 ms
+2025-12-11 11:13:46.607 [taskExecutor-1] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/fabu
+2025-12-11 11:13:46.608 [taskExecutor-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/fabu 执行结束，耗时 4322 ms
+2025-12-11 11:13:46.608 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/eurekalert
+2025-12-11 11:13:46.608 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhihu
+2025-12-11 11:13:46.608 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jiankangshibaowang
+2025-12-11 11:13:46.608 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jiankangshibaowang 执行结束，耗时 3750 ms
+2025-12-11 11:13:46.607 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/hackernews
+2025-12-11 11:13:46.609 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/hackernews 执行结束，耗时 4114 ms
+2025-12-11 11:13:46.608 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/eurekalert 执行结束，耗时 4506 ms
+2025-12-11 11:13:46.619 [taskExecutor-12] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/maoyan/top100
+2025-12-11 11:13:46.619 [taskExecutor-12] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/maoyan/top100 执行结束，耗时 3903 ms
+2025-12-11 11:13:46.608 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhihu 执行结束，耗时 4048 ms
+2025-12-11 11:13:46.608 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/v2ex
+2025-12-11 11:13:46.621 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/v2ex 执行结束，耗时 3830 ms
+2025-12-11 11:13:46.607 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/souhutiyu 执行结束，耗时 3945 ms
+2025-12-11 11:13:46.608 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/landianwang
+2025-12-11 11:13:46.622 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/landianwang 执行结束，耗时 5647 ms
+2025-12-11 11:13:46.622 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youxiawang
+2025-12-11 11:13:46.608 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/guoke
+2025-12-11 11:13:46.622 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/guoke 执行结束，耗时 3957 ms
+2025-12-11 11:13:46.622 [taskExecutor-10] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/rubychina
+2025-12-11 11:13:46.622 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youxiawang 执行结束，耗时 3777 ms
+2025-12-11 11:13:46.622 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/xinlangtiyu
+2025-12-11 11:13:46.623 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/xinlangtiyu 执行结束，耗时 3981 ms
+2025-12-11 11:13:46.608 [taskExecutor-6] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/dianwanbang
+2025-12-11 11:13:46.625 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/dianwanbang 执行结束，耗时 4393 ms
+2025-12-11 11:13:46.621 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/shejidaren
+2025-12-11 11:13:47.735 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/shejidaren 执行结束，耗时 4912 ms
+2025-12-11 11:13:47.736 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/techweb
+2025-12-11 11:13:47.736 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youyanshe
+2025-12-11 11:13:47.736 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/a9vg
+2025-12-11 11:13:47.736 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youyanshe 执行结束，耗时 1129 ms
+2025-12-11 11:13:47.737 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/a9vg 执行结束，耗时 1128 ms
+2025-12-11 11:13:47.736 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/techweb 执行结束，耗时 1114 ms
+2025-12-11 11:13:47.737 [taskExecutor-6] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/maoyan/zhoupiaofangbang
+2025-12-11 11:13:47.737 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/maoyan/zhoupiaofangbang 执行结束，耗时 1111 ms
+2025-12-11 11:13:47.737 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/shidaizaixian
+2025-12-11 11:13:47.737 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jiqizhixin
+2025-12-11 11:13:47.737 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jiqizhixin 执行结束，耗时 1114 ms
+2025-12-11 11:13:46.622 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/rubychina 执行结束，耗时 4253 ms
+2025-12-11 11:13:47.737 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/shidaizaixian 执行结束，耗时 1116 ms
+2025-12-11 11:13:47.738 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/huitongcaijing
+2025-12-11 11:13:47.738 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/huitongcaijing 执行结束，耗时 1119 ms
+2025-12-11 11:13:47.737 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/dongqiudi
+2025-12-11 11:13:47.738 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/dongqiudi 执行结束，耗时 1119 ms
+2025-12-11 11:13:47.737 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/toutiao
+2025-12-11 11:13:47.739 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/toutiao 执行结束，耗时 4976 ms
+2025-12-11 11:13:47.742 [taskExecutor-12] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youku/dongman
+2025-12-11 11:13:47.742 [taskExecutor-12] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youku/dongman 执行结束，耗时 1122 ms
+2025-12-11 11:13:47.742 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/meijingwang
+2025-12-11 11:13:47.742 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/meijingwang 执行结束，耗时 1120 ms
+2025-12-11 11:13:47.867 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/duozhi
+2025-12-11 11:13:47.867 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/duozhi 执行结束，耗时 129 ms
+2025-12-11 11:13:47.983 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jiandan
+2025-12-11 11:13:47.983 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jiandan 执行结束，耗时 246 ms
+2025-12-11 11:13:48.011 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/chongbuluo
+2025-12-11 11:13:48.011 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/chongbuluo 执行结束，耗时 1388 ms
+2025-12-11 11:13:48.040 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/jilu
+2025-12-11 11:13:48.040 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/jilu 执行结束，耗时 300 ms
+2025-12-11 11:13:48.042 [taskExecutor-6] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/maoyan/xiangkanbang
+2025-12-11 11:13:48.042 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/maoyan/xiangkanbang 执行结束，耗时 305 ms
+2025-12-11 11:13:48.054 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/caijing
+2025-12-11 11:13:48.054 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/caijing 执行结束，耗时 311 ms
+2025-12-11 11:13:48.136 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/pptiyu
+2025-12-11 11:13:48.136 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/pptiyu 执行结束，耗时 399 ms
+2025-12-11 11:13:48.191 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/shengwugu
+2025-12-11 11:13:48.191 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhanku/wenzhangbang
+2025-12-11 11:13:48.192 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/shengwugu 执行结束，耗时 453 ms
+2025-12-11 11:13:48.192 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhanku/wenzhangbang 执行结束，耗时 455 ms
+2025-12-11 11:13:48.195 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhitongcaijing
+2025-12-11 11:13:48.196 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhitongcaijing 执行结束，耗时 5843 ms
+2025-12-11 11:13:48.229 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/cachesearch/wordcloud
+2025-12-11 11:13:48.229 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/cachesearch/wordcloud 执行结束，耗时 92 ms
+2025-12-11 11:13:48.235 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/xiaoshuo
+2025-12-11 11:13:48.235 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/xiaoshuo 执行结束，耗时 39 ms
+2025-12-11 11:13:48.354 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/douyin
+2025-12-11 11:13:48.354 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/douyin 执行结束，耗时 615 ms
+2025-12-11 11:13:48.389 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/xianzhishequ
+2025-12-11 11:13:48.389 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/xianzhishequ 执行结束，耗时 652 ms
+2025-12-11 11:13:48.441 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhanku/zuopinbang
+2025-12-11 11:13:48.441 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhanku/zuopinbang 执行结束，耗时 705 ms
+2025-12-11 11:13:48.443 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jiayidajiankang
+2025-12-11 11:13:48.443 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jiayidajiankang 执行结束，耗时 251 ms
+2025-12-11 11:13:48.454 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/xinlangcaijing
+2025-12-11 11:13:48.454 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/xinlangcaijing 执行结束，耗时 413 ms
+2025-12-11 11:13:48.489 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youku/dianshiju
+2025-12-11 11:13:48.490 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youku/dianshiju 执行结束，耗时 297 ms
+2025-12-11 11:13:48.503 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/huaerjiejianwen
+2025-12-11 11:13:48.503 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/huaerjiejianwen 执行结束，耗时 492 ms
+2025-12-11 11:13:48.583 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/kuaijitoutiao
+2025-12-11 11:13:48.583 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/kuaijitoutiao 执行结束，耗时 715 ms
+2025-12-11 11:13:48.644 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tuyawangguo/fx
+2025-12-11 11:13:48.644 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tuyawangguo/fx 执行结束，耗时 590 ms
+2025-12-11 11:13:48.701 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/36ke
+2025-12-11 11:13:48.701 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/36ke 执行结束，耗时 471 ms
+2025-12-11 11:13:48.797 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/baidu/dianying
+2025-12-11 11:13:48.797 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/baidu/dianying 执行结束，耗时 152 ms
+2025-12-11 11:13:48.802 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/kaidiwang
+2025-12-11 11:13:48.802 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/kaidiwang 执行结束，耗时 448 ms
+2025-12-11 11:13:48.817 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/diyicaijing
+2025-12-11 11:13:48.817 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/diyicaijing 执行结束，耗时 427 ms
+2025-12-11 11:13:48.822 [taskExecutor-12] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/abduzeedo
+2025-12-11 11:13:48.822 [taskExecutor-12] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/abduzeedo 执行结束，耗时 1080 ms
+2025-12-11 11:13:48.837 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/zhanku/qianlibang
+2025-12-11 11:13:48.837 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/zhanku/qianlibang 执行结束，耗时 394 ms
+2025-12-11 11:13:48.883 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/niuyueshibao
+2025-12-11 11:13:48.884 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/niuyueshibao 执行结束，耗时 648 ms
+2025-12-11 11:13:48.896 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/woshipm
+2025-12-11 11:13:48.896 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/woshipm 执行结束，耗时 405 ms
+2025-12-11 11:13:48.923 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/shaoshupai
+2025-12-11 11:13:48.923 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/shaoshupai 执行结束，耗时 2302 ms
+2025-12-11 11:13:48.927 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jingguanzhijia
+2025-12-11 11:13:48.927 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jingguanzhijia 执行结束，耗时 423 ms
+2025-12-11 11:13:49.063 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/taimeiti
+2025-12-11 11:13:49.063 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/taimeiti 执行结束，耗时 246 ms
+2025-12-11 11:13:49.118 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/itzhijia
+2025-12-11 11:13:49.118 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/itzhijia 执行结束，耗时 280 ms
+2025-12-11 11:13:49.119 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/lixiangshenghuoshiyanshi
+2025-12-11 11:13:49.119 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/lixiangshenghuoshiyanshi 执行结束，耗时 535 ms
+2025-12-11 11:13:49.174 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/12
+2025-12-11 11:13:49.174 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/12 执行结束，耗时 246 ms
+2025-12-11 11:13:49.210 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/aiqiyi/dongman
+2025-12-11 11:13:49.210 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/aiqiyi/dongman 执行结束，耗时 408 ms
+2025-12-11 11:13:49.214 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/mangguo/dianshiju
+2025-12-11 11:13:49.214 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/mangguo/dianshiju 执行结束，耗时 291 ms
+2025-12-11 11:13:49.243 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/13
+2025-12-11 11:13:49.243 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/13 执行结束，耗时 179 ms
+2025-12-11 11:13:49.276 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/mit
+2025-12-11 11:13:49.276 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/mit 执行结束，耗时 478 ms
+2025-12-11 11:13:49.276 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/17
+2025-12-11 11:13:49.276 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/17 执行结束，耗时 65 ms
+2025-12-11 11:13:49.285 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/15
+2025-12-11 11:13:49.285 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/10
+2025-12-11 11:13:49.286 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/10 执行结束，耗时 42 ms
+2025-12-11 11:13:49.285 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/15 执行结束，耗时 167 ms
+2025-12-11 11:13:49.320 [taskExecutor-20] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/aiqiyi/zongyi
+2025-12-11 11:13:49.320 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/16
+2025-12-11 11:13:49.320 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/aiqiyi/zongyi 执行结束，耗时 436 ms
+2025-12-11 11:13:49.320 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/16 执行结束，耗时 201 ms
+2025-12-11 11:13:49.335 [taskExecutor-13] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cctv/11
+2025-12-11 11:13:49.335 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cctv/11 执行结束，耗时 58 ms
+2025-12-11 11:13:49.351 [taskExecutor-12] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/jinshi
+2025-12-11 11:13:49.351 [taskExecutor-12] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/jinshi 执行结束，耗时 528 ms
+2025-12-11 11:13:49.485 [taskExecutor-11] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/cailianshe
+2025-12-11 11:13:49.485 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/cailianshe 执行结束，耗时 589 ms
+2025-12-11 11:13:49.491 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/dribbble
+2025-12-11 11:13:49.491 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/dribbble 执行结束，耗时 2870 ms
+2025-12-11 11:13:49.620 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/pengpaixinwen
+2025-12-11 11:13:49.621 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/pengpaixinwen 执行结束，耗时 406 ms
+2025-12-11 11:13:49.621 [taskExecutor-9] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/youku/zongyi
+2025-12-11 11:13:49.621 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/youku/zongyi 执行结束，耗时 335 ms
+2025-12-11 11:13:49.627 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/tiebabaidu
+2025-12-11 11:13:49.627 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/tiebabaidu 执行结束，耗时 351 ms
+2025-12-11 11:13:49.728 [taskExecutor-20] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/bilibili 执行结束，耗时 407 ms
+2025-12-11 11:13:49.741 [taskExecutor-4] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/yimusanfendi
+2025-12-11 11:13:49.741 [taskExecutor-4] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/yimusanfendi 执行结束，耗时 1040 ms
+2025-12-11 11:13:49.788 [taskExecutor-12] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/gcores
+2025-12-11 11:13:49.788 [taskExecutor-12] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/gcores 执行结束，耗时 437 ms
+2025-12-11 11:13:49.812 [taskExecutor-18] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/faguang
+2025-12-11 11:13:49.812 [taskExecutor-18] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/faguang 执行结束，耗时 1371 ms
+2025-12-11 11:13:49.849 [taskExecutor-14] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/yiyaomofang
+2025-12-11 11:13:49.849 [taskExecutor-14] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/yiyaomofang 执行结束，耗时 528 ms
+2025-12-11 11:13:49.953 [taskExecutor-2] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/xuangutong
+2025-12-11 11:13:49.953 [taskExecutor-2] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/xuangutong 执行结束，耗时 332 ms
+2025-12-11 11:13:49.958 [taskExecutor-15] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/wuaipojie
+2025-12-11 11:13:49.959 [taskExecutor-15] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/wuaipojie 执行结束，耗时 467 ms
+2025-12-11 11:13:49.996 [taskExecutor-16] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/archdaily
+2025-12-11 11:13:49.996 [taskExecutor-16] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/archdaily 执行结束，耗时 2013 ms
+2025-12-11 11:13:50.377 [taskExecutor-19] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/global/huggingface/datasetslikes 执行结束，耗时 10249 ms
+2025-12-11 11:13:50.514 [taskExecutor-8] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/laohucaijing
+2025-12-11 11:13:50.515 [taskExecutor-8] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/laohucaijing 执行结束，耗时 1229 ms
+2025-12-11 11:13:50.547 [taskExecutor-17] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/core77
+2025-12-11 11:13:50.547 [taskExecutor-17] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/core77 执行结束，耗时 1373 ms
+2025-12-11 11:13:50.767 [taskExecutor-7] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/chaincatcher
+2025-12-11 11:13:50.768 [taskExecutor-7] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/chaincatcher 执行结束，耗时 1140 ms
+2025-12-11 11:13:51.524 [taskExecutor-5] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/global/huggingface/spaceslikes 执行结束，耗时 10020 ms
+2025-12-11 11:13:52.213 [taskExecutor-1] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/ign
+2025-12-11 11:13:52.213 [taskExecutor-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/ign 执行结束，耗时 5605 ms
+2025-12-11 11:13:53.096 [taskExecutor-3] INFO  com.tgmeng.common.util.CacheUtil - 🎁新增缓存:/api/topsearch/kanxue
+2025-12-11 11:13:53.096 [taskExecutor-3] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/kanxue 执行结束，耗时 4642 ms
+2025-12-11 11:13:57.793 [taskExecutor-10] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/global/huggingface/datasetstrending 执行结束，耗时 10055 ms
+2025-12-11 11:13:58.067 [taskExecutor-6] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/global/huggingface/spacestrending 执行结束，耗时 10024 ms
+2025-12-11 11:13:59.359 [taskExecutor-13] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/global/huggingface/modelstrending 执行结束，耗时 10023 ms
+2025-12-11 11:13:59.524 [taskExecutor-11] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/global/huggingface/modelslikes 执行结束，耗时 10039 ms
+2025-12-11 11:13:59.638 [taskExecutor-9] INFO  c.t.c.schedule.ControllerApiSchedule - 🕒🕒🕒 接口 /api/topsearch/wulianwangzhiku 执行结束，耗时 10017 ms
+2025-12-11 11:13:59.638 [scheduling-1] INFO  c.t.c.schedule.ControllerApiSchedule - ✅ 所有接口执行完成，耗时 19529 ms
+2025-12-11 11:13:59.656 [scheduling-1] INFO  c.t.c.schedule.ControllerApiSchedule - ✅ 订阅操作完成，耗时 18 ms
+2025-12-11 11:13:59.656 [scheduling-1] INFO  c.t.c.schedule.ControllerApiSchedule - 🎉 本次定时任务全部完成，总耗时 19547 ms
+2025-12-11 11:13:59.666 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-11 11:13:59.671 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
