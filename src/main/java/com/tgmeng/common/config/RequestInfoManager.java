@@ -2476,6 +2476,47 @@ public class RequestInfoManager {
                 .urlSelector(".title")
                 .register();
 
+        addDomConfig("https://developer.aliyun.com/indexFeed/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("阿里云社区")
+                .platformCategory("科技")
+                .interfaceUrl("/api/topsearch/aliyunshequ")
+                .hotTitleUrlPrefix("https://developer.aliyun.com")
+                .addArea()
+                .rootSelector(".feed-list > li")
+                .keywordSelector("a")
+                .urlSelector("a")
+                .hotScoreSelector(".feed-article-count")
+                .register();
+
+        addDomConfig("https://cloud.tencent.com/developer")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("腾讯云社区")
+                .platformCategory("科技")
+                .interfaceUrl("/api/topsearch/tengxunyunshequ")
+                .hotTitleUrlPrefix("https://cloud.tencent.com")
+                .addArea()
+                .rootSelector(".mod-article-list > .cdc-article-panel-response2__list > div")
+                .keywordSelector(".cdc-article-panel-response2__title")
+                .urlSelector(".cdc-article-panel-response2__title")
+                .hotScoreSelector(".cdc-icon__number")
+                .register();
+
+        addDomConfig("https://tech.meituan.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("美团社区")
+                .platformCategory("科技")
+                .interfaceUrl("/api/topsearch/meituanshequ")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("#J_main-container > .row.post-container-wrapper .post-container")
+                .keywordSelector(".post-title > a")
+                .urlSelector(".post-title > a")
+                .register();
+
+
+
+
 
 
 

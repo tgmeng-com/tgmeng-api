@@ -280,6 +280,9 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/chaincatcher", PlatformConfig.builder().build());
         configs.put("/api/topsearch/kechuangbanribao", PlatformConfig.builder().build());
         configs.put("/api/topsearch/tengxunshejikaifangpingtai", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/aliyunshequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/tengxunyunshequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/meituanshequ", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key
