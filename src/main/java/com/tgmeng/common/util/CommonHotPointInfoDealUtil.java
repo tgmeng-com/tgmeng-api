@@ -130,6 +130,7 @@ public class CommonHotPointInfoDealUtil {
 
     public static String getHotTitleAfterDealResult(RequestInfoManager.PlatformConfig platform, Element element, ReadContext itemCtx) {
         String platformInterface = platform.getInterfaceUrl();
+
         String hotTitle = "";
         switch (platformInterface) {
             case "/api/topsearch/xiaozudouban/{type}":
