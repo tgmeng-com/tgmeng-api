@@ -130,13 +130,16 @@ public class CommonHotPointInfoDealUtil {
 
     public static String getHotTitleAfterDealResult(RequestInfoManager.PlatformConfig platform, Element element, ReadContext itemCtx) {
         String platformInterface = platform.getInterfaceUrl();
-
         String hotTitle = "";
         switch (platformInterface) {
             case "/api/topsearch/xiaozudouban/{type}":
                 hotTitle = safeText(element, ".title > a");
                 hotTitle = hotTitle.contains("】") ? hotTitle.substring(hotTitle.indexOf("】") + 1).trim() : hotTitle.trim();
                 hotTitle = hotTitle.contains("｜") ? hotTitle.substring(hotTitle.indexOf("｜") + 1).trim() : hotTitle.trim();
+                break;
+            case "/api/topsearch/0818tuan":
+                hotTitle = safeText(element, ":root");
+                hotTitle = hotTitle.replaceFirst("^\\d{1,2}-\\d{1,2}\\s+\\d{1,2}:\\d{1,2}\\s+", "");
                 break;
             default:
                 hotTitle = "";

@@ -2519,6 +2519,19 @@ public class RequestInfoManager {
                 .urlSelector(".post-title > a")
                 .register();
 
+        addDomConfig("http://www.0818tuan.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .hotTitleNeedDeal(true)
+                .platformName("0818团")
+                .platformCategory("羊毛")
+                .interfaceUrl("/api/topsearch/0818tuan")
+                .hotTitleUrlPrefix("http://www.0818tuan.com")
+                .addArea()
+                .rootSelector(".col-md-8:nth-of-type(1) > .panel.panel-default > .list-group > a")
+                .keywordSelector(":root")
+                .urlSelector(":root")
+                .register();
+
 
 
 

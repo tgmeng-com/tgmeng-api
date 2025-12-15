@@ -781,6 +781,11 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/0818tuan")
+    public ResultTemplateBean<TopSearchCommonVO> get0818tuanSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
 
 
 
