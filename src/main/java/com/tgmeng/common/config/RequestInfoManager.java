@@ -105,6 +105,11 @@ public class RequestInfoManager {
         return new FluentConfig(url, this, ResponseTypeEnum.INTERFACE);
     }
 
+    private FluentConfig addRssConfig(String url) {
+        return new FluentConfig(url, this, ResponseTypeEnum.RSS);
+    }
+
+
     // ==================== 万能构建器 ====================
 
     @lombok.experimental.Accessors(chain = true, fluent = true)

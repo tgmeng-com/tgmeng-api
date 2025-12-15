@@ -31,6 +31,7 @@
 		<webdrivermanager.version>5.5.3</webdrivermanager.version>
         <hanlp.version>portable-1.8.6</hanlp.version>
         <json-path.version>2.10.0</json-path.version>
+        <rometools.version>2.1.0</rometools.version>
 	</properties>
 
 	<dependencies>
@@ -147,6 +148,12 @@
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
             <version>${json-path.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>${rometools.version}</version>
         </dependency>
 
 

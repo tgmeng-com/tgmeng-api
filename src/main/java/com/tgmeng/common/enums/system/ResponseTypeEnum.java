@@ -19,7 +19,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ResponseTypeEnum implements INameValueEnum<String,String> {
     DOM("DOM", "DOM", "请求第三方返回的DOM，然后这种就用jsoup去解析", true,1),
-    INTERFACE("INTERFACE", "INTERFACE", "请求第三方接口，返回的json或者啥", true,2);
+    INTERFACE("INTERFACE", "INTERFACE", "请求第三方接口，返回的json或者啥", true,2),
+    RSS("RSS", "RSS", "请求第三方接口，返回的RSS", true,3);
 
     private final String key;
     private final String value;

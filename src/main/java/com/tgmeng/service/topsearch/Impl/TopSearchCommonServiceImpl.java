@@ -86,6 +86,9 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         } else if (platform.getResponseType() == ResponseTypeEnum.INTERFACE) {
             // JSON处理
             topSearchCommonVOS = CommonJsonPathUtil.getCommonResult(content, platform);
+        } else if (platform.getResponseType() == ResponseTypeEnum.RSS) {
+            // RSS处理
+            topSearchCommonVOS = CommonRssUtil.getCommonResult(content, platform);
         }
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
                 topSearchCommonVOS,
