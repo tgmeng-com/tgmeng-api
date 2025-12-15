@@ -43,6 +43,7 @@ public class ScheduleRequestConfigManager {
 
     private void initConfigs() {
         // 微博 - 使用Builder模式创建
+        // TODO 每次新加平台，这里加一下定时器里的
         configs.put("/api/topsearch/baidu", PlatformConfig.builder().build());
         configs.put("/api/topsearch/bilibili", PlatformConfig.builder().build());
         configs.put("/api/topsearch/weibo", PlatformConfig.builder().build());
@@ -283,6 +284,7 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/aliyunshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/tengxunyunshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/meituanshequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/0818tuan", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key

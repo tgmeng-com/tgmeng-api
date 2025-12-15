@@ -23,8 +23,6 @@ import java.util.Map;
 @Slf4j
 public class GotifyWebHook {
 
-    // TODO 这个里面推送的数据格式还没有确认是否完全正确，所以先不做。
-
     @Autowired
     private IWebHookClient iWebHookClient;
     @Autowired
