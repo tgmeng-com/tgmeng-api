@@ -6,6 +6,7 @@ import com.tgmeng.common.config.ScheduleRequestConfigManager;
 import com.tgmeng.common.enums.system.RequestFromEnum;
 import com.tgmeng.common.forest.client.system.ISystemLocalClient;
 import com.tgmeng.common.util.CacheUtil;
+import com.tgmeng.common.util.HotPointDataParquetUtil;
 import com.tgmeng.common.util.SubscriptionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class ControllerApiSchedule {
     private final ScheduleRequestConfigManager scheduleRequestConfigManager;
     private final CacheUtil cacheUtil;
     private final SubscriptionUtil subscriptionUtil;
+    private final HotPointDataParquetUtil hotPointDataParquetUtil;
 
     // 启动后10s执行一次，完成后，每隔1分钟执行一次
     @Scheduled(fixedDelay = 60_000, initialDelay = 5_000)
@@ -55,6 +57,11 @@ public class ControllerApiSchedule {
     public void subscriptionSchedule() {
         subscriptionUtil.subscriptionOption();
     }
+
+    //@Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
+    //public void hotPointDataParquetUtilSchedule() {
+    //    hotPointDataParquetUtil.saveToParquet();
+    //}
 
     public void scanAndInvokeControllers(Map<String, ScheduleRequestConfigManager.PlatformConfig> configs) {
         log.info("🤖 开始系统定时任务缓存数据，共 {} 个接口", configs.size());

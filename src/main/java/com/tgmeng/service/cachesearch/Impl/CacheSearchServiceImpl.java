@@ -80,6 +80,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                                     resultMap.put("keyword", keyword);
                                     resultMap.put("dataCardName", map.get("dataCardName"));
                                     resultMap.put("url", url);
+                                    resultMap.put("dataUpdateTime", map.get("dataUpdateTime"));
                                     resultList.add(resultMap);
                                 }
                             }

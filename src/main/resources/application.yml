@@ -50,4 +50,6 @@ my-config:
     dir: ./data/subscritions/       # 订阅文件所在的文件夹
     file-suffix: .json             # 文件后缀
     max-hot-number: 10000          # 每个人最多存10000条
+  history:
+    dir: ./data/history/       # 历史数据文件所在的文件夹
 
