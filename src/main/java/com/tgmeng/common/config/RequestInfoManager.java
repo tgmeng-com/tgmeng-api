@@ -2562,6 +2562,14 @@ public class RequestInfoManager {
                 .rootSelector(".BH-lbox.GN-lbox2 > .GN-lbox2B")
                 .keywordSelector(".GN-lbox2D")
                 .urlSelector(".GN-lbox2D > a")
+
+                .forestRequestHeader(new ForestRequestHeader()
+                        .setUserAgent(UserAgentGeneratorUtil.generateRandomUserAgent())
+                        .setHost("gnn.gamer.com.tw")
+                        .setXForwardedFor("114.114.114.114")
+                        .setReferer("https://gnn.gamer.com.tw/")
+                        .setOrigin("https://gnn.gamer.com.tw")
+                )
                 .register();
 
         addDomConfig("https://www.4gamer.net/{type}")
