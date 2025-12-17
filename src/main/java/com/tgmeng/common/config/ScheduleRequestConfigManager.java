@@ -285,6 +285,28 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/tengxunyunshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/meituanshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/0818tuan", PlatformConfig.builder().build());
+
+        configs.put("/api/topsearch/qooapp/shoujiyouxi", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/qooapp/pczhuji", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/bahamute/shouji", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/bahamute/pc", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/bahamute/tv", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/bahamute/xinxun", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/pc", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/xbox", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/ps", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/switch", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/smartphone", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/vr", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/hardware", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/arcade", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/analog", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/wii", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/vita", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/4gamer/nds", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/gamebase/shoujiyouxi", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/gamebase/pc", PlatformConfig.builder().requestDelay(10L).build());
+        configs.put("/api/topsearch/gamebase/tvzhangji", PlatformConfig.builder().requestDelay(10L).build());
     }
 
     // 获取全部已启用的key

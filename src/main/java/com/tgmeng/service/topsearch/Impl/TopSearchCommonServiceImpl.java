@@ -22,9 +22,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URLDecoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.zip.GZIPInputStream;
 
 @Service
 @Slf4j
@@ -53,13 +59,27 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         ForestResponse forestResponse;
         switch (platform.getRequestType()) {
             case ForestRequestTypeEnum.GET:
-                forestResponse = topSearchCommonClient.commonHttpGetUtils(
-                        forestRequestHeader,
-                        platformUrl,
-                        platform.getQueryParams());
+                if (platform.getPlatformName().equals("4gamer")) {
+                    byte[] forestResponseBytes = topSearchCommonClient.commonHttpGetUtilsForBytes(
+                            forestRequestHeader,
+                            platformUrl,
+                            platform.getQueryParams());
+                    forestResponse = topSearchCommonClient.commonHttpGetUtils(
+                            forestRequestHeader,
+                            platformUrl,
+                            platform.getQueryParams());
+                    forestResponse.setContent(decode(forestResponseBytes, "EUC-JP"));
+                } else {
+                    forestResponse = topSearchCommonClient.commonHttpGetUtils(
+                            forestRequestHeader,
+                            platformUrl,
+                            platform.getQueryParams());
+                }
                 break;
             case ForestRequestTypeEnum.POST:
                 if (ObjectUtil.isNotEmpty(platform.getJsonBody())) {
+                    // 处理jsonBody
+                    CommonJsonPathUtil.jsonBodyDeal(platform);
                     forestResponse = topSearchCommonClient.commonHttpPostUtils(
                             forestRequestHeader,
                             platformUrl,
@@ -127,14 +147,20 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                     .replace("{time}", TimeUtil.getCurrentTimeFormat("yyyyMMdd"));
         } else if (StrUtil.equals(platformCategory, "tuyawangguo")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeTuYaWangGuoEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        }else if (StrUtil.equals(platformCategory, "guojikejichuangxinzhongxin")) {
+        } else if (StrUtil.equals(platformCategory, "guojikejichuangxinzhongxin")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeGuoJiKeJiChuangXinZhongXinnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        }else if (StrUtil.equals(platformCategory, "wangyiyun")) {
+        } else if (StrUtil.equals(platformCategory, "wangyiyun")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeWangYiYunEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        }else if (StrUtil.equals(platformCategory, "baidu")) {
+        } else if (StrUtil.equals(platformCategory, "baidu")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeBaiDuEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        }else if (StrUtil.equals(platformCategory, "zhanku")) {
+        } else if (StrUtil.equals(platformCategory, "zhanku")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeZhanKuEnum.class, HttpRequestUtil.getRequestPathLastWord()));
+        } else if (StrUtil.equals(platformCategory, "QooApp")) {
+            url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeQooAppEnum.class, HttpRequestUtil.getRequestPathLastWord()));
+        } else if (StrUtil.equals(platformCategory, "bahamute")) {
+            url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeBaHaMuTeEnum.class, HttpRequestUtil.getRequestPathLastWord()));
+        } else if (StrUtil.equals(platformCategory, "4gamer")) {
+            url = url.replace("{type}", EnumUtils.getValueByKey(SearchType4GamerEnum.class, HttpRequestUtil.getRequestPathLastWord()));
         }
         map.put("url", url);
         return map;
@@ -147,7 +173,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             // 提取 _m_h5_tk Cookie
             String _m_h5_tk = null;
             for (ForestCookie cookie : cookies) {
-                if ("_m_h5_tk" .equals(cookie.getName())) {
+                if ("_m_h5_tk".equals(cookie.getName())) {
                     _m_h5_tk = cookie.getValue();
                     break;
                 }
@@ -190,6 +216,51 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         } catch (Exception e) {
             log.error("👺👺👺获取优酷平台cookie失败", e);
             throw new ServerException(ServerExceptionEnum.YOU_KU_TOP_SEARCH_EXCEPTION);
+        }
+    }
+
+    private String fixEncoding(String garbled) {
+        try {
+            String s = new String(
+                    garbled.getBytes(StandardCharsets.ISO_8859_1),
+                    StandardCharsets.UTF_8
+            );
+            return new String(
+                    s.getBytes(StandardCharsets.UTF_8),
+                    StandardCharsets.ISO_8859_1
+            );
+        } catch (Exception e) {
+            return garbled;
+        }
+    }
+
+    private static String decode(byte[] bytes, String charset) {
+        // 1. 解压gzip
+        byte[] decompressed = decompressIfNeeded(bytes);
+
+        // 2. 解码
+        return new String(decompressed, Charset.forName(charset));
+    }
+
+    private static byte[] decompressIfNeeded(byte[] data) {
+        // 检查gzip魔数：0x1f 0x8b (31, -117)
+        if (data.length < 2 || data[0] != 0x1f || data[1] != (byte) 0x8b) {
+            return data;
+        }
+
+        try (GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(data));
+             ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+
+            byte[] buffer = new byte[4096];
+            int len;
+            while ((len = gis.read(buffer)) > 0) {
+                bos.write(buffer, 0, len);
+            }
+
+            return bos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return data;
         }
     }
 }

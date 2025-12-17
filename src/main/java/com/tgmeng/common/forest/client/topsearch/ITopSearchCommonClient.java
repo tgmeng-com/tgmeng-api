@@ -16,6 +16,9 @@ public interface ITopSearchCommonClient {
     @Get("{url}")
     ForestResponse commonHttpGetUtils(@Header ForestRequestHeader topSearchRequestHeader, @Var("url") String url, @Query Map<String, Object> queryParam);
 
+    @Get("{url}")
+    byte[] commonHttpGetUtilsForBytes(@Header ForestRequestHeader topSearchRequestHeader, @Var("url") String url, @Query Map<String, Object> queryParam);
+
     @Post("{url}")
     ForestResponse commonHttpPostUtils(@Header ForestRequestHeader topSearchRequestHeader, @Var("url") String url, @JSONBody Map<String, Object> data);
 

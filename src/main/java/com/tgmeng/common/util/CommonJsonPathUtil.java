@@ -6,9 +6,7 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import com.tgmeng.common.config.JsonPathConfig;
 import com.tgmeng.common.config.RequestInfoManager;
-import com.tgmeng.common.enums.business.SearchTypeCCTVEnum;
-import com.tgmeng.common.enums.business.SearchTypeMangGuoEnum;
-import com.tgmeng.common.enums.business.SearchTypeYouKuEnum;
+import com.tgmeng.common.enums.business.*;
 import com.tgmeng.common.enums.enumcommon.EnumUtils;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import lombok.RequiredArgsConstructor;
@@ -123,6 +121,17 @@ public class CommonJsonPathUtil {
             }
         }
         return topSearchCommonVOS;
+    }
+
+    public static void jsonBodyDeal(RequestInfoManager.PlatformConfig platform) {
+        if (platform.getJsonBodyNeedDeal()) {
+            Map<String, Object> jsonBody = platform.getJsonBody();
+            String platformCategory = platform.getPlatformCategory();
+            if (StrUtil.equals(platformCategory, "gamebase")) {
+                jsonBody.put("category",EnumUtils.getValueByKey(SearchTypeGameBaseEnum.class, HttpRequestUtil.getRequestPathLastWord()));
+                platform.setJsonBody(jsonBody);
+            }
+        }
     }
 
     private static Long toLong(Object value) {

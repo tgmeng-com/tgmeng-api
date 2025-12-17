@@ -48,6 +48,8 @@ public class RequestInfoManager {
         @Builder.Default
         private Map<String, Object> jsonBody = new HashMap<>();
         @Builder.Default
+        private Boolean jsonBodyNeedDeal = false;
+        @Builder.Default
         private Map<String, Object> queryParams = new HashMap<>();
         private ForestRequestHeader forestRequestHeader;
         @Builder.Default
@@ -172,6 +174,11 @@ public class RequestInfoManager {
 
         public FluentConfig hotScoreNeedDeal(Boolean v) {
             config.hotScoreNeedDeal(v);
+            return this;
+        }
+
+        public FluentConfig jsonBodyNeedDeal(Boolean v) {
+            config.jsonBodyNeedDeal(v);
             return this;
         }
 
@@ -1160,11 +1167,11 @@ public class RequestInfoManager {
                 .urlSelector("$.pcInfoUrl")
 
                 .jsonBody(
-                        Map.of(
+                        new HashMap<>(Map.of(
                                 "sortBy", 1,
                                 "pageSize", 30,
                                 "channelNum", "103"
-                        )
+                        ))
                 )
                 .register();
 
@@ -2533,7 +2540,76 @@ public class RequestInfoManager {
                 .register();
 
 
+        addDomConfig("https://news.qoo-app.com/category/news-zh/{type}")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("QooApp")
+                .platformCategory("QooApp")
+                .interfaceUrl("/api/topsearch/qooapp/{type}")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".generate-columns-container > article")
+                .keywordSelector(".entry-title > a")
+                .urlSelector(".entry-title > a")
+                .register();
 
+        addDomConfig("https://gnn.gamer.com.tw/index.php?k={type}")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("巴哈姆特")
+                .platformCategory("bahamute")
+                .interfaceUrl("/api/topsearch/bahamute/{type}")
+                .hotTitleUrlPrefix("https:")
+                .addArea()
+                .rootSelector(".BH-lbox.GN-lbox2 > .GN-lbox2B")
+                .keywordSelector(".GN-lbox2D")
+                .urlSelector(".GN-lbox2D > a")
+                .register();
+
+        addDomConfig("https://www.4gamer.net/{type}")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("4gamer")
+                .platformCategory("4gamer")
+                .interfaceUrl("/api/topsearch/4gamer/{type}")
+                .hotTitleUrlPrefix("https://www.4gamer.net/")
+                // 置顶的3个
+                .addArea()
+                .rootSelector(".top_article_top3 > dd")
+                .keywordSelector("a")
+                .urlSelector("a")
+                // 下面两个是专门针对pc分类
+                .addArea()
+                .rootSelector("#NEWS_SELECT_DAY_1 .V2_article_container")
+                .keywordSelector("h2 > a")
+                .urlSelector("h2 > a")
+                .addArea()
+                .rootSelector("#NEWS_SELECT_DAY_2 .V2_article_container")
+                .keywordSelector("h2 > a")
+                .urlSelector("h2 > a")
+                // 除pc外的其他分类
+                .addArea()
+                .rootSelector("#NEWS_SELECT_RECENT_50 .V2_article_container")
+                .keywordSelector("h2 > a")
+                .urlSelector("h2 > a")
+                .register();
+
+        addJsonConfig("https://api.gamebase.com.tw/api/news/getNewsList")
+                .requestType(ForestRequestTypeEnum.POST)
+                .jsonBodyNeedDeal(true)
+                .platformName("gamebase")
+                .platformCategory("gamebase")
+                .interfaceUrl("/api/topsearch/gamebase/{type}")
+                .hotTitleUrlPrefix("https://news.gamebase.com.tw/news/detail/")
+                .addArea()
+                .rootSelector("$.return_msg.list")
+                .keywordSelector("$.news_title")
+                .urlSelector("$.news_no")
+                .jsonBody(
+                        new HashMap<>(Map.of(
+                                "GB_type", "newsList",
+                                "category", "",
+                                "page", 1
+                        ))
+                )
+                .register();
 
 
 

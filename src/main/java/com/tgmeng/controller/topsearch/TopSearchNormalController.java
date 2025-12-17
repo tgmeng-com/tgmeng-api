@@ -786,7 +786,25 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/qooapp/{type}")
+    public ResultTemplateBean getQooAppSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
 
+    @RequestMapping("/bahamute/{type}")
+    public ResultTemplateBean getBahamuteSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/4gamer/{type}")
+    public ResultTemplateBean get4GamerSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/gamebase/{type}")
+    public ResultTemplateBean getGamebaseSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
 
 
 
