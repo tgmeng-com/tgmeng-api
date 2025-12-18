@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/topsearch")
 public class TopSearchNormalController {
 
+    // TODO 每次新加平台，记得加一下Controller
+
     private final ITopSearchCommonService topSearchCommonService;
     /**
      * description: 百度热搜
@@ -805,6 +807,28 @@ public class TopSearchNormalController {
     public ResultTemplateBean getGamebaseSearch(@PathVariable("type") String type) {
         return topSearchCommonService.getTopSearchCommonService();
     }
+
+    @RequestMapping("/nodeloc/{type}")
+    public ResultTemplateBean getNodelocSearch(@PathVariable("type") String type) {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/zhiyuanshequ")
+    public ResultTemplateBean getZhiYuanSheQuSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/liangziwei")
+    public ResultTemplateBean getLiangziweiSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/xinzhiyuan")
+    public ResultTemplateBean getxinzhiyuanSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+
 
 
 

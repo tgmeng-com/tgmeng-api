@@ -2617,6 +2617,54 @@ public class RequestInfoManager {
                 )
                 .register();
 
+        addDomConfig("https://www.nodeloc.com/{type}")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("nodeloc")
+                .platformCategory("nodeloc")
+                .interfaceUrl("/api/topsearch/nodeloc/{type}")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".topic-list-item")
+                .keywordSelector(".title.raw-link.raw-topic-link")
+                .urlSelector(".title.raw-link.raw-topic-link")
+                .hotScoreSelector(".views")
+                .register();
+
+        addJsonConfig("https://hub.baai.ac.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("智源社区")
+                .platformCategory("zhiyuanshequ")
+                .interfaceUrl("/api/topsearch/zhiyuanshequ")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("$")
+                .keywordSelector("$.story_info.title")
+                .urlSelector("$.story_info.url")
+                .register();
+
+        addDomConfig("https://www.qbitai.com/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("量子位")
+                .platformCategory("liangziwei")
+                .interfaceUrl("/api/topsearch/liangziwei")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".article_list > .picture_text")
+                .keywordSelector("h4 > a")
+                .urlSelector("h4 > a")
+                .register();
+
+        addDomConfig("https://aiera.com.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("新智元")
+                .platformCategory("xinzhiyuan")
+                .interfaceUrl("/api/topsearch/xinzhiyuan")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".entries > article")
+                .keywordSelector("h2 > a")
+                .urlSelector("h2 > a")
+                .register();
 
 
 

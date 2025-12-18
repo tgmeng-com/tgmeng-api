@@ -164,6 +164,8 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeBaHaMuTeEnum.class, HttpRequestUtil.getRequestPathLastWord()));
         } else if (StrUtil.equals(platformCategory, "4gamer")) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchType4GamerEnum.class, HttpRequestUtil.getRequestPathLastWord()));
+        } else if (StrUtil.equals(platformCategory, "nodeloc")) {
+            url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeNodeLocEnum.class, HttpRequestUtil.getRequestPathLastWord()));
         }
         map.put("url", url);
         return map;
@@ -277,7 +279,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             if (ObjectUtil.isNotEmpty(topSearchCommonVO) && StrUtil.isNotBlank(topSearchCommonVO.getKeyword())) {
                 try {
                     topSearchCommonVO.setKeyword(ZhConverterUtil.toSimple(topSearchCommonVO.getKeyword()));
-                }catch (Exception e) {
+                } catch (Exception e) {
                     log.error("转换中文为简体失败，keyword={}，platformCategory={}，异常信息={}", topSearchCommonVO.getKeyword(), platformCategory, e.getMessage());
                 }
             }

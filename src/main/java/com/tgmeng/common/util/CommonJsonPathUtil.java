@@ -6,7 +6,10 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import com.tgmeng.common.config.JsonPathConfig;
 import com.tgmeng.common.config.RequestInfoManager;
-import com.tgmeng.common.enums.business.*;
+import com.tgmeng.common.enums.business.SearchTypeCCTVEnum;
+import com.tgmeng.common.enums.business.SearchTypeGameBaseEnum;
+import com.tgmeng.common.enums.business.SearchTypeMangGuoEnum;
+import com.tgmeng.common.enums.business.SearchTypeYouKuEnum;
 import com.tgmeng.common.enums.enumcommon.EnumUtils;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Service
@@ -27,6 +32,12 @@ public class CommonJsonPathUtil {
             content = CommonHotPointInfoDealUtil.getMaoYanJsonFromContent(content);
         } else if (StrUtil.equals(platform.getPlatformCategory(), "cctv")) {
             content = content.replaceAll("^setItem1\\((.*)\\);$", "$1");
+        }else if (StrUtil.equals(platform.getPlatformCategory(), "zhiyuanshequ")) {
+            Pattern pattern = Pattern.compile("resources:\\s*\\{\\s*data:\\s*(\\[[\\s\\S]*?\\])\\s*,\\s*pageIndex:");
+            Matcher matcher = pattern.matcher(content);
+            if (matcher.find()) {
+                content = matcher.group(1);
+            }
         }
         ReadContext ctx =  JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();

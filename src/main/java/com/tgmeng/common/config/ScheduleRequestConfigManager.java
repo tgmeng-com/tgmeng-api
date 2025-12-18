@@ -307,6 +307,12 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/gamebase/shoujiyouxi", PlatformConfig.builder().requestDelay(10L).build());
         configs.put("/api/topsearch/gamebase/pc", PlatformConfig.builder().requestDelay(10L).build());
         configs.put("/api/topsearch/gamebase/tvzhangji", PlatformConfig.builder().requestDelay(10L).build());
+
+        configs.put("/api/topsearch/nodeloc/hot", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/nodeloc/youhui", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/zhiyuanshequ", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/liangziwei", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/xinzhiyuan", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key
