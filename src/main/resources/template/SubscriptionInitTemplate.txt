@@ -43,6 +43,13 @@
       "secret": "",
       "platformKeywords": [],
       "remark": ""
+    },
+    {
+      "type": "WANGYIPOPO",
+      "webhook": "",
+      "secret": "",
+      "platformKeywords": [],
+      "remark": ""
     }
   ],
   "sent": []

@@ -56,6 +56,9 @@ public class SubscriptionUtil {
     @Lazy
     @Autowired
     private GotifyWebHook gotifyWebHook;
+    @Lazy
+    @Autowired
+    private WangYiPOPOWebHook wangYiPOPOWebHook;
 
     @Value("${my-config.subscription.dir}")
     private String subscriptionDir;
@@ -211,7 +214,10 @@ public class SubscriptionUtil {
                 ntfyWebHook.sendMessage(newHotList, push, mergedKeywords, accessKey);
                 break;
             case SubscriptionChannelTypeEnum.GOTIFY:
-                gotifyWebHook.sendMessage(newHotList, push, mergedKeywords);
+                gotifyWebHook.sendMessage(newHotList, push, mergedKeywords, accessKey);
+                break;
+            case SubscriptionChannelTypeEnum.WANGYIPOPO:
+                wangYiPOPOWebHook.sendMessage(newHotList, push, mergedKeywords, accessKey);
                 break;
             default:
                 break;

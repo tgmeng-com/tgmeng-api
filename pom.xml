@@ -35,6 +35,7 @@
         <parquet-avro.version>1.16.0</parquet-avro.version>
         <hadoop-common.version>3.4.2</hadoop-common.version>
         <opencc4j.version>1.14.0</opencc4j.version>
+        <commons-codec.version>1.20.0</commons-codec.version>
 	</properties>
 
 	<dependencies>
@@ -176,6 +177,12 @@
             <groupId>com.github.houbb</groupId>
             <artifactId>opencc4j</artifactId>
             <version>${opencc4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
         </dependency>
 
 

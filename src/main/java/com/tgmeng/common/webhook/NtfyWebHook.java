@@ -36,7 +36,6 @@ public class NtfyWebHook {
         sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
         stopWatch.stop();
         log.info("🎉 NTFY成功推送：{}条，accessKey: {},耗时: {} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.NTFY.getDescription(), newHotList.size());
     }
 
     public String getWebHook(SubscriptionBean.PushConfig push) {
