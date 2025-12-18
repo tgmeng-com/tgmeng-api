@@ -1,10 +1,12 @@
 package com.tgmeng.service.topsearch.Impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.dtflys.forest.http.ForestCookie;
 import com.dtflys.forest.http.ForestResponse;
+import com.github.houbb.opencc4j.util.ZhConverterUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.config.RequestInfoManager;
 import com.tgmeng.common.enums.business.*;
@@ -110,6 +112,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             // RSS处理
             topSearchCommonVOS = CommonRssUtil.getCommonResult(content, platform);
         }
+        convertChineseToSimple(topSearchCommonVOS, platform.getPlatformCategory());
         TopSearchCommonVO topSearchCommonVO = new TopSearchCommonVO(
                 topSearchCommonVOS,
                 platform.getPlatformName(),
@@ -261,6 +264,23 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         } catch (IOException e) {
             e.printStackTrace();
             return data;
+        }
+    }
+
+    // 中文转简体
+    private void convertChineseToSimple(List<TopSearchCommonVO.DataInfo> topSearchCommonVOS, String platformCategory) {
+        if (CollUtil.isEmpty(topSearchCommonVOS) || !StrUtil.containsAnyIgnoreCase(platformCategory, "qooapp", "gamebase", "bahamute")) {
+            return;
+        }
+
+        for (TopSearchCommonVO.DataInfo topSearchCommonVO : topSearchCommonVOS) {
+            if (ObjectUtil.isNotEmpty(topSearchCommonVO) && StrUtil.isNotBlank(topSearchCommonVO.getKeyword())) {
+                try {
+                    topSearchCommonVO.setKeyword(ZhConverterUtil.toSimple(topSearchCommonVO.getKeyword()));
+                }catch (Exception e) {
+                    log.error("转换中文为简体失败，keyword={}，platformCategory={}，异常信息={}", topSearchCommonVO.getKeyword(), platformCategory, e.getMessage());
+                }
+            }
         }
     }
 }

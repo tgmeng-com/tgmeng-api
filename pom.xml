@@ -34,6 +34,7 @@
         <rometools.version>2.1.0</rometools.version>
         <parquet-avro.version>1.16.0</parquet-avro.version>
         <hadoop-common.version>3.4.2</hadoop-common.version>
+        <opencc4j.version>1.14.0</opencc4j.version>
 	</properties>
 
 	<dependencies>
@@ -169,6 +170,12 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>${hadoop-common.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>opencc4j</artifactId>
+            <version>${opencc4j.version}</version>
         </dependency>
 
 
