@@ -64,7 +64,7 @@
 - ✅ 全局返回结果封装
 - ✅ 全局日志处理
 - ✅ 跨域配置
-- ✅ 热点关键词订阅推送(支持飞书、钉钉、企业微信、Telegram、NTFY、GOTIFY)
+- ✅ 热点关键词订阅推送(支持飞书、钉钉、企业微信、Telegram、NTFY、GOTIFY、网易POPO)
 - ✅ GitHub Action 自动部署
   - ✅ 提交代码即自动部署项目到指定服务器
   - ✅ 提交新Tag即可自动发布Realease
