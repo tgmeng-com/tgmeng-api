@@ -106,6 +106,7 @@ public class CommonJsonPathUtil {
                 String desc = "";
                 desc = switch (platform.getPlatformCategory()) {
                     case "maoyan" -> itemCtx.read(selector.getDesc());
+                    case "GitHub" -> itemCtx.read(selector.getDesc());
                     default -> "";
                 };
                 String publishTime = "";

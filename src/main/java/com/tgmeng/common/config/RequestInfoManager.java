@@ -1659,6 +1659,7 @@ public class RequestInfoManager {
                 .keywordSelector("$.name")
                 .urlSelector("$.html_url")
                 .hotScoreSelector("$.stargazers_count")
+                .descSelector("$.description")
 
                 .register();
 

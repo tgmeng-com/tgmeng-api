@@ -53,3 +53,62 @@ my-config:
   history:
     dir: ./data/history/       # 历史数据文件所在的文件夹
 
+
+
+# 翻译服务配置
+translation:
+  # ==================== 国内平台（推荐优先使用） ====================
+
+  # 1. 小牛翻译 ⭐⭐⭐⭐⭐（额度最大）
+  niutrans:
+    enabled: false
+    priority: 1
+    apikey: apikey
+
+  # 2. 腾讯翻译 ⭐⭐⭐⭐⭐（推荐）
+  tencent:
+    enabled: false
+    priority: 2
+    secretid: secretid
+    secretkey: secretkey
+    region: ap-shanghai
+
+  # 3. 百度翻译 ⭐⭐⭐⭐
+  baidu:
+    enabled: false
+    priority: 3
+    appid: appid
+    secret: secret
+
+  # 4. 阿里翻译 ⭐⭐⭐
+  ali:
+    enabled: true
+    priority: 8
+    accesskeyid: accesskeyid
+    accesskeysecret: accesskeysecret
+
+  # 5. Google翻译 ⭐⭐⭐⭐（质量最好）
+  google:
+    enabled: false
+    priority: 4
+    apikey: your_google_apikey
+
+  # 6. 微软翻译 ⭐⭐⭐⭐
+  microsoft:
+    enabled: false
+    priority: 5
+    subscriptionkey: subscriptionkey
+    region: eastasia
+
+  # 7. 有道翻译 ⭐⭐⭐
+  youdao:
+    enabled: false
+    priority: 6
+    appkey: appkey
+    secret: secret
+
+  # 8. DeepL翻译 ⭐⭐⭐⭐（欧洲语言质量最好）
+  deepl:
+    enabled: false
+    priority: 7
+    authkey: your_deepl_authkey
