@@ -179,9 +179,10 @@ public class SubscriptionUtil {
     private List<Map<String, Object>> getNewHotList(List<Map<String, Object>> hotList, List<String> mergedKeywords, Set<String> sentSet) {
         return hotList.stream()
                 .filter(map -> {
-                    String keyWord = String.valueOf(map.get("keyword"));
-                    String hashBase64 = generateHash(keyWord, String.valueOf(map.get("dataCardName")));
-                    return mergedKeywords.stream().anyMatch(keyWord::contains) && !sentSet.contains(hashBase64);
+                    String hotTitle = String.valueOf(map.get("keyword"));
+                    String hashBase64 = generateHash(hotTitle, String.valueOf(map.get("dataCardName")));
+                    String hotTitleLower = hotTitle.toLowerCase();
+                    return mergedKeywords.stream().anyMatch(keyword -> hotTitleLower.contains(keyword.toLowerCase()))  && !sentSet.contains(hashBase64);
                 }).collect(Collectors.toMap(
                         map -> generateHash(
                                 String.valueOf(map.get("keyword")),
