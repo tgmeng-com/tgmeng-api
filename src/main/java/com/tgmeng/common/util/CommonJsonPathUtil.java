@@ -121,7 +121,7 @@ public class CommonJsonPathUtil {
                     default -> "";
                 };
                 String publishTime = "";
-                publishTime = switch (publishTime) {
+                publishTime = switch (platform.getPlatformCategory()) {
                     case "maoyan" -> itemCtx.read(selector.getPublishTime());
                     default -> "";
                 };
