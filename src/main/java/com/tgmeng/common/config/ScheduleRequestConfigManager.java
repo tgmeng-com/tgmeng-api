@@ -233,7 +233,6 @@ public class ScheduleRequestConfigManager {
 
         configs.put("/api/topsearch/36ke", PlatformConfig.builder().build());
         configs.put("/api/topsearch/itzhijia", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/jikegongyuan", PlatformConfig.builder().build());
         configs.put("/api/topsearch/readhub", PlatformConfig.builder().build());
         configs.put("/api/topsearch/taimeiti", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhongguancunzaixian", PlatformConfig.builder().build());

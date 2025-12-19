@@ -538,11 +538,6 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/jikegongyuan")
-    public ResultTemplateBean<TopSearchCommonVO> getjikegongyuanSearch() {
-        return topSearchCommonService.getTopSearchCommonService();
-    }
-
     @RequestMapping("/readhub")
     public ResultTemplateBean<TopSearchCommonVO> getreadhub() {
         return topSearchCommonService.getTopSearchCommonService();

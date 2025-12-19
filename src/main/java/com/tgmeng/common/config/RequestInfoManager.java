@@ -1917,18 +1917,6 @@ public class RequestInfoManager {
                 .hotScoreSelector(".review-num")
                 .register();
 
-        addDomConfig("https://www.geekpark.net/")
-                .requestType(ForestRequestTypeEnum.GET)
-                .platformName("极客公园")
-                .platformCategory("科技")
-                .interfaceUrl("/api/topsearch/jikegongyuan")
-                .hotTitleUrlPrefix("https://www.geekpark.net")
-                .addArea()
-                .rootSelector(".main-content > .container > .article-list > .article-item")
-                .keywordSelector(".article-info > a:nth-of-type(2)")
-                .urlSelector(".article-info > a:nth-of-type(2)")
-                .register();
-
         addDomConfig("https://readhub.cn/hot")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("ReadHub")
@@ -1948,8 +1936,7 @@ public class RequestInfoManager {
                 .interfaceUrl("/api/topsearch/taimeiti")
                 .hotTitleUrlPrefix("")
                 .addArea()
-                .rootSelector(".content > .item")
-                .keywordSelector("._tit")
+                .rootSelector(".content > .item").keywordSelector("._tit")
                 .urlSelector("._tit")
                 .hotScoreSelector(".action_reads")
                 .register();
