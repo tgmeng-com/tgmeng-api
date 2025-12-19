@@ -247,11 +247,6 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/shejidaren")
-    public ResultTemplateBean getSheJiDaRenSearch() {
-        return topSearchCommonService.getTopSearchCommonService();
-    }
-
     @RequestMapping("/topys")
     public ResultTemplateBean getTopysSearch() {
         return topSearchCommonService.getTopSearchCommonService();

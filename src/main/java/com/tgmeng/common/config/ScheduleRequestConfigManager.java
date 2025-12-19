@@ -126,7 +126,6 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/tuyawangguo/best", PlatformConfig.builder().build());
         configs.put("/api/topsearch/tuyawangguo/new", PlatformConfig.builder().build());
         configs.put("/api/topsearch/tuyawangguo/fx", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/shejidaren", PlatformConfig.builder().build());
         configs.put("/api/topsearch/topys", PlatformConfig.builder().build());
         configs.put("/api/topsearch/archdaily", PlatformConfig.builder().build());
         configs.put("/api/topsearch/dribbble", PlatformConfig.builder().build());

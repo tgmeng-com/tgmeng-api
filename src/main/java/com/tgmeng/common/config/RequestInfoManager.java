@@ -943,19 +943,6 @@ public class RequestInfoManager {
 
                 .register();
 
-        addDomConfig("https://www.shejidaren.com/")
-                .requestType(ForestRequestTypeEnum.GET)
-                .platformName("设计达人")
-                .platformCategory("设计")
-                .interfaceUrl("/api/topsearch/shejidaren")
-                .hotTitleUrlPrefix("")
-                .addArea()
-                .rootSelector(".indexbody .post")
-                .keywordSelector("h2 > a")
-                .urlSelector("h2 > a")
-
-                .register();
-
         addDomConfig("https://hot.uisdc.com/posts")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("优设网")

@@ -53,7 +53,6 @@ public enum ForestRequestHeaderOriginEnum implements INameValueEnum<String,Strin
     YOU_SHE_WANG("YOU_SHE_WANG", "https://hot.uisdc.com", "",true,5),
     ZHAN_KU("ZHAN_KU", "https://www.zcool.com.cn", "",true,5),
     TU_YA_WANG_GUO("TU_YA_WANG_GUO", "https://www.gracg.com", "",true,5),
-    SHE_JI_DA_REN("SHE_JI_DA_REN", "https://www.shejidaren.com", "",true,5),
     TOPYS("TOPYS", "https://www.topys.cn", "",true,5),
     ARCH_DAILY("ARCH_DAILY", "https://www.archdaily.cn", "",true,5),
     DRIBBBLE("DRIBBBLE", "https://dribbble.com", "",true,5),
