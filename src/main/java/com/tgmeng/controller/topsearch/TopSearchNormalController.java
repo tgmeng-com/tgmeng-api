@@ -578,18 +578,8 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/wulianwangzhiku")
-    public ResultTemplateBean<TopSearchCommonVO> getwulianwangzhikuSearch() {
-        return topSearchCommonService.getTopSearchCommonService();
-    }
-
     @RequestMapping("/kuaikeji")
     public ResultTemplateBean<TopSearchCommonVO> getkuaikejiSearch() {
-        return topSearchCommonService.getTopSearchCommonService();
-    }
-
-    @RequestMapping("/techweb")
-    public ResultTemplateBean<TopSearchCommonVO> gettechwebSearch() {
         return topSearchCommonService.getTopSearchCommonService();
     }
 

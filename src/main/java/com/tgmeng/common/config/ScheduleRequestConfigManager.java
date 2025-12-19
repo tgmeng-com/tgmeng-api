@@ -241,9 +241,7 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/iheima", PlatformConfig.builder().build());
         configs.put("/api/topsearch/leifengwang", PlatformConfig.builder().build());
         configs.put("/api/topsearch/quantianhoukeji", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/wulianwangzhiku", PlatformConfig.builder().build());
         configs.put("/api/topsearch/kuaikeji", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/techweb", PlatformConfig.builder().build());
         configs.put("/api/topsearch/lixiangshenghuoshiyanshi", PlatformConfig.builder().build());
         configs.put("/api/topsearch/duozhi", PlatformConfig.builder().build());
         configs.put("/api/topsearch/jiemodui", PlatformConfig.builder().build());

@@ -2014,18 +2014,6 @@ public class RequestInfoManager {
                 .urlSelector(".article-title")
                 .register();
 
-        addDomConfig("https://www.iot101.com/")
-                .requestType(ForestRequestTypeEnum.GET)
-                .platformName("物联网智库")
-                .platformCategory("科技")
-                .interfaceUrl("/api/topsearch/wulianwangzhiku")
-                .hotTitleUrlPrefix("")
-                .addArea()
-                .rootSelector("#newsList > .news-item-box")
-                .keywordSelector(".title > a")
-                .urlSelector(".title > a")
-                .register();
-
         addDomConfig("https://www.mydrivers.com/")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("快科技")
@@ -2040,18 +2028,6 @@ public class RequestInfoManager {
                 .rootSelector("#news_content_1 li")
                 .keywordSelector("a")
                 .urlSelector("a")
-                .register();
-
-        addDomConfig("https://www.techweb.com.cn/roll/")
-                .requestType(ForestRequestTypeEnum.GET)
-                .platformName("TechWeb")
-                .platformCategory("科技")
-                .interfaceUrl("/api/topsearch/techweb")
-                .hotTitleUrlPrefix("")
-                .addArea()
-                .rootSelector(".newslist li")
-                .keywordSelector(".tit > a")
-                .urlSelector(".tit > a")
                 .register();
 
         addDomConfig("https://www.toodaylab.com/")
