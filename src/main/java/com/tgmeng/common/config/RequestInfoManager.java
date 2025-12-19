@@ -1804,18 +1804,6 @@ public class RequestInfoManager {
                 .hotScoreSelector("$.views")
                 .register();
 
-        addDomConfig("https://bbs.kanxue.com/")
-                .requestType(ForestRequestTypeEnum.GET)
-                .platformName("看雪")
-                .platformCategory("社区")
-                .interfaceUrl("/api/topsearch/kanxue")
-                .hotTitleUrlPrefix("https://bbs.kanxue.com/")
-                .addArea()
-                .rootSelector(".bbs_home_page_three_col > div:nth-of-type(2) > div:nth-of-type(2) > div")
-                .keywordSelector(".bbs_home_page_list_title")
-                .urlSelector(".bbs_home_page_list_title")
-                .register();
-
         addDomConfig("https://www.txrjy.com/forum.php")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("通信人家园")
