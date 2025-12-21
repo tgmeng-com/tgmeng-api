@@ -86,8 +86,9 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                             ) t
                             ORDER BY dataUpdateTime DESC
                     """, simHash, pathPattern, startTime, endTime, simHash, simHashDistance);
-
-            return duckdb.query(sql);
+            List<Map<String, Object>> query = duckdb.query(sql);
+            log.info("查询历史热点轨迹成功，标题：{}，共 {} 条记录", title, query.size());
+            return query;
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new ServerException("热点历史追踪查询异常");
@@ -221,9 +222,8 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
 
                 return processedRow;
             }).toList();
-
+            log.info("查询突发热点成功，共 {} 条记录", result.size());
             return result;
-
         } catch (Exception e) {
             log.error("突发热点查询异常: {}", e.getMessage(), e);
             throw new ServerException("突发热点查询异常");
