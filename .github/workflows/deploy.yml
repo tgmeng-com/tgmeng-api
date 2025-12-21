@@ -227,6 +227,7 @@ jobs:
               -e SUBSCRIPTION_FILE_INIT_PASSWORD="${SUBSCRIPTION_FILE_INIT_PASSWORD}" \
               -e UMAMI_WEBSITE_TGMENG_COM="${UMAMI_WEBSITE_TGMENG_COM}" \
               -e JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heapdumps -XX:ErrorFile=/app/logs/hs_err_%p.log" \
+              -e TZ=Asia/Shanghai \
               ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
             
             # 等待容器启动
