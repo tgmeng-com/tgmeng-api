@@ -29,6 +29,15 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     @Value("${my-config.history.sim-hash-distance}")
     private Integer simHashDistance;
 
+    @Value("${my-config.history.sudden-heat-point-time-window}")
+    private Integer suddenHeatPointTimeWindow;
+
+    @Value("${my-config.history.sudden-heat-point-platform-num-least}")
+    private Integer suddenHeatPointPlatformNumLeast;
+
+    @Value("${my-config.history.sudden-heat-point-result-limit}")
+    private Integer suddenHeatPointResultLimit;
+
     @Autowired
     private DuckDBUtil duckdb;
 
@@ -46,7 +55,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     // 突发热点
     @Override
     public ResultTemplateBean getSuddenHeatPoint() {
-        List<Map<String, Object>> result = suddenHeatPoint(60, 5, 10);
+        List<Map<String, Object>> result = suddenHeatPoint(suddenHeatPointTimeWindow, suddenHeatPointPlatformNumLeast, suddenHeatPointResultLimit);
         return ResultTemplateBean.success(result);
     }
 
