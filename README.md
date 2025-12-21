@@ -67,7 +67,6 @@
 - ✅ 热点关键词订阅推送(支持飞书、钉钉、企业微信、Telegram、NTFY、GOTIFY、网易POPO)
 - ✅ GitHub Action 自动部署
   - ✅ 提交代码即自动部署项目到指定服务器
-  - ✅ 提交新Tag即可自动发布Realease
   - ✅ 提交新代码即可自动发布到Docker镜像到DockerHub
   - ✅ 提交新代码即可自动发布到Docker镜像到GHCR(github container registry)
 

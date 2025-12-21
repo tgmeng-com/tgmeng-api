@@ -26,10 +26,11 @@ jobs:
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}                # 服务器密码
       SERVER_PORT: 22                                                # 服务器端口
       JAVA_VERSION: '21'                                             # java版本
-      REMOTE_JAR_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api    # 部署目录，我是root用户登录，所以这里就会变成/home/root/tgmeng-api
+      REMOTE_APP_DIR: /home/${{ secrets.SERVER_USER }}/tgmeng-api    # 部署目录，我是root用户登录，所以这里就会变成/home/root/tgmeng-api
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}          # DockerHub 用户名
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}                # DockerHub 访问令牌
       DOCKER_IMAGE_NAME: tgmeng-api                                  # DockerHub 镜像名称（也就是dockerHub里面的仓库的名字）
+      CONTAINER_NAME: tgmeng-api
       GHCR_IMAGE_NAME: tgmeng-api                                   # GHCR 镜像名称（建议是仓库名）
       # 这里格式为
       #  [
@@ -106,7 +107,7 @@ jobs:
           script: |
             echo "[$(date)] 服务器连接成功"
 
-      # 上传 在服务器创建所需目录，删除旧的 JAR 文件，只保留最新的 10 个文件
+      # 上传 在服务器创建所需目录，删除旧文件
       - name: 创建所需目录并清理旧文件
         uses: appleboy/ssh-action@master
         with:
@@ -114,188 +115,31 @@ jobs:
           username: ${{ env.SERVER_USER }}
           password: ${{ env.SERVER_PASSWORD }}
           port: ${{ env.SERVER_PORT }}
-          envs: REMOTE_JAR_DIR,JAR_NAME
+          envs: REMOTE_APP_DIR,JAR_NAME
           script: |
             echo "[$(date)] 准备部署新版本应用..."
             # 磁盘空间检查
-            df -h $REMOTE_JAR_DIR | awk 'NR==2 {if ($4+0 < 500) {print "[$(date)] 磁盘空间不足！"; exit 1}}'
+            df -h $REMOTE_APP_DIR | awk 'NR==2 {if ($4+0 < 500) {print "[$(date)] 磁盘空间不足！"; exit 1}}'
             # 确保目标文件夹存在
-            mkdir -p "$REMOTE_JAR_DIR"
-            # 获取当前时间戳
-            TIMESTAMP=$(date +%Y%m%d%H%M%S)
-            
-            # 如果文件已经存在，重命名为带时间戳的文件
-            if [ -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
-              echo "[$(date)] 备份现有 JAR 文件: ${JAR_NAME%.*}-$TIMESTAMP.jar"
-              mv "$REMOTE_JAR_DIR/$JAR_NAME" "$REMOTE_JAR_DIR/${JAR_NAME%.*}-$TIMESTAMP.jar"
-            fi
-            
-            # 清理旧的 JAR 文件，只保留最新的 10 个文件
-            cd "$REMOTE_JAR_DIR"
-            echo "[$(date)] 清理旧的 JAR 文件..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "${JAR_NAME%.*}-*.jar" -printf '%T@ %p\n' | 
-            sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧 JAR 文件可清理"
+            mkdir -p "$REMOTE_APP_DIR/logs"
+            mkdir -p "$REMOTE_APP_DIR/data"
+            mkdir -p "$REMOTE_APP_DIR/heapdumps"
             
             # 清理旧的日志文件，值保留最新的10个
             echo "[$(date)] 清理旧的日志文件，只保留最新的 10 个..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "app-*.log" -printf '%T@ %p\n' |
+            find "$REMOTE_APP_DIR/logs" -maxdepth 1 -name "app-*.log" -printf '%T@ %p\n' |
             sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧日志文件可清理"
             
             # 清理旧的堆转储文件，只保留最新的 10 个
             echo "[$(date)] 清理旧的堆转储文件..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "heapdump_*.hprof" -printf '%T@ %p\n' |
-            sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧堆转储文件可清理"
+            find "$REMOTE_APP_DIR/heapdumps" -maxdepth 1 -name "heapdump_*.hprof" -printf '%T@ %p\n' |
+            sort -rn | awk 'NR>5 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧堆转储文件可清理"
             
             # 清理旧的错误日志文件，只保留最新的 10 个
             echo "[$(date)] 清理旧的错误日志文件..."
-            find "$REMOTE_JAR_DIR" -maxdepth 1 -name "hs_err_*.log" -printf '%T@ %p\n' |
+            find "$REMOTE_APP_DIR" -maxdepth 1 -name "hs_err_*.log" -printf '%T@ %p\n' |
             sort -rn | awk 'NR>10 {print $2}' | xargs -r rm -f || echo "[$(date)] 无旧错误日志文件可清理"
 
-      - name: 上传Jar包到服务器
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          source: target/${{ env.JAR_NAME }}
-          target: ${{ env.REMOTE_JAR_DIR }}
-          strip_components: 1 # 去除路径中的一级目录，也就是target，不然会把target文件夹也拷贝过去
-
-      - name: 验证Jar包是否上传成功
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          envs: REMOTE_JAR_DIR,JAR_NAME  # 传递环境变量
-          script: |
-            if [ ! -f "$REMOTE_JAR_DIR/$JAR_NAME" ]; then
-              echo "[$(date)] JAR 上传失败！"
-              exit 1
-            fi
-            echo "[$(date)] JAR 文件上传成功: $(ls -lh $REMOTE_JAR_DIR/$JAR_NAME)"
-
-      - name: 重启Jar包
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.SERVER_HOST }}
-          username: ${{ env.SERVER_USER }}
-          password: ${{ env.SERVER_PASSWORD }}
-          port: ${{ env.SERVER_PORT }}
-          envs: REMOTE_JAR_DIR,JAR_NAME,PORT,JAVA_VERSION,AI_PLATFORM_CONFIG,GOOGLE_ADS_CLOSE_PASSWORD,SUBSCRIPTION_FILE_INIT_PASSWORD,UMAMI_WEBSITE_TGMENG_COM  # 传递环境变量
-          script: |
-            echo "[$(date)] 准备重启应用..."
-            
-            # java版本检查
-            REQUIRED_JAVA="java version \"${JAVA_VERSION}"
-            echo "[$(date)] 检查 Java 版本..."
-            if ! java -version 2>&1 | grep -E "version \"${JAVA_VERSION}(\.|$)"; then
-              echo "[$(date)] Java 版本不匹配！需要 Java ${JAVA_VERSION}.x"
-              java -version 2>&1
-              exit 1
-            fi
-            
-            # 检查并终止 JAR 进程或端口占用
-            JAR_PATTERN="java.*-jar.*${JAR_NAME%.*}"
-            PIDS=$(pgrep -f "$JAR_PATTERN")
-            PORT_PID=$(ss -tulnp 2>/dev/null | grep -E ":${PORT}\s" | awk -F',' '{print $2}' | awk -F'pid=' '{print $2}' | head -n 1)
-            ALL_PIDS="$PIDS $PORT_PID"
-            if [ -n "$ALL_PIDS" ]; then
-              echo "[$(date)] 发现进程 PIDs: $ALL_PIDS"
-              for PID in $ALL_PIDS; do
-                if [ -n "$PID" ] && ps -p $PID > /dev/null; then
-                  echo "[$(date)] 尝试终止进程 $PID..."
-                  kill -15 $PID
-                fi
-              done
-              sleep 15
-              for PID in $ALL_PIDS; do
-                if [ -n "$PID" ] && ps -p $PID > /dev/null; then
-                  echo "[$(date)] 进程 $PID 未正常终止，强制停止..."
-                  kill -9 $PID
-                fi
-              done
-            else
-              echo "[$(date)] 未找到运行中的 JAR 进程或占用 ${PORT} 端口的进程"
-            fi
-            
-            # 启动应用
-            echo "[$(date)] 启动应用: $JAR_NAME"
-            cd $REMOTE_JAR_DIR
-            TIMESTAMP=$(date +%Y%m%d%H%M%S)
-            if [ -f "$REMOTE_JAR_DIR/app.log" ]; then
-              echo "[$(date)] 备份现有日志文件: app-$TIMESTAMP.log"
-              mv "$REMOTE_JAR_DIR/app.log" "$REMOTE_JAR_DIR/app-$TIMESTAMP.log"
-            fi
-            
-            # 资源限制
-            nohup java \
-              -Xms512m -Xmx1024m \
-              -XX:+UseG1GC \
-              -XX:+HeapDumpOnOutOfMemoryError \
-              -XX:HeapDumpPath=$REMOTE_JAR_DIR/heapdump_$(date +%s).hprof \
-              -XX:ErrorFile=$REMOTE_JAR_DIR/hs_err_%p.log \
-              -jar $JAR_NAME --server.port=$PORT > app.log 2>&1 &
-            sleep 30
-            
-            # 进程检查
-            ps aux | grep "[j]ava.*-jar $JAR_NAME" || echo "[$(date)] 无匹配的 Java 进程"
-            if pgrep -f "java.*-jar $JAR_NAME" > /dev/null; then
-              echo "[$(date)] 进程检查通过，应用已成功启动！"
-              #echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志："
-              #head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
-            else
-              echo "[$(date)] 应用启动失败！"
-              echo "[$(date)] 打印 $REMOTE_JAR_DIR/app.log 的前 50 行日志（若存在）："
-              head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
-              exit 1
-            fi
-            
-            # 接口健康检查
-            HEALTH_URL="http://localhost:$PORT/api/actuator/health"
-            MAX_RETRIES=10
-            RETRY_INTERVAL=5
-
-            # 确保 curl 可用
-            if ! command -v curl &> /dev/null; then
-              echo "[$(date)] curl 未安装，尝试安装..."
-              apt-get update && apt-get install -y curl
-            fi
-            for i in $(seq 1 $MAX_RETRIES); do
-              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_URL")
-              if [ "$STATUS_CODE" -eq 200 ]; then
-                echo "[$(date)] 接口健康检查通过 ✅"
-                break
-              else
-                echo "[$(date)] 第 $i 次接口检查失败（状态码 $STATUS_CODE），重试中..."
-                sleep $RETRY_INTERVAL
-              fi
-
-              if [ "$i" -eq "$MAX_RETRIES" ]; then
-                echo "[$(date)] 应用接口健康检查失败 ❌"
-                head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
-                exit 1
-              fi
-            done
-
-            echo "[$(date)] 应用启动成功并健康运行 🎉"
-            head -n 50 $REMOTE_JAR_DIR/app.log || echo "[$(date)] 无法读取日志文件！"
-
-      # 登录 DockerHub
-      - name: 登录Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ env.DOCKERHUB_USERNAME }}
-          password: ${{ env.DOCKERHUB_TOKEN }}
-      # 登录 GHCR（github repository container register）,也就是github的docker库
-      - name: 登录GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       # 构建Docker镜像（DockerHub）
       - name: 构建Docker镜像
         run: |
@@ -306,6 +150,14 @@ jobs:
             -t ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} \
             -t ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest \
             .
+
+      # 登录 DockerHub
+      - name: 登录Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USERNAME }}
+          password: ${{ env.DOCKERHUB_TOKEN }}
+
       # 推送Docker镜像（DockerHub）
       - name: 推送Docker镜像
         run: |
@@ -313,6 +165,122 @@ jobs:
           docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           echo "Pushing to ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest"
           docker push ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+
+      - name: 部署并测试Docker容器
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          password: ${{ env.SERVER_PASSWORD }}
+          port: ${{ env.SERVER_PORT }}
+          envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN,DOCKER_IMAGE_NAME,DOCKER_IMAGE_TAG,CONTAINER_NAME,PORT,REMOTE_APP_DIR,AI_PLATFORM_CONFIG,GOOGLE_ADS_CLOSE_PASSWORD,SUBSCRIPTION_FILE_INIT_PASSWORD,UMAMI_WEBSITE_TGMENG_COM
+          script: |
+            echo "[$(date)] 准备部署并测试 Docker 容器..."
+            
+            if ! command -v docker &> /dev/null; then
+              echo "[$(date)] Docker 未安装，请先安装 Docker！"
+              exit 1
+            fi
+            
+            # 登录 DockerHub（用于拉取基础镜像，如果需要）
+            echo "[$(date)] 登录 DockerHub..."
+            echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+            
+            # 拉取最新镜像
+            echo "[$(date)] 拉取镜像: ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest"
+            docker pull ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
+            
+            # 停止并删除旧容器
+            if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
+              echo "[$(date)] 停止并删除旧容器..."
+              docker stop ${CONTAINER_NAME} || true
+              docker rm ${CONTAINER_NAME} || true
+            fi
+            
+            # 清理旧镜像（保留当前版本和latest）
+            echo "[$(date)] 清理旧镜像..."
+            docker images --format '{{.Repository}}:{{.Tag}}' | \
+              grep "^${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}" | \
+              grep -v "${DOCKER_IMAGE_TAG}" | \
+              grep -v "latest" | \
+              xargs -r docker rmi || echo "[$(date)] 无旧镜像可清理"
+            
+            # 备份当前日志
+            TIMESTAMP=$(date +%Y%m%d%H%M%S)
+            if [ -f "${REMOTE_APP_DIR}/logs/app.log" ]; then
+              echo "[$(date)] 备份现有日志文件"
+              mv "${REMOTE_APP_DIR}/logs/app.log" "${REMOTE_APP_DIR}/logs/app-${TIMESTAMP}.log"
+            fi
+            
+            # 启动新容器
+            echo "[$(date)] 启动新容器..."
+            docker run -d \
+              --name ${CONTAINER_NAME} \
+              --restart unless-stopped \
+              -p ${PORT}:${PORT} \
+              -v ${REMOTE_APP_DIR}/logs:/app/logs \
+              -v ${REMOTE_APP_DIR}/data:/app/data \
+              -v ${REMOTE_APP_DIR}/heapdumps:/app/heapdumps \
+              -e SERVER_PORT=${PORT} \
+              -e AI_PLATFORM_CONFIG="${AI_PLATFORM_CONFIG}" \
+              -e GOOGLE_ADS_CLOSE_PASSWORD="${GOOGLE_ADS_CLOSE_PASSWORD}" \
+              -e SUBSCRIPTION_FILE_INIT_PASSWORD="${SUBSCRIPTION_FILE_INIT_PASSWORD}" \
+              -e UMAMI_WEBSITE_TGMENG_COM="${UMAMI_WEBSITE_TGMENG_COM}" \
+              -e JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heapdumps -XX:ErrorFile=/app/logs/hs_err_%p.log" \
+              ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
+            
+            # 等待容器启动
+            sleep 30
+            
+            # 检查容器是否运行
+            if ! docker ps --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
+              echo "[$(date)] ❌ 容器启动失败！"
+              echo "[$(date)] 容器日志："
+              docker logs ${CONTAINER_NAME} || true
+              exit 1
+            fi
+            
+            echo "[$(date)] ✅ 容器启动成功！"
+            docker ps | grep ${CONTAINER_NAME}
+            
+            # 健康检查
+            HEALTH_URL="http://localhost:${PORT}/api/actuator/health"
+            MAX_RETRIES=10
+            RETRY_INTERVAL=5
+            
+            echo "[$(date)] 开始健康检查..."
+            for i in $(seq 1 ${MAX_RETRIES}); do
+              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "${HEALTH_URL}" || echo "000")
+              if [ "${STATUS_CODE}" -eq 200 ]; then
+                echo "[$(date)] ✅ 接口健康检查通过！"
+                break
+              else
+                echo "[$(date)] 第 ${i}/${MAX_RETRIES} 次检查失败（状态码 ${STATUS_CODE}），${RETRY_INTERVAL}秒后重试..."
+                sleep ${RETRY_INTERVAL}
+              fi
+            
+              if [ "${i}" -eq "${MAX_RETRIES}" ]; then
+                echo "[$(date)] ❌ 应用接口健康检查失败！"
+                echo "[$(date)] 容器日志（最后100行）："
+                docker logs --tail 100 ${CONTAINER_NAME}
+                echo "[$(date)] 回滚：停止并删除失败的容器..."
+                docker stop ${CONTAINER_NAME} || true
+                docker rm ${CONTAINER_NAME} || true
+                exit 1
+              fi
+            done
+            
+            echo "[$(date)] 🎉 应用部署成功并健康运行！"
+            echo "[$(date)] 容器资源使用情况："
+            docker stats --no-stream ${CONTAINER_NAME}
+
+      # 登录 GHCR（github repository container register）,也就是github的docker库
+      - name: 登录GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # 推送Docker镜像到GHCR（github repository container register）,也就是github的docker库
       # 拉取是这样：docker pull ghcr.io/YOUR_USERNAME/GHCR_IMAGE_NAME:tag
@@ -322,33 +290,3 @@ jobs:
           docker push ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           echo "Pushing to ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest"
           docker push ghcr.io/${{ github.repository_owner }}/${{ env.GHCR_IMAGE_NAME }}:latest
-
-      # 创建 GitHub Release，当创建以v*开头的tag时，会自动创建release，就是开头定义的那个v*，比如v1.0.1
-      - name: 创建 GitHub Release
-        id: create_release  # 新增 ID 以供后续步骤引用
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: actions/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.TAG_NAME }}
-          body: |
-            #  ${{ env.ARTIFACT_ID }} ${{ env.TAG_NAME }}
-            - 自动构建并部署 JAR 文件: ${{ env.JAR_NAME }}
-            - 端口: ${{ env.PORT }}
-            - 新增功能和修复（请根据实际变更更新，这里不变了，自己去github的release页面改）。
-          draft: false
-          prerelease: false
-
-      # 上传 发布release后，自动上传jar包到release
-      - name: 上传 JAR 到 Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: actions/upload-release-asset@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/${{ env.JAR_NAME }}
-          asset_name: ${{ env.JAR_NAME }}
-          asset_content_type: application/java-archive
