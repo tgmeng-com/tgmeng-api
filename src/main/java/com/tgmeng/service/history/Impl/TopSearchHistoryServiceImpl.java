@@ -85,7 +85,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                 ORDER BY simHash, platformName, dataUpdateTime ASC  -- 每个平台保留最早的
                             ) t
                             ORDER BY dataUpdateTime DESC
-                    """, simHash, pathPattern, startTime, endTime, simHash, simHashDistance);
+                    """, simHash, simHash, pathPattern, startTime, endTime, simHash, simHashDistance);
             List<Map<String, Object>> query = duckdb.query(sql);
             log.info("查询历史热点轨迹成功，标题：{}，共 {} 条记录", title, query.size());
             return query;
