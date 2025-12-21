@@ -41,6 +41,7 @@ public class HanLPUtil {
                 .filter(HanLPUtil::isMeaningful)
                 .filter(term -> !STOP_WORDS.contains(term.word))
                 .filter(term -> !term.word.isEmpty())
+                .filter(term -> term.word.length() > 1)
                 .map(HanLPUtil::toToken)
                 .collect(Collectors.toList());
     }
@@ -51,7 +52,7 @@ public class HanLPUtil {
         // 只过滤长数字
         if (term.word.matches("[0-9]+") && term.word.length() > 3) return false;
         // 标点
-        if (term.nature.toString().startsWith("w")) return false;
+        if (term.nature.toString().startsWith("w") ) return false;
         return matchRule(term) != null;
     }
 
