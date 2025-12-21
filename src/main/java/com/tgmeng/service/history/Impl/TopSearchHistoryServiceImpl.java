@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     // 突发热点
     @Override
     public ResultTemplateBean getSuddenHeatPoint() {
-        List<Map<String, Object>> result = suddenHeatPoint(60, 2);
+        List<Map<String, Object>> result = suddenHeatPoint(60, 5, 10);
         return ResultTemplateBean.success(result);
     }
 
@@ -64,7 +65,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
             // 根据时间范围获取要扫描的数据范围
             String pathPattern = duckdb.buildPathPattern(start, end);
             String sql = String.format("""
-                            SELECT 
+                            SELECT
                                 dataUpdateTime,
                                 platformName,
                                 platformCategory,
@@ -73,16 +74,16 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                 simHash,
                                 BIT_COUNT(xor(simHash, %d)) as distance
                             FROM (
-                                SELECT 
+                                SELECT DISTINCT ON (simHash, platformName)  -- 按 simHash 和平台去重
                                     *,
-                                    ROW_NUMBER() OVER (PARTITION BY simHash ORDER BY dataUpdateTime ASC) as rn
+                                    BIT_COUNT(xor(simHash, %d)) as distance
                                 FROM read_parquet('%s')
                                 WHERE simHash IS NOT NULL
                                   AND dataUpdateTime >= '%s'
                                   AND dataUpdateTime <= '%s'
                                   AND BIT_COUNT(xor(simHash, %d)) <= %d
+                                ORDER BY simHash, platformName, dataUpdateTime ASC  -- 每个平台保留最早的
                             ) t
-                            WHERE rn = 1
                             ORDER BY dataUpdateTime DESC
                     """, simHash, pathPattern, startTime, endTime, simHash, simHashDistance);
 
@@ -100,7 +101,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
      * @param minPlatforms 最少出现的平台数
      * @return 突发热点列表
      */
-    public List<Map<String, Object>> suddenHeatPoint(int minutes, int minPlatforms) {
+    public List<Map<String, Object>> suddenHeatPoint(int minutes, int minPlatforms, int limit) {
         try {
             LocalDateTime endTime = LocalDateTime.now();
             LocalDateTime startTime = endTime.minusMinutes(minutes);
@@ -112,66 +113,221 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
             String pathPattern = duckdb.buildPathPattern(startTime, endTime);
 
             String sql = String.format("""
-                    WITH recent AS (
-                        SELECT
-                            title,
-                            platformName,
-                            dataUpdateTime,
-                            simHash,
-                            CAST(dataUpdateTime AS TIMESTAMP) AS update_ts
-                        FROM read_parquet('%s')
-                        WHERE simHash IS NOT NULL
-                          AND dataUpdateTime >= '%s'
-                          AND dataUpdateTime <= '%s'
-                    ),
-                    similar_pairs AS (
-                        SELECT
-                            a.simHash AS sim1,
-                            b.simHash AS sim2,
-                            BIT_COUNT(xor(a.simHash, b.simHash)) AS distance
-                        FROM recent a
-                        JOIN recent b
-                          ON a.platformName < b.platformName
-                         AND BIT_COUNT(xor(a.simHash, b.simHash)) <= 15
-                    ),
-                    representatives AS (
-                        SELECT
-                            simHash,
-                            MIN(update_ts) AS first_time,
-                            ARG_MIN(title, update_ts) AS representative_title
-                        FROM recent
-                        GROUP BY simHash
-                    ),
-                    clusters AS (
-                        SELECT
-                            r.simHash,
-                            COUNT(DISTINCT r.platformName) AS platform_count,
-                            MIN(r.update_ts) AS first_time,
-                            MAX(r.update_ts) AS latest_appear_time,
-                            ANY_VALUE(representative_title) AS representative_title
-                        FROM recent r
-                        JOIN similar_pairs s
-                          ON r.simHash = s.sim1 OR r.simHash = s.sim2
-                        JOIN representatives rep
-                          ON r.simHash = rep.simHash
-                        GROUP BY r.simHash
-                    )
-                    SELECT
-                        representative_title,
-                        platform_count,
-                        first_time,
-                        latest_appear_time
-                    FROM clusters
-                    WHERE platform_count >= %d
-                    ORDER BY platform_count DESC, first_time ASC
-                    LIMIT 50
-                    """, pathPattern, startStr, endStr, minPlatforms);
+                     WITH recent_data AS (
+                                         -- 获取最近时间窗口内的数据，并计算分桶ID
+                                         SELECT\s
+                                             dataUpdateTime,
+                                             platformName,
+                                             platformCategory,
+                                             title,
+                                             url,
+                                             simHash,
+                                             -- 使用 SimHash 的高48位作为桶ID（可调整位数）
+                                             (simHash >> 16) as bucket_id
+                                         FROM read_parquet('%s')
+                                         WHERE simHash IS NOT NULL
+                                           AND dataUpdateTime >= '%s'
+                                           AND dataUpdateTime <= '%s'
+                                           AND platformName != '4gamer'
+                                     ),
+                                     -- 同平台去重（保留最新的）
+                                     dedup_data AS (
+                                         SELECT DISTINCT ON (platformName, simHash)
+                                             *
+                                         FROM recent_data
+                                         ORDER BY platformName, simHash, dataUpdateTime DESC
+                                     ),
+                                     -- 只在同一桶内进行 SimHash 聚类
+                                     hotspot_groups AS (
+                                         SELECT\s
+                                             a.simHash as original_simhash,
+                                             a.title as original_title,
+                                             a.platformName,
+                                             a.platformCategory,
+                                             a.url,
+                                             a.dataUpdateTime,
+                                             MIN(b.simHash) as group_id
+                                         FROM dedup_data a
+                                         JOIN dedup_data b\s
+                                             ON a.bucket_id = b.bucket_id  -- 关键：只在同桶内连接
+                                             AND BIT_COUNT(xor(a.simHash, b.simHash)) <= %d
+                                         GROUP BY a.simHash, a.title, a.platformName, a.platformCategory, a.url, a.dataUpdateTime
+                                     ),
+                                     -- 统计每个组的平台覆盖情况，并收集所有热点详情
+                                     group_stats AS (
+                                         SELECT\s
+                                             group_id,
+                                             COUNT(DISTINCT platformName) as platform_count,
+                                             COUNT(*) as total_count,
+                                             LIST(DISTINCT platformName) as platforms,
+                                             MIN(dataUpdateTime) as first_seen,
+                                             MAX(dataUpdateTime) as last_seen,
+                                             -- 收集该组所有热点的详细信息
+                                             LIST(STRUCT_PACK(
+                                                 title := original_title,
+                                                 url := url,
+                                                 platformName := platformName,
+                                                 platformCategory := platformCategory,
+                                                 dataUpdateTime := dataUpdateTime
+                                             ) ORDER BY dataUpdateTime DESC ) as hotspot_list
+                                         FROM hotspot_groups
+                                         GROUP BY group_id
+                                     ),
+                                     -- 获取每个组的代表性标题
+                                     representative_titles AS (
+                                         SELECT DISTINCT ON (group_id)
+                                             group_id,
+                                             original_title as title,
+                                             url,
+                                             platformName as sample_platform,
+                                             dataUpdateTime
+                                         FROM hotspot_groups
+                                         ORDER BY group_id, dataUpdateTime DESC
+                                     )
+                                     -- 最终结果
+                                     SELECT\s
+                                         rt.title,
+                                         rt.url,
+                                         rt.sample_platform,
+                                         gs.platform_count,
+                                         gs.total_count,
+                                         gs.platforms,
+                                         gs.hotspot_list,
+                                         gs.first_seen,
+                                         gs.last_seen,
+                                         rt.group_id as simhash_group
+                                     FROM group_stats gs
+                                     JOIN representative_titles rt ON gs.group_id = rt.group_id
+                                     WHERE gs.platform_count >= %d
+                                     ORDER BY gs.platform_count DESC, gs.total_count DESC
+                                     LIMIT %d
+                    """, pathPattern, startStr, endStr, simHashDistance, minPlatforms, limit);
+            List<Map<String, Object>> query = duckdb.query(sql);
 
-            return duckdb.query(sql);
+            List<Map<String, Object>> result = query.stream().map(row -> {
+                Map<String, Object> processedRow = new HashMap<>(row);
+
+                // 处理 platforms（LIST 类型）
+                Object platforms = row.get("platforms");
+                if (platforms != null) {
+                    processedRow.put("platforms", convertToList(platforms));
+                }
+
+                // 处理 hotspot_list（LIST<STRUCT> 类型）
+                Object hotspotList = row.get("hotspot_list");
+                if (hotspotList != null) {
+                    processedRow.put("hotspot_list", convertToList(hotspotList));
+                }
+
+                return processedRow;
+            }).toList();
+
+            return result;
 
         } catch (Exception e) {
             log.error("突发热点查询异常: {}", e.getMessage(), e);
             throw new ServerException("突发热点查询异常");
         }
+    }
+
+    /**
+     * 将 DuckDB 的复杂类型转换为普通 List
+     */
+    private List<Object> convertToList(Object obj) {
+        if (obj == null) {
+            return new java.util.ArrayList<>();
+        }
+
+        List<Object> result = new java.util.ArrayList<>();
+
+        try {
+            // 处理 DuckDBArray 类型
+            if (obj.getClass().getName().contains("DuckDBArray")) {
+                // 获取 getArray() 方法
+                java.lang.reflect.Method getArrayMethod = obj.getClass().getMethod("getArray");
+                Object array = getArrayMethod.invoke(obj);
+
+                if (array != null && array.getClass().isArray()) {
+                    int length = java.lang.reflect.Array.getLength(array);
+                    for (int i = 0; i < length; i++) {
+                        Object item = java.lang.reflect.Array.get(array, i);
+                        // 如果是 STRUCT，转换为 Map
+                        if (item != null && item.getClass().getName().contains("Struct")) {
+                            result.add(convertStructToMap(item));
+                        } else {
+                            result.add(item);
+                        }
+                    }
+                }
+            }
+            // 如果已经是普通 List
+            else if (obj instanceof List) {
+                result.addAll((List<?>) obj);
+            }
+            // 如果是普通数组
+            else if (obj.getClass().isArray()) {
+                int length = java.lang.reflect.Array.getLength(obj);
+                for (int i = 0; i < length; i++) {
+                    result.add(java.lang.reflect.Array.get(obj, i));
+                }
+            }
+        } catch (Exception e) {
+            log.warn("转换 List 失败: {}, 类型: {}", e.getMessage(), obj.getClass().getName());
+        }
+
+        return result;
+    }
+
+    /**
+     * 将 DuckDB 的 STRUCT 类型转换为 Map
+     */
+    private Map<String, Object> convertStructToMap(Object struct) {
+        Map<String, Object> map = new java.util.HashMap<>();
+
+        if (struct == null) {
+            return map;
+        }
+
+        try {
+            // 尝试调用 getMap() 方法（如果 STRUCT 有这个方法）
+            try {
+                java.lang.reflect.Method getMapMethod = struct.getClass().getMethod("getMap");
+                Object mapObj = getMapMethod.invoke(struct);
+                if (mapObj instanceof Map) {
+                    Map<?, ?> sourceMap = (Map<?, ?>) mapObj;
+                    for (Map.Entry<?, ?> entry : sourceMap.entrySet()) {
+                        map.put(String.valueOf(entry.getKey()), entry.getValue());
+                    }
+                    return map;
+                }
+            } catch (NoSuchMethodException e) {
+                // 没有 getMap 方法，继续用反射
+            }
+
+            // 通过反射获取 STRUCT 的所有字段
+            java.lang.reflect.Method[] methods = struct.getClass().getMethods();
+            for (java.lang.reflect.Method method : methods) {
+                String methodName = method.getName();
+                // 查找 getter 方法
+                if (methodName.startsWith("get")
+                        && !methodName.equals("getClass")
+                        && !methodName.equals("getMap")
+                        && method.getParameterCount() == 0) {
+
+                    String fieldName = methodName.substring(3);
+                    // 转换首字母为小写
+                    if (fieldName.length() > 0) {
+                        fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
+                    }
+
+                    Object value = method.invoke(struct);
+                    map.put(fieldName, value);
+                }
+            }
+        } catch (Exception e) {
+            log.warn("转换 STRUCT 失败: {}, 类型: {}", e.getMessage(), struct.getClass().getName());
+        }
+
+        return map;
     }
 }

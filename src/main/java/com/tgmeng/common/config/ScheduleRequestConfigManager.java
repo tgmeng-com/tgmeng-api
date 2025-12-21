@@ -308,6 +308,8 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/zhiyuanshequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/liangziwei", PlatformConfig.builder().build());
         configs.put("/api/topsearch/xinzhiyuan", PlatformConfig.builder().build());
+        // 突发热点
+        configs.put("/api/topsearch/history/suddenHeatPoint", PlatformConfig.builder().build());
     }
 
     // 获取全部已启用的key

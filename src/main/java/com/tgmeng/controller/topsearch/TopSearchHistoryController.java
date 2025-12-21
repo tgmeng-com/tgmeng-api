@@ -30,8 +30,8 @@ public class TopSearchHistoryController {
         return topSearchHistoryService.getHotPointHistory(requestBody);
     }
 
-    //@RequestMapping("/suddenHeatPoint")
-    //public ResultTemplateBean getSuddenHeatPoint() {
-    //    return topSearchHistoryService.getSuddenHeatPoint();
-    //}
+    @RequestMapping("/suddenHeatPoint")
+    public ResultTemplateBean getSuddenHeatPoint() {
+        return topSearchHistoryService.getSuddenHeatPoint();
+    }
 }
