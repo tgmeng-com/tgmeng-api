@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @Aspect
 @Component
@@ -39,7 +42,12 @@ public class TopSearchDataCacheInterceptor {
         String url = HttpRequestUtil.getRequestUrl();
         if (dataCacheEnabled) {
             String source = HttpRequestUtil.getRequestHeader("X-Source");
-            if (url.contains("/api/cachesearch/allbyword")) {
+            List<String> cacheSearchPaths = Arrays.asList(
+                    "/api/cachesearch/allbyword",
+                    "/api/topsearch/history/hotpoint",
+                    "/api/topsearch/history/suddenHeatPoint"
+            );
+            if (cacheSearchPaths.stream().anyMatch(url::contains)) {
                 log.info("🙋🏻‍♂️外部请求，检索数据，走正常程序:{}", url);
                 return joinPoint.proceed();
             } else if (!RequestFromEnum.INTERNAL.getValue().equals(source)) {

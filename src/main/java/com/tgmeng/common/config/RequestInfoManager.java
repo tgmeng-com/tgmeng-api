@@ -1612,7 +1612,7 @@ public class RequestInfoManager {
 
         addDomConfig("https://www.gracg.com/showwork/{type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .platformName("涂鸦王国热门作品")
+                .platformName("涂鸦王国")
                 .platformCategory("tuyawangguo")
                 .interfaceUrl("/api/topsearch/tuyawangguo/{type}")
                 .hotTitleUrlPrefix("https://www.gracg.com")

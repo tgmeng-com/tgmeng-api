@@ -3,14 +3,13 @@ package com.tgmeng.service.cachesearch.Impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
-import com.hankcs.hanlp.HanLP;
-import com.hankcs.hanlp.seg.common.Term;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.config.AIPlatformConfigService;
 import com.tgmeng.common.forest.client.ai.IAIClient;
 import com.tgmeng.common.util.AIRequestUtil;
 import com.tgmeng.common.util.CacheUtil;
 import com.tgmeng.common.util.FileUtil;
+import com.tgmeng.common.util.HanLPUtil;
 import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
 import com.tgmeng.model.dto.ai.response.AiChatModelResponseContentTemplateDTO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -81,6 +79,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                                     resultMap.put("dataCardName", map.get("dataCardName"));
                                     resultMap.put("url", url);
                                     resultMap.put("dataUpdateTime", map.get("dataUpdateTime"));
+                                    resultMap.put("dataCardCategory", map.get("dataCardCategory"));
                                     resultList.add(resultMap);
                                 }
                             }
@@ -108,14 +107,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
             Map<String, Integer> keywordFrequencyMap = new HashMap<>();
 
             for (String keyword : allOriginalKeywords) {
-                List<Term> terms = HanLP.segment(keyword);
-                List<String> meaningfulWords = terms.stream()
-                        .filter(term -> !isPunctuation(term.nature.toString()))
-                        .filter(term -> !isStopWord(term.word))
-                        .filter(term -> isMeaningfulWord(term.nature.toString()))
-                        .filter(term -> term.word.length() > 1)
-                        .map(term -> term.word)
-                        .collect(Collectors.toList());
+                List<String> meaningfulWords = HanLPUtil.tokenizeToWords(keyword);
                 for (String word : meaningfulWords) {
                     keywordFrequencyMap.put(word,
                             keywordFrequencyMap.getOrDefault(word, 0) + 1);
@@ -160,28 +152,6 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
     }
 
     /*------------------------- 辅助方法 -------------------------*/
-
-    private boolean isPunctuation(String nature) {
-        return nature.startsWith("w");
-    }
-
-    private boolean isStopWord(String word) {
-        Set<String> stopWords = Set.of("的", "了", "在", "是", "我", "有", "和", "就",
-                "不", "人", "都", "一", "一个", "上", "也", "很",
-                "到", "说", "要", "去", "你", "会", "着", "没有",
-                "看", "好", "自己", "这");
-        return stopWords.contains(word);
-    }
-
-    private boolean isMeaningfulWord(String nature) {
-        return nature.startsWith("n") ||  // 名词
-                nature.startsWith("v") ||  // 动词
-                nature.startsWith("a") ||  // 形容词
-                nature.startsWith("nr") ||
-                nature.startsWith("ns") ||
-                nature.startsWith("nt") ||
-                nature.startsWith("nz");
-    }
 
     /**
      * 按词频排序并取前 500

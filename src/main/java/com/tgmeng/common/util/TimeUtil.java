@@ -449,7 +449,7 @@ public class TimeUtil {
      *
      * @author tgmeng
      * @since 2025/7/2 1:36
-    */
+     */
     public String getTimeBeforeNow(int years, int months, int weeks, int days, String pattern) {
         // 获取当前时间
         LocalDateTime currentTime = LocalDateTime.now();
@@ -926,20 +926,20 @@ public class TimeUtil {
         Long milliSecond = millisecond - day * d - hour * h - minute * m - second * s;
 
         StringBuffer sb = new StringBuffer();
-        if(day > 0) {
-            sb.append(day+"d");
+        if (day > 0) {
+            sb.append(day + "d");
         }
-        if(hour > 0) {
-            sb.append(hour+"h");
+        if (hour > 0) {
+            sb.append(hour + "h");
         }
-        if(minute > 0) {
-            sb.append(minute+"m");
+        if (minute > 0) {
+            sb.append(minute + "m");
         }
-        if(second > 0) {
-            sb.append(second+"s");
+        if (second > 0) {
+            sb.append(second + "s");
         }
-        if(milliSecond > 0) {
-            sb.append(milliSecond+"ms");
+        if (milliSecond > 0) {
+            sb.append(milliSecond + "ms");
         }
         return sb.toString();
     }

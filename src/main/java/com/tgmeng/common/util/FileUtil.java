@@ -80,6 +80,19 @@ public class FileUtil {
         }
     }
 
+    // 递归删除文件夹及其中的所有文件
+    public static boolean deleteFolder(File folder) {
+        if (folder.isDirectory()) {
+            File[] files = folder.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    deleteFolder(file);  // 递归删除文件
+                }
+            }
+        }
+        return folder.delete();  // 删除空的文件夹
+    }
+
     public static void writeToFile(File file, Object data) throws IOException {
         String filePath = file.getAbsolutePath();
         Lock lock = FILE_LOCKS.get(filePath); // 通过 hash 映射到某一把锁

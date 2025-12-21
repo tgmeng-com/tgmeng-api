@@ -53,15 +53,23 @@ public class ControllerApiSchedule {
         scanAndInvokeControllers(scheduleRequestConfigManager.getAllEnabledConfigsByRequestCycle(1200L));
     }
 
+    // 定时处理订阅
     @Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
     public void subscriptionSchedule() {
         subscriptionUtil.subscriptionOption();
     }
 
-    //@Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
-    //public void hotPointDataParquetUtilSchedule() {
-    //    hotPointDataParquetUtil.saveToParquet();
-    //}
+    // 热点数据定时存储
+    @Scheduled(fixedDelay = 60_000, initialDelay = 60_000)
+    public void hotPointDataParquetUtilSchedule() {
+        hotPointDataParquetUtil.saveToParquet();
+    }
+
+    // 定时清理历史热点数据，每天3点清理数天前的历史数据，可以在yml中配置
+    @Scheduled(cron = "0 0 3 * * ?")
+    public void hotPointDataParquetCleanSchedule() {
+        hotPointDataParquetUtil.cleanForParquet();
+    }
 
     public void scanAndInvokeControllers(Map<String, ScheduleRequestConfigManager.PlatformConfig> configs) {
         log.info("🤖 开始系统定时任务缓存数据，共 {} 个接口", configs.size());

@@ -51,7 +51,9 @@ my-config:
     file-suffix: .json             # 文件后缀
     max-hot-number: 10000          # 每个人最多存10000条
   history:
-    dir: ./data/history/       # 历史数据文件所在的文件夹
+    dir: ./data/history/       # 历史数据文件所在的文件夹，历史数据目前用来查询热点轨迹
+    keep-day: 10               # 历史数据保留天数  my-config.history.keep-day
+    sim-hash-distance: 15        # 相似度哈希汉明距离  就是汉明距离在多少以内就判断为相似热点
 
 
 

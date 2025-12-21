@@ -34,8 +34,11 @@
         <rometools.version>2.1.0</rometools.version>
         <parquet-avro.version>1.16.0</parquet-avro.version>
         <hadoop-common.version>3.4.2</hadoop-common.version>
+        <hadoop-mapreduce-client-core.version>3.4.2</hadoop-mapreduce-client-core.version>
         <opencc4j.version>1.14.0</opencc4j.version>
         <commons-codec.version>1.20.0</commons-codec.version>
+        <google-guava.version>33.5.0-jre</google-guava.version>
+        <duckdb-jdbc.version>1.4.3.0</duckdb-jdbc.version>
 	</properties>
 
     <dependencies>
@@ -171,6 +174,26 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>${hadoop-common.version}</version>
+            <exclusions>
+                <!-- 排除 log4j -->
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-reload4j</artifactId>
+                </exclusion>
+                <!-- 排除 commons-logging -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -185,6 +208,17 @@
             <version>${commons-codec.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google-guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.duckdb</groupId>
+            <artifactId>duckdb_jdbc</artifactId>
+            <version>${duckdb-jdbc.version}</version>
+        </dependency>
 
     </dependencies>
 

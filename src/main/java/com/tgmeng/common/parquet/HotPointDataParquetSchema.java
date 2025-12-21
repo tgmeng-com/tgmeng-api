@@ -10,9 +10,10 @@ public class HotPointDataParquetSchema {
                 .fields()
                 .requiredString("url")
                 .requiredString("title")
-                .requiredString("timestamp")
                 .requiredString("platformName")
-                .requiredInt("rank")
+                .requiredString("platformCategory")
+                .requiredString("dataUpdateTime")
+                .requiredLong("simHash")
                 .endRecord();
     }
 }

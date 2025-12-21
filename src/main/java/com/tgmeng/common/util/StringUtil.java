@@ -168,4 +168,9 @@ public class StringUtil {
         }
         return sb + ".json";
     }
+
+    // 把字符串中的//都替换成/，主要用在一些文件的路径中存在//的情况
+    public static String replaceForFilePath(String input){
+        return input.replaceAll("/+", "/");
+    }
 }

@@ -2,6 +2,7 @@ package com.tgmeng.common.util;
 
 import com.tgmeng.common.bean.HotPointDataParquetBean;
 import com.tgmeng.common.parquet.HotPointDataParquetSchema;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
@@ -12,9 +13,9 @@ import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 public class ParquetUtil {
 
     static {
@@ -51,32 +52,14 @@ public class ParquetUtil {
     }
 
     // 写入本地
-    public void writeParquet(List<HotPointDataParquetBean> records, String outputPath) throws IOException {
+    public void writeParquet(List<HotPointDataParquetBean> records, String outputPath) throws Exception {
         writeParquetWithConf(records, outputPath, conf);
-    }
-
-    // 写入 R2
-    public void writeParquetToR2(List<HotPointDataParquetBean> records,
-                                 String bucket, String key,
-                                 String accountId, String accessKey, String secretKey) throws IOException {
-        Configuration r2Conf = getR2Configuration(accountId, accessKey, secretKey);
-        String s3Path = String.format("s3a://%s/%s", bucket, key);
-        writeParquetWithConf(records, s3Path, r2Conf);
-    }
-
-    // 写入阿里云OSS
-    public void writeParquetToOSS(List<HotPointDataParquetBean> records,
-                                  String bucket, String key,
-                                  String endpoint, String accessKey, String secretKey) throws IOException {
-        Configuration ossConf = getOSSConfiguration(endpoint, accessKey, secretKey);
-        String ossPath = String.format("oss://%s/%s", bucket, key);
-        writeParquetWithConf(records, ossPath, ossConf);
     }
 
     // 通用写入方法
     private void writeParquetWithConf(List<HotPointDataParquetBean> records,
                                       String outputPath,
-                                      Configuration configuration) throws IOException {
+                                      Configuration configuration) throws Exception {
         Path path = new Path(outputPath);
 
         try (ParquetWriter<GenericRecord> writer = AvroParquetWriter
@@ -102,34 +85,10 @@ public class ParquetUtil {
         GenericRecord avroRecord = new GenericData.Record(schema);
         avroRecord.put("url", record.getUrl());
         avroRecord.put("title", record.getTitle());
-        avroRecord.put("timestamp", record.getTimestamp());
         avroRecord.put("platformName", record.getPlatformName());
-        avroRecord.put("rank", record.getRank());
+        avroRecord.put("platformCategory", record.getPlatformCategory());
+        avroRecord.put("dataUpdateTime", record.getDataUpdateTime());
+        avroRecord.put("simHash", record.getSimHash());
         return avroRecord;
-    }
-
-    // 新增:配置 R2
-    public Configuration getR2Configuration(String accountId, String accessKey, String secretKey) {
-        Configuration r2Conf = new Configuration(conf);
-
-        // R2 配置(兼容 S3 协议)
-        r2Conf.set("fs.s3a.endpoint", String.format("https://%s.r2.cloudflarestorage.com", accountId));
-        r2Conf.set("fs.s3a.access.key", accessKey);
-        r2Conf.set("fs.s3a.secret.key", secretKey);
-        r2Conf.set("fs.s3a.path.style.access", "true");
-        r2Conf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem");
-
-        return r2Conf;
-    }
-    // 阿里云OSS 配置
-    public Configuration getOSSConfiguration(String endpoint, String accessKey, String secretKey) {
-        Configuration ossConf = new Configuration(conf);
-
-        ossConf.set("fs.oss.endpoint", endpoint);
-        ossConf.set("fs.oss.accessKeyId", accessKey);
-        ossConf.set("fs.oss.accessKeySecret", secretKey);
-        ossConf.set("fs.oss.impl", "org.apache.hadoop.fs.aliyun.oss.AliyunOSSFileSystem");
-
-        return ossConf;
     }
 }

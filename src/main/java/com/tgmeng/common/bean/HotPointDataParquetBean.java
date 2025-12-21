@@ -10,9 +10,13 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HotPointDataParquetBean {
+    // 原始数据
     private String url;
     private String title;
-    private String timestamp;
     private String platformName;
-    private Long rank;
+    private String platformCategory;
+    private String dataUpdateTime;
+
+    // 计算数据
+    private Long simHash;
 }
