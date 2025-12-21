@@ -9,6 +9,13 @@ services:
       - "8080:4399"  # 映射主机 8080 端口到容器 4399 端口
     environment:
       - JAVA_OPTS=-Xms512m -Xmx1024m  # 可选：设置 JVM 参数
+      - AI_PLATFORM_CONFIG="${AI_PLATFORM_CONFIG}" \
+      - JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heapdumps -XX:ErrorFile=/app/logs/hs_err_%p.log" \
+      - TZ=Asia/Shanghai \
+    volumes: # ← 这里是文件挂载配置
+      - /home/root/tgmeng-api/logs:/app/logs          # 日志目录
+      - /home/root/tgmeng-api/data:/app/data          # 数据目录（你的业务数据、DuckDB 文件等）
+      - /home/root/tgmeng-api/heapdumps:/app/heapdumps  # HeapDump 文件目录
     restart: unless-stopped  # 容器异常退出时自动重启，除非手动停止
 
 # 使用

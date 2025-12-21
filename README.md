@@ -71,6 +71,54 @@
   - ✅ 提交新代码即可自动发布到Docker镜像到GHCR(github container registry)
 
 ---
+
+## 🔧 配置
+
+### 1 环境变量`AI_PLATFORM_CONFIG`
+
+- 项目里主要的一个环境变量就是`AI_PLATFORM_CONFIG`，他是用于项目里所有用到的AI的配置，比如AI简报什么的。
+
+- 你可以把它配置在系统的环境变量里，当然如果docker部署，也可以直接配置在docker的启动命令或者docker-compose文件里
+
+- 当然如果你不用这些AI功能，那么这个环境变量你可以忽略，换句话说，就是当没看见我这个东西，对其他所有包括部署在内的什么完全没影响。
+
+- 格式如下
+
+```json
+[
+  {
+    "platform": "无敌人工AI",
+    "api":"https://api.*****.com/v1/chat/completions",
+    "key": "sk-tg8Bvn601KF*******************",
+    "from": "老逼登给的",
+    "models": 
+        [
+            "deepseek-ai/deepseek-v3.1",
+            "openai/gpt-oss-120b"
+        ]
+  },
+  {
+    "platform": "傻叼AI",
+    "api":"https://ai.***.com/v1/chat/completions",
+    "key": "sk-q0YWZPM0dnP5aBnU*******************",
+    "from": "大鸟先生",
+    "models": 
+        [
+            "claude-sonnet-4.5",
+            "gemini-2.5-pro",
+            "deepseek-ai/DeepSeek-R1",
+            "deepseek-ai/DeepSeek-V3.1",
+            "moonshotai/Kimi-K2-Instruct",
+            "grok-4.1-thinking",
+            "qwen/qwen3-next-80b-a3b-thinking",
+            "zai-org/GLM-4.6",
+            "claude-sonnet-4"
+        ]
+  }
+  ....
+]
+```
+
 ## 🗼 部署
 
 ### 1 GitHub Action 一键部署
@@ -94,7 +142,18 @@ REMOTE_JAR_DIR   # 你的要部署的目录
 ```shell
 docker pull tgmeng/tgmeng-api:latest                     # 这是dockerhub里的镜像
 # docker pull ghcr.io/tgmeng-com/tgmeng-api:latest       # 这是ghcr里的镜像，和上面是一样的，拉哪个都行
-docker run -d -p 8080:4399 --name tgmeng-api tgmeng/tgmeng-api:latest
+docker run -d \
+      --name tgmeng-api \
+      --restart unless-stopped \
+      -p 8080:4399 \
+      -v /home/root/tgmeng-api/logs:/app/logs \
+      -v /home/root/tgmeng-api/data:/app/data \
+      -v /home/root/tgmeng-api/heapdumps:/app/heapdumps \
+      -e AI_PLATFORM_CONFIG="${AI_PLATFORM_CONFIG}" \
+      -e JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heapdumps -XX:ErrorFile=/app/logs/hs_err_%p.log" \
+      -e TZ=Asia/Shanghai \
+      tgmeng/tgmeng-api:latest
+
 docker ps
 docker logs -f --tail=50 tgmeng-api
 ```
