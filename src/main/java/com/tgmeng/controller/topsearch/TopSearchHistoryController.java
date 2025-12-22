@@ -3,6 +3,7 @@ package com.tgmeng.controller.topsearch;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,8 +31,8 @@ public class TopSearchHistoryController {
         return topSearchHistoryService.getHotPointHistory(requestBody);
     }
 
-    @RequestMapping("/suddenHeatPoint")
-    public ResultTemplateBean getSuddenHeatPoint() {
-        return topSearchHistoryService.getSuddenHeatPoint();
+    @RequestMapping("/suddenheatpoint/{type}")
+    public ResultTemplateBean getSuddenHeatPoint(@PathVariable("type") String type) {
+        return topSearchHistoryService.getSuddenHeatPoint(type);
     }
 }

@@ -30,7 +30,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     private Integer simHashDistance;
 
     @Value("${my-config.history.sudden-heat-point-time-window}")
-    private Integer suddenHeatPointTimeWindow;
+    private Integer defaultSuddenHeatPointTimeWindow;
 
     @Value("${my-config.history.sudden-heat-point-platform-num-least}")
     private Integer suddenHeatPointPlatformNumLeast;
@@ -54,9 +54,20 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
 
     // 突发热点
     @Override
-    public ResultTemplateBean getSuddenHeatPoint() {
-        List<Map<String, Object>> result = suddenHeatPoint(suddenHeatPointTimeWindow, suddenHeatPointPlatformNumLeast, suddenHeatPointResultLimit);
+    public ResultTemplateBean getSuddenHeatPoint(String type) {
+        List<Map<String, Object>> result = suddenHeatPoint(getTimeWindow(type), suddenHeatPointPlatformNumLeast, suddenHeatPointResultLimit);
         return ResultTemplateBean.success(result);
+    }
+
+    private int getTimeWindow(String type) {
+        return switch (type) {
+            case "hour" -> 60;
+            case "3hour" -> 60 * 3;
+            case "6hour" -> 60 * 6;
+            case "day" -> 60 * 24;
+            case "10day" -> 60 * 24 * 10;
+            default -> defaultSuddenHeatPointTimeWindow;
+        };
     }
 
     /**

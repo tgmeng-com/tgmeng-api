@@ -309,7 +309,11 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/liangziwei", PlatformConfig.builder().build());
         configs.put("/api/topsearch/xinzhiyuan", PlatformConfig.builder().build());
         // 突发热点
-        configs.put("/api/topsearch/history/suddenHeatPoint", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/history/suddenheatpoint/hour", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/topsearch/history/suddenheatpoint/3hour", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/topsearch/history/suddenheatpoint/6hour", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/topsearch/history/suddenheatpoint/day", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/topsearch/history/suddenheatpoint/10day", PlatformConfig.builder().requestDelay(5L).build());
     }
 
     // 获取全部已启用的key

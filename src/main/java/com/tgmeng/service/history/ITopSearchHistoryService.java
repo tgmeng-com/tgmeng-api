@@ -8,6 +8,6 @@ import java.util.Map;
 public interface ITopSearchHistoryService {
     ResultTemplateBean<TopSearchCommonVO> getHotPointHistory(Map<String, String> requestBody);
 
-    ResultTemplateBean getSuddenHeatPoint();
+    ResultTemplateBean getSuddenHeatPoint(String type);
 
 }
