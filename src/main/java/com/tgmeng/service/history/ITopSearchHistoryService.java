@@ -10,4 +10,5 @@ public interface ITopSearchHistoryService {
 
     ResultTemplateBean getSuddenHeatPoint(String type);
 
+    ResultTemplateBean getWordHistory(Map<String, String> requestBody);
 }

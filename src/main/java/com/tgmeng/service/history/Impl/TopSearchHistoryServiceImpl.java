@@ -1,5 +1,6 @@
 package com.tgmeng.service.history.Impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.util.DuckDBUtil;
@@ -57,6 +58,50 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     public ResultTemplateBean getSuddenHeatPoint(String type) {
         List<Map<String, Object>> result = suddenHeatPoint(getTimeWindow(type), suddenHeatPointPlatformNumLeast, suddenHeatPointResultLimit);
         return ResultTemplateBean.success(result);
+    }
+
+    @Override
+    public ResultTemplateBean getWordHistory(Map<String, String> requestBody) {
+        String ps = requestBody.get("PS");
+        if (!ps.equals(System.getenv("PS"))) {
+            throw new ServerException("error");
+        }
+        String title = requestBody.get("title");
+        if (StrUtil.isEmpty(title)) {
+            throw new ServerException("word empty error");
+        }
+        String startTime = requestBody.get("startTime");
+        String endTime = requestBody.get("endTime");
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime start = LocalDateTime.parse(startTime, formatter);
+            LocalDateTime end = LocalDateTime.parse(endTime, formatter);
+            // 根据时间范围获取要扫描的数据范围
+            String pathPattern = duckdb.buildPathPattern(start, end);
+            String titleLike = "%" + title.trim() + "%";
+            ;
+            String sql = String.format("""
+                    SELECT
+                        dataUpdateTime,
+                        platformName,
+                        platformCategory,
+                        title,
+                        url,
+                        simHash
+                    FROM read_parquet('%s')
+                    WHERE simHash IS NOT NULL
+                      AND dataUpdateTime >= '%s'
+                      AND dataUpdateTime <= '%s'
+                      AND lower(title) LIKE lower('%s')
+                    ORDER BY dataUpdateTime DESC
+                    """, pathPattern, startTime, endTime, titleLike);
+            List<Map<String, Object>> query = duckdb.query(sql);
+            log.info("查询热点成功，关键词：{}，共 {} 条记录", title, query.size());
+            return ResultTemplateBean.success(query);
+        } catch (Exception e) {
+            log.error("查询热点失败：{}，错误信息：{}", title, e.getMessage());
+            throw new ServerException("error");
+        }
     }
 
     private int getTimeWindow(String type) {

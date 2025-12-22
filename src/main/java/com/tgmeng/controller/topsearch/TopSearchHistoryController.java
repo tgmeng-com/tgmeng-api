@@ -35,4 +35,9 @@ public class TopSearchHistoryController {
     public ResultTemplateBean getSuddenHeatPoint(@PathVariable("type") String type) {
         return topSearchHistoryService.getSuddenHeatPoint(type);
     }
+
+    @RequestMapping("/getwordhistory")
+    public ResultTemplateBean getWordHistory(@RequestBody Map<String, String> requestBody) {
+        return topSearchHistoryService.getWordHistory(requestBody);
+    }
 }
