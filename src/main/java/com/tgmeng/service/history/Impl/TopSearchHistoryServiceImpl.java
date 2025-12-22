@@ -97,7 +97,10 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                     """, pathPattern, startTime, endTime, titleLike);
             List<Map<String, Object>> query = duckdb.query(sql);
             log.info("查询热点成功，关键词：{}，共 {} 条记录", title, query.size());
-            return ResultTemplateBean.success(query);
+            Map<Object, Object> result = new HashMap<>();
+            result.put("size", query.size());
+            result.put("list", query);
+            return ResultTemplateBean.success(result);
         } catch (Exception e) {
             log.error("查询热点失败：{}，错误信息：{}", title, e.getMessage());
             throw new ServerException("error");
