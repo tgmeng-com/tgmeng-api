@@ -88,12 +88,22 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                         title,
                         url,
                         simHash
-                    FROM read_parquet('%s')
-                    WHERE simHash IS NOT NULL
-                      AND dataUpdateTime >= '%s'
-                      AND dataUpdateTime <= '%s'
-                      AND lower(title) LIKE lower('%s')
-                    ORDER BY dataUpdateTime DESC
+                    FROM (
+                        SELECT DISTINCT ON (title, platformName, url)
+                            dataUpdateTime,
+                            platformName,
+                            platformCategory,
+                            title,
+                            url,
+                            simHash
+                        FROM read_parquet('%s')
+                        WHERE simHash IS NOT NULL
+                          AND dataUpdateTime >= '%s'
+                          AND dataUpdateTime <= '%s'
+                          AND lower(title) LIKE lower('%s')
+                        ORDER BY title, platformName, url, dataUpdateTime ASC  -- 去重时保留最早的
+                    ) t
+                    ORDER BY dataUpdateTime DESC;  -- 最终结果整体降序（最新在前）
                     """, pathPattern, startTime, endTime, titleLike);
             List<Map<String, Object>> query = duckdb.query(sql);
             log.info("查询热点成功，关键词：{}，共 {} 条记录", title, query.size());
