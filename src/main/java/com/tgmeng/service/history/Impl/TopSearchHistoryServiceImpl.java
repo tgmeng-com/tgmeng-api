@@ -89,7 +89,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                         url,
                         simHash
                     FROM (
-                        SELECT DISTINCT ON (title, platformName, url)
+                        SELECT DISTINCT ON (title, platformName)
                             dataUpdateTime,
                             platformName,
                             platformCategory,
@@ -101,7 +101,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                           AND dataUpdateTime >= '%s'
                           AND dataUpdateTime <= '%s'
                           AND lower(title) LIKE lower('%s')
-                        ORDER BY title, platformName, url, dataUpdateTime ASC  -- 去重时保留最早的
+                        ORDER BY title, platformName, dataUpdateTime ASC  -- 去重时保留最早的
                     ) t
                     ORDER BY dataUpdateTime DESC;  -- 最终结果整体降序（最新在前）
                     """, pathPattern, startTime, endTime, titleLike);
