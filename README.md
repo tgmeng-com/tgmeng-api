@@ -135,7 +135,12 @@ SERVER_HOST      # 你的服务器IP
 SERVER_USER      # 你的服务器用户名
 SERVER_PASSWORD  # 你的服务器密码
 SERVER_PORT      # 你的服务器端口
-REMOTE_JAR_DIR   # 你的要部署的目录
+REMOTE_APP_DIR   # 你的要部署的目录
+# 流程是先打包镜像到dockerHub，然后从dockerHub里拉取镜像来启动，所以需要配置dockerHub的信息
+DOCKERHUB_USERNAME # DockerHub 用户名
+DOCKERHUB_TOKEN    # DockerHub 访问令牌
+DOCKER_IMAGE_NAME  # DockerHub 镜像名称（也就是dockerHub里面的仓库的名字）
+CONTAINER_NAME     # 你要启动的容器名称(看你自己随便写，比如tgmeng-api)
 ```
 
 ### 2 Docker镜像一键部署
