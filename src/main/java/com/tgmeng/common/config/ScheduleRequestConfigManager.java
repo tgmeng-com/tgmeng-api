@@ -216,7 +216,6 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
 
-        configs.put("/api/topsearch/wuaipojie", PlatformConfig.builder().build());
         configs.put("/api/topsearch/shuimushequ", PlatformConfig.builder().build());
         configs.put("/api/topsearch/chongbuluo", PlatformConfig.builder().build());
         configs.put("/api/topsearch/xianzhishequ", PlatformConfig.builder().build());

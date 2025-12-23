@@ -2,6 +2,7 @@ package com.tgmeng.common.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.config.RequestInfoManager;
+import com.tgmeng.common.enums.business.PlatFormCategoryEnum;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -17,7 +18,7 @@ public class CommonJsoupUtil {
 
     public static List<TopSearchCommonVO.DataInfo> getCommonResult(String content, RequestInfoManager.PlatformConfig platform) {
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
-        if (StrUtil.equals(platform.getPlatformCategory(), "HuggingFaces")) {
+        if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.HUGGING_FACES.getValue())) {
             topSearchCommonVOS = HuggingFaceJsoupParseUtil.parseContent(content);
             return topSearchCommonVOS;
         } else {

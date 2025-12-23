@@ -66,20 +66,29 @@ public class WangYiPOPOWebHook {
         List<String> jsonBodys = new ArrayList<>();
 
         for (List<Map<String, Object>> subNewHots : splitNewHotList) {
-            StringBuilder md = new StringBuilder("🍭 糖果梦热榜 🍭\n\n");
+            // 哥们说不要这个开头了标题了
+            //StringBuilder md = new StringBuilder("🍭 糖果梦热榜 🍭\n\n");
+            StringBuilder md = new StringBuilder();
             for (int i = 0; i < subNewHots.size(); i++) {
                 Map<String, Object> hot = subNewHots.get(i);
+                //md.append(i + 1).append(". ")
+                //        .append("").append(hot.get("keyword")).append("(")
+                //        .append(hot.get("url")).append(")")
+                //        .append("       --").append(hot.get("dataCardName"))
+                //        .append("\n");
+
+                // 哥们说不要超链接了
                 md.append(i + 1).append(". ")
-                        .append("").append(hot.get("keyword")).append("(")
-                        .append(hot.get("url")).append(")")
-                        .append("       --").append(hot.get("dataCardName"))
+                        .append("").append(hot.get("keyword"))
+                        .append("    --").append(hot.get("dataCardName"))
                         .append("\n");
             }
             md.append("\n");
-            md.append("📱 共计：").append(subNewHots.size()).append(" 条\n");
-            md.append("📰 订阅：").append(String.join(", ", keywords)).append("\n");
+            // 哥们不要这个共计和订阅词了
+            //md.append("📱 共计：").append(subNewHots.size()).append(" 条\n");
+            //md.append("📰 订阅：").append(String.join(", ", keywords)).append("\n");
             md.append("⏰ 时间：").append(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern)).append("\n");
-            md.append("🙋🏻‍♂️ 来源：").append("糖果梦热榜：https://tgmeng.com");
+            md.append("🙋🏻‍♂️ 来源：").append("🍭 糖果梦热榜 - https://tgmeng.com 🍭");
             jsonBodys.add(md.toString());
         }
         return jsonBodys;

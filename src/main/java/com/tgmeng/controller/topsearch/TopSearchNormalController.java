@@ -463,11 +463,6 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/wuaipojie")
-    public ResultTemplateBean<TopSearchCommonVO> getWuAiPojieSearch() {
-        return topSearchCommonService.getTopSearchCommonService();
-    }
-
     @RequestMapping("/shuimushequ")
     public ResultTemplateBean<TopSearchCommonVO> getShuimushEquSearch() {
         return topSearchCommonService.getTopSearchCommonService();

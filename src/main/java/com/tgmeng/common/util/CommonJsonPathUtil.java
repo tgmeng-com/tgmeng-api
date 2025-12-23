@@ -6,10 +6,7 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import com.tgmeng.common.config.JsonPathConfig;
 import com.tgmeng.common.config.RequestInfoManager;
-import com.tgmeng.common.enums.business.SearchTypeCCTVEnum;
-import com.tgmeng.common.enums.business.SearchTypeGameBaseEnum;
-import com.tgmeng.common.enums.business.SearchTypeMangGuoEnum;
-import com.tgmeng.common.enums.business.SearchTypeYouKuEnum;
+import com.tgmeng.common.enums.business.*;
 import com.tgmeng.common.enums.enumcommon.EnumUtils;
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +25,9 @@ import java.util.regex.Pattern;
 public class CommonJsonPathUtil {
 
     public static List<TopSearchCommonVO.DataInfo> getCommonResult(String content, RequestInfoManager.PlatformConfig platform) {
-        if (StrUtil.equals(platform.getPlatformCategory(), "maoyan")) {
+        if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.MAO_YAN.getValue())) {
             content = CommonHotPointInfoDealUtil.getMaoYanJsonFromContent(content);
-        } else if (StrUtil.equals(platform.getPlatformCategory(), "cctv")) {
+        } else if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.CCTV.getValue())) {
             content = content.replaceAll("^setItem1\\((.*)\\);$", "$1");
         }else if (StrUtil.equals(platform.getPlatformCategory(), "zhiyuanshequ")) {
             Pattern pattern = Pattern.compile("resources:\\s*\\{\\s*data:\\s*(\\[[\\s\\S]*?\\])\\s*,\\s*pageIndex:");
@@ -45,11 +42,11 @@ public class CommonJsonPathUtil {
         for (RequestInfoManager.Selector selector : platform.getSelectors()) {
             List<Map<String, Object>> hotNewsList = new ArrayList<>();
             String rootSelector = selector.getRoot();
-            if (StrUtil.equals(platform.getPlatformCategory(), "mangguo")) {
+            if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.MANG_GUO_SHI_PIN.getValue())) {
                 rootSelector = rootSelector.replace("{type}", EnumUtils.getValueByKey(SearchTypeMangGuoEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-            } else if (StrUtil.equals(platform.getPlatformCategory(), "youku")) {
+            } else if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.YOU_KU_SHI_PIN.getValue())) {
                 rootSelector = rootSelector.replace("{type}", EnumUtils.getValueByKey(SearchTypeYouKuEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-            } else if (StrUtil.equals(platform.getPlatformCategory(), "cctv")) {
+            } else if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.CCTV.getValue())) {
                 rootSelector = rootSelector.replace("{type}", EnumUtils.getValueByKey(SearchTypeCCTVEnum.class, HttpRequestUtil.getRequestPathLastWord()));
             }
             Object read = ctx.read(rootSelector);
@@ -98,33 +95,29 @@ public class CommonJsonPathUtil {
                     showTime = itemCtx.read(selector.getShowTime());
                 }
                 String type = "";
-                type = switch (platform.getPlatformCategory()) {
-                    case "cctv" -> HttpRequestUtil.getRequestPathLastWord();
-                    case "maoyan" -> itemCtx.read(selector.getType());
-                    default -> "";
-                };
-
+                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.CCTV.getValue())) {
+                    type = HttpRequestUtil.getRequestPathLastWord();
+                }else if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
+                    type = itemCtx.read(selector.getType());
+                }
                 String image = "";
-                image = switch (platform.getPlatformCategory()) {
-                    case "maoyan" -> itemCtx.read(selector.getImage());
-                    default -> "";
-                };
+                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
+                    image = itemCtx.read(selector.getImage());
+                }
                 String author = "";
-                author = switch (platform.getPlatformCategory()) {
-                    case "maoyan" -> itemCtx.read(selector.getAuthor());
-                    default -> "";
-                };
+                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
+                    author = itemCtx.read(selector.getAuthor());
+                }
                 String desc = "";
-                desc = switch (platform.getPlatformCategory()) {
-                    case "maoyan" -> itemCtx.read(selector.getDesc());
-                    case "GitHub" -> itemCtx.read(selector.getDesc());
-                    default -> "";
-                };
+                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
+                    desc = itemCtx.read(selector.getDesc());
+                }else if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.GITHUB.getValue())) {
+                    desc = itemCtx.read(selector.getDesc());
+                }
                 String publishTime = "";
-                publishTime = switch (platform.getPlatformCategory()) {
-                    case "maoyan" -> itemCtx.read(selector.getPublishTime());
-                    default -> "";
-                };
+                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
+                    publishTime = itemCtx.read(selector.getPublishTime());
+                }
                 String commentCount = "";
 
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
@@ -139,7 +132,7 @@ public class CommonJsonPathUtil {
         if (platform.getJsonBodyNeedDeal()) {
             Map<String, Object> jsonBody = platform.getJsonBody();
             String platformCategory = platform.getPlatformCategory();
-            if (StrUtil.equals(platformCategory, "gamebase")) {
+            if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.GAME_BASE.getValue())) {
                 jsonBody.put("category",EnumUtils.getValueByKey(SearchTypeGameBaseEnum.class, HttpRequestUtil.getRequestPathLastWord()));
                 platform.setJsonBody(jsonBody);
             }

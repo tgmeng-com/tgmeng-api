@@ -54,14 +54,14 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         Map<String, Object> urlPlaceHolderDeal = urlPlaceHolderDeal(platform);
         String platformUrl = urlPlaceHolderDeal.get("url").toString();
         ForestRequestHeader forestRequestHeader = platform.getForestRequestHeader();
-        if (StrUtil.equals(platform.getPlatformCategory(), "youku")) {
+        if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.YOU_KU_SHI_PIN.getValue())) {
             forestRequestHeader = (ForestRequestHeader) urlPlaceHolderDeal.get("forestRequestHeader");
         }
         // 处理请求
         ForestResponse forestResponse;
         switch (platform.getRequestType()) {
             case ForestRequestTypeEnum.GET:
-                if (platform.getPlatformName().equals("4gamer")) {
+                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.FOUR_GAMER.getValue())) {
                     byte[] forestResponseBytes = topSearchCommonClient.commonHttpGetUtilsForBytes(
                             forestRequestHeader,
                             platformUrl,
@@ -127,44 +127,44 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         String url = platform.getUrl();
         String platformCategory = platform.getPlatformCategory();
         Map<String, Object> map = new HashMap<>();
-        if (StrUtil.equals(platformCategory, "GitHub")) {
+        if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.GITHUB.getValue())) {
             url = url.replace("{time}", EnumUtils.getValueByKey(SearchTypeGithubEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "HuggingFaces")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.HUGGING_FACES.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeHuggingFaceEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "tencent")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.TENG_XUN_SHI_PIN.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeTengXunShiPinEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "aiqiyi")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.AI_QI_YI_SHI_PIN.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeAiQiYiEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "mangguo")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.MANG_GUO_SHI_PIN.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeMangGuoEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "maoyan")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.MAO_YAN.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeMaoYanEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "youku")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.YOU_KU_SHI_PIN.getValue())) {
             Map<String, Object> youkuUrlAndCookie = urlPlaceHolderDealForYouku(platform);
             url = youkuUrlAndCookie.get("url").toString();
             map.put("forestRequestHeader", youkuUrlAndCookie.get("forestRequestHeader"));
-        } else if (StrUtil.equals(platformCategory, "xiaozudouban")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.XIAO_ZU_DOU_BAN.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeXiaoZuDouBanEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "cctv")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.CCTV.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeCCTVEnum.class, HttpRequestUtil.getRequestPathLastWord()))
                     .replace("{time}", TimeUtil.getCurrentTimeFormat("yyyyMMdd"));
-        } else if (StrUtil.equals(platformCategory, "tuyawangguo")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.TU_YA_WANG_GUO.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeTuYaWangGuoEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "guojikejichuangxinzhongxin")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.GUO_JI_KE_JI_CHUANG_XIN_ZHONG_XIN.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeGuoJiKeJiChuangXinZhongXinnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "wangyiyun")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.WANG_YI_YUN_YIN_YUE.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeWangYiYunEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "baidu")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.BAI_DU.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeBaiDuEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "zhanku")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.ZHAN_KU.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeZhanKuEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "QooApp")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.QOOAPP.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeQooAppEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "bahamute")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.BA_HA_MU_TE.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeBaHaMuTeEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "4gamer")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.FOUR_GAMER.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchType4GamerEnum.class, HttpRequestUtil.getRequestPathLastWord()));
-        } else if (StrUtil.equals(platformCategory, "nodeloc")) {
+        } else if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.NODELOC.getValue())) {
             url = url.replace("{type}", EnumUtils.getValueByKey(SearchTypeNodeLocEnum.class, HttpRequestUtil.getRequestPathLastWord()));
         }
         map.put("url", url);
@@ -271,7 +271,7 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
 
     // 中文转简体
     private void convertChineseToSimple(List<TopSearchCommonVO.DataInfo> topSearchCommonVOS, String platformCategory) {
-        if (CollUtil.isEmpty(topSearchCommonVOS) || !StrUtil.containsAnyIgnoreCase(platformCategory, "qooapp", "gamebase", "bahamute")) {
+        if (CollUtil.isEmpty(topSearchCommonVOS) || !StrUtil.containsAnyIgnoreCase(platformCategory, PlatFormCategoryEnum.QOOAPP.getValue(), PlatFormCategoryEnum.GAME_BASE.getValue(), PlatFormCategoryEnum.BA_HA_MU_TE.getValue())) {
             return;
         }
 
