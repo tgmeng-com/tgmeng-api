@@ -126,8 +126,6 @@
 
 - 修改 <span style="color:yellow">.github/workflows/deploy.yml</span> 中的下列值，
 
-- 如果你不需要把自动打镜像到dockerhub，把里面dockerhub相关的代码注释/删掉即可（文件里搜DockerHub就行）。
- 
 - 你的代码推送到github仓库后，就会自动触发action，自动部署本项目
 
 ```shell
