@@ -1,6 +1,7 @@
 package com.tgmeng.common.util;
 
 import com.tgmeng.common.bean.HotPointDataParquetBean;
+import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 
@@ -34,18 +32,21 @@ public class HotPointDataParquetUtil {
 
     public void saveToParquet() {
         try {
-            List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, null).getData();
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("word",null);
+            paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue());
+            List<Map<String, Object>> hotList = cacheSearchService.searchByWord(paramMap).getData();
             ParquetUtil parquetUtil = new ParquetUtil();
 
             List<HotPointDataParquetBean> records = new ArrayList<>();
             for (Map<String, Object> hotPoint : hotList) {
                 HotPointDataParquetBean record = new HotPointDataParquetBean(
                         hotPoint.get("url").toString(),
-                        hotPoint.get("keyword").toString(),
-                        hotPoint.get("dataCardName").toString(),
-                        hotPoint.get("dataCardCategory").toString(),
+                        hotPoint.get("title").toString(),
+                        hotPoint.get("platformName").toString(),
+                        hotPoint.get("platformCategory").toString(),
                         hotPoint.get("dataUpdateTime").toString(),
-                        SimHashUtil.calculateSimHash(hotPoint.get("keyword").toString()));
+                        SimHashUtil.calculateSimHash(hotPoint.get("title").toString()));
                 records.add(record);
             }
 

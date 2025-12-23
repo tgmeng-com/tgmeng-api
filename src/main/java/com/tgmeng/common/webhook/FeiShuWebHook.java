@@ -88,8 +88,8 @@ public class FeiShuWebHook {
                 Map<String, Object> hot = subNewHots.get(i);
                 List<WebHookFeiShuBean.TagItem> row = new ArrayList<>();
                 row.add(getFeiShuWebhookItem("text", (i + 1) + ". ", ""));
-                row.add(getFeiShuWebhookItem("a", hot.get("keyword").toString(), hot.get("url").toString()));
-                row.add(getFeiShuWebhookItem("text", " -- " + hot.get("dataCardName"), ""));
+                row.add(getFeiShuWebhookItem("a", hot.get("title").toString(), hot.get("url").toString()));
+                row.add(getFeiShuWebhookItem("text", " -- " + hot.get("platformName"), ""));
                 contentRows.add(row);
             }
 

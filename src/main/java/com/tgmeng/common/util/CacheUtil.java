@@ -130,22 +130,22 @@ public class CacheUtil {
         if (CollectionUtil.isEmpty(cacheValue)) {
             return new ArrayList<>();
         }
-        List<String> keywords = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
         cacheValue.forEach(t->{
             if (t instanceof Map<?, ?> map) {
                 Object dataInfoObj = map.get("dataInfo");
                 if (dataInfoObj instanceof List<?> dataInfoList) {
                     dataInfoList.forEach(item -> {
                         if (item instanceof Map<?, ?> itemMap) {
-                            Object keyword = itemMap.get("keyword");
-                            if (keyword instanceof String s) {
-                                keywords.add(s);
+                            Object title = itemMap.get("title");
+                            if (title instanceof String s) {
+                                titles.add(s);
                             }
                         }
                     });
                 }
             }
         });
-        return keywords;
+        return titles;
     }
 }

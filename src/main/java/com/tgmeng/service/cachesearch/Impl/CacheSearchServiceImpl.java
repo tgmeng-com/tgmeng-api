@@ -1,22 +1,21 @@
 package com.tgmeng.service.cachesearch.Impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.config.AIPlatformConfigService;
-import com.tgmeng.common.forest.client.ai.IAIClient;
-import com.tgmeng.common.util.AIRequestUtil;
-import com.tgmeng.common.util.CacheUtil;
-import com.tgmeng.common.util.FileUtil;
-import com.tgmeng.common.util.HanLPUtil;
+import com.tgmeng.common.enums.business.SearchModeEnum;
+import com.tgmeng.common.exception.ServerException;
+import com.tgmeng.common.util.*;
 import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
 import com.tgmeng.model.dto.ai.response.AiChatModelResponseContentTemplateDTO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
+import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -26,22 +25,63 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CacheSearchServiceImpl implements ICacheSearchService {
 
+    @Value("${my-config.history.keep-day}")
+    private Integer historyDataKeepDay;
+
     @Autowired
     private AIPlatformConfigService aiPlatformConfigService;
+    @Autowired
+    private ITopSearchHistoryService topSearchHistoryService;
 
-    private final IAIClient aiClient;
     private final AIRequestUtil aiRequestUtil;
     private final CacheUtil cacheUtil;
 
-    /**
-     * 按关键词检索缓存
-     */
+
     @Override
-    public ResultTemplateBean<List<Map<String, Object>>> getCacheSearchAllByWord(String word,List<String>  words) {
+    public ResultTemplateBean<List<Map<String, Object>>> searchByWord(Map<String, String> requestBody) {
+        String word = requestBody.get("word");
+        String searchMode = requestBody.get("searchMode");
+        if (StrUtil.isBlank(searchMode)) {
+            throw new ServerException("searchMode empty error");
+        }
+        // 模糊匹配五分钟的，直接从内存里拿
+        if (StrUtil.equals(searchMode, SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue())) {
+            List<Map<String, Object>> result = getCacheSearchAllByWord(word);
+            return ResultTemplateBean.success(result);
+        }
+        Map<String,String> paramMap = new HashMap<>();
+        paramMap.put("title", word);
+        paramMap.put("endTime", TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern));
+        // 模糊匹配当天
+        if (StrUtil.equals(searchMode, SearchModeEnum.MO_HU_PI_PEI_TODAY.getValue())) {
+            paramMap.put("startTime", TimeUtil.getTodayStartTime(TimeUtil.defaultPattern));
+            return topSearchHistoryService.getWordHistory(paramMap);
+        }
+        // 模糊匹配历史
+        if (StrUtil.equals(searchMode, SearchModeEnum.MO_HU_PI_PEI_HISTORY.getValue())) {
+            paramMap.put("startTime", TimeUtil.getTimeBeforeNow(0, 0, 0, historyDataKeepDay, TimeUtil.defaultPattern));
+            return topSearchHistoryService.getWordHistory(paramMap);
+        }
+        // 指纹匹配当天
+        if (StrUtil.equals(searchMode, SearchModeEnum.ZHI_WEN_PI_PEI_TODAY.getValue())) {
+            paramMap.put("startTime", TimeUtil.getTodayStartTime(TimeUtil.defaultPattern));
+            return topSearchHistoryService.getHotPointHistory(paramMap);
+        }
+        // 指纹匹配历史
+        if (StrUtil.equals(searchMode, SearchModeEnum.ZHI_WEN_PI_PEI_HISTORY.getValue())) {
+            paramMap.put("startTime", TimeUtil.getTimeBeforeNow(0, 0, 0, historyDataKeepDay, TimeUtil.defaultPattern));
+            return topSearchHistoryService.getHotPointHistory(paramMap);
+        }
+        return ResultTemplateBean.success(new ArrayList<>());
+    }
+    /**
+     * 按关键词检索5分钟内的缓存数据
+     */
+    public List<Map<String, Object>> getCacheSearchAllByWord(String word) {
 
         Collection<Object> cacheValue = cacheUtil.getValue();
         if (CollectionUtil.isEmpty(cacheValue)) {
-            return ResultTemplateBean.success(new ArrayList<>());
+            return new ArrayList<>();
         }
         List<Map<String, Object>> resultList = new ArrayList<>();
 
@@ -51,35 +91,22 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                 if (dataInfoObj instanceof List<?> dataInfoList) {
                     dataInfoList.forEach(item -> {
                         if (item instanceof Map<?, ?> itemMap) {
-                            Object keyword = itemMap.get("keyword");
+                            Object title = itemMap.get("title");
                             Object url = itemMap.get("url");
-                            if (keyword instanceof String s){
-                                s = keyword.toString().trim().toLowerCase();   // 确保 keyword 转成小写字符串
-                                // 合并 words 和 word
-                                List<String> merged = new ArrayList<>();
-                                if (CollUtil.isNotEmpty(words)) {
-                                    // 统一小写
-                                    merged.addAll(words.stream()
-                                            .filter(StrUtil::isNotBlank)
-                                            .map(String::trim)
-                                            .map(String::toLowerCase)
-                                            .toList()
-                                    );
+                            if (title instanceof String s){
+                                s = title.toString().trim().toLowerCase();   // 确保 title 转成小写字符串
+                                String lowerCaseWord = null;
+                                if (StrUtil.isNotBlank(word)){
+                                    lowerCaseWord = word.trim().toLowerCase();
                                 }
-                                if (StrUtil.isNotBlank(word)) {
-                                    merged.add(word.trim().toLowerCase());
-                                }
-                                // 最终数组
-                                String[] wordsMerged = merged.toArray(new String[0]);
-
                                 // 匹配关键词
-                                if (wordsMerged.length == 0 || StrUtil.containsAny(s,wordsMerged)){
+                                if (StrUtil.isBlank(lowerCaseWord) || StrUtil.contains(s,lowerCaseWord)){
                                     HashMap<String, Object> resultMap = new HashMap<>();
-                                    resultMap.put("keyword", keyword);
-                                    resultMap.put("dataCardName", map.get("dataCardName"));
+                                    resultMap.put("title", title);
+                                    resultMap.put("platformName", map.get("platformName"));
                                     resultMap.put("url", url);
                                     resultMap.put("dataUpdateTime", map.get("dataUpdateTime"));
-                                    resultMap.put("dataCardCategory", map.get("dataCardCategory"));
+                                    resultMap.put("platformCategory", map.get("platformCategory"));
                                     resultList.add(resultMap);
                                 }
                             }
@@ -88,7 +115,10 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                 }
             }
         });
-        return ResultTemplateBean.success(resultList);
+        resultList.sort((map1, map2) ->
+                map2.get("dataUpdateTime").toString().compareTo(map1.get("dataUpdateTime").toString())
+        );
+        return resultList;
     }
 
     /**
@@ -97,17 +127,17 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
     @Override
     public ResultTemplateBean getCacheSearchWordCloud() {
         try {
-            // 2. 收集所有 keyword 文本
-            List<String> allOriginalKeywords = cacheUtil.getAllCacheTitle();
-            if (allOriginalKeywords.isEmpty()) {
+            // 2. 收集所有 title 文本
+            List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
+            if (allOriginalTitles.isEmpty()) {
                 return ResultTemplateBean.success(Collections.emptyList());
             }
 
             // 3. 使用 HanLP 分词 + 词频统计
             Map<String, Integer> keywordFrequencyMap = new HashMap<>();
 
-            for (String keyword : allOriginalKeywords) {
-                List<String> meaningfulWords = HanLPUtil.tokenizeToWords(keyword);
+            for (String title : allOriginalTitles) {
+                List<String> meaningfulWords = HanLPUtil.tokenizeToWords(title);
                 for (String word : meaningfulWords) {
                     keywordFrequencyMap.put(word,
                             keywordFrequencyMap.getOrDefault(word, 0) + 1);
@@ -124,13 +154,13 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
 
     @Override
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
-        // 2. 收集所有 keyword 文本
-        List<String> allOriginalKeywords = cacheUtil.getAllCacheTitle();
-        if (allOriginalKeywords.isEmpty()) {
+        // 2. 收集所有 title 文本
+        List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
+        if (allOriginalTitles.isEmpty()) {
             return ResultTemplateBean.success(Collections.emptyList());
         }
         // 交给AI处理，根据所有热点标题，生成一个实时简报
-        String content = FileUtil.readFileToStringFromClasspath("template/AISummaryTemplate.txt") + allOriginalKeywords;
+        String content = FileUtil.readFileToStringFromClasspath("template/AISummaryTemplate.txt") + allOriginalTitles;
         //String content = "帮我写一个笑话";
 
         // 测试数据

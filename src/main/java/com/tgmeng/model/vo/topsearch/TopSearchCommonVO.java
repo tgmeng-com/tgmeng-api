@@ -22,11 +22,11 @@ import java.util.List;
 public class TopSearchCommonVO {
 
     /** 数据卡片名称 比如百度*/
-    private String dataCardName;
+    private String platformName;
     /** 数据卡片logo 比如百度的logo地址*/
-    private String dataCardLogo;
+    private String platformLogo;
     /** 数据卡片分类 比如新闻*/
-    private String dataCardCategory;
+    private String platformCategory;
     private Long dataSize;
     private String dataUpdateTime ;
     private List<DataInfo> dataInfo;
@@ -36,7 +36,7 @@ public class TopSearchCommonVO {
     @NoArgsConstructor
     public static  class DataInfo<T> {
         /** 热搜词 */
-        private String keyword;
+        private String title;
         /** 给前端格式化的热度，比如“1.2万” */
         private T hotScore;
         /** 热搜词的url */
@@ -60,10 +60,10 @@ public class TopSearchCommonVO {
 
     }
 
-    public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String dataCardName,String dataCardLogo,String dataCardCategory){
-        this.dataCardName = dataCardName;
-        this.dataCardLogo = dataCardLogo;
-        this.dataCardCategory = dataCardCategory;
+    public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String platformName,String platformLogo,String platformCategory){
+        this.platformName = platformName;
+        this.platformLogo = platformLogo;
+        this.platformCategory = platformCategory;
         this.setDataSize((long)dataInfo.size());
         this.setDataUpdateTime(TimeUtil.getCurrentTimeFormat("yyyy-MM-dd HH:mm:ss"));
         this.dataInfo = dataInfo;

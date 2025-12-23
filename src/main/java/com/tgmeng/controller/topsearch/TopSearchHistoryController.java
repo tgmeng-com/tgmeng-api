@@ -25,7 +25,7 @@ import java.util.Map;
 public class TopSearchHistoryController {
     private final ITopSearchHistoryService topSearchHistoryService;
 
-    // 热点历史数据
+    // 热点历史数据,指纹查询
     @RequestMapping("/hotpoint")
     public ResultTemplateBean getHotPointHistory(@RequestBody Map<String, String> requestBody) {
         return topSearchHistoryService.getHotPointHistory(requestBody);
@@ -36,6 +36,7 @@ public class TopSearchHistoryController {
         return topSearchHistoryService.getSuddenHeatPoint(type);
     }
 
+    // 历史数据查询，模糊匹配
     @RequestMapping("/getwordhistory")
     public ResultTemplateBean getWordHistory(@RequestBody Map<String, String> requestBody) {
         return topSearchHistoryService.getWordHistory(requestBody);

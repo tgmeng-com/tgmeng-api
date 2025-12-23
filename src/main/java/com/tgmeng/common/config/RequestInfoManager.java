@@ -73,7 +73,7 @@ public class RequestInfoManager {
     public static class Selector {
         private String root;
         @Builder.Default
-        private String keyword = "";
+        private String title = "";
         @Builder.Default
         private String url = "";
         @Builder.Default
@@ -245,8 +245,8 @@ public class RequestInfoManager {
             return this;
         }
 
-        public FluentConfig keywordSelector(String v) {
-            currentSelector.keyword(v);
+        public FluentConfig titleSelector(String v) {
+            currentSelector.title(v);
             return this;
         }
 
@@ -376,7 +376,7 @@ public class RequestInfoManager {
                 .interfaceUrl("/api/topsearch/zhitongcaijing")
                 .addArea()
                 .rootSelector("#news-article-box > .shadow-wrap-box")
-                .keywordSelector(".info-item-content-title a")
+                .titleSelector(".info-item-content-title a")
                 .urlSelector(".info-item-content-title a")
 
                 .register();
@@ -389,7 +389,7 @@ public class RequestInfoManager {
         //         // 区域1：主要新闻
         //         .addArea()
         //             .rootSelector("#main-news > .news-item")
-        //             .keywordSelector(".title a")
+        //             .titleSelector(".title a")
         //             .urlSelector("a")
         //             .descSelector(".description")
         //             .hotScoreSelector(".hot-value")
@@ -397,7 +397,7 @@ public class RequestInfoManager {
         //         // 区域2：热门推荐
         //         .addArea()
         //             .rootSelector("#hot-recommend > .hot-item")
-        //             .keywordSelector(".hot-title")
+        //             .titleSelector(".hot-title")
         //             .urlSelector("a")
         //             .hotScoreSelector(".score")
         //             .imageSelector("img")
@@ -405,7 +405,7 @@ public class RequestInfoManager {
         //         // 区域3：编辑精选
         //         .addArea()
         //             .rootSelector(".editor-choice .article")
-        //             .keywordSelector("h3")
+        //             .titleSelector("h3")
         //             .urlSelector("a")
         //             .authorSelector(".author")
         //             .publishTimeSelector(".time")
@@ -423,7 +423,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.thepaper.cn/newsDetail_forward_")
                 .addArea()
                 .rootSelector("$.data.hotNews")
-                .keywordSelector("$.name")
+                .titleSelector("$.name")
                 .urlSelector("$.contId")
 
                 .register();
@@ -436,7 +436,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#list_url > li")
-                .keywordSelector("h1 > a")
+                .titleSelector("h1 > a")
                 .urlSelector("h1 > a")
                 .register();
 
@@ -448,7 +448,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.guokr.com")
                 .addArea()
                 .rootSelector(".FeedFloat__FeedFloatWrap-zt5yna-0 > a, .FeedFloat__FeedFloatWrap-zt5yna-0 > * > a")
-                .keywordSelector(".eAYHrP")
+                .titleSelector(".eAYHrP")
                 .urlSelector("a")
                 .register();
 
@@ -460,7 +460,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.familydoctor.cn")
                 .addArea()
                 .rootSelector(".news-item")
-                .keywordSelector(".news-title > a")
+                .titleSelector(".news-title > a")
                 .urlSelector(".news-title > a")
                 .register();
 
@@ -472,7 +472,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https:")
                 .addArea()
                 .rootSelector(".sUl > li")
-                .keywordSelector(".oP-txt a")
+                .titleSelector(".oP-txt a")
                 .urlSelector(".oP-txt a")
                 .register();
 
@@ -484,7 +484,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".article-card")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -496,7 +496,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://bydrug.pharmcube.com")
                 .addArea()
                 .rootSelector(".ant-spin-container > div")
-                .keywordSelector(".mf-font-600")
+                .titleSelector(".mf-font-600")
                 .urlSelector(".mf-font-600")
                 .register();
 
@@ -508,7 +508,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".composs-blog-list > .item")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .register();
 
@@ -520,7 +520,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".s1-m-li.rdzx-ul a")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -532,7 +532,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https:")
                 .addArea()
                 .rootSelector(".ptlist.ptlist-news.adNewsIndexYaoWen > li")
-                .keywordSelector(".tit > a")
+                .titleSelector(".tit > a")
                 .urlSelector(".tit > a")
                 .register();
 
@@ -544,7 +544,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.yystv.cn")
                 .addArea()
                 .rootSelector(".articles-item")
-                .keywordSelector("h2")
+                .titleSelector("h2")
                 .urlSelector("a")
                 .register();
 
@@ -556,7 +556,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.gcores.com")
                 .addArea()
                 .rootSelector(".col.mb-5")
-                .keywordSelector("h3")
+                .titleSelector("h3")
                 .urlSelector("a")
                 .register();
 
@@ -568,7 +568,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".broll.wrap h3")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -580,7 +580,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.youxituoluo.com")
                 .addArea()
                 .rootSelector(".article_list > li")
-                .keywordSelector(".title")
+                .titleSelector(".title")
                 .urlSelector(".title")
                 .register();
 
@@ -592,7 +592,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.a9vg.com")
                 .addArea()
                 .rootSelector(".a9-plain-list_item")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -604,7 +604,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".Indexbox2-2 > .switchbox a")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -616,7 +616,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".bgx a")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -628,7 +628,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".athing.submission")
-                .keywordSelector(".titleline > a:first-of-type")
+                .titleSelector(".titleline > a:first-of-type")
                 .urlSelector(".titleline > a:first-of-type")
                 .register();
 
@@ -640,7 +640,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://juejin.cn/post/")
                 .addArea()
                 .rootSelector("$.data")
-                .keywordSelector("$.content.title")
+                .titleSelector("$.content.title")
                 .urlSelector("$.content.content_id")
                 .hotScoreSelector("$.content_counter.hot_rank")
                 .register();
@@ -653,7 +653,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https:")
                 .addArea()
                 .rootSelector("#topic_ladder_cat_3 > li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -665,7 +665,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://bbs.hupu.com")
                 .addArea()
                 .rootSelector(".text-list-model > div")
-                .keywordSelector(".t-title")
+                .titleSelector(".t-title")
                 .urlSelector("a")
                 .hotScoreSelector(".t-replies")
                 .register();
@@ -678,7 +678,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.v2ex.com")
                 .addArea()
                 .rootSelector(".cell.item")
-                .keywordSelector(".topic-link")
+                .titleSelector(".topic-link")
                 .urlSelector(".topic-link")
                 .hotScoreSelector(".t-count_livid")
                 .register();
@@ -691,11 +691,11 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".zuqiu-news .list-item")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .addArea()
                 .rootSelector(".lanqiu-news .list-item")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
 
                 .register();
@@ -708,7 +708,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.ppsport.com")
                 .addArea()
                 .rootSelector(".info-panel-wrap > div")
-                .keywordSelector(".tw-link")
+                .titleSelector(".tw-link")
                 .urlSelector(".tw-link")
                 .register();
 
@@ -720,7 +720,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#plantingtext li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -732,7 +732,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".channel_news_body li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -744,7 +744,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".feed-group > a")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -756,7 +756,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#hot-search-list > div")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -768,7 +768,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.dongqiudi.com")
                 .addArea()
                 .rootSelector(".top-center > p")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
 
                 .register();
@@ -781,7 +781,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".test-img-list-model > div")
-                .keywordSelector(".list-item-title")
+                .titleSelector(".list-item-title")
                 .urlSelector(".list-item-title")
                 .register();
 
@@ -793,7 +793,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.jiqizhixin.com/articles/")
                 .addArea()
                 .rootSelector("$.articles")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.slug")
                 .register();
 
@@ -805,7 +805,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.eurekalert.org")
                 .addArea()
                 .rootSelector("#main-content > .post")
-                .keywordSelector("h2")
+                .titleSelector("h2")
                 .urlSelector("a")
                 .register();
 
@@ -818,7 +818,7 @@ public class RequestInfoManager {
                 .hotTitleUrlNeedDeal(true)
                 .addArea()
                 .rootSelector("$.data.items")
-                .keywordSelector("$.name")
+                .titleSelector("$.name")
                 .forestRequestHeader(new ForestRequestHeader()
                         .setHost("apii.web.mittrchina.com")
                         .setAccept("*/*")
@@ -839,7 +839,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://abduzeedo.com")
                 .addArea()
                 .rootSelector(".posts > article")
-                .keywordSelector("span > h2 > a")
+                .titleSelector("span > h2 > a")
                 .urlSelector("span > h2 > a")
                 .register();
 
@@ -851,7 +851,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".post_list_prime li")
-                .keywordSelector("h1 > a")
+                .titleSelector("h1 > a")
                 .urlSelector("h1 > a")
                 .register();
 
@@ -863,7 +863,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.awwwards.com")
                 .addArea()
                 .rootSelector(".grid-cards > li")
-                .keywordSelector(".avatar-name__title")
+                .titleSelector(".avatar-name__title")
                 .urlSelector(".figure-rollover__link")
 
                 .forestRequestHeader(new ForestRequestHeader()
@@ -880,7 +880,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://dribbble.com")
                 .addArea()
                 .rootSelector("#main > ol > li")
-                .keywordSelector(".display-name")
+                .titleSelector(".display-name")
                 .urlSelector(".shot-thumbnail-link")
                 .hotScoreSelector(".js-shot-views-count")
                 .register();
@@ -893,7 +893,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.archdaily.cn")
                 .addArea()
                 .rootSelector(".afd-post-stream")
-                .keywordSelector("h3 span")
+                .titleSelector("h3 span")
                 .urlSelector("h3 a")
                 .register();
 
@@ -905,7 +905,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.topys.cn")
                 .addArea()
                 .rootSelector(".article-box-item")
-                .keywordSelector(".title")
+                .titleSelector(".title")
                 .urlSelector(".title")
                 .register();
 
@@ -917,7 +917,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".p-items > .p-item")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .hotScoreSelector(".meta-views")
                 .register();
@@ -931,7 +931,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.woshipm.com/")
                 .addArea()
                 .rootSelector("$.RESULT")
-                .keywordSelector("$.data.articleTitle")
+                .titleSelector("$.data.articleTitle")
                 .urlSelector("$.data.type")
                 .forestRequestHeader(new ForestRequestHeader()
                         .setHost("www.woshipm.com")
@@ -953,7 +953,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.rfi.fr")
                 .addArea()
                 .rootSelector(".css-1rznr30-CardLink")
-                .keywordSelector("")
+                .titleSelector("")
                 .urlSelector("")
                 .forestRequestHeader(new ForestRequestHeader()
                         .setUserAgent(UserAgentGeneratorUtil.generateRandomUserAgent())
@@ -974,7 +974,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.rfi.fr")
                 .addArea()
                 .rootSelector(".o-banana-split .article__title")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
 
                 .forestRequestHeader(new ForestRequestHeader()
@@ -991,7 +991,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("main[role='main']  li[role='listitem']")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1003,7 +1003,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".article-list > li")
-                .keywordSelector("h2")
+                .titleSelector("h2")
                 .urlSelector("a")
                 .register();
 
@@ -1015,7 +1015,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".jin10-news-index-list > .jin10-news-list > div")
-                .keywordSelector("p")
+                .titleSelector("p")
                 .urlSelector(".jin10-news-list-item-info > a")
                 .register();
 
@@ -1027,7 +1027,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.fastbull.com")
                 .addArea()
                 .rootSelector(".news-top a")
-                .keywordSelector("h4")
+                .titleSelector("h4")
                 .urlSelector("a")
                 .register();
 
@@ -1039,7 +1039,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.gelonghui.com")
                 .addArea()
                 .rootSelector("#hot-article ul:first-of-type li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .forestRequestHeader(new ForestRequestHeader()
                         .setUserAgent(UserAgentGeneratorUtil.generateRandomUserAgent())
@@ -1056,7 +1056,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.cls.cn")
                 .addArea()
                 .rootSelector(".home-article-ranking-box > div")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1068,7 +1068,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.items")
-                .keywordSelector("$.resource.title")
+                .titleSelector("$.resource.title")
                 .urlSelector("$.resource.uri")
                 .register();
 
@@ -1080,7 +1080,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".list-con ul li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1092,7 +1092,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.yicai.com")
                 .addArea()
                 .rootSelector("#headlist > a")
-                .keywordSelector("h2")
+                .titleSelector("h2")
                 .urlSelector("a")
                 .register();
 
@@ -1104,7 +1104,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.data")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.pcInfoUrl")
                 .jsonBody(
                         new HashMap<>(Map.of(
@@ -1123,7 +1123,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.zhihu.com/question/")
                 .addArea()
                 .rootSelector("$.data")
-                .keywordSelector("$.target.title")
+                .titleSelector("$.target.title")
                 .urlSelector("$.target.id")
                 .register();
 
@@ -1135,7 +1135,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://sspai.com/post/")
                 .addArea()
                 .rootSelector("$.data")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.id")
                 .hotScoreSelector("$.comment_count")
                 .register();
@@ -1148,7 +1148,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.bang_topic.topic_list")
-                .keywordSelector("$.topic_name")
+                .titleSelector("$.topic_name")
                 .urlSelector("$.topic_url")
                 .hotScoreSelector("$.discuss_num")
                 .register();
@@ -1162,7 +1162,7 @@ public class RequestInfoManager {
                 .hotTitleUrlAfter(".html")
                 .addArea()
                 .rootSelector("$.data.items")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.contentId")
                 .hotScoreSelector("$.hotValue")
                 .register();
@@ -1175,11 +1175,11 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.fixed_top_data")
-                .keywordSelector("$.Title")
+                .titleSelector("$.Title")
                 .urlSelector("$.Url")
                 .addArea()
                 .rootSelector("$.data")
-                .keywordSelector("$.Title")
+                .titleSelector("$.Title")
                 .urlSelector("$.Url")
                 .hotScoreSelector("$.HotValue")
                 .register();
@@ -1192,7 +1192,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.idlist[0].newslist[1:]")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.url")
                 .hotScoreSelector("$.readCount")
                 .register();
@@ -1206,7 +1206,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$")
-                .keywordSelector("$.name")
+                .titleSelector("$.name")
                 .hotScoreSelector("$.score")
                 .register();
 
@@ -1219,7 +1219,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.word_list")
-                .keywordSelector("$.word")
+                .titleSelector("$.word")
                 .hotScoreSelector("$.hot_value")
 
                 .register();
@@ -1233,11 +1233,11 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.hotgov")
-                .keywordSelector("$.word")
+                .titleSelector("$.word")
                 .urlSelector("$.url")
                 .addArea()
                 .rootSelector("$.data.band_list")
-                .keywordSelector("$.note")
+                .titleSelector("$.note")
                 .hotScoreSelector("$.num")
 
                 .register();
@@ -1250,7 +1250,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.list")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.short_link_v2")
                 .hotScoreSelector("$.stat.view")
                 .forestRequestHeader(new ForestRequestHeader()
@@ -1271,12 +1271,12 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.cards[0].topContent")
-                .keywordSelector("$.word")
+                .titleSelector("$.word")
                 .urlSelector("$.url")
                 .hotScoreSelector("$.hotScore")
                 .addArea()
                 .rootSelector("$.data.cards[0].content")
-                .keywordSelector("$.word")
+                .titleSelector("$.word")
                 .urlSelector("$.url")
                 .hotScoreSelector("$.hotScore")
                 .register();
@@ -1289,7 +1289,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.cards[0].content")
-                .keywordSelector("$.word")
+                .titleSelector("$.word")
                 .urlSelector("$.url")
                 .hotScoreSelector("$.hotScore")
                 .register();
@@ -1302,7 +1302,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://music.163.com/#/song?id=")
                 .addArea()
                 .rootSelector("$.result.tracks")
-                .keywordSelector("$.name")
+                .titleSelector("$.name")
                 .urlSelector("$.id")
                 .hotScoreSelector("$.popularity")
                 .register();
@@ -1316,7 +1316,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".table_list > li")
-                .keywordSelector("div:nth-of-type(1) > a")
+                .titleSelector("div:nth-of-type(1) > a")
                 .urlSelector("div:nth-of-type(1) > a")
                 .forestRequestHeader(new ForestRequestHeader()
                         .setUserAgent(UserAgentGeneratorUtil.generateRandomUserAgent())
@@ -1335,7 +1335,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.items[0].contents")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.pageUrl")
                 .hotScoreSelector("$.mainIndex")
                 .register();
@@ -1348,7 +1348,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://so.mgtv.com/so?k=")
                 .addArea()
                 .rootSelector("$.data.topList[?(@.label=='{type}')].data[*]")
-                .keywordSelector("$.name")
+                .titleSelector("$.name")
                 .urlSelector("$.name")
                 .register();
 
@@ -1361,7 +1361,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.maoyan.com/films/")
                 .addArea()
                 .rootSelector("$.data.data.movies")
-                .keywordSelector("$.nm")
+                .titleSelector("$.nm")
                 .urlSelector("$.id")
                 .imageSelector("$.img")
                 .authorSelector("$.star")
@@ -1378,7 +1378,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".eTkjTE > section")
-                .keywordSelector(".cnxaX > a")
+                .titleSelector(".cnxaX > a")
                 .urlSelector(".rankCard")
                 .hotScoreSelector(".rankBox > div:nth-of-type(4) .kFzKPV")
                 .register();
@@ -1391,7 +1391,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.gracg.com")
                 .addArea()
                 .rootSelector(".px-2 > div")
-                .keywordSelector(".show-works-title")
+                .titleSelector(".show-works-title")
                 .urlSelector(".cursor-hand")
                 .hotScoreSelector(".show-works-views > span")
                 .register();
@@ -1404,7 +1404,7 @@ public class RequestInfoManager {
                 .interfaceUrl("/api/topsearch/guojikejichuangxinzhongxin/{type}")
                 .addArea()
                 .rootSelector(".news_box > ul:eq(2) > li")
-                .keywordSelector("h2")
+                .titleSelector("h2")
                 .register();
 
         addJsonConfig("https://api.github.com/search/repositories?q=stars:>0+created:>={time}&sort=stars&order=desc&page=1&per_page=100")
@@ -1415,7 +1415,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.items")
-                .keywordSelector("$.name")
+                .titleSelector("$.name")
                 .urlSelector("$.html_url")
                 .hotScoreSelector("$.stargazers_count")
                 .descSelector("$.description")
@@ -1438,7 +1438,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.youtube.com/watch?v=")
                 .addArea()
                 .rootSelector("$.items")
-                .keywordSelector("$.snippet.title")
+                .titleSelector("$.snippet.title")
                 .urlSelector("$.id")
                 .hotScoreSelector("$.statistics.viewCount")
 
@@ -1453,7 +1453,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://v.youku.com/v_show/id_XNjQ1NDI4ODY2MA==.html?s=")
                 .addArea()
                 .rootSelector("$.data.nodes[0].nodes[0].data.tabDataMap.{type}.nodes[0].nodes[*].data")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.encodeShowId")
                 .register();
 
@@ -1466,7 +1466,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".olt tr:not(:has(span[title=置顶]))")
-                .keywordSelector(".title > a")
+                .titleSelector(".title > a")
                 .urlSelector(".title > a")
                 .publishTimeSelector(".time")
                 .commentCountSelector(".r-count")
@@ -1484,7 +1484,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.cctv{type}.list")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .hotScoreSelector("$.startTime")
                 .urlSelector("$.columnBackvideourl")
                 .startTimeSelector("$.startTime")
@@ -1500,7 +1500,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.newsmth.net")
                 .addArea()
                 .rootSelector("#top10 > ul > li")
-                .keywordSelector("a:nth-of-type(2)")
+                .titleSelector("a:nth-of-type(2)")
                 .urlSelector("a:nth-of-type(2)")
                 .register();
 
@@ -1512,7 +1512,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.chongbuluo.com/")
                 .addArea()
                 .rootSelector(".bm_c tbody")
-                .keywordSelector(".common > a")
+                .titleSelector(".common > a")
                 .urlSelector(".common > a")
                 .hotScoreSelector(".common > .xi1")
                 .register();
@@ -1525,7 +1525,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".hot_news2 > ul > li")
-                .keywordSelector("div > a")
+                .titleSelector("div > a")
                 .urlSelector("div > a")
                 .register();
 
@@ -1538,7 +1538,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.list")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .hotScoreSelector("$.views")
                 .register();
 
@@ -1550,7 +1550,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.txrjy.com/")
                 .addArea()
                 .rootSelector("#review li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1562,7 +1562,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".topic-list .topic-list-item")
-                .keywordSelector(".link-top-line > a")
+                .titleSelector(".link-top-line > a")
                 .urlSelector(".link-top-line > a")
                 .hotScoreSelector(".views span")
                 .register();
@@ -1575,7 +1575,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://ruby-china.org")
                 .addArea()
                 .rootSelector(".card-body.item-list > div")
-                .keywordSelector(".title.media-heading > a")
+                .titleSelector(".title.media-heading > a")
                 .urlSelector(".title.media-heading > a")
                 .hotScoreSelector(".count")
                 .register();
@@ -1588,7 +1588,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".hot-news-list-wrap > ul >li")
-                .keywordSelector("a > p")
+                .titleSelector("a > p")
                 .urlSelector("a")
                 .register();
 
@@ -1600,7 +1600,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".tab_new.tab-list-explore > .conlist > dl")
-                .keywordSelector("dd > h2 > a")
+                .titleSelector("dd > h2 > a")
                 .urlSelector("dd > h2 > a")
                 .register();
 
@@ -1612,7 +1612,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".section.articles-list > .items > .item")
-                .keywordSelector(".content > a")
+                .titleSelector(".content > a")
                 .urlSelector(".content > a")
                 .register();
 
@@ -1624,7 +1624,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#ct > .mn tbody > tr:not(:first-child)")
-                .keywordSelector("th > a")
+                .titleSelector("th > a")
                 .urlSelector("th > a")
                 .hotScoreSelector(".num > a")
                 .register();
@@ -1637,7 +1637,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.36kr.com")
                 .addArea()
                 .rootSelector(".main-wrapper > .list-wrapper > .list-section-wrapper:nth-of-type(1) > .article-list > .article-wrapper")
-                .keywordSelector(".article-item-info > p > a")
+                .titleSelector(".article-item-info > p > a")
                 .urlSelector(".article-item-info > p > a")
                 .hotScoreSelector(".kr-flow-bar-hot > span")
                 .register();
@@ -1650,7 +1650,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".rank-box:nth-of-type(2) > div")
-                .keywordSelector(".plc-title")
+                .titleSelector(".plc-title")
                 .urlSelector("a")
                 .hotScoreSelector(".review-num")
                 .register();
@@ -1663,7 +1663,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://readhub.cn")
                 .addArea()
                 .rootSelector(".style_tabs__HaLYn > .style_tabs__HaLYn > .mantine-Tabs-panel > ol > li")
-                .keywordSelector("div > div:nth-of-type(2) > a")
+                .titleSelector("div > div:nth-of-type(2) > a")
                 .urlSelector("div > div:nth-of-type(2) > a")
                 .register();
 
@@ -1674,7 +1674,7 @@ public class RequestInfoManager {
                 .interfaceUrl("/api/topsearch/taimeiti")
                 .hotTitleUrlPrefix("")
                 .addArea()
-                .rootSelector(".content > .item").keywordSelector("._tit")
+                .rootSelector(".content > .item").titleSelector("._tit")
                 .urlSelector("._tit")
                 .hotScoreSelector(".action_reads")
                 .register();
@@ -1687,7 +1687,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#today_news_1 li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1699,7 +1699,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".article-list.post-list-layout.post > ul >li")
-                .keywordSelector(".title")
+                .titleSelector(".title")
                 .urlSelector(".title")
                 .hotScoreSelector(".icon-view")
                 .register();
@@ -1712,7 +1712,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.cyzone.cn")
                 .addArea()
                 .rootSelector("#pane-recommend .article-item")
-                .keywordSelector(".item-title")
+                .titleSelector(".item-title")
                 .urlSelector(".item-title")
                 .register();
 
@@ -1724,7 +1724,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.iheima.com")
                 .addArea()
                 .rootSelector(".mainleft .item-wrap.clearfix")
-                .keywordSelector(".title")
+                .titleSelector(".title")
                 .urlSelector(".title")
                 .register();
 
@@ -1736,7 +1736,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".lph-pageList.index-pageList > .list li")
-                .keywordSelector("h3 > a")
+                .titleSelector("h3 > a")
                 .urlSelector("h3 > a")
                 .register();
 
@@ -1748,7 +1748,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://awtmt.com")
                 .addArea()
                 .rootSelector(".article-list > div")
-                .keywordSelector(".article-title")
+                .titleSelector(".article-title")
                 .urlSelector(".article-title")
                 .register();
 
@@ -1760,11 +1760,11 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#newlist_1 > h4 > ul > li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .addArea()
                 .rootSelector("#news_content_1 li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1776,7 +1776,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.toodaylab.com")
                 .addArea()
                 .rootSelector(".hot-list.clearfix > a")
-                .keywordSelector("p")
+                .titleSelector("p")
                 .urlSelector(":root")
                 .register();
 
@@ -1788,7 +1788,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".list-post > .post-item")
-                .keywordSelector(".post-inner > a")
+                .titleSelector(".post-inner > a")
                 .urlSelector(".post-inner > a")
                 .register();
 
@@ -1800,7 +1800,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.jiemodui.com")
                 .addArea()
                 .rootSelector(".itemList > a")
-                .keywordSelector("h3")
+                .titleSelector("h3")
                 .urlSelector(":root")
                 .register();
 
@@ -1812,7 +1812,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".article-hot-list .hot-item")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1824,7 +1824,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".cloumn-bd.section.hots-wrapper  .hots-wrapper__bd  li")
-                .keywordSelector("h4 > a")
+                .titleSelector("h4 > a")
                 .urlSelector("h4 > a")
                 .register();
 
@@ -1836,7 +1836,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://lieyunpro.com")
                 .addArea()
                 .rootSelector(".article-container > div")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .register();
 
@@ -1848,7 +1848,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://weread.qq.com")
                 .addArea()
                 .rootSelector(".ranking_content_bookList > li")
-                .keywordSelector(".wr_bookList_item_title")
+                .titleSelector(".wr_bookList_item_title")
                 .urlSelector("a")
                 .hotScoreSelector(".wr_bookList_item_readingCountText")
                 .register();
@@ -1861,7 +1861,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.rankList")
-                .keywordSelector("$.contentTitle")
+                .titleSelector("$.contentTitle")
                 .urlSelector("$.shareUrl")
                 .hotScoreSelector("$.viewCount")
                 .register();
@@ -1874,7 +1874,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".main-inner.group .pad.group article")
-                .keywordSelector(".post-title > a")
+                .titleSelector(".post-title > a")
                 .urlSelector(".post-title > a")
                 .register();
 
@@ -1886,7 +1886,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".left-cont.fix > li")
-                .keywordSelector("h4 > a")
+                .titleSelector("h4 > a")
                 .urlSelector("h4 > a")
                 .register();
 
@@ -1898,7 +1898,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".post-list > div")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .register();
 
@@ -1910,7 +1910,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.vgover.com")
                 .addArea()
                 .rootSelector(".vg-list.vg-list--8 > li")
-                .keywordSelector("h3 > a")
+                .titleSelector("h3 > a")
                 .urlSelector("h3 > a")
                 .register();
 
@@ -1922,11 +1922,11 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.tvmao.com")
                 .addArea()
                 .rootSelector(".rtive.f_drama")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .addArea()
                 .rootSelector(".r_hot_drama > li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1938,7 +1938,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https:")
                 .addArea()
                 .rootSelector("#YwNes > .news-left:nth-of-type(2) .rdph-list2:nth-of-type(2) li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1950,7 +1950,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https:")
                 .addArea()
                 .rootSelector(".seo-list > div")
-                .keywordSelector("h2")
+                .titleSelector("h2")
                 .urlSelector(".article-wrap > a")
                 .register();
 
@@ -1962,7 +1962,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".hotComment.ranking > ul > li")
-                .keywordSelector("h3 > a")
+                .titleSelector("h3 > a")
                 .urlSelector("h3 > a")
                 .register();
 
@@ -1974,7 +1974,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.stnn.cc")
                 .addArea()
                 .rootSelector(".n_left_l > .hs li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1986,7 +1986,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".hot-list > li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -1998,7 +1998,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#artitileList1 > ul > li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -2010,7 +2010,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://news.mbalib.com")
                 .addArea()
                 .rootSelector(".latest-article")
-                .keywordSelector("h3 > a")
+                .titleSelector("h3 > a")
                 .urlSelector("h3 > a")
                 .register();
 
@@ -2022,7 +2022,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".box_R_item.line.news > div li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -2034,7 +2034,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".t4_left > a")
-                .keywordSelector(".t4_block_text")
+                .titleSelector(".t4_block_text")
                 .urlSelector(":root")
                 .register();
 
@@ -2046,7 +2046,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".js-main__l .js-article_item")
-                .keywordSelector(".js-article_item__title")
+                .titleSelector(".js-article_item__title")
                 .urlSelector(".js-article_item__title")
                 .register();
 
@@ -2058,10 +2058,10 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#blk_hdline_01 a")
-                .keywordSelector(":root")
+                .titleSelector(":root")
                 .urlSelector(":root")
                 .rootSelector(".m-p1-mb1-list.m-list-container a")
-                .keywordSelector(":root")
+                .titleSelector(":root")
                 .urlSelector(":root")
                 .register();
 
@@ -2073,7 +2073,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.kuaijitoutiao.com/article/")
                 .addArea()
                 .rootSelector("$.data.data")
-                .keywordSelector("$.appNews.title")
+                .titleSelector("$.appNews.title")
                 .urlSelector("$.appNews.articleID")
                 .register();
 
@@ -2085,11 +2085,11 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("http://www.laohucaijing.com")
                 .addArea()
                 .rootSelector(".Recommend a")
-                .keywordSelector(":root")
+                .titleSelector(":root")
                 .urlSelector(":root")
                 .addArea()
                 .rootSelector(".content_list h3")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -2101,7 +2101,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.theblockbeats.info")
                 .addArea()
                 .rootSelector(".home-page-ctr-contain  .title-item")
-                .keywordSelector(":root")
+                .titleSelector(":root")
                 .urlSelector(":root")
                 .register();
 
@@ -2113,7 +2113,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://news.fx678.com")
                 .addArea()
                 .rootSelector(".col4_r_txts.l  li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -2125,7 +2125,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$.data.list")
-                .keywordSelector("$.title")
+                .titleSelector("$.title")
                 .urlSelector("$.url")
                 .hotScoreSelector("$.score_num")
                 .register();
@@ -2138,7 +2138,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://xuangutong.com.cn")
                 .addArea()
                 .rootSelector(".article-wrapper_iIO5l")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .register();
 
@@ -2150,7 +2150,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.chaincatcher.com")
                 .addArea()
                 .rootSelector(".left_area.pr-2.col-lg-9.col-12 .article_left")
-                .keywordSelector("a > h3")
+                .titleSelector("a > h3")
                 .urlSelector("a")
                 .register();
 
@@ -2162,7 +2162,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://www.chinastarmarket.cn")
                 .addArea()
                 .rootSelector(".d-f.m-t-30.m-b-30")
-                .keywordSelector(".d-b.o-h.f-s-20.f-w-b.l-h-15.c-000.w-s-n.t-o-el.list-link")
+                .titleSelector(".d-b.o-h.f-s-20.f-w-b.l-h-15.c-000.w-s-n.t-o-el.list-link")
                 .urlSelector(".d-b.o-h.f-s-20.f-w-b.l-h-15.c-000.w-s-n.t-o-el.list-link")
                 .register();
 
@@ -2174,7 +2174,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://topd.tencent.com")
                 .addArea()
                 .rootSelector(".li-work")
-                .keywordSelector(".title")
+                .titleSelector(".title")
                 .urlSelector(".title")
                 .register();
 
@@ -2186,7 +2186,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://developer.aliyun.com")
                 .addArea()
                 .rootSelector(".feed-list > li")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 .hotScoreSelector(".feed-article-count")
                 .register();
@@ -2199,7 +2199,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://cloud.tencent.com")
                 .addArea()
                 .rootSelector(".mod-article-list > .cdc-article-panel-response2__list > div")
-                .keywordSelector(".cdc-article-panel-response2__title")
+                .titleSelector(".cdc-article-panel-response2__title")
                 .urlSelector(".cdc-article-panel-response2__title")
                 .hotScoreSelector(".cdc-icon__number")
                 .register();
@@ -2212,7 +2212,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("#J_main-container > .row.post-container-wrapper .post-container")
-                .keywordSelector(".post-title > a")
+                .titleSelector(".post-title > a")
                 .urlSelector(".post-title > a")
                 .register();
 
@@ -2225,7 +2225,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("http://www.0818tuan.com")
                 .addArea()
                 .rootSelector(".col-md-8:nth-of-type(1) > .panel.panel-default > .list-group > a")
-                .keywordSelector(":root")
+                .titleSelector(":root")
                 .urlSelector(":root")
                 .register();
 
@@ -2238,7 +2238,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".generate-columns-container > article")
-                .keywordSelector(".entry-title > a")
+                .titleSelector(".entry-title > a")
                 .urlSelector(".entry-title > a")
                 .register();
 
@@ -2250,7 +2250,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https:")
                 .addArea()
                 .rootSelector(".BH-lbox.GN-lbox2 > .GN-lbox2B")
-                .keywordSelector(".GN-lbox2D")
+                .titleSelector(".GN-lbox2D")
                 .urlSelector(".GN-lbox2D > a")
 
                 .forestRequestHeader(new ForestRequestHeader()
@@ -2268,21 +2268,21 @@ public class RequestInfoManager {
                 // 置顶的3个
                 .addArea()
                 .rootSelector(".top_article_top3 > dd")
-                .keywordSelector("a")
+                .titleSelector("a")
                 .urlSelector("a")
                 // 下面两个是专门针对pc分类
                 .addArea()
                 .rootSelector("#NEWS_SELECT_DAY_1 .V2_article_container")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .addArea()
                 .rootSelector("#NEWS_SELECT_DAY_2 .V2_article_container")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 // 除pc外的其他分类
                 .addArea()
                 .rootSelector("#NEWS_SELECT_RECENT_50 .V2_article_container")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .register();
 
@@ -2295,7 +2295,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("https://news.gamebase.com.tw/news/detail/")
                 .addArea()
                 .rootSelector("$.return_msg.list")
-                .keywordSelector("$.news_title")
+                .titleSelector("$.news_title")
                 .urlSelector("$.news_no")
                 .jsonBody(
                         new HashMap<>(Map.of(
@@ -2314,7 +2314,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".topic-list-item")
-                .keywordSelector(".title.raw-link.raw-topic-link")
+                .titleSelector(".title.raw-link.raw-topic-link")
                 .urlSelector(".title.raw-link.raw-topic-link")
                 .hotScoreSelector(".views")
                 .register();
@@ -2327,7 +2327,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector("$")
-                .keywordSelector("$.story_info.title")
+                .titleSelector("$.story_info.title")
                 .urlSelector("$.story_info.url")
                 .register();
 
@@ -2339,7 +2339,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".article_list > .picture_text")
-                .keywordSelector("h4 > a")
+                .titleSelector("h4 > a")
                 .urlSelector("h4 > a")
                 .register();
 
@@ -2351,7 +2351,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .addArea()
                 .rootSelector(".entries > article")
-                .keywordSelector("h2 > a")
+                .titleSelector("h2 > a")
                 .urlSelector("h2 > a")
                 .register();
 

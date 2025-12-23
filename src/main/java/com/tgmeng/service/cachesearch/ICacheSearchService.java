@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface ICacheSearchService {
 
-    ResultTemplateBean<List<Map<String, Object>>> getCacheSearchAllByWord(String word, List<String> words);
+    ResultTemplateBean<List<Map<String, Object>>> searchByWord(Map<String, String> requestBody);
 
     ResultTemplateBean getCacheSearchWordCloud();
 

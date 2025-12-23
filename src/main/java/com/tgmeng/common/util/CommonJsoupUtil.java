@@ -38,7 +38,7 @@ public class CommonJsoupUtil {
                     if (platform.getHotTitleNeedDeal()){
                         title = CommonHotPointInfoDealUtil.getHotTitleAfterDealResult(platform, element, null);
                     }else {
-                        title = safeText(element, selector.getKeyword());
+                        title = safeText(element, selector.getTitle());
                     }
                     String publishTime = safeText(element, selector.getPublishTime());
                     String commentCount = StrUtil.isNotBlank(safeText(element, selector.getCommentCount())) ? safeText(element, selector.getCommentCount()) : "0";

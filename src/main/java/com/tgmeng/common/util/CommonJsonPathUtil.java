@@ -61,7 +61,7 @@ public class CommonJsonPathUtil {
 
             for (Object element : hotNewsList) {
                 ReadContext itemCtx =  JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(element);
-                String title = itemCtx.read(selector.getKeyword());
+                String title = itemCtx.read(selector.getTitle());
                 String url = "";
                 if (platform.getHotTitleUrlNeedDeal()) {
                     url = CommonHotPointInfoDealUtil.getUrlAfterDealResult(platform, null, itemCtx);

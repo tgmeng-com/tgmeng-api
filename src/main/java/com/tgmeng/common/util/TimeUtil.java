@@ -499,6 +499,17 @@ public class TimeUtil {
     }
 
     /**
+     * @desc 获取今天0点的字符串
+     * @return long
+     *
+     * @date 2020/7/28 9:38
+     * @author xiaoma
+     */
+    public String getTodayStartTime(String pattern) {
+        return LocalDate.now(defaultZoneId).atStartOfDay(defaultZoneId).format(DateTimeFormatter.ofPattern(StrUtil.isEmpty(pattern) ? defaultPattern : pattern));
+    }
+
+    /**
      * @desc 获取当前月最后一天的 毫秒值
      * @return long
      *

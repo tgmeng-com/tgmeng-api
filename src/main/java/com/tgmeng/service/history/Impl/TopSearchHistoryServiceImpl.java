@@ -6,7 +6,6 @@ import com.tgmeng.common.enums.business.PlatFormCategoryEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.util.DuckDBUtil;
 import com.tgmeng.common.util.SimHashUtil;
-import com.tgmeng.common.util.TimeUtil;
 import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,12 +76,16 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     private static final String EXCLUDED_PLATFORM_NAMES_SQL = EXCLUDED_PLATFORM_NAMES.stream().map(s -> "'" + s + "'").collect(Collectors.joining(", "));
 
 
-    // 热点历史轨迹
+    // 热点历史轨迹，指纹匹配
     @Override
     public ResultTemplateBean getHotPointHistory(Map<String, String> requestBody) {
         String title = requestBody.get("title");
-        String startTime = TimeUtil.getTimeBeforeNow(0, 0, 0, historyDataKeepDay, "yyyy-MM-dd HH:mm:ss");
-        String endTime = TimeUtil.getCurrentTimeFormat("yyyy-MM-dd HH:mm:ss");
+        String startTime = requestBody.get("startTime");
+        String endTime = requestBody.get("endTime");
+        if (StrUtil.isBlank(title) || StrUtil.isBlank(startTime) || StrUtil.isBlank(endTime)) {
+            throw new ServerException("param empty error");
+        }
+
         List<Map<String, Object>> result = trackHotspotHistory(title, startTime, endTime);
         return ResultTemplateBean.success(result);
     }
@@ -91,12 +97,9 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
         return ResultTemplateBean.success(result);
     }
 
+    // 历史数据，模糊匹配
     @Override
     public ResultTemplateBean getWordHistory(Map<String, String> requestBody) {
-        String ps = requestBody.get("PS");
-        if (!ps.equals(System.getenv("PS"))) {
-            throw new ServerException("error");
-        }
         String title = requestBody.get("title");
         if (StrUtil.isEmpty(title)) {
             throw new ServerException("word empty error");
@@ -138,10 +141,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                     """, pathPattern, startTime, endTime, titleLike);
             List<Map<String, Object>> query = duckdb.query(sql);
             log.info("查询热点成功，关键词：{}，共 {} 条记录", title, query.size());
-            Map<Object, Object> result = new HashMap<>();
-            result.put("size", query.size());
-            result.put("list", query);
-            return ResultTemplateBean.success(result);
+            return ResultTemplateBean.success(query);
         } catch (Exception e) {
             log.error("查询热点失败：{}，错误信息：{}", title, e.getMessage());
             throw new ServerException("error");

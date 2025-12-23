@@ -19,7 +19,7 @@ public class CacheSearchController {
     // 根据type查询所有缓存热搜数据
     @RequestMapping("/allbyword")
     public ResultTemplateBean<List<Map<String, Object>>> getCacheSearchAllByWord(@RequestBody Map<String, String> requestBody) {
-        return cacheSearchService.getCacheSearchAllByWord(requestBody.get("word"),null);
+        return cacheSearchService.searchByWord(requestBody);
     }
 
     // 查询所有缓存热搜数据的词云

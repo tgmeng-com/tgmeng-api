@@ -6,6 +6,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.SubscriptionBean;
+import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.webhook.*;
@@ -98,7 +99,10 @@ public class SubscriptionUtil {
         AtomicInteger failCount = new AtomicInteger(0);
 
         // 从缓存中获取热点数据
-        List<Map<String, Object>> hotList = cacheSearchService.getCacheSearchAllByWord(null, null).getData();
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("word",null);
+        paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue());
+        List<Map<String, Object>> hotList = cacheSearchService.searchByWord(paramMap).getData();
         // 使用 CompletableFuture 来并行处理每个文件
         for (File file : subscriptionFiles) {
             // 提交每个文件处理的任务
@@ -143,7 +147,7 @@ public class SubscriptionUtil {
                     if (CollUtil.isNotEmpty(newHotList)) {
                         // 记录新推送的哈希
                         for (Map<String, Object> hotItem : newHotList) {
-                            String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
+                            String hashBase64 = generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
                             newHashes.add(hashBase64);
                         }
                         sendToPlatform(push, newHotList, mergedKeywords, subscriptionBean.getAccessKey());
@@ -162,7 +166,7 @@ public class SubscriptionUtil {
             // 更新文件内容
             updateFileContent(subscriptionBean, file);
             stopWatch.stop();
-        }else {
+        } else {
             stopWatch.stop();
             log.info("✈️ 完成更新订阅文件: {}，未推送新数据", file.getName());
         }
@@ -179,14 +183,14 @@ public class SubscriptionUtil {
     private List<Map<String, Object>> getNewHotList(List<Map<String, Object>> hotList, List<String> mergedKeywords, Set<String> sentSet) {
         return hotList.stream()
                 .filter(map -> {
-                    String hotTitle = String.valueOf(map.get("keyword"));
-                    String hashBase64 = generateHash(hotTitle, String.valueOf(map.get("dataCardName")));
+                    String hotTitle = String.valueOf(map.get("title"));
+                    String hashBase64 = generateHash(hotTitle, String.valueOf(map.get("platformName")));
                     String hotTitleLower = hotTitle.toLowerCase();
-                    return mergedKeywords.stream().anyMatch(keyword -> hotTitleLower.contains(keyword.toLowerCase()))  && !sentSet.contains(hashBase64);
+                    return mergedKeywords.stream().anyMatch(keyword -> hotTitleLower.contains(keyword.toLowerCase())) && !sentSet.contains(hashBase64);
                 }).collect(Collectors.toMap(
                         map -> generateHash(
-                                String.valueOf(map.get("keyword")),
-                                String.valueOf(map.get("dataCardName"))
+                                String.valueOf(map.get("title")),
+                                String.valueOf(map.get("platformName"))
                         ),
                         map -> map,
                         (existing, replacement) -> replacement,  // 保留最后一个
@@ -225,10 +229,10 @@ public class SubscriptionUtil {
         }
     }
 
-    private String generateHash(String keyword, String dataCardName) {
+    private String generateHash(String title, String platformName) {
         // 生成 MD5 二进制
         byte[] hashBinary = SecureUtil.md5().digest(
-                (keyword + dataCardName).getBytes(StandardCharsets.UTF_8)
+                (title + platformName).getBytes(StandardCharsets.UTF_8)
         );
         // 转 Base64（22 个字符左右）
         return Base64.getEncoder().encodeToString(hashBinary);
@@ -256,11 +260,11 @@ public class SubscriptionUtil {
         }
     }
 
-    private void pushNewHashToSent(List<Map<String, Object>> newHotList, SubscriptionBean subscriptionBean){
+    private void pushNewHashToSent(List<Map<String, Object>> newHotList, SubscriptionBean subscriptionBean) {
         // 记录新推送的哈希
         Set<String> sent = subscriptionBean.getSent();
         for (Map<String, Object> hotItem : newHotList) {
-            String hashBase64 = generateHash(hotItem.get("keyword").toString(), hotItem.get("dataCardName").toString());
+            String hashBase64 = generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
             sent.add(hashBase64);
         }
     }

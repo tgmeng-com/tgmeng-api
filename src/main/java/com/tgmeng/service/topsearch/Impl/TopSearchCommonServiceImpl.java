@@ -276,11 +276,11 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
         }
 
         for (TopSearchCommonVO.DataInfo topSearchCommonVO : topSearchCommonVOS) {
-            if (ObjectUtil.isNotEmpty(topSearchCommonVO) && StrUtil.isNotBlank(topSearchCommonVO.getKeyword())) {
+            if (ObjectUtil.isNotEmpty(topSearchCommonVO) && StrUtil.isNotBlank(topSearchCommonVO.getTitle())) {
                 try {
-                    topSearchCommonVO.setKeyword(ZhConverterUtil.toSimple(topSearchCommonVO.getKeyword()));
+                    topSearchCommonVO.setTitle(ZhConverterUtil.toSimple(topSearchCommonVO.getTitle()));
                 } catch (Exception e) {
-                    log.error("转换中文为简体失败，keyword={}，platformCategory={}，异常信息={}", topSearchCommonVO.getKeyword(), platformCategory, e.getMessage());
+                    log.error("转换中文为简体失败，title={}，platformCategory={}，异常信息={}", topSearchCommonVO.getTitle(), platformCategory, e.getMessage());
                 }
             }
         }

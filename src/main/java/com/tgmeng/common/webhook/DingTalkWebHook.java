@@ -77,9 +77,9 @@ public class DingTalkWebHook {
             for (int i = 0; i < subNewHots.size(); i++) {
                 Map<String, Object> hot = subNewHots.get(i);
                 md.append(i + 1).append(". ")
-                        .append("[").append(hot.get("keyword")).append("](")
+                        .append("[").append(hot.get("title")).append("](")
                         .append(hot.get("url")).append(")")
-                        .append("       --").append(hot.get("dataCardName"))
+                        .append("       --").append(hot.get("platformName"))
                         .append("<br>");
             }
             md.append("<br>");

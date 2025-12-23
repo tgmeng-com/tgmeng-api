@@ -65,13 +65,13 @@ public class TelegramWebHook {
             md.append("<b>🍭 糖果梦热榜 🍭</b>\n\n");
             for (int i = 0; i < subNewHots.size(); i++) {
                 Map<String, Object> hot = subNewHots.get(i);
-                String keyword = hot.get("keyword").toString();
+                String title = hot.get("title").toString();
                 String url = hot.get("url").toString();
-                String source = hot.get("dataCardName").toString();
+                String source = hot.get("platformName").toString();
 
                 md.append(i + 1)
                         .append(". <a href=\"").append(url).append("\">")
-                        .append(keyword)
+                        .append(title)
                         .append("</a>  — ").append(source)
                         .append("\n");
             }
