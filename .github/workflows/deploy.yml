@@ -198,13 +198,9 @@ jobs:
               docker rm ${CONTAINER_NAME} || true
             fi
             
-            # 清理旧镜像（保留当前版本和latest）
-            echo "[$(date)] 清理旧镜像..."
-            docker images --format '{{.Repository}}:{{.Tag}}' | \
-              grep "^${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}" | \
-              grep -v "${DOCKER_IMAGE_TAG}" | \
-              grep -v "latest" | \
-              xargs -r docker rmi || echo "[$(date)] 无旧镜像可清理"
+            # 清理旧镜像（拉取新的镜像后，旧的镜像的TAG会变成None，也就是悬空镜像）
+            echo "[$(date)] 清理悬空镜像（dangling images）..."
+            docker image prune -f || echo "[$(date)] 无悬空镜像可清理"
             
             # 备份当前日志
             TIMESTAMP=$(date +%Y%m%d%H%M%S)
