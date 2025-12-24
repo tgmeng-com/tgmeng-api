@@ -44,7 +44,6 @@ public class ScheduleRequestConfigManager {
     private void initConfigs() {
         // 微博 - 使用Builder模式创建
         // TODO 每次新加平台，这里加一下定时器里的
-        configs.put("/api/topsearch/baidu", PlatformConfig.builder().build());
         configs.put("/api/topsearch/bilibili", PlatformConfig.builder().build());
         configs.put("/api/topsearch/weibo", PlatformConfig.builder().build());
         configs.put("/api/topsearch/douyin", PlatformConfig.builder().build());
@@ -58,14 +57,20 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/wangyiyun/regebang", PlatformConfig.builder().requestCycle(300L).requestDelay(10L).build());
         configs.put("/api/topsearch/tiebabaidu", PlatformConfig.builder().build());
         configs.put("/api/topsearch/shaoshupai", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/baidu", PlatformConfig.builder().build());
         configs.put("/api/topsearch/baidu/dianshiju", PlatformConfig.builder().build());
         configs.put("/api/topsearch/baidu/xiaoshuo", PlatformConfig.builder().build());
         configs.put("/api/topsearch/baidu/dianying", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/baidu/youxi", PlatformConfig.builder().build());
         configs.put("/api/topsearch/baidu/qiche", PlatformConfig.builder().build());
         configs.put("/api/topsearch/baidu/regeng", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/baidu/caijing", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/baidu/minsheng", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/baiducaijing", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/baiduminsheng", PlatformConfig.builder().build());
+
+        configs.put("/api/topsearch/baidutiyu", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/baiduwenyu", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/baiduguoji", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/baidu/duanju", PlatformConfig.builder().build());
+
         configs.put("/api/topsearch/zhihu", PlatformConfig.builder().build());
         configs.put("/api/topsearch/github/stars/all", PlatformConfig.builder().requestCycle(1200L).requestDelay(10L).build());
         configs.put("/api/topsearch/github/stars/day", PlatformConfig.builder().requestCycle(1200L).requestDelay(10L).build());

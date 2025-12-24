@@ -22,11 +22,11 @@ public enum SearchTypeBaiDuEnum implements INameValueEnum<String,String> {
     XIAO_SHUO_BAIDU("xiaoshuo", "novel", "百度小说", true,2),
     DIAN_YING_BAIDU("dianying", "movie", "百度电影", true,2),
     NEWS_BAIDU("resou", "realtime", "百度热搜", true,2),
-    YOU_XI_BAIDU("youxi", "game", "百度游戏", true,2),
     QI_CHE_BAIDU("qiche", "car", "百度汽车", true,2),
     REGENG_BAIDU("regeng", "phrase", "百度热梗", true,2),
-    CAIJING_BAIDU("caijing", "finance", "百度财经", true,2),
-    MINSHENG_BAIDU("minsheng", "livelihood", "百度民生", true,2);
+    DUAN_JU_BAIDU("duanju", "drama", "百度短剧", true,2);
+
+
 
     private final String key;
     private final String value;

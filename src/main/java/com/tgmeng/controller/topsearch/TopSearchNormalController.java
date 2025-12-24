@@ -127,6 +127,31 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/baiduguoji")
+    public ResultTemplateBean getBaiDuGuojiTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/baiduwenyu")
+    public ResultTemplateBean getbaiduWenYuTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/baiducaijing")
+    public ResultTemplateBean getBaiDuCaiJingTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/baidutiyu")
+    public ResultTemplateBean getBaiduTiYuTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
+    @RequestMapping("/baiduminsheng")
+    public ResultTemplateBean getBaiduminshengTopSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
     @RequestMapping("/zhihu")
     public ResultTemplateBean getZhiHuSearch() {
         return topSearchCommonService.getTopSearchCommonService();
