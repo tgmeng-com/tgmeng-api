@@ -1288,7 +1288,7 @@ public class RequestInfoManager {
                 .interfaceUrl("/api/topsearch/baidu/{type}")
                 .hotTitleUrlPrefix("")
                 .addArea()
-                .rootSelector("$.data.cards[0].content")
+                .rootSelector("$.data.cards[0].content[0].content")
                 .titleSelector("$.word")
                 .urlSelector("$.url")
                 .hotScoreSelector("$.hotScore")
