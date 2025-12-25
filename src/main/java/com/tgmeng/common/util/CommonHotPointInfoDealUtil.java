@@ -67,9 +67,14 @@ public class CommonHotPointInfoDealUtil {
                         .add(".html").toString();
                 break;
             case "/api/topsearch/baidu":
+            case "/api/topsearch/baidu/{type}":
+            case "/api/topsearch/baiducaijing" :
+            case "/api/topsearch/baiduminsheng" :
+            case "/api/topsearch/baidutiyu" :
+            case "/api/topsearch/baiduwenyu" :
+            case "/api/topsearch/baiduguoji" :
                 String baiduUrl = itemCtx.read("$.url");
                 hotTitleUrl = baiduUrl.replace("https://m.baidu.com/", "https://baidu.com/");
-
                 break;
             case "/api/topsearch/guojikejichuangxinzhongxin/{type}":
                 String nsticUrl = safeAttr(element, "a", "href");
