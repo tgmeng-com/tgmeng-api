@@ -236,6 +236,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                              (simHash >> 16) as bucket_id
                                          FROM read_parquet('%s')
                                          WHERE simHash IS NOT NULL
+                                           AND simHash != 0
                                            AND dataUpdateTime >= '%s'
                                            AND dataUpdateTime <= '%s'
                                            AND platformCategory NOT IN (%s)
