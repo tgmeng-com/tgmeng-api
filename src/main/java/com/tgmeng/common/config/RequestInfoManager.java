@@ -1390,6 +1390,7 @@ public class RequestInfoManager {
 
         addJsonConfig("https://top.baidu.com/api/board?platform=wise&tab={type}")
                 .requestType(ForestRequestTypeEnum.GET)
+                .hotTitleUrlNeedDeal(true)
                 .platformName("百度")
                 .platformCategory(PlatFormCategoryEnum.BAI_DU.getValue())
                 .interfaceUrl("/api/topsearch/baidu/{type}")
