@@ -961,6 +961,22 @@ public class TimeUtil {
         return calendar.getTime();
     }
 
+    // 判断是否没过去
+    public Boolean isBefore(String timeStrA, String timeStrB) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(defaultPattern);
+        LocalDateTime dateTimeA = LocalDateTime.parse(timeStrA, formatter);
+        LocalDateTime dateTimeB = LocalDateTime.parse(timeStrB, formatter);
+        return dateTimeA.isBefore(dateTimeB);
+    }
+
+    // 判断是否已经过去
+    public Boolean isAfter(String timeStrA, String timeStrB) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(defaultPattern);
+        LocalDateTime dateTimeA = LocalDateTime.parse(timeStrA, formatter);
+        LocalDateTime dateTimeB = LocalDateTime.parse(timeStrB, formatter);
+        return dateTimeA.isAfter(dateTimeB);
+    }
+
     @Data
     @AllArgsConstructor
     public class DurationTime {

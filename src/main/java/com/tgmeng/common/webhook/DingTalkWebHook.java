@@ -5,7 +5,7 @@ import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.tgmeng.common.bean.SubscriptionBean;
+import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
@@ -33,7 +33,7 @@ public class DingTalkWebHook {
     @Autowired
     private UmamiUtil umamiUtil;
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords,String accessKey) {
+    public void sendMessage(List<Map<String, Object>> newHotList, LicenseBean.SubscriptionPlatformConfig push, List<String> keywords, String accessKey) {
         StopWatch stopWatch = new StopWatch(accessKey);
         stopWatch.start();
         String webHook = getWebHook(push);
@@ -45,7 +45,7 @@ public class DingTalkWebHook {
         log.info("🎉 钉钉成功推送：{}条，accessKey: {},耗时：{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
     }
 
-    public String getWebHook(SubscriptionBean.PushConfig push) {
+    public String getWebHook(LicenseBean.SubscriptionPlatformConfig push) {
         try {
             String webhook = push.getWebhook();
             String secret = push.getSecret();

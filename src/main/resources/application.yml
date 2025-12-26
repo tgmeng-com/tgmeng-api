@@ -47,16 +47,26 @@ my-config:
       max-size: 5000         #最大缓存条数
       expire-time: 172800       # 通用缓存过期时间 单位是秒,里默认缓存个48小时
   subscription:
-    dir: ./data/subscritions/       # 订阅文件所在的文件夹
-    file-suffix: .json             # 文件后缀
+    dir: ./data/subscriptions/     # 订阅去重的key所在的文件夹
     max-hot-number: 10000          # 每个人最多存10000条
   history:
     dir: ./data/history/       # 历史数据文件所在的文件夹，历史数据目前用来查询热点轨迹
-    keep-day: 10               # 历史数据保留天数  my-config.history.keep-day
+    keep-day: 30               # 历史数据保留天数  my-config.history.keep-day
     sim-hash-distance: 15        # 相似度哈希汉明距离  就是汉明距离在多少以内就判断为相似热点
     sudden-heat-point-time-window: 60        # 默认突发热点查询时间窗口 单位是分钟
     sudden-heat-point-platform-num-least: 2  # 突发热点查询最少平台数  就是在时间窗口内，至少有多少个平台搜索到了这个热点，才认为是突发热点
     sudden-heat-point-result-limit: 100              # 突发热点查询结果最多返回多少条
+  license:
+    enabled: true                # 是否开启密钥限制，false的话，就是全部功能开放
+    dir: ./data/license/
+  log:
+    license:
+      dir: ./data/log/license/   #密钥使用的记录日志存储位置
+      max-log-size: 10485760   # 最大10M
+      keep-log-size: 9437184 #超过10M后，保留后面的9M，然后继续写
+
+
+
 
 # 翻译服务配置
 translation:

@@ -100,7 +100,8 @@ public enum ServerExceptionEnum implements INameValueEnum<Integer, String> {
     GUO_KE_SEARCH_EXCEPTION(109, "果壳", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     JIAN_KANG_SHI_BAO_WANG_SEARCH_EXCEPTION(109, "健康时报网", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
     CCTV_SEARCH_EXCEPTION(109, "CCTV", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
-    PENG_PAI_XIN_WEN_SEARCH_EXCEPTION(109, "澎湃新闻", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
+    PENG_PAI_XIN_WEN_SEARCH_EXCEPTION(109, "澎湃新闻", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1),
+    LICENSE_CHECK_EXCEPTION(999, "授权码校验异常", "有可能是网络问题、风控(速率等)、接口变更、数据结构变更等", true, 1);
 
     private final Integer key;
     private final String value;

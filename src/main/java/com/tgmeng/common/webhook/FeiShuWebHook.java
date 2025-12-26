@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tgmeng.common.bean.SubscriptionBean;
+import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.bean.WebHookFeiShuBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
@@ -34,7 +34,7 @@ public class FeiShuWebHook {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords,String accessKey) {
+    public void sendMessage(List<Map<String, Object>> newHotList, LicenseBean.SubscriptionPlatformConfig push, List<String> keywords, String accessKey) {
         StopWatch stopWatch = new StopWatch(accessKey);
         stopWatch.start();
         String webHook = getWebHook(push);
@@ -46,7 +46,7 @@ public class FeiShuWebHook {
         log.info("🎉 飞书成功推送：{}条，accessKey: {},耗时: {} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
     }
 
-    public String getWebHook(SubscriptionBean.PushConfig push) {
+    public String getWebHook(LicenseBean.SubscriptionPlatformConfig push) {
         try {
             String webhook = push.getWebhook();
             if (StrUtil.isNotBlank(webhook) && StrUtil.isNotBlank(push.getSecret())) {
@@ -59,7 +59,7 @@ public class FeiShuWebHook {
         }
     }
 
-    public String getSign(SubscriptionBean.PushConfig push, Long timestamp) {
+    public String getSign(LicenseBean.SubscriptionPlatformConfig push, Long timestamp) {
         try {
             String secret = push.getSecret();
             String sign = "";
@@ -120,7 +120,7 @@ public class FeiShuWebHook {
         return allContentRows;
     }
 
-    public List<String> getPostBody(SubscriptionBean.PushConfig push, List<List<List<WebHookFeiShuBean.TagItem>>> allContentRows) {
+    public List<String> getPostBody(LicenseBean.SubscriptionPlatformConfig push, List<List<List<WebHookFeiShuBean.TagItem>>> allContentRows) {
         try {
 
             List<String> result = new ArrayList<>();

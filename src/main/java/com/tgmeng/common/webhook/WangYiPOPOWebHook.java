@@ -5,7 +5,7 @@ import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import com.dtflys.forest.http.ForestResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tgmeng.common.bean.SubscriptionBean;
+import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
@@ -35,7 +35,7 @@ public class WangYiPOPOWebHook {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords, String accessKey) {
+    public void sendMessage(List<Map<String, Object>> newHotList, LicenseBean.SubscriptionPlatformConfig push, List<String> keywords, String accessKey) {
         StopWatch stopWatch = new StopWatch(accessKey);
         stopWatch.start();
         String webHook = getWebHook(push);
@@ -47,7 +47,7 @@ public class WangYiPOPOWebHook {
         log.info("🎉 网易POPO成功推送：{}条，accessKey: {},耗时: {} ms", newHotList.size(), accessKey, stopWatch.getTotalTimeMillis());
     }
 
-    public String getWebHook(SubscriptionBean.PushConfig push) {
+    public String getWebHook(LicenseBean.SubscriptionPlatformConfig push) {
         try {
             String webhook = push.getWebhook();
             if (StrUtil.isNotBlank(webhook) && StrUtil.isNotBlank(push.getSecret())) {
@@ -94,7 +94,7 @@ public class WangYiPOPOWebHook {
         return jsonBodys;
     }
 
-    public List<String> getPostBody(List<String> hotContent, SubscriptionBean.PushConfig push) {
+    public List<String> getPostBody(List<String> hotContent, LicenseBean.SubscriptionPlatformConfig push) {
         try {
             List<String> postBodys = new ArrayList<>();
             for (String subHotContent : hotContent) {
@@ -124,7 +124,7 @@ public class WangYiPOPOWebHook {
         umamiUtil.sendEvent(SubscriptionChannelTypeEnum.WANGYIPOPO.getDescription(), count);
     }
 
-    private String getSignData(SubscriptionBean.PushConfig push, String timestamp) {
+    private String getSignData(LicenseBean.SubscriptionPlatformConfig push, String timestamp) {
         try {
             String secret = push.getSecret();
             String sign = "";

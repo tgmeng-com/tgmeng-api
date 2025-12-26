@@ -5,6 +5,7 @@ import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.bean.SubscriptionBean;
 import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
@@ -26,8 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
-
-import static com.tgmeng.common.util.StringUtil.generateRandomFileName;
 
 @Slf4j
 @Service
@@ -63,8 +62,10 @@ public class SubscriptionUtil {
 
     @Value("${my-config.subscription.dir}")
     private String subscriptionDir;
-    @Value("${my-config.subscription.file-suffix}")
-    private String fileSuffix;
+
+    @Value("${my-config.license.dir}")
+    private String licenseDir;
+
 
     @Value("${my-config.subscription.max-hot-number}")
     private Integer maxHotNumber;
@@ -79,10 +80,10 @@ public class SubscriptionUtil {
         stopWatch.start();
         try {
             log.info("✈️✈️✈️ 开始处理订阅");
-            FileUtil.checkDirExitAndMake(subscriptionDir);
-            File[] subscriptionFileList = FileUtil.getAllFilesInPath(subscriptionDir);
-            log.info("✈️✈️ 共 {} 个订阅文件", subscriptionFileList.length);
-            cycleFile(subscriptionFileList);
+            FileUtil.checkDirExitAndMake(licenseDir);
+            File[] licenseFileList = FileUtil.getAllFilesInPath(licenseDir);
+            log.info("✈️✈️ 共 {} 个订阅文件", licenseFileList.length);
+            cycleFile(licenseFileList);
         } catch (Exception e) {
             log.error("订阅处理失败: {}", e.getMessage());
         } finally {
@@ -93,18 +94,18 @@ public class SubscriptionUtil {
     }
 
     // 遍历订阅文件列表
-    public void cycleFile(File[] subscriptionFiles) {
+    public void cycleFile(File[] licenseFileList) {
         // 使用 AtomicInteger 来保证线程安全地统计成功和失败的次数
         AtomicInteger successCount = new AtomicInteger(0);
         AtomicInteger failCount = new AtomicInteger(0);
 
         // 从缓存中获取热点数据
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("word",null);
+        paramMap.put("word", null);
         paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue());
         List<Map<String, Object>> hotList = cacheSearchService.searchByWord(paramMap).getData();
         // 使用 CompletableFuture 来并行处理每个文件
-        for (File file : subscriptionFiles) {
+        for (File file : licenseFileList) {
             // 提交每个文件处理的任务
             log.info("✈️ 开始处理订阅: {}", file.getName());
             try {
@@ -116,31 +117,33 @@ public class SubscriptionUtil {
             }
         }
         // 打印最终统计结果
-        log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount.get(), failCount.get(), subscriptionFiles.length);
+        log.info("订阅处理完成 - 成功: {}, 失败: {}, 总计: {}", successCount.get(), failCount.get(), licenseFileList.length);
     }
 
     // 开始遍历热点去订阅
-    public void startSubscriptionOption(File file, List<Map<String, Object>> hotList) {
+    public void startSubscriptionOption(File licenseFile, List<Map<String, Object>> hotList) {
         try {
-            SubscriptionBean subscriptionBean = MAPPER.readValue(file, SubscriptionBean.class);
-            pushToChannel(subscriptionBean, hotList, file);
+            File subscriptionFile = new File(subscriptionDir + licenseFile.getName().split("\\.")[0] + StringUtil.SubscriptionFileExtension);
+            LicenseBean licenseBean = MAPPER.readValue(licenseFile, LicenseBean.class);
+            SubscriptionBean subscriptionBean = MAPPER.readValue(subscriptionFile, SubscriptionBean.class);
+            pushToChannel(licenseBean, subscriptionBean, hotList, subscriptionFile);
         } catch (Exception e) {
             throw new ServerException(e.getMessage());
         }
     }
 
     // 执行订阅操作
-    public void pushToChannel(SubscriptionBean subscriptionBean, List<Map<String, Object>> hotList, File file) {
+    public void pushToChannel(LicenseBean licenseBean, SubscriptionBean subscriptionBean, List<Map<String, Object>> hotList, File subscriptionFile) {
         // 全局关键词
-        List<String> keywords = subscriptionBean.getKeywords() == null ? new ArrayList<>() : subscriptionBean.getKeywords();
+        List<String> keywords = licenseBean.getSubscriptionGlobalKeywords() == null ? new ArrayList<>() : licenseBean.getSubscriptionGlobalKeywords();
         // 已发送的哈希集合
         Set<String> sentSet = subscriptionBean.getSent();
         // 存储新推送的哈希，用于后续更新文件
         Set<String> newHashes = ConcurrentHashMap.newKeySet();
-        subscriptionBean.getPlatforms().forEach(push -> {
+        licenseBean.getSubscriptionPlatformConfigs().forEach(push -> {
             try {
                 // 合并关键词
-                List<String> mergedKeywords = mergeKeywords(keywords, push.getPlatformKeywords());
+                List<String> mergedKeywords = mergeKeywords(keywords, push.getSubscriptionPlatformKeywords());
                 // 筛选平台关键词和独立关键词合并后符合的热点，并且过滤掉已推送的
                 if (CollUtil.isNotEmpty(mergedKeywords)) {
                     List<Map<String, Object>> newHotList = getNewHotList(hotList, mergedKeywords, sentSet);
@@ -150,7 +153,7 @@ public class SubscriptionUtil {
                             String hashBase64 = generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
                             newHashes.add(hashBase64);
                         }
-                        sendToPlatform(push, newHotList, mergedKeywords, subscriptionBean.getAccessKey());
+                        sendToPlatform(push, newHotList, mergedKeywords, licenseBean.getLicenseCode());
                     }
                 }
             } catch (Exception e) {
@@ -158,17 +161,17 @@ public class SubscriptionUtil {
             }
         });
         // 推送完成后，统一更新文件内容
-        StopWatch stopWatch = new StopWatch(file.getName() + RandomUtil.randomString(10));
+        StopWatch stopWatch = new StopWatch(subscriptionFile.getName() + RandomUtil.randomString(10));
         stopWatch.start();
         if (!newHashes.isEmpty()) {
             // 将新推送的哈希添加到已发送的集合中
             sentSet.addAll(newHashes);
             // 更新文件内容
-            updateFileContent(subscriptionBean, file);
+            updateFileContent(subscriptionBean, subscriptionFile);
             stopWatch.stop();
         } else {
             stopWatch.stop();
-            log.info("✈️ 完成更新订阅文件: {}，未推送新数据", file.getName());
+            log.info("✈️ 完成更新订阅文件: {}，未推送新数据", subscriptionFile.getName());
         }
     }
 
@@ -201,7 +204,7 @@ public class SubscriptionUtil {
                 .toList();
     }
 
-    private void sendToPlatform(SubscriptionBean.PushConfig push, List<Map<String, Object>> newHotList, List<String> mergedKeywords, String accessKey) {
+    private void sendToPlatform(LicenseBean.SubscriptionPlatformConfig push, List<Map<String, Object>> newHotList, List<String> mergedKeywords, String accessKey) {
         switch (push.getType()) {
             case SubscriptionChannelTypeEnum.DINGDING:
                 dingTalkWebHook.sendMessage(newHotList, push, mergedKeywords, accessKey);
@@ -258,40 +261,5 @@ public class SubscriptionUtil {
         } catch (Exception e) {
             throw new ServerException("重写文件失败 - 文件: " + file.getName() + ", 错误: " + e.getMessage());
         }
-    }
-
-    private void pushNewHashToSent(List<Map<String, Object>> newHotList, SubscriptionBean subscriptionBean) {
-        // 记录新推送的哈希
-        Set<String> sent = subscriptionBean.getSent();
-        for (Map<String, Object> hotItem : newHotList) {
-            String hashBase64 = generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
-            sent.add(hashBase64);
-        }
-    }
-
-    // TODO 生成初始化订阅文件，这个只有站长后台手动触发，为的是保证站里订阅key是手动下发
-    public List<String> generateSubscriptionFile(Integer count) {
-        log.info("开始创建初始化文件，数量为：" + count);
-        List<String> newFileList = new ArrayList<>();
-        Set<String> allFileNamesInPath = new LinkedHashSet<>(FileUtil.getAllFileNamesInPath(subscriptionDir));
-        for (int i = 0; i < count; i++) {
-            String fileName = generateRandomFileName();
-            if (allFileNamesInPath.contains(fileName)) {
-                continue;
-            }
-            try {
-                String jsonContent = FileUtil.readFileToStringFromClasspath("template/SubscriptionInitTemplate.txt");
-                SubscriptionBean subscriptionBean = MAPPER.readValue(jsonContent, SubscriptionBean.class);
-                subscriptionBean.setAccessKey(fileName.split("\\.")[0]);
-                // 创建文件并写入内容
-                FileUtil.createFileAndWriteInitContent(subscriptionDir, fileName, MAPPER.writeValueAsString(subscriptionBean));
-            } catch (Exception e) {
-                throw new ServerException("创建文件失败，文件名:" + fileName + " 异常信息:" + e);
-            }
-            newFileList.add(fileName);
-            log.info("第{}个文件创建成功：{}", i, fileName);
-        }
-        log.info("所有文件创建成功，共{}个", newFileList.size());
-        return newFileList;
     }
 }

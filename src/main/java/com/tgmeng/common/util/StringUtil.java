@@ -1,10 +1,14 @@
 package com.tgmeng.common.util;
 
 import cn.hutool.core.util.StrUtil;
+import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.model.dto.topsearch.TopSearchShaoShuPaiDTO;
 import com.tgmeng.model.dto.topsearch.TopSearchZhiHuDTO;
 
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Random;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
@@ -18,6 +22,12 @@ public class StringUtil {
      * @author tgmeng
      * @since 2025/6/29 20:58
      */
+
+    public static final String LicenseCodeFileExtension = ".json";
+    public static final String SubscriptionFileExtension = ".json";
+    public static final String logFileExtension = ".log";
+
+
     public static String weiBoTopSearchItemUrlUtil(String note, Long realpos) {
         return new StringJoiner("")
                 .add("https://s.weibo.com/weibo?q=%23")
@@ -130,16 +140,16 @@ public class StringUtil {
 
 
     public static Long stringParseToLong(String str) {
-        if(StrUtil.isBlank(str)){
+        if (StrUtil.isBlank(str)) {
             return 0L;
         }
         str = str.trim().toLowerCase();
         if (str.endsWith("k")) {
-            return (long)(Double.parseDouble(str.replace("k", "")) * 1_000);
+            return (long) (Double.parseDouble(str.replace("k", "")) * 1_000);
         } else if (str.endsWith("m")) {
-            return (long)(Double.parseDouble(str.replace("m", "")) * 1_000_000);
+            return (long) (Double.parseDouble(str.replace("m", "")) * 1_000_000);
         } else if (str.endsWith("b")) {
-            return (long)(Double.parseDouble(str.replace("b", "")) * 1_000_000_000);
+            return (long) (Double.parseDouble(str.replace("b", "")) * 1_000_000_000);
         } else {
             return Long.parseLong(str.replaceAll("[^\\d]", ""));
         }
@@ -166,11 +176,21 @@ public class StringUtil {
             int index = random.nextInt(chars.length());
             sb.append(chars.charAt(index));
         }
-        return sb + ".json";
+        return sb.toString();
     }
 
     // 把字符串中的//都替换成/，主要用在一些文件的路径中存在//的情况
-    public static String replaceForFilePath(String input){
+    public static String replaceForFilePath(String input) {
         return input.replaceAll("/+", "/");
+    }
+
+    // 判断时间格式是否正确
+    public static void validateTimeIsDefaultPattern(String time, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        try {
+            LocalDateTime.parse(time, formatter);
+        } catch (DateTimeParseException e) {
+            throw new ServerException("time 格式不正确，要求格式为 " + pattern);
+        }
     }
 }

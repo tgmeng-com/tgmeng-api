@@ -40,10 +40,13 @@ public class FileUtil {
     }
 
     // 初始化订阅文件并写入内容
-    public static void createFileAndWriteInitContent(String filePath, String fileName, String content) throws IOException {
+    public static void createFileAndWriteInitContent(String filePath, String fileName, String content) {
+        checkDirExitAndMake(filePath);
         String fullPath = filePath + fileName;
         try (FileWriter writer = new FileWriter(fullPath)) {
-            writer.write(content);
+            if (content != null) {
+                writer.write(content);
+            }
         } catch (Exception e) {
             throw new ServerException("创建文件失败，文件名:" + fullPath + " 异常信息:" + e);
         }

@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tgmeng.common.bean.SubscriptionBean;
+import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
@@ -31,7 +31,7 @@ public class GotifyWebHook {
 
     ObjectMapper MAPPER = new ObjectMapper();
 
-    public void sendMessage(List<Map<String, Object>> newHotList, SubscriptionBean.PushConfig push, List<String> keywords, String accessKey) {
+    public void sendMessage(List<Map<String, Object>> newHotList, LicenseBean.SubscriptionPlatformConfig push, List<String> keywords, String accessKey) {
         StopWatch stopWatch = new StopWatch(accessKey);
         stopWatch.start();
         String webHook = getWebHook(push);
@@ -43,7 +43,7 @@ public class GotifyWebHook {
         log.info("🎉 Gotify成功推送：{}条，accessKey: {},耗时: {} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
     }
 
-    public String getWebHook(SubscriptionBean.PushConfig push) {
+    public String getWebHook(LicenseBean.SubscriptionPlatformConfig push) {
         try {
             String webhook = push.getWebhook();
             if (StrUtil.isNotBlank(webhook)) {

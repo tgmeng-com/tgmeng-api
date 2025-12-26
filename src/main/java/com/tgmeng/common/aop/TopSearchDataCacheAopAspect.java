@@ -1,4 +1,4 @@
-package com.tgmeng.common.interceptor;
+package com.tgmeng.common.aop;
 
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.system.RequestFromEnum;
@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -20,7 +21,8 @@ import java.util.List;
 @Slf4j
 @Aspect
 @Component
-public class TopSearchDataCacheInterceptor {
+@Order(1)
+public class TopSearchDataCacheAopAspect {
 
     @Autowired
     private CacheUtil cacheUtil;

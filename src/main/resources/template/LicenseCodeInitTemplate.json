@@ -1,0 +1,13 @@
+{
+  "licenseCode": "",
+  "status":"ACTIVE",
+  "features": [],
+  "startTime": "1997-01-01 00:00:00",
+  "expireTime": "",
+  "maxMachines": 6,
+  "machineIds": [],
+  "limitPerMinute": 60,
+  "limitPerDay": 600,
+  "subscriptionGlobalKeywords": [],
+  "subscriptionPlatformConfigs": []
+}

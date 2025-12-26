@@ -21,7 +21,7 @@ public class ServerException extends BossException {
      *
      * @author tgmeng
      * @since 2025/7/1 12:03
-    */
+     */
     public ServerException() {
         super(HTTP_STATUS, ServerExceptionEnum.SYSTEM_EXCEPTION.getKey(), ServerExceptionEnum.SYSTEM_EXCEPTION.getValue(), null);
     }
@@ -36,7 +36,7 @@ public class ServerException extends BossException {
      *
      * @author tgmeng
      * @since 2025/7/1 12:04
-    */
+     */
     public ServerException(ServerExceptionEnum exceptionEnum) {
         super(HTTP_STATUS, exceptionEnum.getKey(), exceptionEnum.getValue(), null);
     }
@@ -47,9 +47,14 @@ public class ServerException extends BossException {
      *
      * @author tgmeng
      * @since 2025/7/1 12:04
-    */
+     */
     public ServerException(ServerExceptionEnum exceptionEnum, Object data) {
         super(HTTP_STATUS, exceptionEnum.getKey(), exceptionEnum.getValue(), data);
+    }
+
+
+    public ServerException(ServerExceptionEnum exceptionEnum, String message, Object data) {
+        super(HTTP_STATUS, exceptionEnum.getKey(), message, data);
     }
 
     /**
@@ -58,7 +63,7 @@ public class ServerException extends BossException {
      *
      * @author tgmeng
      * @since 2025/7/1 12:04
-    */
+     */
     public ServerException(HttpStatus httpStatus, ServerExceptionEnum exceptionEnum) {
         super(httpStatus, exceptionEnum.getKey(), exceptionEnum.getValue(), null);
     }
@@ -69,7 +74,7 @@ public class ServerException extends BossException {
      *
      * @author tgmeng
      * @since 2025/7/1 12:05
-    */
+     */
     public ServerException(HttpStatus httpStatus, ServerExceptionEnum exceptionEnum, Object data) {
         super(httpStatus, exceptionEnum.getKey(), exceptionEnum.getValue(), data);
     }

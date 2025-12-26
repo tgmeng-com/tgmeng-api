@@ -32,23 +32,6 @@ jobs:
       DOCKER_IMAGE_NAME: tgmeng-api                                  # DockerHub 镜像名称（也就是dockerHub里面的仓库的名字）
       CONTAINER_NAME: tgmeng-api
       GHCR_IMAGE_NAME: tgmeng-api                                   # GHCR 镜像名称（建议是仓库名）
-      # 这里格式为
-      #  [
-      #    {
-      #      "platform": "NVIDIA",
-      #      "api":"https://integrate.api.nvidia.com/v1/chat/completions",
-      #      "key": "nvapi-tg8HLdW",
-      #      "from": "LinuxDo公益站 黑与白站长大佬推荐"
-      #      "models":
-      #          [
-      #          "deepseek-ai/deepseek-v3.1",""
-      #          ]
-      #    }
-      #     ...
-      #  ]
-      #
-      #
-      #
       AI_PLATFORM_CONFIG: ${{ secrets.AI_PLATFORM_CONFIG }}
       GOOGLE_ADS_CLOSE_PASSWORD: ${{ secrets.GOOGLE_ADS_CLOSE_PASSWORD }}
       SUBSCRIPTION_FILE_INIT_PASSWORD: ${{ secrets.SUBSCRIPTION_FILE_INIT_PASSWORD }}

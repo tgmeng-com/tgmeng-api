@@ -1,6 +1,8 @@
 package com.tgmeng.controller.cachesearch;
 
+import com.tgmeng.common.annotation.LicenseRequired;
 import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.LicenseFeatureEnum;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,12 +14,14 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+
 @RequestMapping("/cachesearch")
 public class CacheSearchController {
     private final ICacheSearchService cacheSearchService;
 
     // 根据type查询所有缓存热搜数据
     @RequestMapping("/allbyword")
+    @LicenseRequired(feature = LicenseFeatureEnum.SEARCH)
     public ResultTemplateBean<List<Map<String, Object>>> getCacheSearchAllByWord(@RequestBody Map<String, String> requestBody) {
         return cacheSearchService.searchByWord(requestBody);
     }
@@ -28,7 +32,9 @@ public class CacheSearchController {
         return cacheSearchService.getCacheSearchWordCloud();
     }
 
+    // 实时简报
     @RequestMapping("/realtimesummary")
+    @LicenseRequired(feature = LicenseFeatureEnum.AI_SUMMARY)
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
         return cacheSearchService.getCacheSearchRealTimeSummary();
     }
