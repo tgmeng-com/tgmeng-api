@@ -21,8 +21,8 @@ management:
 
 forest:
   max-connections: 1000        # 连接池最大连接数
-  connect-timeout: 10000        # 连接超时时间，单位为毫秒
-  read-timeout: 60000           # 数据读取超时时间，单位为毫秒
+  connect-timeout: 120000        # 连接超时时间，单位为毫秒
+  read-timeout: 120000           # 数据读取超时时间，单位为毫秒
   log-enabled: false            # 打开或关闭日志（默认为 true）
   log-request: false            # 打开/关闭Forest请求日志（默认为 true）
   log-response-status: false    # 打开/关闭Forest响应状态日志（默认为 true）

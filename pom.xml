@@ -21,7 +21,7 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <mapstructBinding.version>0.2.0</mapstructBinding.version>
         <jsoup.version>1.21.1</jsoup.version>
-        <forest.version>1.7.1</forest.version>
+        <forest.version>1.7.6</forest.version>
         <spring-boot-starter-validation.version>3.5.3</spring-boot-starter-validation.version>
         <caffeine.version>3.2.1</caffeine.version>
         <twitter4j-core.version>4.0.7</twitter4j-core.version>
