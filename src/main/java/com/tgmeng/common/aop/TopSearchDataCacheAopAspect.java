@@ -47,7 +47,9 @@ public class TopSearchDataCacheAopAspect {
             List<String> cacheSearchPaths = Arrays.asList(
                     "/api/cachesearch/allbyword",
                     "/api/topsearch/history/hotpoint",
-                    "/api/topsearch/history/getwordhistory"
+                    "/api/topsearch/history/getwordhistory",
+                    "/api/topsearch/history/mergeparquet",
+                    "/api/topsearch/history/customexcutesql"
             );
             if (cacheSearchPaths.stream().anyMatch(url::contains)) {
                 log.info("🙋🏻‍♂️外部请求，检索数据，走正常程序:{}", url);
