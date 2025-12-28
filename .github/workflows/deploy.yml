@@ -207,7 +207,7 @@ jobs:
               -e GOOGLE_ADS_CLOSE_PASSWORD="${GOOGLE_ADS_CLOSE_PASSWORD}" \
               -e SUBSCRIPTION_FILE_INIT_PASSWORD="${SUBSCRIPTION_FILE_INIT_PASSWORD}" \
               -e UMAMI_WEBSITE_TGMENG_COM="${UMAMI_WEBSITE_TGMENG_COM}" \
-              -e JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heapdumps -XX:ErrorFile=/app/logs/hs_err_%p.log" \
+              -e JAVA_OPTS="-Xms1536m -Xmx2048m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heapdumps -XX:ErrorFile=/app/logs/hs_err_%p.log" \
               -e TZ=Asia/Shanghai \
               ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
             
