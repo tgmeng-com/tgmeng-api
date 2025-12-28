@@ -6,8 +6,11 @@ import com.tgmeng.common.enums.business.LicenseFeatureEnum;
 import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * description: 突发热点、历史热点追踪等
@@ -29,5 +32,32 @@ public class TopSearchHistoryController {
     @LicenseRequired(feature = LicenseFeatureEnum.SUDDEN_NEWS)
     public ResultTemplateBean getSuddenHeatPoint(@PathVariable("type") String type) {
         return topSearchHistoryService.getSuddenHeatPoint(type);
+    }
+
+
+    /**
+     * 合并parquet文件
+     *     "password":"",
+     *     "sourceDir": "./data/history/2025/12/24",
+     *     "targetFile": "2025-12-24.parquet"
+     * @param requestBody
+     * @return
+     */
+    @RequestMapping("/mergeparquet")
+    public ResultTemplateBean mergeParquetByGlob(@RequestBody Map<String, String> requestBody) {
+        return topSearchHistoryService.mergeParquetByGlob(requestBody);
+    }
+
+    /**
+     * 执行sql，自己跑着用
+     *     "password":"",
+     *     "sourceDir": "./data/history/2025/12/24",
+     *     "targetFile": "2025-12-24.parquet"
+     * @param requestBody
+     * @return
+     */
+    @RequestMapping("/customexcutesql")
+    public ResultTemplateBean customexcutesql(@RequestBody Map<String, String> requestBody) {
+        return topSearchHistoryService.customexcutesql(requestBody);
     }
 }

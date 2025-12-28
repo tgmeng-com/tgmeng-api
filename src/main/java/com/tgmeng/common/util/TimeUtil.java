@@ -955,6 +955,42 @@ public class TimeUtil {
         return sb.toString();
     }
 
+    /**
+     * 获取昨天的年份（例如今天 2025-12-29 → 2025）
+     */
+    public int getYesterdayYear() {
+        return LocalDate.now(defaultZoneId).minusDays(1).getYear();
+    }
+
+    /**
+     * 获取昨天的月份（1~12，例如 12）
+     */
+    public int getYesterdayMonth() {
+        return LocalDate.now(defaultZoneId).minusDays(1).getMonthValue();
+    }
+
+    /**
+     * 获取昨天的日期（1~31，例如 28）
+     */
+    public int getYesterdayDay() {
+        return LocalDate.now(defaultZoneId).minusDays(1).getDayOfMonth();
+    }
+
+    /**
+     * 获取昨天的日期字符串，格式 yyyy-MM-dd（例如 "2025-12-28"）
+     */
+    public String getYesterdayDateString() {
+        return LocalDate.now(defaultZoneId).minusDays(1).format(DateTimeFormatter.ofPattern(defultSimplePattern));
+    }
+
+    /**
+     * 获取昨天的日期字符串，自定义格式
+     */
+    public String getYesterdayDateString(String pattern) {
+        return LocalDate.now(defaultZoneId).minusDays(1)
+                .format(DateTimeFormatter.ofPattern(StrUtil.isEmpty(pattern) ? defaultPattern : pattern));
+    }
+
     public Date getDateAfterNowSomeDays(int days) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, days);

@@ -10,4 +10,8 @@ public interface ITopSearchHistoryService {
     ResultTemplateBean getSuddenHeatPoint(String type);
 
     ResultTemplateBean getWordHistory(Map<String, String> requestBody);
+
+    ResultTemplateBean mergeParquetByGlob(Map<String, String> requestBody);
+
+    ResultTemplateBean customexcutesql(Map<String, String> requestBody);
 }

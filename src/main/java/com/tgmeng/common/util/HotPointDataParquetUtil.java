@@ -3,6 +3,7 @@ package com.tgmeng.common.util;
 import com.tgmeng.common.bean.HotPointDataParquetBean;
 import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
+import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,11 +30,12 @@ public class HotPointDataParquetUtil {
     private Integer historyDataKeepDay;
 
     private final ICacheSearchService cacheSearchService;
+    private final ITopSearchHistoryService topSearchHistoryService;
 
     public void saveToParquet() {
         try {
             Map<String, String> paramMap = new HashMap<>();
-            paramMap.put("word",null);
+            paramMap.put("word", null);
             paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue());
             List<Map<String, Object>> hotList = cacheSearchService.searchByWord(paramMap).getData();
             ParquetUtil parquetUtil = new ParquetUtil();
@@ -68,6 +70,15 @@ public class HotPointDataParquetUtil {
         int currentTimeHour = TimeUtil.getCurrentTimeHour();
         int currentTimeMinute = TimeUtil.getCurrentTimeMinute();
         return String.format("%s/%d/%02d/%02d/%02d/%02d.parquet", historyDataDir, currentTimeYear, currentTimeMonth, currentTimeDay, currentTimeHour, currentTimeMinute);
+    }
+
+    // 合并昨天的数据到一个parquet中
+    public void mergeYesterdaySchedule() {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("password", System.getenv("ADMIN_PASSWORD"));
+        paramMap.put("sourceDir", historyDataDir + TimeUtil.getYesterdayDateString("yyyy/MM/dd"));
+        paramMap.put("targetFile", TimeUtil.getYesterdayDateString());
+        topSearchHistoryService.mergeParquetByGlob(paramMap);
     }
 
     // 删除数天前的历史数据

@@ -61,6 +61,26 @@ public class DuckDBUtil implements AutoCloseable {
         }
     }
 
+    /**
+     * 执行非查询 SQL（如 COPY TO、CREATE TABLE、INSERT、UPDATE、DELETE 等）
+     * 支持参数化语句，返回受影响的行数
+     * @return 执行影响的行数
+     * @throws SQLException 如果执行失败
+     */
+    public long execute(String sql, Object... params) throws SQLException {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
+            long affectedRows = stmt.executeUpdate();
+            log.debug("DuckDB 执行成功: {}，影响行数: {}", sql, affectedRows);
+            return affectedRows;
+        } catch (SQLException e) {
+            log.error("DuckDB 执行失败: {}", sql, e);
+            throw e;
+        }
+    }
+
     // 根据传入的时间范围，得到需要扫描的文件范围
     public String buildPathPattern(LocalDateTime start, LocalDateTime end) {
         int startHour = start.getHour();

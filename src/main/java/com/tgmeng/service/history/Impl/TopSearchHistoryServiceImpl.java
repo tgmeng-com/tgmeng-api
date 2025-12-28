@@ -6,6 +6,7 @@ import com.tgmeng.common.enums.business.PlatFormCategoryEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.util.DuckDBUtil;
 import com.tgmeng.common.util.SimHashUtil;
+import com.tgmeng.common.util.StringUtil;
 import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -20,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -28,6 +34,9 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
 
     @Value("${my-config.history.keep-day}")
     private Integer historyDataKeepDay;
+
+    @Value("${my-config.history.dir}")
+    private String historyDataDir;
 
     @Value("${my-config.history.sim-hash-distance}")
     private Integer simHashDistance;
@@ -146,17 +155,6 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
             log.error("查询热点失败：{}，错误信息：{}", title, e.getMessage());
             throw new ServerException("error");
         }
-    }
-
-    private int getTimeWindow(String type) {
-        return switch (type) {
-            case "hour" -> 60;
-            case "3hour" -> 60 * 3;
-            case "6hour" -> 60 * 6;
-            case "day" -> 60 * 24;
-            case "10day" -> 60 * 24 * 10;
-            default -> defaultSuddenHeatPointTimeWindow;
-        };
     }
 
     /**
@@ -342,6 +340,145 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     }
 
     /**
+     * 合并parquet文件，参数例如
+     * ./data/history/2025/12/28/
+     *  2025-12-28.parquet"
+     */
+    @Override
+    public ResultTemplateBean mergeParquetByGlob(Map<String, String> requestBody) {
+        String adminPassword = System.getenv("ADMIN_PASSWORD");
+        String password = String.valueOf(requestBody.get("password"));
+        if (!adminPassword.equals(password)) {
+            return ResultTemplateBean.success("管理员密码无效");
+        }
+
+        String sourceDir = requestBody.get("sourceDir");
+        String targetFile = requestBody.get("targetFile");
+
+        Path sourceRoot = Paths.get(sourceDir).toAbsolutePath().normalize();
+        Path targetPath = sourceRoot.resolve(targetFile).normalize();
+        Path tmpTargetPath = sourceRoot.resolve(targetFile + ".tmp").normalize();
+
+        String sourceFileListPattern =
+                StringUtil.replaceForFilePath(sourceRoot + "/**/*.parquet");
+
+        try {
+            log.info("开始合并 Parquet 文件");
+            log.info("源路径: {}", sourceFileListPattern);
+            log.info("目标文件: {}", targetPath);
+
+            long start = System.currentTimeMillis();
+
+            // 1️⃣ COPY 到临时文件（⚠️ 不要直接写目标文件），他妈这里一直有进程占用问题，所以咱给他妈的搞个临时文件弄一下
+            String sql = String.format("""
+                        COPY (
+                            SELECT *
+                            FROM read_parquet('%s')
+                        )
+                        TO '%s'
+                        (FORMAT 'parquet', COMPRESSION 'zstd');
+                    """, sourceFileListPattern, tmpTargetPath.toString());
+
+            long row = duckdb.execute(sql);
+
+            long mergeCost = System.currentTimeMillis() - start;
+            log.info("Parquet 合并完成，行数: {}，耗时: {} ms", row, mergeCost);
+
+            // 2️⃣ 等待 DuckDB 在 Windows 下释放句柄
+            Thread.sleep(100);
+
+            // 3️⃣ 原子替换目标文件（并发 SELECT 安全）
+            Files.move(
+                    tmpTargetPath,
+                    targetPath,
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.ATOMIC_MOVE
+            );
+
+            log.info("目标文件已原子替换: {}", targetPath);
+
+            // 4️⃣ 删除源 parquet + crc + 空目录（排除目标文件）
+            deleteSourceFilesAndEmptyDirs(sourceRoot, targetPath);
+
+            return ResultTemplateBean.success(Map.of(
+                    "源目录", sourceDir,
+                    "目标文件", targetFile,
+                    "合并行数", row,
+                    "耗时(ms)", mergeCost
+            ));
+        } catch (Exception e) {
+            log.error("Parquet 文件合并失败", e);
+
+            // 清理残留 tmp
+            try {
+                Files.deleteIfExists(tmpTargetPath);
+            } catch (Exception ignore) {
+            }
+
+            throw new ServerException("Parquet 文件合并失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 删除 globPattern 匹配的所有 parquet 文件，但排除 targetFile
+     */
+    private void deleteSourceFilesAndEmptyDirs(Path root, Path targetPath) {
+        try {
+            // 1️⃣ 删除 parquet / crc（排除目标文件）
+            Files.walk(root)
+                    .filter(Files::isRegularFile)
+                    .filter(p ->
+                            p.toString().endsWith(".parquet")
+                                    || p.toString().endsWith(".crc")
+                    )
+                    .filter(p -> !p.normalize().equals(targetPath))
+                    .forEach(p -> {
+                        try {
+                            Files.delete(p);
+                            log.info("删除源文件: {}", p);
+                        } catch (Exception e) {
+                            log.warn("删除文件失败: {}, {}", p, e.getMessage());
+                        }
+                    });
+
+            // 2️⃣ 删除空目录（从深到浅）
+            Files.walk(root)
+                    .filter(Files::isDirectory)
+                    .sorted((a, b) -> b.getNameCount() - a.getNameCount())
+                    .forEach(dir -> {
+                        try (Stream<Path> stream = Files.list(dir)) {
+                            if (stream.findAny().isEmpty()) {
+                                Files.delete(dir);
+                                log.info("删除空目录: {}", dir);
+                            }
+                        } catch (Exception ignore) {
+                        }
+                    });
+
+        } catch (Exception e) {
+            log.error("清理源文件失败", e);
+        }
+    }
+
+    //执行sql，自己跑着用
+    @Override
+    public ResultTemplateBean customexcutesql(Map<String, String> requestBody) {
+        String adminPassword = System.getenv("ADMIN_PASSWORD");
+        String password = requestBody.get("password");
+        if (adminPassword.equals(password)) {
+            String sql = requestBody.get("sql");
+            try {
+                List<Map<String, Object>> query = duckdb.query(sql);
+                return ResultTemplateBean.success(query);
+            } catch (Exception e) {
+                log.error("执行sql失败：{}，错误：{}", sql, e.getMessage());
+                throw new ServerException("执行sql失败：" + sql + "，错误：" + e.getMessage());
+            }
+        }
+        return ResultTemplateBean.success("管理员密码无效");
+    }
+
+    /**
      * 将 DuckDB 的复杂类型转换为普通 List
      */
     private List<Object> convertToList(Object obj) {
@@ -440,5 +577,16 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
         }
 
         return map;
+    }
+
+    private int getTimeWindow(String type) {
+        return switch (type) {
+            case "hour" -> 60;
+            case "3hour" -> 60 * 3;
+            case "6hour" -> 60 * 6;
+            case "day" -> 60 * 24;
+            case "10day" -> 60 * 24 * 10;
+            default -> defaultSuddenHeatPointTimeWindow;
+        };
     }
 }
