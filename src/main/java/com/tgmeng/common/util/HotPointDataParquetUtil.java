@@ -77,7 +77,7 @@ public class HotPointDataParquetUtil {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("password", System.getenv("ADMIN_PASSWORD"));
         paramMap.put("sourceDir", historyDataDir + TimeUtil.getYesterdayDateString("yyyy/MM/dd"));
-        paramMap.put("targetFile", TimeUtil.getYesterdayDateString());
+        paramMap.put("targetFile", TimeUtil.getYesterdayDateString() + ".parquet");
         topSearchHistoryService.mergeParquetByGlob(paramMap);
     }
 
