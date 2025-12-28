@@ -1,5 +1,6 @@
 package com.tgmeng.common.util;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.tgmeng.common.bean.HotPointDataParquetBean;
 import com.tgmeng.common.parquet.HotPointDataParquetSchema;
 import lombok.extern.slf4j.Slf4j;
@@ -60,24 +61,23 @@ public class ParquetUtil {
     private void writeParquetWithConf(List<HotPointDataParquetBean> records,
                                       String outputPath,
                                       Configuration configuration) throws Exception {
-        Path path = new Path(outputPath);
-
-        try (ParquetWriter<GenericRecord> writer = AvroParquetWriter
-                .<GenericRecord>builder(path)
-                .withSchema(schema)
-                .withConf(configuration)  // 使用传入的配置
-                .withCompressionCodec(CompressionCodecName.ZSTD)
-                .withDictionaryEncoding(true)
-                .withRowGroupSize(128 * 1024 * 1024)
-                .withPageSize(1024 * 1024)
-                .build()) {
-
-            for (HotPointDataParquetBean record : records) {
-                GenericRecord avroRecord = convertToAvroRecord(record);
-                writer.write(avroRecord);
+        if (ArrayUtil.isNotEmpty(records)) {
+            Path path = new Path(outputPath);
+            try (ParquetWriter<GenericRecord> writer = AvroParquetWriter
+                    .<GenericRecord>builder(path)
+                    .withSchema(schema)
+                    .withConf(configuration)  // 使用传入的配置
+                    .withCompressionCodec(CompressionCodecName.ZSTD)
+                    .withDictionaryEncoding(true)
+                    .withRowGroupSize(128 * 1024 * 1024)
+                    .withPageSize(1024 * 1024)
+                    .build()) {
+                for (HotPointDataParquetBean record : records) {
+                    GenericRecord avroRecord = convertToAvroRecord(record);
+                    writer.write(avroRecord);
+                }
+                System.out.println("✅ 成功写入 " + records.size() + " 条记录到 " + outputPath);
             }
-
-            System.out.println("✅ 成功写入 " + records.size() + " 条记录到 " + outputPath);
         }
     }
 
