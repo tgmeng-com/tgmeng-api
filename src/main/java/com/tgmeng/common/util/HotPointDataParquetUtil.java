@@ -47,6 +47,7 @@ public class HotPointDataParquetUtil {
                         hotPoint.get("title").toString(),
                         hotPoint.get("platformName").toString(),
                         hotPoint.get("platformCategory").toString(),
+                        hotPoint.get("platformCategoryRoot").toString(),
                         hotPoint.get("dataUpdateTime").toString(),
                         SimHashUtil.calculateSimHash(hotPoint.get("title").toString()));
                 records.add(record);

@@ -12,6 +12,7 @@ public class HotPointDataParquetSchema {
                 .requiredString("title")
                 .requiredString("platformName")
                 .requiredString("platformCategory")
+                .requiredString("platformCategoryRoot")
                 .requiredString("dataUpdateTime")
                 .requiredLong("simHash")
                 .endRecord();

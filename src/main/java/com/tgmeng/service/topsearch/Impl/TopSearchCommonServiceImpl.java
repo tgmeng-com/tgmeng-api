@@ -117,7 +117,8 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
                 topSearchCommonVOS,
                 platform.getPlatformName(),
                 platform.getPlatformLogo(),
-                platform.getPlatformCategory()
+                platform.getPlatformCategory(),
+                platform.getPlatformCategoryRoot()
         );
         return ResultTemplateBean.success(topSearchCommonVO);
     }

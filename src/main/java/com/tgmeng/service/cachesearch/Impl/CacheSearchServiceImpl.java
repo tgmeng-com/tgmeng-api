@@ -107,6 +107,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                                     resultMap.put("url", url);
                                     resultMap.put("dataUpdateTime", map.get("dataUpdateTime"));
                                     resultMap.put("platformCategory", map.get("platformCategory"));
+                                    resultMap.put("platformCategoryRoot", map.get("platformCategoryRoot"));
                                     resultList.add(resultMap);
                                 }
                             }

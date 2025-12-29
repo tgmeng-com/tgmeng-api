@@ -128,6 +128,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                         dataUpdateTime,
                         platformName,
                         platformCategory,
+                        platformCategoryRoot,
                         title,
                         url,
                         simHash
@@ -136,6 +137,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                             dataUpdateTime,
                             platformName,
                             platformCategory,
+                            platformCategoryRoot,
                             title,
                             url,
                             simHash
@@ -176,6 +178,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                 dataUpdateTime,
                                 platformName,
                                 platformCategory,
+                                platformCategoryRoot,
                                 title,
                                 url,
                                 simHash,
@@ -223,10 +226,11 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
             String sql = String.format("""
                      WITH recent_data AS (
                                          -- 获取最近时间窗口内的数据，并计算分桶ID
-                                         SELECT\s
+                                         SELECT
                                              dataUpdateTime,
                                              platformName,
                                              platformCategory,
+                                             platformCategoryRoot,
                                              title,
                                              url,
                                              simHash,
@@ -249,23 +253,25 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                      ),
                                      -- 只在同一桶内进行 SimHash 聚类
                                      hotspot_groups AS (
-                                         SELECT\s
+                                         SELECT
                                              a.simHash as original_simhash,
                                              a.title as original_title,
                                              a.platformName,
                                              a.platformCategory,
+                                             a.platformCategoryRoot,
                                              a.url,
                                              a.dataUpdateTime,
                                              MIN(b.simHash) as group_id
                                          FROM dedup_data a
-                                         JOIN dedup_data b\s
+                                         JOIN dedup_data b
                                              ON a.bucket_id = b.bucket_id  -- 关键：只在同桶内连接
+                                             AND a.simHash >= b.simHash
                                              AND BIT_COUNT(xor(a.simHash, b.simHash)) <= %d
-                                         GROUP BY a.simHash, a.title, a.platformName, a.platformCategory, a.url, a.dataUpdateTime
+                                         GROUP BY a.simHash, a.title, a.platformName, a.platformCategory, a.platformCategoryRoot, a.url, a.dataUpdateTime
                                      ),
                                      -- 统计每个组的平台覆盖情况，并收集所有热点详情
                                      group_stats AS (
-                                         SELECT\s
+                                         SELECT
                                              group_id,
                                              COUNT(DISTINCT platformName) as platform_count,
                                              COUNT(*) as total_count,
@@ -278,6 +284,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                                  url := url,
                                                  platformName := platformName,
                                                  platformCategory := platformCategory,
+                                                 platformCategoryRoot := platformCategoryRoot,
                                                  dataUpdateTime := dataUpdateTime
                                              ) ORDER BY dataUpdateTime DESC ) as hotspot_list
                                          FROM hotspot_groups
@@ -295,7 +302,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                          ORDER BY group_id, dataUpdateTime DESC
                                      )
                                      -- 最终结果
-                                     SELECT\s
+                                     SELECT
                                          rt.title,
                                          rt.url,
                                          rt.sample_platform,
@@ -465,11 +472,18 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     public ResultTemplateBean customexcutesql(Map<String, String> requestBody) {
         String adminPassword = System.getenv("ADMIN_PASSWORD");
         String password = requestBody.get("password");
+        String mode = requestBody.get("mode");
         if (adminPassword.equals(password)) {
             String sql = requestBody.get("sql");
             try {
-                List<Map<String, Object>> query = duckdb.query(sql);
-                return ResultTemplateBean.success(query);
+                if ("query".equalsIgnoreCase(mode)) {
+                    List<Map<String, Object>> query = duckdb.query(sql);
+                    return ResultTemplateBean.success(query);
+                }else if ("execute".equalsIgnoreCase(mode)) {
+                    long execute = duckdb.execute(sql);
+                    return ResultTemplateBean.success(execute);
+                }
+                return ResultTemplateBean.success("模式不合适");
             } catch (Exception e) {
                 log.error("执行sql失败：{}，错误：{}", sql, e.getMessage());
                 throw new ServerException("执行sql失败：" + sql + "，错误：" + e.getMessage());

@@ -15,6 +15,7 @@ public class HotPointDataParquetBean {
     private String title;
     private String platformName;
     private String platformCategory;
+    private String platformCategoryRoot;
     private String dataUpdateTime;
 
     // 计算数据

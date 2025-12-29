@@ -37,7 +37,7 @@ public class ControllerApiSchedule {
     private final SubscriptionUtil subscriptionUtil;
     private final HotPointDataParquetUtil hotPointDataParquetUtil;
 
-    // 启动后10s执行一次，完成后，每隔1分钟执行一次
+    // 启动后5s执行一次，完成后，每隔1分钟执行一次
     @Scheduled(fixedDelay = 60_000, initialDelay = 5_000)
     public void endpointsOneMinutesRefresh() {
         scanAndInvokeControllers(scheduleRequestConfigManager.getAllEnabledConfigsByRequestCycle(60L));

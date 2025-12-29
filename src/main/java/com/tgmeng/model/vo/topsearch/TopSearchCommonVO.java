@@ -27,6 +27,7 @@ public class TopSearchCommonVO {
     private String platformLogo;
     /** 数据卡片分类 比如新闻*/
     private String platformCategory;
+    private String platformCategoryRoot;
     private Long dataSize;
     private String dataUpdateTime ;
     private List<DataInfo> dataInfo;
@@ -60,10 +61,11 @@ public class TopSearchCommonVO {
 
     }
 
-    public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String platformName,String platformLogo,String platformCategory){
+    public TopSearchCommonVO(List<TopSearchCommonVO.DataInfo> dataInfo,String platformName,String platformLogo,String platformCategory,String platformCategoryRoot){
         this.platformName = platformName;
         this.platformLogo = platformLogo;
         this.platformCategory = platformCategory;
+        this.platformCategoryRoot = platformCategoryRoot;
         this.setDataSize((long)dataInfo.size());
         this.setDataUpdateTime(TimeUtil.getCurrentTimeFormat("yyyy-MM-dd HH:mm:ss"));
         this.dataInfo = dataInfo;
