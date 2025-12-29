@@ -45,7 +45,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
             throw new ServerException("searchMode empty error");
         }
         // 模糊匹配五分钟的，直接从内存里拿
-        if (StrUtil.equals(searchMode, SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue())) {
+        if (StrUtil.equals(searchMode, SearchModeEnum.MO_HU_PI_PEI_ONE_MINUTES.getValue())) {
             List<Map<String, Object>> result = getCacheSearchAllByWord(word);
             return ResultTemplateBean.success(result);
         }

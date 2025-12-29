@@ -46,8 +46,6 @@ public class TopSearchDataCacheAopAspect {
             String source = HttpRequestUtil.getRequestHeader("X-Source");
             List<String> cacheSearchPaths = Arrays.asList(
                     "/api/cachesearch/allbyword",
-                    "/api/topsearch/history/hotpoint",
-                    "/api/topsearch/history/getwordhistory",
                     "/api/topsearch/history/mergeparquet",
                     "/api/topsearch/history/customexcutesql"
             );

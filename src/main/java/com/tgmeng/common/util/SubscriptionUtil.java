@@ -102,7 +102,7 @@ public class SubscriptionUtil {
         // 从缓存中获取热点数据
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("word", null);
-        paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue());
+        paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_ONE_MINUTES.getValue());
         List<Map<String, Object>> hotList = cacheSearchService.searchByWord(paramMap).getData();
         // 使用 CompletableFuture 来并行处理每个文件
         for (File file : licenseFileList) {

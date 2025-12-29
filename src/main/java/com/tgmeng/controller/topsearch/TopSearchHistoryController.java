@@ -34,7 +34,6 @@ public class TopSearchHistoryController {
         return topSearchHistoryService.getSuddenHeatPoint(type);
     }
 
-
     /**
      * 合并parquet文件
      *     "password":"",

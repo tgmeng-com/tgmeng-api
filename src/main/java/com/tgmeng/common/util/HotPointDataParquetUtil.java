@@ -36,7 +36,7 @@ public class HotPointDataParquetUtil {
         try {
             Map<String, String> paramMap = new HashMap<>();
             paramMap.put("word", null);
-            paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_FIVE_MINUTES.getValue());
+            paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_ONE_MINUTES.getValue());
             List<Map<String, Object>> hotList = cacheSearchService.searchByWord(paramMap).getData();
             ParquetUtil parquetUtil = new ParquetUtil();
 

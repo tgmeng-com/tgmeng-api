@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SearchModeEnum implements INameValueEnum<String, String> {
-    MO_HU_PI_PEI_FIVE_MINUTES("", "MO_HU_PI_PEI_FIVE_MINUTES", "模糊匹配(1分钟)", true, 1),
+    MO_HU_PI_PEI_ONE_MINUTES("", "MO_HU_PI_PEI_ONE_MINUTES", "模糊匹配(1分钟)", true, 1),
     MO_HU_PI_PEI_TODAY("", "MO_HU_PI_PEI_TODAY", "模糊匹配(今日)", true, 2),
     MO_HU_PI_PEI_HISTORY("", "MO_HU_PI_PEI_HISTORY", "模糊匹配(历史)", true, 3),
     ZHI_WEN_PI_PEI_TODAY("", "ZHI_WEN_PI_PEI_TODAY", "指纹匹配(今日)", true, 4),
