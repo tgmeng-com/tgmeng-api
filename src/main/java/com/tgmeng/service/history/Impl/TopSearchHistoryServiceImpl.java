@@ -586,6 +586,8 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
             case "6hour" -> 60 * 6;
             case "day" -> 60 * 24;
             case "10day" -> 60 * 24 * 10;
+            case "month" -> 60 * 24 * 10 * 31;
+            case "history" -> 60 * 24 * 10 * 31 * 12 * 50;
             default -> defaultSuddenHeatPointTimeWindow;
         };
     }

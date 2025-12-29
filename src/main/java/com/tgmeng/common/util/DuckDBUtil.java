@@ -121,7 +121,7 @@ public class DuckDBUtil implements AutoCloseable {
             );
         }
 
-        // 跨月或跨年，扫描所有
+        // 跨年，扫描所有
         return StringUtil.replaceForFilePath(
                 String.format("%s/**/*.parquet", dataPath)
         );
