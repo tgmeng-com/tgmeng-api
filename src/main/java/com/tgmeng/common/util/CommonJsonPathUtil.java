@@ -29,14 +29,14 @@ public class CommonJsonPathUtil {
             content = CommonHotPointInfoDealUtil.getMaoYanJsonFromContent(content);
         } else if (StrUtil.equals(platform.getPlatformCategory(), PlatFormCategoryEnum.CCTV.getValue())) {
             content = content.replaceAll("^setItem1\\((.*)\\);$", "$1");
-        }else if (StrUtil.equals(platform.getPlatformCategory(), "zhiyuanshequ")) {
+        } else if (StrUtil.equals(platform.getPlatformCategory(), "zhiyuanshequ")) {
             Pattern pattern = Pattern.compile("resources:\\s*\\{\\s*data:\\s*(\\[[\\s\\S]*?\\])\\s*,\\s*pageIndex:");
             Matcher matcher = pattern.matcher(content);
             if (matcher.find()) {
                 content = matcher.group(1);
             }
         }
-        ReadContext ctx =  JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(content);
+        ReadContext ctx = JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
 
         for (RequestInfoManager.Selector selector : platform.getSelectors()) {
@@ -60,7 +60,7 @@ public class CommonJsonPathUtil {
             }
 
             for (Object element : hotNewsList) {
-                ReadContext itemCtx =  JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(element);
+                ReadContext itemCtx = JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(element);
                 String title = itemCtx.read(selector.getTitle());
                 String url = "";
                 if (platform.getHotTitleUrlNeedDeal()) {
@@ -97,7 +97,7 @@ public class CommonJsonPathUtil {
                 String type = "";
                 if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.CCTV.getValue())) {
                     type = HttpRequestUtil.getRequestPathLastWord();
-                }else if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
+                } else if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
                     type = itemCtx.read(selector.getType());
                 }
                 String image = "";
@@ -105,13 +105,14 @@ public class CommonJsonPathUtil {
                     image = itemCtx.read(selector.getImage());
                 }
                 String author = "";
-                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
+                if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue()) ||
+                        platform.getPlatformCategory().equals(PlatFormCategoryEnum.WANG_YI_YUN_YIN_YUE.getValue())) {
                     author = itemCtx.read(selector.getAuthor());
                 }
                 String desc = "";
                 if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.MAO_YAN.getValue())) {
                     desc = itemCtx.read(selector.getDesc());
-                }else if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.GITHUB.getValue())) {
+                } else if (platform.getPlatformCategory().equals(PlatFormCategoryEnum.GITHUB.getValue())) {
                     desc = itemCtx.read(selector.getDesc());
                 }
                 String publishTime = "";
@@ -133,7 +134,7 @@ public class CommonJsonPathUtil {
             Map<String, Object> jsonBody = platform.getJsonBody();
             String platformCategory = platform.getPlatformCategory();
             if (StrUtil.equals(platformCategory, PlatFormCategoryEnum.GAME_BASE.getValue())) {
-                jsonBody.put("category",EnumUtils.getValueByKey(SearchTypeGameBaseEnum.class, HttpRequestUtil.getRequestPathLastWord()));
+                jsonBody.put("category", EnumUtils.getValueByKey(SearchTypeGameBaseEnum.class, HttpRequestUtil.getRequestPathLastWord()));
                 platform.setJsonBody(jsonBody);
             }
         }
