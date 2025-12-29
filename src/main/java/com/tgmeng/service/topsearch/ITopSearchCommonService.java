@@ -6,4 +6,5 @@ import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 public interface ITopSearchCommonService {
     ResultTemplateBean<TopSearchCommonVO> getTopSearchCommonService();
 
+    ResultTemplateBean getCategorys();
 }

@@ -43,11 +43,13 @@ public class ControllerApiSchedule {
         scanAndInvokeControllers(scheduleRequestConfigManager.getAllEnabledConfigsByRequestCycle(60L));
     }
 
+    // 启动后30s执行一次，完成后，每隔5分钟执行一次
     @Scheduled(fixedDelay = 300_000, initialDelay = 30_000)
     public void endpointsFiveMinutesRefresh() {
         scanAndInvokeControllers(scheduleRequestConfigManager.getAllEnabledConfigsByRequestCycle(300L));
     }
 
+    // 启动后30s执行一次，完成后，每隔20分钟执行一次
     @Scheduled(fixedDelay = 1_200_000, initialDelay = 30_000)
     public void endpointsTwentyMinutesRefresh() {
         scanAndInvokeControllers(scheduleRequestConfigManager.getAllEnabledConfigsByRequestCycle(1200L));

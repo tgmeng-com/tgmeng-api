@@ -286,4 +286,33 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             }
         }
     }
+
+    @Override
+    public ResultTemplateBean getCategorys() {
+        Map<String, RequestInfoManager.PlatformConfig> configs = requestInfoManager.getConfigs();
+        Map<String, List<Map<String, String>>> groupedData = new LinkedHashMap<>();
+        for (Map.Entry<String, RequestInfoManager.PlatformConfig> entry : configs.entrySet()) {
+            RequestInfoManager.PlatformConfig platformData = entry.getValue();
+            String platformCategoryRoot = platformData.getPlatformCategoryRoot();
+            String platformCategory = platformData.getPlatformCategory();
+            String platformName = platformData.getPlatformName();
+            if (platformCategoryRoot == null || platformCategoryRoot.isEmpty()) {
+                platformCategoryRoot = "其他";
+            }
+            Map<String, String> info = new HashMap<>();
+            info.put("platformCategory", platformCategory);
+            info.put("platformName", platformName);
+            groupedData.computeIfAbsent(platformCategoryRoot, k -> new ArrayList<>())
+                    .add(info);
+        }
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Map.Entry<String, List<Map<String, String>>> entry : groupedData.entrySet()) {
+            Map<String, Object> categoryData = new LinkedHashMap<>();
+            categoryData.put("platformCategoryRoot", entry.getKey());
+            categoryData.put("platforms", entry.getValue());
+            result.add(categoryData);
+        }
+        return ResultTemplateBean.success(result);
+    }
+
 }

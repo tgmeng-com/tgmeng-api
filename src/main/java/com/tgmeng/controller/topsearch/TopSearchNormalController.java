@@ -25,6 +25,12 @@ public class TopSearchNormalController {
     // TODO 每次新加平台，记得加一下Controller
 
     private final ITopSearchCommonService topSearchCommonService;
+
+    // 获取平台分类
+    @RequestMapping("/categories")
+    public ResultTemplateBean getCategories() {
+        return topSearchCommonService.getCategorys();
+    }
     /**
      * description: 百度热搜
      * method: getBaiDuTopSearch
