@@ -35,6 +35,9 @@ forest:
 
 
 my-config:
+  ai:
+    max-retry-times: 3     # AI模型的最大重试次数
+    retry-delay-ms: 1000   # AI模型的重试时间间隔(毫秒)
   proxy:
     top-search:
       enabled: false            # 是否开启代理
@@ -51,7 +54,7 @@ my-config:
     max-hot-number: 10000          # 每个人最多存10000条
   history:
     dir: ./data/history/       # 历史数据文件所在的文件夹，历史数据目前用来查询热点轨迹
-    keep-day: 365               # 历史数据保留天数
+    keep-day: 36500               # 历史数据保留天数
     sim-hash-distance: 15        # 相似度哈希汉明距离  就是汉明距离在多少以内就判断为相似热点
     sudden-heat-point-time-window: 60        # 默认突发热点查询时间窗口 单位是分钟
     sudden-heat-point-platform-num-least: 2  # 突发热点查询最少平台数  就是在时间窗口内，至少有多少个平台搜索到了这个热点，才认为是突发热点

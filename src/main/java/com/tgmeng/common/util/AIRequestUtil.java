@@ -5,15 +5,17 @@ import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.dtflys.forest.http.ForestResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tgmeng.common.config.AIPlatformConfigService;
 import com.tgmeng.common.forest.client.ai.IAIClient;
 import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
 import com.tgmeng.model.dto.ai.request.AICommonChatModelRequestDTO;
+import com.tgmeng.model.dto.ai.response.AICommonChatModelResponseCustomDTO;
 import com.tgmeng.model.dto.ai.response.AICommonChatModelResponseDTO;
-import com.tgmeng.model.dto.ai.response.AiChatModelResponseContentTemplateDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.SocketTimeoutException;
@@ -36,11 +38,15 @@ public class AIRequestUtil {
 
     private final IAIClient aiClient;
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final TypeReference<AiChatModelResponseContentTemplateDTO.Result> RESULT_TYPE = new TypeReference<AiChatModelResponseContentTemplateDTO.Result>() {
-    };
+
     // 重试配置
-    private static final int MAX_RETRY_TIMES = 3;      // 最大重试次数
-    private static final long RETRY_DELAY_MS = 1000;   // 重试延迟(毫秒)
+    @Value("${my-config.ai.max-retry-times:false}")
+    private int MAX_RETRY_TIMES;
+    @Value("${my-config.ai.retry-delay-ms:false}")
+    private long RETRY_DELAY_MS;
+
+    @Autowired
+    private AIPlatformConfigService aiPlatformConfigService;
 
     /**
      * description: 获取系统里配置的所有代理，不管启用没启用的
@@ -49,7 +55,23 @@ public class AIRequestUtil {
      * @author tgmeng
      * @since 2025/7/1 13:08
      */
-    public <T extends AICommonChatModelResponseDTO> AiChatModelResponseContentTemplateDTO aiChat(String content, List<AIPlatformConfig> aiPlatformConfigs) {
+    public AICommonChatModelResponseCustomDTO aiChat(String content) {
+        // 测试数据
+        //AIPlatformConfig aiPlatformConfigTest = new AIPlatformConfig()
+        //        .setPlatform("NVIDIA")
+        //        .setApi("https://integrate.api.nvidia.com/v1/chat/completions")
+        //        .setKey("nvapi-tg8HLdWOQZ8N")
+        //        .setFrom("LinuxDo公益站 黑与白站长大佬推荐")
+        //        .setModels(List.of(
+        //                "qwen/qwen3-next-80b-a3b-instruct",
+        //                "moonshotai/kimi-k2-instruct-0905",
+        //                "bytedance/seed-oss-36b-instruct",
+        //                "nvidia/nemotron-3-nano-30b-a3b"
+        //        ));
+        //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfigTest));
+        // AI平台
+        List<AIPlatformConfig> aiPlatformConfigs = aiPlatformConfigService.getAiPlatformConfigs();
+
         for (AIPlatformConfig aiPlatformConfig : aiPlatformConfigs) {
             if (ObjUtil.isNotEmpty(aiPlatformConfig)) {
                 String platform = aiPlatformConfig.getPlatform();
@@ -73,21 +95,19 @@ public class AIRequestUtil {
                                 AICommonChatModelResponseDTO response = MAPPER.readValue(forestResponse.getContent(), AICommonChatModelResponseDTO.class);
                                 // 4. 提取消息内容并转换
                                 String messageContent = extractMessageContent(response);
-                                Long totalTokens = response.getUsage().getTotalTokens();
                                 if (messageContent == null) {
                                     log.warn("[{},{}] 未识别的响应类型: {}", platform, model, response.getClass().getName());
                                     return null;
                                 }
-                                // 5. 构建结果
-                                AiChatModelResponseContentTemplateDTO.Result aiResult = MAPPER.readValue(messageContent, RESULT_TYPE);
-
-                                AiChatModelResponseContentTemplateDTO result = new AiChatModelResponseContentTemplateDTO()
-                                        .setResult(aiResult)
+                                // 提取有用的结果
+                                Long totalTokens = response.getUsage().getTotalTokens();
+                                AICommonChatModelResponseCustomDTO result = new AICommonChatModelResponseCustomDTO()
                                         .setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern))
                                         .setUsedTime(usedTime)
                                         .setPlatform(platform)
                                         .setModel(model)
                                         .setFrom(from)
+                                        .setMessageContent(messageContent)
                                         .setTotalTokens(totalTokens);
                                 log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒，消耗Token: {}", platform, model, attempt, usedTime, totalTokens);
                                 return result;

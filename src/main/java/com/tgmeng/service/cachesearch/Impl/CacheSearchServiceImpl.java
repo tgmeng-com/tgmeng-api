@@ -2,12 +2,12 @@ package com.tgmeng.service.cachesearch.Impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.config.AIPlatformConfigService;
 import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.util.*;
-import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
+import com.tgmeng.model.dto.ai.response.AICommonChatModelResponseCustomDTO;
 import com.tgmeng.model.dto.ai.response.AiChatModelResponseContentTemplateDTO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import com.tgmeng.service.history.ITopSearchHistoryService;
@@ -25,13 +25,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CacheSearchServiceImpl implements ICacheSearchService {
 
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
     @Value("${my-config.history.keep-day}")
     private Integer historyDataKeepDay;
 
     @Autowired
-    private AIPlatformConfigService aiPlatformConfigService;
-    @Autowired
     private ITopSearchHistoryService topSearchHistoryService;
+
 
     private final AIRequestUtil aiRequestUtil;
     private final CacheUtil cacheUtil;
@@ -49,7 +50,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
             List<Map<String, Object>> result = getCacheSearchAllByWord(word);
             return ResultTemplateBean.success(result);
         }
-        Map<String,String> paramMap = new HashMap<>();
+        Map<String, String> paramMap = new HashMap<>();
         paramMap.put("title", word);
         paramMap.put("endTime", TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern));
         // 模糊匹配当天
@@ -74,6 +75,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         }
         return ResultTemplateBean.success(new ArrayList<>());
     }
+
     /**
      * 按关键词检索5分钟内的缓存数据
      */
@@ -93,14 +95,14 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                         if (item instanceof Map<?, ?> itemMap) {
                             Object title = itemMap.get("title");
                             Object url = itemMap.get("url");
-                            if (title instanceof String s){
+                            if (title instanceof String s) {
                                 s = title.toString().trim().toLowerCase();   // 确保 title 转成小写字符串
                                 String lowerCaseWord = null;
-                                if (StrUtil.isNotBlank(word)){
+                                if (StrUtil.isNotBlank(word)) {
                                     lowerCaseWord = word.trim().toLowerCase();
                                 }
                                 // 匹配关键词
-                                if (StrUtil.isBlank(lowerCaseWord) || StrUtil.contains(s,lowerCaseWord)){
+                                if (StrUtil.isBlank(lowerCaseWord) || StrUtil.contains(s, lowerCaseWord)) {
                                     HashMap<String, Object> resultMap = new HashMap<>();
                                     resultMap.put("title", title);
                                     resultMap.put("platformName", map.get("platformName"));
@@ -155,34 +157,21 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
 
     @Override
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
-        // 2. 收集所有 title 文本
-        List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
-        if (allOriginalTitles.isEmpty()) {
-            return ResultTemplateBean.success(Collections.emptyList());
+        try {
+            List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
+            if (allOriginalTitles.isEmpty()) {
+                return ResultTemplateBean.success(Collections.emptyList());
+            }
+            // 输入的内容：实时简报模板+热点数据
+            String content = FileUtil.readFileToStringFromClasspath("template/AISummaryTemplate.txt") + allOriginalTitles;
+            //String content = "帮我写一个笑话";
+            AICommonChatModelResponseCustomDTO customField = aiRequestUtil.aiChat(content);
+            // 处理结果
+            AiChatModelResponseContentTemplateDTO.Result aiResult = MAPPER.readValue(customField.getMessageContent(), AiChatModelResponseContentTemplateDTO.Result.class);
+            return ResultTemplateBean.success(aiResult);
+        } catch (Exception e) {
+            throw new ServerException("AI简报处理失败：" + e.getMessage());
         }
-        // 交给AI处理，根据所有热点标题，生成一个实时简报
-        String content = FileUtil.readFileToStringFromClasspath("template/AISummaryTemplate.txt") + allOriginalTitles;
-        //String content = "帮我写一个笑话";
-
-        // 测试数据
-        //AIPlatformConfig aiPlatformConfig = new AIPlatformConfig()
-        //        .setPlatform("NVIDIA")
-        //        .setApi("https://integrate.api.nvidia.com/v1/chat/completions")
-        //        .setKey("nvapi-tg8HLdWOQZ8NWJ0PgoLR")
-        //        .setFrom("LinuxDo公益站 黑与白站长大佬推荐")
-        //        .setModels(List.of(
-        //                "qwen/qwen3-next-80b-a3b-instruct",
-        //                "moonshotai/kimi-k2-instruct-0905",
-        //                "bytedance/seed-oss-36b-instruct",
-        //                "nvidia/nemotron-3-nano-30b-a3b"
-        //        ));
-        //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfig));
-
-        // 生产数据
-        List<AIPlatformConfig> aiPlatformConfigs = aiPlatformConfigService.getAiPlatformConfigs();
-
-        AiChatModelResponseContentTemplateDTO aiChatResult = aiRequestUtil.aiChat(content, aiPlatformConfigs);
-        return ResultTemplateBean.success(aiChatResult);
     }
 
     /*------------------------- 辅助方法 -------------------------*/
