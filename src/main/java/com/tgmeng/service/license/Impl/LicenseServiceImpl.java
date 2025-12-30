@@ -95,8 +95,11 @@ public class LicenseServiceImpl implements ILicenseService {
             File file = new File(licenseUtil.getLicenseFilePathByCode(LicenseContext.getLicenseCode()));
             LicenseBean licenseBean = MAPPER.readValue(file, LicenseBean.class);
             licenseBean.getSubscriptionGlobalKeywords().removeIf(s -> s == null || s.trim().isEmpty());
-
+            // 全局关键词
             licenseBean.setSubscriptionGlobalKeywords(newLicenseBean.getSubscriptionGlobalKeywords());
+            // 全局分类选择
+            licenseBean.setSubscriptionGlobalCategories(newLicenseBean.getSubscriptionGlobalCategories());
+            // 平台配置
             licenseBean.setSubscriptionPlatformConfigs(newLicenseBean.getSubscriptionPlatformConfigs());
             FileUtil.writeToFile(file, licenseBean);
             log.info("更新订阅配置成功:{}", newLicenseBean);

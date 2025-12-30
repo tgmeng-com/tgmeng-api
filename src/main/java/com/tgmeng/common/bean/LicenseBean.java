@@ -33,6 +33,8 @@ public class LicenseBean {
     private Integer limitPerDay;
     // 订阅推送全局关键词
     private List<String> subscriptionGlobalKeywords;
+    // 订阅的全局分类选择
+    private List<String> subscriptionGlobalCategories;
     // 订阅推送平台配置
     private List<SubscriptionPlatformConfig> subscriptionPlatformConfigs;
 
@@ -43,6 +45,8 @@ public class LicenseBean {
         private String webhook;
         private String secret;
         private List<String> subscriptionPlatformKeywords;
+        // 订阅的独立分类选择
+        private List<String> subscriptionPlatformCategories;
         private String remark;
     }
 }

@@ -45,9 +45,11 @@ public class TopSearchDataCacheAopAspect {
         if (dataCacheEnabled) {
             String source = HttpRequestUtil.getRequestHeader("X-Source");
             List<String> cacheSearchPaths = Arrays.asList(
+                    // TODO 排除掉需要不走缓存的
                     "/api/cachesearch/allbyword",
                     "/api/topsearch/history/mergeparquet",
-                    "/api/topsearch/history/customexcutesql"
+                    "/api/topsearch/history/customexcutesql",
+                    "/api/topsearch/categories"
             );
             if (cacheSearchPaths.stream().anyMatch(url::contains)) {
                 log.info("🙋🏻‍♂️外部请求，检索数据，走正常程序:{}", url);

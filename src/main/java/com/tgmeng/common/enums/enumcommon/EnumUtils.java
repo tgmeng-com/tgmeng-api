@@ -53,4 +53,15 @@ public class EnumUtils {
     public static <E extends INameValueEnum<K, V>, K, V> boolean isExistKey(Class<E> enumClass, String name) {
         return Arrays.stream(enumClass.getEnumConstants()).anyMatch(e -> e.getKey().equals(name));
     }
+
+    public static <E extends INameValueEnum<K, V>, K, V> List<V> sortValuesByEnumSort(Class<E> enumClass, List<V> values) {
+        return values.stream()
+                .sorted(Comparator.comparingInt(v -> {
+                    E e = getEnumByValue(enumClass, v);
+                    return e == null || e.getSort() == null
+                            ? Integer.MAX_VALUE
+                            : e.getSort();
+                }))
+                .collect(Collectors.toList());
+    }
 }

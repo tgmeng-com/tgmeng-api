@@ -305,11 +305,14 @@ public class TopSearchCommonServiceImpl implements ITopSearchCommonService {
             groupedData.computeIfAbsent(platformCategoryRoot, k -> new ArrayList<>())
                     .add(info);
         }
+
+        List<String> sortedCategoryRoot = EnumUtils.sortValuesByEnumSort(PlatFormCategoryRootEnum.class, new ArrayList<>(groupedData.keySet()));
+
         List<Map<String, Object>> result = new ArrayList<>();
-        for (Map.Entry<String, List<Map<String, String>>> entry : groupedData.entrySet()) {
+        for (String root : sortedCategoryRoot) {
             Map<String, Object> categoryData = new LinkedHashMap<>();
-            categoryData.put("platformCategoryRoot", entry.getKey());
-            categoryData.put("platforms", entry.getValue());
+            categoryData.put("platformCategoryRoot", root);
+            categoryData.put("platforms", groupedData.get(root));
             result.add(categoryData);
         }
         return ResultTemplateBean.success(result);

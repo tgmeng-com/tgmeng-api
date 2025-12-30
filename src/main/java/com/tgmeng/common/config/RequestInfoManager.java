@@ -1521,7 +1521,6 @@ public class RequestInfoManager {
 
         addJsonConfig("https://mesh.if.iqiyi.com/portal/pcw/rankList/comSecRankList?category_id={type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("爱奇艺视频")
                 .platformCategory(PlatFormCategoryEnum.AI_QI_YI_SHI_PIN.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.YING_YIN.getValue())
@@ -1536,7 +1535,6 @@ public class RequestInfoManager {
 
         addJsonConfig("https://mobileso.bz.mgtv.com/pc/suggest/v1")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("芒果视频")
                 .platformCategory(PlatFormCategoryEnum.MANG_GUO_SHI_PIN.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.YING_YIN.getValue())
@@ -1569,7 +1567,6 @@ public class RequestInfoManager {
 
         addDomConfig("https://www.zcool.com.cn/{type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("站酷")
                 .platformCategory(PlatFormCategoryEnum.ZHAN_KU.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.SHE_JI.getValue())
@@ -1584,7 +1581,6 @@ public class RequestInfoManager {
 
         addDomConfig("https://www.gracg.com/showwork/{type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("涂鸦王国")
                 .platformCategory(PlatFormCategoryEnum.TU_YA_WANG_GUO.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.SHE_JI.getValue())
@@ -1611,7 +1607,6 @@ public class RequestInfoManager {
 
         addJsonConfig("https://api.github.com/search/repositories?q=stars:>0+created:>={time}&sort=stars&order=desc&page=1&per_page=100")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("GitHub")
                 .platformCategory(PlatFormCategoryEnum.GITHUB.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.KE_JI.getValue())
@@ -1628,7 +1623,6 @@ public class RequestInfoManager {
 
         addDomConfig("https://huggingface.co/{type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("HuggingFaces")
                 .platformCategory(PlatFormCategoryEnum.HUGGING_FACES.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.KE_JI.getValue())
@@ -1654,7 +1648,6 @@ public class RequestInfoManager {
         addJsonConfig("https://acs.youku.com/h5/mtop.youku.soku.yksearch/2.0/?appKey={appKey}&data={data}&t={time}&sign={sign}")
                 .hotScoreNeedDeal(true)
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("优酷视频")
                 .platformCategory(PlatFormCategoryEnum.YOU_KU_SHI_PIN.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.YING_YIN.getValue())
@@ -1669,7 +1662,6 @@ public class RequestInfoManager {
         addDomConfig("https://www.douban.com/group/{type}")
                 .hotTitleNeedDeal(true)
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("小组豆瓣")
                 .platformCategory(PlatFormCategoryEnum.XIAO_ZU_DOU_BAN.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.SHENG_HUO.getValue())
@@ -1689,7 +1681,6 @@ public class RequestInfoManager {
 
         addJsonConfig("https://api.cntv.cn/epg/getEpgInfoByChannelNew?c=cctv{type}&serviceId=tvcctv&d={time}&t=jsonp&cb=setItem1")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("央视电视台")
                 .platformCategory(PlatFormCategoryEnum.CCTV.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.DIAN_SHI.getValue())
@@ -2504,7 +2495,6 @@ public class RequestInfoManager {
 
         addDomConfig("https://news.qoo-app.com/category/news-zh/{type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("QooApp")
                 .platformCategory(PlatFormCategoryEnum.QOOAPP.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.YUO_XI.getValue())
@@ -2518,7 +2508,6 @@ public class RequestInfoManager {
 
         addDomConfig("https://gnn.gamer.com.tw/index.php?k={type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("巴哈姆特")
                 .platformCategory(PlatFormCategoryEnum.BA_HA_MU_TE.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.YUO_XI.getValue())
@@ -2537,7 +2526,6 @@ public class RequestInfoManager {
 
         addDomConfig("https://www.4gamer.net/{type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("4Gamer")
                 .platformCategory(PlatFormCategoryEnum.FOUR_GAMER.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.YUO_XI.getValue())
@@ -2587,7 +2575,6 @@ public class RequestInfoManager {
 
         addDomConfig("https://www.nodeloc.com/{type}")
                 .requestType(ForestRequestTypeEnum.GET)
-                .hotTitleUrlNeedDeal(true)
                 .platformName("nodeloc")
                 .platformCategory(PlatFormCategoryEnum.NODELOC.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.SHE_QU.getValue())

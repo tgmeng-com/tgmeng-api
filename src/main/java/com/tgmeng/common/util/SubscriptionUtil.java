@@ -144,9 +144,11 @@ public class SubscriptionUtil {
             try {
                 // 合并关键词
                 List<String> mergedKeywords = mergeKeywords(keywords, push.getSubscriptionPlatformKeywords());
+                // 获取过滤的平台
+                List<String> filterPlatformNames = getFilterPlatformNames(licenseBean, push);
                 // 筛选平台关键词和独立关键词合并后符合的热点，并且过滤掉已推送的
                 if (CollUtil.isNotEmpty(mergedKeywords)) {
-                    List<Map<String, Object>> newHotList = getNewHotList(hotList, mergedKeywords, sentSet);
+                    List<Map<String, Object>> newHotList = getNewHotList(hotList, mergedKeywords, filterPlatformNames, sentSet);
                     if (CollUtil.isNotEmpty(newHotList)) {
                         // 记录新推送的哈希
                         for (Map<String, Object> hotItem : newHotList) {
@@ -175,6 +177,19 @@ public class SubscriptionUtil {
         }
     }
 
+    // 获取筛选的平台，优先独立平台的筛选，独立平台没有的话就看全局，全局没有就返回空，代表不过滤
+    private List<String> getFilterPlatformNames(LicenseBean licenseBean, LicenseBean.SubscriptionPlatformConfig subscriptionPlatformConfig) {
+        List<String> subscriptionPlatformCategories = subscriptionPlatformConfig.getSubscriptionPlatformCategories();
+        if (CollUtil.isNotEmpty(subscriptionPlatformCategories)) {
+            return subscriptionPlatformCategories;
+        }
+        List<String> subscriptionGlobalCategories = licenseBean.getSubscriptionGlobalCategories();
+        if (CollUtil.isNotEmpty(subscriptionGlobalCategories)) {
+            return subscriptionGlobalCategories;
+        }
+        return new ArrayList<>();
+    }
+
     private List<String> mergeKeywords(List<String> keywords, List<String> platformKeywords) {
         platformKeywords = platformKeywords == null ? new ArrayList<>() : platformKeywords;
         // 合并关键词
@@ -183,14 +198,24 @@ public class SubscriptionUtil {
         return mergedKeywords;
     }
 
-    private List<Map<String, Object>> getNewHotList(List<Map<String, Object>> hotList, List<String> mergedKeywords, Set<String> sentSet) {
+    private List<Map<String, Object>> getNewHotList(List<Map<String, Object>> hotList, List<String> mergedKeywords, List<String> filterPlatformNames, Set<String> sentSet) {
         return hotList.stream()
+                // 过滤平台
+                .filter(map -> {
+                    if (CollUtil.isEmpty(filterPlatformNames)) {
+                        return true; // 不过滤
+                    }
+                    String platformName = String.valueOf(map.get("platformName"));
+                    return filterPlatformNames.contains(platformName);
+                })
+                // 过滤关键词
                 .filter(map -> {
                     String hotTitle = String.valueOf(map.get("title"));
                     String hashBase64 = generateHash(hotTitle, String.valueOf(map.get("platformName")));
                     String hotTitleLower = hotTitle.toLowerCase();
                     return mergedKeywords.stream().anyMatch(keyword -> hotTitleLower.contains(keyword.toLowerCase())) && !sentSet.contains(hashBase64);
-                }).collect(Collectors.toMap(
+                })
+                .collect(Collectors.toMap(
                         map -> generateHash(
                                 String.valueOf(map.get("title")),
                                 String.valueOf(map.get("platformName"))
