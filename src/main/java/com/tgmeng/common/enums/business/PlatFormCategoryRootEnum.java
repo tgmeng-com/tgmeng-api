@@ -19,7 +19,7 @@ public enum PlatFormCategoryRootEnum implements INameValueEnum<String, String> {
     KE_JI("", "科技", "", true, 9),
     SHE_JI("", "设计", "", true, 10),
     YING_YIN("", "影音", "", true, 11),
-    YUO_XI("", "游戏", "", true, 12),
+    YOU_XI("", "游戏", "", true, 12),
     JIAN_KANG("", "健康", "", true, 13);
 
     private final String key;

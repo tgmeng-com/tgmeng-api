@@ -12,4 +12,6 @@ public interface ICacheSearchService {
     ResultTemplateBean getCacheSearchWordCloud();
 
     ResultTemplateBean getCacheSearchRealTimeSummary();
+
+    ResultTemplateBean getAISuddenheatpoint();
 }

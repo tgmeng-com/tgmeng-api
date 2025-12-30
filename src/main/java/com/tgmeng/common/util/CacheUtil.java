@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Expiry;
+import com.tgmeng.common.enums.business.PlatFormCategoryEnum;
+import com.tgmeng.common.enums.business.PlatFormCategoryRootEnum;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -148,4 +150,45 @@ public class CacheUtil {
         });
         return titles;
     }
+
+    // 这个是根据平台分类去排除，这些平台噪点大，意义不大，排除掉，比如ai总结、突发热点的时候用
+    public Set<String> EXCLUDED_PLATFORM_CATEGORIES_ROOT = Set.of(
+            PlatFormCategoryRootEnum.YANG_MAO.getValue(),
+            PlatFormCategoryRootEnum.DIAN_SHI.getValue(),
+            PlatFormCategoryRootEnum.SHENG_HUO.getValue(),
+            PlatFormCategoryRootEnum.YING_YIN.getValue(),
+            PlatFormCategoryRootEnum.YOU_XI.getValue(),
+            PlatFormCategoryRootEnum.JIAN_KANG.getValue(),
+            PlatFormCategoryRootEnum.SHE_JI.getValue(),
+            PlatFormCategoryRootEnum.SHE_QU.getValue(),
+            PlatFormCategoryRootEnum.TI_YU.getValue()
+    );
+    public Set<String> EXCLUDED_PLATFORM_CATEGORIES = Set.of(
+            PlatFormCategoryEnum.BAI_DU.getValue(),
+            PlatFormCategoryEnum.GITHUB.getValue(),
+            PlatFormCategoryEnum.HUGGING_FACES.getValue(),
+            PlatFormCategoryEnum.ZHAN_KU.getValue(),
+            PlatFormCategoryEnum.TU_YA_WANG_GUO.getValue(),
+            PlatFormCategoryEnum.MAO_YAN.getValue(),
+            PlatFormCategoryEnum.TENG_XUN_SHI_PIN.getValue(),
+            PlatFormCategoryEnum.AI_QI_YI_SHI_PIN.getValue(),
+            PlatFormCategoryEnum.MANG_GUO_SHI_PIN.getValue(),
+            PlatFormCategoryEnum.YOU_KU_SHI_PIN.getValue(),
+            PlatFormCategoryEnum.WANG_YI_YUN_YIN_YUE.getValue(),
+            PlatFormCategoryEnum.FOUR_GAMER.getValue(),
+            PlatFormCategoryEnum.CCTV.getValue()
+
+    );
+    // 这个是根据平台名称去排除
+    public Set<String> EXCLUDED_PLATFORM_NAMES = Set.of(
+            "电视猫",
+            "微信读书",
+            "HACKER_NEWS",
+            "腾讯设计开放平台",
+            "Abduzeedo",
+            "Core77",
+            "Dribbble",
+            "Awwwards",
+            "Youtube"
+    );
 }

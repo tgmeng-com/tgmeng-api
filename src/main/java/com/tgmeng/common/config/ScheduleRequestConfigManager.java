@@ -217,7 +217,8 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/cctv/16", PlatformConfig.builder().build());
         configs.put("/api/topsearch/cctv/17", PlatformConfig.builder().build());
         configs.put("/api/topsearch/pengpaixinwen", PlatformConfig.builder().build());
-        configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(300L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/aiSuddenheatpoint", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
         configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
 
@@ -287,10 +288,10 @@ public class ScheduleRequestConfigManager {
 
         configs.put("/api/topsearch/qooapp/shoujiyouxi", PlatformConfig.builder().requestDelay(10L).build());
         configs.put("/api/topsearch/qooapp/pczhuji", PlatformConfig.builder().requestDelay(10L).build());
-        configs.put("/api/topsearch/bahamute/shouji", PlatformConfig.builder().requestDelay(10L).build());
-        configs.put("/api/topsearch/bahamute/pc", PlatformConfig.builder().requestDelay(10L).build());
-        configs.put("/api/topsearch/bahamute/tv", PlatformConfig.builder().requestDelay(10L).build());
-        configs.put("/api/topsearch/bahamute/xinxun", PlatformConfig.builder().requestDelay(10L).build());
+        //configs.put("/api/topsearch/bahamute/shouji", PlatformConfig.builder().requestDelay(10L).build());
+        //configs.put("/api/topsearch/bahamute/pc", PlatformConfig.builder().requestDelay(10L).build());
+        //configs.put("/api/topsearch/bahamute/tv", PlatformConfig.builder().requestDelay(10L).build());
+        //configs.put("/api/topsearch/bahamute/xinxun", PlatformConfig.builder().requestDelay(10L).build());
         configs.put("/api/topsearch/4gamer/pc", PlatformConfig.builder().requestDelay(10L).build());
         configs.put("/api/topsearch/4gamer/xbox", PlatformConfig.builder().requestDelay(10L).build());
         configs.put("/api/topsearch/4gamer/ps", PlatformConfig.builder().requestDelay(10L).build());

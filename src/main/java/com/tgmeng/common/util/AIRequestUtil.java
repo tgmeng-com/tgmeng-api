@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,20 +58,21 @@ public class AIRequestUtil {
      */
     public AICommonChatModelResponseCustomDTO aiChat(String content) {
         // 测试数据
-        //AIPlatformConfig aiPlatformConfigTest = new AIPlatformConfig()
-        //        .setPlatform("NVIDIA")
-        //        .setApi("https://integrate.api.nvidia.com/v1/chat/completions")
-        //        .setKey("nvapi-tg8HLdWOQZ8N")
-        //        .setFrom("LinuxDo公益站 黑与白站长大佬推荐")
-        //        .setModels(List.of(
-        //                "qwen/qwen3-next-80b-a3b-instruct",
-        //                "moonshotai/kimi-k2-instruct-0905",
-        //                "bytedance/seed-oss-36b-instruct",
-        //                "nvidia/nemotron-3-nano-30b-a3b"
-        //        ));
-        //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfigTest));
+        AIPlatformConfig aiPlatformConfigTest = new AIPlatformConfig()
+                .setPlatform("NVIDIA")
+                .setApi("https://integrate.api.nvidia.com/v1/chat/completions")
+                .setKey("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")
+                .setFrom("LinuxDo公益站 黑与白站长大佬推荐")
+                .setModels(List.of(
+                        //"bytedance/seed-oss-36b-instruct",  //512K
+                        "qwen/qwen3-next-80b-a3b-instruct",
+                        "moonshotai/kimi-k2-instruct-0905",
+                        "bytedance/seed-oss-36b-instruct",
+                        "nvidia/nemotron-3-nano-30b-a3b"
+                ));
+        List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfigTest));
         // AI平台
-        List<AIPlatformConfig> aiPlatformConfigs = aiPlatformConfigService.getAiPlatformConfigs();
+        //List<AIPlatformConfig> aiPlatformConfigs = aiPlatformConfigService.getAiPlatformConfigs();
 
         for (AIPlatformConfig aiPlatformConfig : aiPlatformConfigs) {
             if (ObjUtil.isNotEmpty(aiPlatformConfig)) {

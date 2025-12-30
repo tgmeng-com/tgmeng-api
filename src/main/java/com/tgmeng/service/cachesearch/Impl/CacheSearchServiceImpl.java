@@ -8,7 +8,8 @@ import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.util.*;
 import com.tgmeng.model.dto.ai.response.AICommonChatModelResponseCustomDTO;
-import com.tgmeng.model.dto.ai.response.AiChatModelResponseContentTemplateDTO;
+import com.tgmeng.model.dto.ai.response.AiChatModelResponseMessageContentForRealtimesummaryDTO;
+import com.tgmeng.model.dto.ai.response.AiChatModelResponseMessageContentForSuddenHeatpointDTO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.Data;
@@ -155,6 +156,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         }
     }
 
+    // 每分钟的全局实时简报
     @Override
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
         try {
@@ -165,10 +167,69 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
             // 输入的内容：实时简报模板+热点数据
             String content = FileUtil.readFileToStringFromClasspath("template/AISummaryTemplate.txt") + allOriginalTitles;
             //String content = "帮我写一个笑话";
-            AICommonChatModelResponseCustomDTO customField = aiRequestUtil.aiChat(content);
+            AICommonChatModelResponseCustomDTO result = aiRequestUtil.aiChat(content);
             // 处理结果
-            AiChatModelResponseContentTemplateDTO.Result aiResult = MAPPER.readValue(customField.getMessageContent(), AiChatModelResponseContentTemplateDTO.Result.class);
-            return ResultTemplateBean.success(aiResult);
+            AiChatModelResponseMessageContentForRealtimesummaryDTO data = MAPPER.readValue(result.getMessageContent(), AiChatModelResponseMessageContentForRealtimesummaryDTO.class);
+            result.setData(data);
+            result.setMessageContent(null);
+            return ResultTemplateBean.success(result);
+        } catch (Exception e) {
+            throw new ServerException("AI简报处理失败：" + e.getMessage());
+        }
+    }
+
+    // AI分析的突发热点
+    @Override
+    public ResultTemplateBean getAISuddenheatpoint() {
+        try {
+            //获取缓存里所有数据
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("word", null);
+            paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_ONE_MINUTES.getValue());
+            List<Map<String, Object>> hotList = searchByWord(paramMap).getData();
+
+            // 突发热点查询中需要排除的平台，因为这些平台的热点基本没有意义或者指纹干扰很大
+            Set<String> EXCLUDED_PLATFORM_CATEGORIES = cacheUtil.EXCLUDED_PLATFORM_CATEGORIES;
+            Set<String> EXCLUDED_PLATFORM_CATEGORIES_ROOT = cacheUtil.EXCLUDED_PLATFORM_CATEGORIES_ROOT;
+            Set<String> EXCLUDED_PLATFORM_NAMES = cacheUtil.EXCLUDED_PLATFORM_NAMES;
+            List<Map<String, Object>> filteredList = hotList.stream()
+                    .filter(item -> {
+                        String platformName = Objects.toString(item.get("platformName"), "");
+                        String platformCategory = Objects.toString(item.get("platformCategory"), "");
+                        String platformCategoryRoot = Objects.toString(item.get("platformCategoryRoot"), "");
+                        return !EXCLUDED_PLATFORM_NAMES.contains(platformName)
+                                && !EXCLUDED_PLATFORM_CATEGORIES.contains(platformCategory)
+                                && !EXCLUDED_PLATFORM_CATEGORIES_ROOT.contains(platformCategoryRoot);
+                    }).toList();
+
+            // 取出里面需要给ai的字段
+            List<Map<String, Object>> sendData = filteredList.stream()
+                    .map(item -> {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("title", item.get("title"));
+                        map.put("url", item.get("url"));
+                        map.put("platformName", item.get("platformName"));
+                        map.put("dataUpdateTime", item.get("dataUpdateTime"));
+                        return map;
+                    }).toList();
+            if (sendData.isEmpty()) {
+                return ResultTemplateBean.success(Collections.emptyList());
+            }
+
+            // TODO 后续如果模型量不够用，那就先只发送标题，就用这个，把上面带url和分类、时间的注释掉
+            //List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
+            //if (allOriginalTitles.isEmpty()) {
+            //    return ResultTemplateBean.success(Collections.emptyList());
+            //}
+
+            // 输入的内容：突发热点模板模板+热点数据
+            String content = FileUtil.readFileToStringFromClasspath("template/AISuddenHeatpointTemplate.txt") + sendData;
+            AICommonChatModelResponseCustomDTO result = aiRequestUtil.aiChat(content);
+            // 处理结果
+            AiChatModelResponseMessageContentForSuddenHeatpointDTO data = MAPPER.readValue(result.getMessageContent(), AiChatModelResponseMessageContentForSuddenHeatpointDTO.class);
+            result.setData(data);
+            result.setMessageContent(null);
+            return ResultTemplateBean.success(result);
         } catch (Exception e) {
             throw new ServerException("AI简报处理失败：" + e.getMessage());
         }

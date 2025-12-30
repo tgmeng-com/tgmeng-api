@@ -2,8 +2,8 @@ package com.tgmeng.service.history.Impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
-import com.tgmeng.common.enums.business.PlatFormCategoryEnum;
 import com.tgmeng.common.exception.ServerException;
+import com.tgmeng.common.util.CacheUtil;
 import com.tgmeng.common.util.DuckDBUtil;
 import com.tgmeng.common.util.SimHashUtil;
 import com.tgmeng.common.util.StringUtil;
@@ -23,7 +23,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,38 +51,8 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
 
     @Autowired
     private DuckDBUtil duckdb;
-
-    // 突发热点查询中需要排除的平台，因为这些平台的热点基本没有意义或者指纹干扰很大
-    // 这个是根据平台分类去排除
-    private static final Set<String> EXCLUDED_PLATFORM_CATEGORIES = Set.of(
-            PlatFormCategoryEnum.BAI_DU.getValue(),
-            PlatFormCategoryEnum.GITHUB.getValue(),
-            PlatFormCategoryEnum.HUGGING_FACES.getValue(),
-            PlatFormCategoryEnum.ZHAN_KU.getValue(),
-            PlatFormCategoryEnum.TU_YA_WANG_GUO.getValue(),
-            PlatFormCategoryEnum.MAO_YAN.getValue(),
-            PlatFormCategoryEnum.TENG_XUN_SHI_PIN.getValue(),
-            PlatFormCategoryEnum.AI_QI_YI_SHI_PIN.getValue(),
-            PlatFormCategoryEnum.MANG_GUO_SHI_PIN.getValue(),
-            PlatFormCategoryEnum.YOU_KU_SHI_PIN.getValue(),
-            PlatFormCategoryEnum.WANG_YI_YUN_YIN_YUE.getValue(),
-            PlatFormCategoryEnum.FOUR_GAMER.getValue(),
-            PlatFormCategoryEnum.CCTV.getValue()
-    );
-    // 这个是根据平台名称去排除
-    private static final Set<String> EXCLUDED_PLATFORM_NAMES = Set.of(
-            "电视猫",
-            "微信读书",
-            "HACKER_NEWS",
-            "腾讯设计开放平台",
-            "Abduzeedo",
-            "Core77",
-            "Dribbble",
-            "Awwwards"
-    );
-    private static final String EXCLUDED_PLATFORM_CATEGORIES_SQL = EXCLUDED_PLATFORM_CATEGORIES.stream().map(s -> "'" + s + "'").collect(Collectors.joining(", "));
-    private static final String EXCLUDED_PLATFORM_NAMES_SQL = EXCLUDED_PLATFORM_NAMES.stream().map(s -> "'" + s + "'").collect(Collectors.joining(", "));
-
+    @Autowired
+    private CacheUtil cacheUtil;
 
     // 热点历史轨迹，指纹匹配
     @Override
@@ -222,6 +191,9 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
             String endStr = endTime.format(formatter);
 
             String pathPattern = duckdb.buildPathPattern(startTime, endTime);
+            // 突发热点查询中需要排除的平台，因为这些平台的热点基本没有意义或者指纹干扰很大
+            String EXCLUDED_PLATFORM_CATEGORIES_SQL = cacheUtil.EXCLUDED_PLATFORM_CATEGORIES.stream().map(s -> "'" + s + "'").collect(Collectors.joining(", "));
+            String EXCLUDED_PLATFORM_NAMES_SQL = cacheUtil.EXCLUDED_PLATFORM_NAMES.stream().map(s -> "'" + s + "'").collect(Collectors.joining(", "));
 
             String sql = String.format("""
                      WITH recent_data AS (
