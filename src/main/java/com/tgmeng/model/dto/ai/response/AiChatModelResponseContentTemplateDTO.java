@@ -8,8 +8,9 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class AiChatModelResponseContentTemplateDTO {
-    private List<Result> result;
+    private Result result;
     private String time;
+    private Long usedTime; // 秒
     private String platform;
     private String model;
     private String from;
@@ -17,9 +18,9 @@ public class AiChatModelResponseContentTemplateDTO {
 
     @Data
     public static class Result {
-
-        private String categroy;
-        private List<DataInfo> data;
+        private List<DataInfo> summary;
+        private List<DataInfo> analyze;
+        private List<DataInfo> future;
     }
 
     @Data

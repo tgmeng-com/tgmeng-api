@@ -36,7 +36,7 @@ public class AIRequestUtil {
 
     private final IAIClient aiClient;
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final TypeReference<List<AiChatModelResponseContentTemplateDTO.Result>> RESULT_TYPE = new TypeReference<List<AiChatModelResponseContentTemplateDTO.Result>>() {
+    private static final TypeReference<AiChatModelResponseContentTemplateDTO.Result> RESULT_TYPE = new TypeReference<AiChatModelResponseContentTemplateDTO.Result>() {
     };
     // 重试配置
     private static final int MAX_RETRY_TIMES = 3;      // 最大重试次数
@@ -68,6 +68,7 @@ public class AIRequestUtil {
                             try {
                                 // 2. 发起请求
                                 ForestResponse forestResponse = aiClient.getAIMessage(api, key, aiCommonChatModelRequestDTO);
+                                Long usedTime = (System.currentTimeMillis() - startTime) / 1000;
                                 // 3. 解析响应
                                 AICommonChatModelResponseDTO response = MAPPER.readValue(forestResponse.getContent(), AICommonChatModelResponseDTO.class);
                                 // 4. 提取消息内容并转换
@@ -78,15 +79,17 @@ public class AIRequestUtil {
                                     return null;
                                 }
                                 // 5. 构建结果
-                                List<AiChatModelResponseContentTemplateDTO.Result> resultList = MAPPER.readValue(messageContent, RESULT_TYPE);
+                                AiChatModelResponseContentTemplateDTO.Result aiResult = MAPPER.readValue(messageContent, RESULT_TYPE);
+
                                 AiChatModelResponseContentTemplateDTO result = new AiChatModelResponseContentTemplateDTO()
-                                        .setResult(resultList)
+                                        .setResult(aiResult)
                                         .setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern))
+                                        .setUsedTime(usedTime)
                                         .setPlatform(platform)
                                         .setModel(model)
                                         .setFrom(from)
                                         .setTotalTokens(totalTokens);
-                                log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒，消耗Token: {}", platform, model, attempt, (System.currentTimeMillis() - startTime) / 1000.0, totalTokens);
+                                log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒，消耗Token: {}", platform, model, attempt, usedTime, totalTokens);
                                 return result;
                             } catch (Exception e) {
                                 if (e.getCause() instanceof SocketTimeoutException) {

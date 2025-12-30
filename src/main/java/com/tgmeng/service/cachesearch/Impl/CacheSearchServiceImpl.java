@@ -171,8 +171,11 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         //        .setKey("nvapi-tg8HLdWOQZ8NWJ0PgoLR")
         //        .setFrom("LinuxDo公益站 黑与白站长大佬推荐")
         //        .setModels(List.of(
-        //                "deepseek-ai/deepseek-v3.1",
-        //                "openai/gpt-oss-120b"));
+        //                "qwen/qwen3-next-80b-a3b-instruct",
+        //                "moonshotai/kimi-k2-instruct-0905",
+        //                "bytedance/seed-oss-36b-instruct",
+        //                "nvidia/nemotron-3-nano-30b-a3b"
+        //        ));
         //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfig));
 
         // 生产数据
