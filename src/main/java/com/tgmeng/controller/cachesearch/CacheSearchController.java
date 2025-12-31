@@ -38,12 +38,4 @@ public class CacheSearchController {
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
         return cacheSearchService.getCacheSearchRealTimeSummary();
     }
-
-    // AI分析的突发热点
-    @RequestMapping("/aiSuddenheatpoint")
-    @LicenseRequired(feature = LicenseFeatureEnum.AI_SUMMARY)
-    public ResultTemplateBean getAISuddenheatpoint() {
-        return cacheSearchService.getAISuddenheatpoint();
-    }
-
 }

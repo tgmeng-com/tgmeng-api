@@ -1,6 +1,5 @@
 package com.tgmeng.common.util;
 
-import cn.hutool.core.collection.CollectionUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Expiry;
@@ -126,42 +125,17 @@ public class CacheUtil {
         return null;
     }
 
-    //获取所有热点缓存标题
-    public List<String> getAllCacheTitle() {
-        Collection<Object> cacheValue = getValue();
-        if (CollectionUtil.isEmpty(cacheValue)) {
-            return new ArrayList<>();
-        }
-        List<String> titles = new ArrayList<>();
-        cacheValue.forEach(t->{
-            if (t instanceof Map<?, ?> map) {
-                Object dataInfoObj = map.get("dataInfo");
-                if (dataInfoObj instanceof List<?> dataInfoList) {
-                    dataInfoList.forEach(item -> {
-                        if (item instanceof Map<?, ?> itemMap) {
-                            Object title = itemMap.get("title");
-                            if (title instanceof String s) {
-                                titles.add(s);
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        return titles;
-    }
-
     // 这个是根据平台分类去排除，这些平台噪点大，意义不大，排除掉，比如ai总结、突发热点的时候用
     public Set<String> EXCLUDED_PLATFORM_CATEGORIES_ROOT = Set.of(
-            PlatFormCategoryRootEnum.YANG_MAO.getValue(),
+            //PlatFormCategoryRootEnum.YANG_MAO.getValue(),
             PlatFormCategoryRootEnum.DIAN_SHI.getValue(),
-            PlatFormCategoryRootEnum.SHENG_HUO.getValue(),
-            PlatFormCategoryRootEnum.YING_YIN.getValue(),
-            PlatFormCategoryRootEnum.YOU_XI.getValue(),
-            PlatFormCategoryRootEnum.JIAN_KANG.getValue(),
-            PlatFormCategoryRootEnum.SHE_JI.getValue(),
-            PlatFormCategoryRootEnum.SHE_QU.getValue(),
-            PlatFormCategoryRootEnum.TI_YU.getValue()
+            //PlatFormCategoryRootEnum.SHENG_HUO.getValue(),
+            PlatFormCategoryRootEnum.YING_YIN.getValue()
+            //PlatFormCategoryRootEnum.YOU_XI.getValue()
+            //PlatFormCategoryRootEnum.JIAN_KANG.getValue(),
+            //PlatFormCategoryRootEnum.SHE_JI.getValue()
+            //PlatFormCategoryRootEnum.SHE_QU.getValue()
+            //PlatFormCategoryRootEnum.TI_YU.getValue()
     );
     public Set<String> EXCLUDED_PLATFORM_CATEGORIES = Set.of(
             PlatFormCategoryEnum.BAI_DU.getValue(),

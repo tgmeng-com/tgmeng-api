@@ -36,7 +36,7 @@ forest:
 
 my-config:
   ai:
-    max-retry-times: 3     # AI模型的最大重试次数
+    max-retry-times: 1     # AI模型的最大重试次数
     retry-delay-ms: 1000   # AI模型的重试时间间隔(毫秒)
   proxy:
     top-search:

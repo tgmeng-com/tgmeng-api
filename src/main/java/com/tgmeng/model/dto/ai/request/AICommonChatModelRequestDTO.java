@@ -27,6 +27,9 @@ public class AICommonChatModelRequestDTO {
 
     private List<Input> messages;
 
+    @JsonProperty("max_tokens")
+    private Long maxTokens;
+
     @JsonProperty("response_format")
     private ResponseFormat responseFormat;
 

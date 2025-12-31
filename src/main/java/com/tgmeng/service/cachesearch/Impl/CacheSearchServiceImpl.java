@@ -4,12 +4,12 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.PlatFormCategoryRootEnum;
 import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.util.*;
 import com.tgmeng.model.dto.ai.response.AICommonChatModelResponseCustomDTO;
 import com.tgmeng.model.dto.ai.response.AiChatModelResponseMessageContentForRealtimesummaryDTO;
-import com.tgmeng.model.dto.ai.response.AiChatModelResponseMessageContentForSuddenHeatpointDTO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.Data;
@@ -132,7 +132,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
     public ResultTemplateBean getCacheSearchWordCloud() {
         try {
             // 2. 收集所有 title 文本
-            List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
+            List<String> allOriginalTitles = getCacheTitleByCategory(null);
             if (allOriginalTitles.isEmpty()) {
                 return ResultTemplateBean.success(Collections.emptyList());
             }
@@ -160,12 +160,12 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
     @Override
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
         try {
-            List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
+            List<String> allOriginalTitles = getCacheTitleByCategory(null);
             if (allOriginalTitles.isEmpty()) {
                 return ResultTemplateBean.success(Collections.emptyList());
             }
             // 输入的内容：实时简报模板+热点数据
-            String content = FileUtil.readFileToStringFromClasspath("template/AISummaryTemplate.txt") + allOriginalTitles;
+            String content = FileUtil.readFileToStringFromClasspath("template/AISummaryTemplate.txt") + String.join(System.lineSeparator(), allOriginalTitles);
             //String content = "帮我写一个笑话";
             AICommonChatModelResponseCustomDTO result = aiRequestUtil.aiChat(content);
             // 处理结果
@@ -178,17 +178,16 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         }
     }
 
-    // AI分析的突发热点
-    @Override
-    public ResultTemplateBean getAISuddenheatpoint() {
-        try {
-            //获取缓存里所有数据
-            Map<String, String> paramMap = new HashMap<>();
-            paramMap.put("word", null);
-            paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_ONE_MINUTES.getValue());
-            List<Map<String, Object>> hotList = searchByWord(paramMap).getData();
-
-            // 突发热点查询中需要排除的平台，因为这些平台的热点基本没有意义或者指纹干扰很大
+    // 根据分类获取热点标题，参数为null则传回所有热点标题(排除掉了噪点比较大的一些平台)
+    public List<String> getCacheTitleByCategory(PlatFormCategoryRootEnum categoryRootEnum) {
+        //获取缓存里所有数据
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("word", null);
+        paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_ONE_MINUTES.getValue());
+        List<Map<String, Object>> hotList = searchByWord(paramMap).getData();
+        List<String> titles = new ArrayList<>();
+        // 参数为null，返回全局数据，不包含噪点大的平台
+        if (null == categoryRootEnum) {
             Set<String> EXCLUDED_PLATFORM_CATEGORIES = cacheUtil.EXCLUDED_PLATFORM_CATEGORIES;
             Set<String> EXCLUDED_PLATFORM_CATEGORIES_ROOT = cacheUtil.EXCLUDED_PLATFORM_CATEGORIES_ROOT;
             Set<String> EXCLUDED_PLATFORM_NAMES = cacheUtil.EXCLUDED_PLATFORM_NAMES;
@@ -201,38 +200,22 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                                 && !EXCLUDED_PLATFORM_CATEGORIES.contains(platformCategory)
                                 && !EXCLUDED_PLATFORM_CATEGORIES_ROOT.contains(platformCategoryRoot);
                     }).toList();
-
-            // 取出里面需要给ai的字段
-            List<Map<String, Object>> sendData = filteredList.stream()
-                    .map(item -> {
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("title", item.get("title"));
-                        map.put("url", item.get("url"));
-                        map.put("platformName", item.get("platformName"));
-                        map.put("dataUpdateTime", item.get("dataUpdateTime"));
-                        return map;
+            // 取出里面的title
+            titles = filteredList.stream()
+                    .map(map -> (String) map.get("title"))
+                    .toList();
+        } else {
+            // 返回单独分类下的所有标题
+            List<Map<String, Object>> filteredList = hotList.stream()
+                    .filter(item -> {
+                        String platformCategoryRoot = Objects.toString(item.get("platformCategoryRoot"), "");
+                        return StrUtil.equals(platformCategoryRoot, categoryRootEnum.getValue());
                     }).toList();
-            if (sendData.isEmpty()) {
-                return ResultTemplateBean.success(Collections.emptyList());
-            }
-
-            // TODO 后续如果模型量不够用，那就先只发送标题，就用这个，把上面带url和分类、时间的注释掉
-            //List<String> allOriginalTitles = cacheUtil.getAllCacheTitle();
-            //if (allOriginalTitles.isEmpty()) {
-            //    return ResultTemplateBean.success(Collections.emptyList());
-            //}
-
-            // 输入的内容：突发热点模板模板+热点数据
-            String content = FileUtil.readFileToStringFromClasspath("template/AISuddenHeatpointTemplate.txt") + sendData;
-            AICommonChatModelResponseCustomDTO result = aiRequestUtil.aiChat(content);
-            // 处理结果
-            AiChatModelResponseMessageContentForSuddenHeatpointDTO data = MAPPER.readValue(result.getMessageContent(), AiChatModelResponseMessageContentForSuddenHeatpointDTO.class);
-            result.setData(data);
-            result.setMessageContent(null);
-            return ResultTemplateBean.success(result);
-        } catch (Exception e) {
-            throw new ServerException("AI简报处理失败：" + e.getMessage());
+            titles = filteredList.stream()
+                    .map(map -> (String) map.get("title"))
+                    .toList();
         }
+        return titles;
     }
 
     /*------------------------- 辅助方法 -------------------------*/

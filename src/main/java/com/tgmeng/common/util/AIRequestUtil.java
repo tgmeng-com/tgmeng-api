@@ -3,10 +3,12 @@ package com.tgmeng.common.util;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpStatus;
 import com.dtflys.forest.http.ForestResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.config.AIPlatformConfigService;
+import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.ai.IAIClient;
 import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
 import com.tgmeng.model.dto.ai.request.AICommonChatModelRequestDTO;
@@ -60,14 +62,13 @@ public class AIRequestUtil {
         //AIPlatformConfig aiPlatformConfigTest = new AIPlatformConfig()
         //        .setPlatform("NVIDIA")
         //        .setApi("https://integrate.api.nvidia.com/v1/chat/completions")
-        //        .setKey("nvapi-tg8HLdWOQZ8NWJ0PgoLR")
+        //        .setKey("nvapi-sQC2yYo1C0lfnMAZU9bGFE7QT")
         //        .setFrom("LinuxDo公益站 黑与白站长大佬推荐")
         //        .setModels(List.of(
-        //                //"bytedance/seed-oss-36b-instruct",  //512K
-        //                "qwen/qwen3-next-80b-a3b-instruct",
+        //                "deepseek-ai/deepseek-v3.1",
         //                "moonshotai/kimi-k2-instruct-0905",
-        //                "bytedance/seed-oss-36b-instruct",
-        //                "nvidia/nemotron-3-nano-30b-a3b"
+        //                "qwen/qwen3-next-80b-a3b-instruct",
+        //                "bytedance/seed-oss-36b-instruct"
         //        ));
         //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfigTest));
         // AI平台
@@ -91,27 +92,36 @@ public class AIRequestUtil {
                             try {
                                 // 2. 发起请求
                                 ForestResponse forestResponse = aiClient.getAIMessage(api, key, aiCommonChatModelRequestDTO);
-                                Long usedTime = (System.currentTimeMillis() - startTime) / 1000;
-                                // 3. 解析响应
-                                AICommonChatModelResponseDTO response = MAPPER.readValue(forestResponse.getContent(), AICommonChatModelResponseDTO.class);
-                                // 4. 提取消息内容并转换
-                                String messageContent = extractMessageContent(response);
-                                if (messageContent == null) {
-                                    log.warn("[{},{}] 未识别的响应类型: {}", platform, model, response.getClass().getName());
-                                    return null;
+                                if (HttpStatus.HTTP_OK == forestResponse.getStatusCode()) {
+                                    Long usedTime = (System.currentTimeMillis() - startTime) / 1000;
+                                    // 3. 解析响应
+                                    AICommonChatModelResponseDTO response = MAPPER.readValue(forestResponse.getContent(), AICommonChatModelResponseDTO.class);
+                                    // 4. 提取消息内容并转换
+                                    String messageContent = extractMessageContent(response);
+                                    if (messageContent == null) {
+                                        log.warn("[{},{}] 未识别的响应类型: {}", platform, model, response.getClass().getName());
+                                        return null;
+                                    }
+                                    // 提取有用的结果
+                                    Long totalTokens = response.getUsage().getTotalTokens();
+                                    AICommonChatModelResponseCustomDTO result = new AICommonChatModelResponseCustomDTO()
+                                            .setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern))
+                                            .setUsedTime(usedTime)
+                                            .setPlatform(platform)
+                                            .setModel(model)
+                                            .setFrom(from)
+                                            .setMessageContent(messageContent)
+                                            .setTotalTokens(totalTokens);
+                                    log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒，消耗Token: {}", platform, model, attempt, usedTime, totalTokens);
+                                    return result;
+                                } else {
+                                    String message;
+                                    message = forestResponse.getContent();
+                                    if (message == null) {
+                                        message = forestResponse.getException().getMessage();
+                                    }
+                                    throw new ServerException(message);
                                 }
-                                // 提取有用的结果
-                                Long totalTokens = response.getUsage().getTotalTokens();
-                                AICommonChatModelResponseCustomDTO result = new AICommonChatModelResponseCustomDTO()
-                                        .setTime(TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern))
-                                        .setUsedTime(usedTime)
-                                        .setPlatform(platform)
-                                        .setModel(model)
-                                        .setFrom(from)
-                                        .setMessageContent(messageContent)
-                                        .setTotalTokens(totalTokens);
-                                log.info("👄👄👄👄👄AI时报大模型分析成功：[{},{}] 请求成功 ✅ 第{}次尝试 耗时: {}秒，消耗Token: {}", platform, model, attempt, usedTime, totalTokens);
-                                return result;
                             } catch (Exception e) {
                                 if (e.getCause() instanceof SocketTimeoutException) {
                                     log.error("[{},{}] 🚨🚨🚨🚨🚨🚨请求超时: {}", platform, model, e.getMessage());
@@ -146,6 +156,7 @@ public class AIRequestUtil {
                 .setInput(
                         CollectionUtil.toList(new AICommonChatModelRequestDTO.Input().setRole("user")
                                 .setContent(content)))
+                .setMaxTokens(20000L)
                 .setResponseFormat(new AICommonChatModelRequestDTO.ResponseFormat().setType("json_object"));
     }
 

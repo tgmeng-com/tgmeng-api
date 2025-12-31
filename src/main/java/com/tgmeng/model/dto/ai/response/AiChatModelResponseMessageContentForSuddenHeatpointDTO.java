@@ -16,7 +16,8 @@ public class AiChatModelResponseMessageContentForSuddenHeatpointDTO {
     @Data
     public static class DataInfo {
         private String title;
-        private List<HostPoints> hostPoints;
+        private Long count;
+        //private List<HostPoints> hostPoints;
         private String summary;
         private String analyze;
         private String future;

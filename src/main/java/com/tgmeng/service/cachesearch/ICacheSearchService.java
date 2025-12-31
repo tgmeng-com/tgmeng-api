@@ -13,5 +13,4 @@ public interface ICacheSearchService {
 
     ResultTemplateBean getCacheSearchRealTimeSummary();
 
-    ResultTemplateBean getAISuddenheatpoint();
 }
