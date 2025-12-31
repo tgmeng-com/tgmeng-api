@@ -5,6 +5,7 @@ import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.business.LicenseFeatureEnum;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,9 +34,9 @@ public class CacheSearchController {
     }
 
     // 实时简报
-    @RequestMapping("/realtimesummary")
+    @RequestMapping("/realtimesummary/{type}")
     @LicenseRequired(feature = LicenseFeatureEnum.AI_SUMMARY)
-    public ResultTemplateBean getCacheSearchRealTimeSummary() {
+    public ResultTemplateBean getCacheSearchRealTimeSummary(@PathVariable("type") String type) {
         return cacheSearchService.getCacheSearchRealTimeSummary();
     }
 }

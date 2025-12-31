@@ -38,6 +38,7 @@ my-config:
   ai:
     max-retry-times: 1     # AI模型的最大重试次数
     retry-delay-ms: 1000   # AI模型的重试时间间隔(毫秒)
+    max-tokens: 40000      # AI输出的最大token限制
   proxy:
     top-search:
       enabled: false            # 是否开启代理

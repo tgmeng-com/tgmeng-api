@@ -42,10 +42,12 @@ public class AIRequestUtil {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     // 重试配置
-    @Value("${my-config.ai.max-retry-times:false}")
+    @Value("${my-config.ai.max-retry-times:1}")
     private int MAX_RETRY_TIMES;
-    @Value("${my-config.ai.retry-delay-ms:false}")
+    @Value("${my-config.ai.retry-delay-ms:1000}")
     private long RETRY_DELAY_MS;
+    @Value("${my-config.ai.max-tokens:40000}")
+    private long MAX_TOKENS;
 
     @Autowired
     private AIPlatformConfigService aiPlatformConfigService;
@@ -156,7 +158,7 @@ public class AIRequestUtil {
                 .setInput(
                         CollectionUtil.toList(new AICommonChatModelRequestDTO.Input().setRole("user")
                                 .setContent(content)))
-                .setMaxTokens(20000L)
+                .setMaxTokens(MAX_TOKENS)
                 .setResponseFormat(new AICommonChatModelRequestDTO.ResponseFormat().setType("json_object"));
     }
 

@@ -217,7 +217,22 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/cctv/16", PlatformConfig.builder().build());
         configs.put("/api/topsearch/cctv/17", PlatformConfig.builder().build());
         configs.put("/api/topsearch/pengpaixinwen", PlatformConfig.builder().build());
-        configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(300L).timeout(300L).build());
+
+        configs.put("/api/cachesearch/realtimesummary/all", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/news", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/wool", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/media", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/tv", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/life", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/community", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/finance", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/sports", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/technology", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/design", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/audiovideo", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/game", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary/health", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+
         configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
 

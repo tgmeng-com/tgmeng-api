@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.business.PlatFormCategoryRootEnum;
 import com.tgmeng.common.enums.business.SearchModeEnum;
+import com.tgmeng.common.enums.enumcommon.EnumUtils;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.util.*;
 import com.tgmeng.model.dto.ai.response.AICommonChatModelResponseCustomDTO;
@@ -160,7 +161,8 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
     @Override
     public ResultTemplateBean getCacheSearchRealTimeSummary() {
         try {
-            List<String> allOriginalTitles = getCacheTitleByCategory(null);
+            PlatFormCategoryRootEnum categoryRootEnum = EnumUtils.getEnumByKey(PlatFormCategoryRootEnum.class, HttpRequestUtil.getRequestPathLastWord());
+            List<String> allOriginalTitles = getCacheTitleByCategory(categoryRootEnum);
             if (allOriginalTitles.isEmpty()) {
                 return ResultTemplateBean.success(Collections.emptyList());
             }
