@@ -217,7 +217,7 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/cctv/16", PlatformConfig.builder().build());
         configs.put("/api/topsearch/cctv/17", PlatformConfig.builder().build());
         configs.put("/api/topsearch/pengpaixinwen", PlatformConfig.builder().build());
-        configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(60L).timeout(300L).build());
+        configs.put("/api/cachesearch/realtimesummary", PlatformConfig.builder().requestCycle(300L).timeout(300L).build());
         configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
         configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
 
