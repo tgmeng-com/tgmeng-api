@@ -7,7 +7,7 @@ import cn.hutool.http.HttpStatus;
 import com.dtflys.forest.http.ForestResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tgmeng.common.config.AIPlatformConfigService;
+import com.tgmeng.common.config.SystemConfigService;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.ai.IAIClient;
 import com.tgmeng.model.dto.ai.config.AIPlatformConfig;
@@ -50,7 +50,7 @@ public class AIRequestUtil {
     private long MAX_TOKENS;
 
     @Autowired
-    private AIPlatformConfigService aiPlatformConfigService;
+    private SystemConfigService systemConfigService;
 
     /**
      * description: 获取系统里配置的所有代理，不管启用没启用的
@@ -74,7 +74,7 @@ public class AIRequestUtil {
         //        ));
         //List<AIPlatformConfig> aiPlatformConfigs = new ArrayList<>(List.of(aiPlatformConfigTest));
         // AI平台
-        List<AIPlatformConfig> aiPlatformConfigs = aiPlatformConfigService.getAiPlatformConfigs();
+        List<AIPlatformConfig> aiPlatformConfigs = systemConfigService.getAiPlatformConfigs();
 
         for (AIPlatformConfig aiPlatformConfig : aiPlatformConfigs) {
             if (ObjUtil.isNotEmpty(aiPlatformConfig)) {

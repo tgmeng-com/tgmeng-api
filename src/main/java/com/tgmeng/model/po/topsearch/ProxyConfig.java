@@ -6,18 +6,18 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class ProxyPO {
+public class ProxyConfig {
 
     /** proxy的用户名 */
-    private String proxyUser;
+    private String user;
     /** proxy的密码 */
-    private String proxyPassword;
+    private String password;
     /** proxy的host */
-    private String proxyHost;
+    private String host;
     /** proxy的Port */
-    private Integer proxyPort;
+    private Integer port;
     /** proxy的类型，分http和sock */
-    private ProxyTypeEnum proxyType;
+    private ProxyTypeEnum type;
     /** 在全局开启代理的情况下，这里控制启用哪一条代理 */
     private Boolean enabled;
 }

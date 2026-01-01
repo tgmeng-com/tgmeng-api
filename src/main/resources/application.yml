@@ -35,13 +35,60 @@ forest:
 
 
 my-config:
+  admin-password: "123321"              # 管理员密码，用于调用一些内部接口，比如生成key、查询数据、执行sql、合并历史文件等等（一定要配置一下，因为项目开源，管理员接口其他人是知道的）
+  google-ads-close-password: "123321"   # 如果站内用到谷歌广，然后用户输入这个密码就可以关闭谷歌广告，可忽略
+  umami-website-tgmeng-com: "123321"    # 站内用的umami统计的websiteID，可忽略
   ai:
     max-retry-times: 3     # AI模型的最大重试次数
-    retry-delay-ms: 1000   # AI模型的重试时间间隔(毫秒)
+    retry-delay-ms: 1000   # AI模型的重试时间间隔(毫秒)，每次调用会循环下面所有平台所有的模型，一旦成功就返回，不成功就重试本平台，达到上面的重试次数后，就换下一个模型、下一个平台轮询请求
     max-tokens: 40000      # AI输出的最大token限制
+    ai-platform-config: >  # AI平台的配置
+      [
+        {
+          "platform": "叼毛AI",
+          "api":"https://test.api.ai.com/v1/chat/completions",
+          "key": "******sk-swe42******",
+          "from": "叼毛站站长",
+          "models": 
+              [
+                  "qwen/qwen3-next-80b-a3b-instruct",
+                  "......"
+              ]
+        },
+        {
+          "platform": "AI刘季一万钱",
+                    "api":"https://test.api.ai.com/v1/chat/completions",
+                    "key": "******sk-swe42******",
+                    "from": "邦子牛逼",
+                    "models": 
+                        [
+                            "qwen/qwen3-next-80b-a3b-instruct",
+                            "......"
+                        ]
+        }
+      ]
   proxy:
     top-search:
       enabled: false            # 是否开启代理
+    config: >                   # 代理配置，可以配置很多个HTTP和很多个SOCKS的，系统每次请求在enabled的里面随机取一个
+          [
+              {
+                "user": "1234",
+                "password":"1234",
+                "host": "123.123.123.123",
+                "port": 1234,
+                "type": "HTTP",
+                "enabled": true
+              },
+              {
+                "user": "1234",
+                "password": "1234",
+                "host": "123.123.123.123",
+                "port": 1234,
+                "type": "SOCKS",
+                "enabled": true
+              }
+          ]
   schedule:
     controller-api-top-search:
       enabled: true                 #是否开启定时任务，不开启的话，所有数据都是从接口获取，下面的其他这些配置就没用了

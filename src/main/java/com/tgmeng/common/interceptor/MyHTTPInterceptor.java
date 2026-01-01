@@ -3,10 +3,11 @@ package com.tgmeng.common.interceptor;
 import com.dtflys.forest.http.ForestProxy;
 import com.dtflys.forest.http.ForestRequest;
 import com.dtflys.forest.interceptor.Interceptor;
+import com.tgmeng.common.config.SystemConfigService;
 import com.tgmeng.common.enums.business.ProxyTypeEnum;
-import com.tgmeng.common.util.ProxyUtil;
-import com.tgmeng.model.po.topsearch.ProxyPO;
+import com.tgmeng.model.po.topsearch.ProxyConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,9 @@ public class MyHTTPInterceptor implements Interceptor {
     @Value("${my-config.proxy.top-search.enabled:false}")
     private Boolean proxyEnabled;
 
+    @Autowired
+    private SystemConfigService systemConfigService;
+
     /**
      * description: 请求开始前，判断并进行代理设置
      * method: beforeExecute
@@ -43,26 +47,26 @@ public class MyHTTPInterceptor implements Interceptor {
         //判断是否开启了全局代理
         if (proxyEnabled){
             //获取启用所有启用的代理
-            List<ProxyPO> proxyEnabledList = ProxyUtil.getProxyEnabledList();
+            List<ProxyConfig> proxyEnabledList = systemConfigService.getProxyConfigs();
             if (proxyEnabledList.isEmpty()) {
                 log.info("没有启用http请求代理");
                 return true;
             }
             //随机取其中一个代理
-            ProxyPO proxyEnabledRandomChoose = proxyEnabledList.get(ThreadLocalRandom.current().nextInt(proxyEnabledList.size()));
+            ProxyConfig proxyEnabledRandomChoose = proxyEnabledList.get(ThreadLocalRandom.current().nextInt(proxyEnabledList.size()));
             log.info("启用了http请求代理，本次请求选择：{}", proxyEnabledRandomChoose.toString());
             //判断代理类型是HTTP或者SOCKS
-            ProxyTypeEnum proxyType = proxyEnabledRandomChoose.getProxyType();
+            ProxyTypeEnum proxyType = proxyEnabledRandomChoose.getType();
             switch (proxyType) {
                 case HTTP:
-                    req.proxy(ForestProxy.http(proxyEnabledRandomChoose.getProxyHost(), proxyEnabledRandomChoose.getProxyPort())
-                            .username(proxyEnabledRandomChoose.getProxyUser())
-                            .password(proxyEnabledRandomChoose.getProxyPassword()));
+                    req.proxy(ForestProxy.http(proxyEnabledRandomChoose.getHost(), proxyEnabledRandomChoose.getPort())
+                            .username(proxyEnabledRandomChoose.getUser())
+                            .password(proxyEnabledRandomChoose.getPassword()));
                     break;
                 case SOCKS:
-                    req.proxy(ForestProxy.socks(proxyEnabledRandomChoose.getProxyHost(), proxyEnabledRandomChoose.getProxyPort())
-                            .username(proxyEnabledRandomChoose.getProxyUser())
-                            .password(proxyEnabledRandomChoose.getProxyPassword()));
+                    req.proxy(ForestProxy.socks(proxyEnabledRandomChoose.getHost(), proxyEnabledRandomChoose.getPort())
+                            .username(proxyEnabledRandomChoose.getUser())
+                            .password(proxyEnabledRandomChoose.getPassword()));
                     break;
                 default:
                     //不是HTTP也不是SOCKS，这里先忽略

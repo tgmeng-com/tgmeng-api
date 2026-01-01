@@ -49,6 +49,9 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     @Value("${my-config.history.sudden-heat-point-result-limit}")
     private Integer suddenHeatPointResultLimit;
 
+    @Value("${my-config.admin-password}")
+    private String adminPassword;
+
     @Autowired
     private DuckDBUtil duckdb;
     @Autowired
@@ -325,7 +328,6 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
      */
     @Override
     public ResultTemplateBean mergeParquetByGlob(Map<String, String> requestBody) {
-        String adminPassword = System.getenv("ADMIN_PASSWORD");
         String password = String.valueOf(requestBody.get("password"));
         if (!adminPassword.equals(password)) {
             return ResultTemplateBean.success("管理员密码无效");
@@ -442,7 +444,6 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     //执行sql，自己跑着用
     @Override
     public ResultTemplateBean customexcutesql(Map<String, String> requestBody) {
-        String adminPassword = System.getenv("ADMIN_PASSWORD");
         String password = requestBody.get("password");
         String mode = requestBody.get("mode");
         if (adminPassword.equals(password)) {

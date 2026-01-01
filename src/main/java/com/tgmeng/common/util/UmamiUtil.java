@@ -2,13 +2,13 @@ package com.tgmeng.common.util;
 
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.RandomUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.UmamiPostDataBean;
 import com.tgmeng.common.forest.client.umami.IUmamiClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UmamiUtil {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    @Value("${my-config.umami-website-tgmeng-com}")
+    private String umamiWebsiteTgmengCom;
 
     @Autowired
     private IUmamiClient umamiClient;
@@ -38,7 +39,7 @@ public class UmamiUtil {
         UmamiPostDataBean umamiPostDataBean = new UmamiPostDataBean();
         UmamiPostDataBean.Payload payload = new UmamiPostDataBean.Payload();
         payload.setName(metricName);
-        payload.setWebsite(System.getenv("UMAMI_WEBSITE_TGMENG_COM"));
+        payload.setWebsite(umamiWebsiteTgmengCom);
 
         UmamiPostDataBean.DataInfo data = new UmamiPostDataBean.DataInfo();
         data.setValue(value);

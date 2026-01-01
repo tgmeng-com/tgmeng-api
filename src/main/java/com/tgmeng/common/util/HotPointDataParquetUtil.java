@@ -29,6 +29,9 @@ public class HotPointDataParquetUtil {
     @Value("${my-config.history.keep-day}")
     private Integer historyDataKeepDay;
 
+    @Value("${my-config.admin-password}")
+    private String adminPassword;
+
     private final ICacheSearchService cacheSearchService;
     private final ITopSearchHistoryService topSearchHistoryService;
 
@@ -76,7 +79,7 @@ public class HotPointDataParquetUtil {
     // 合并昨天的数据到一个parquet中
     public void mergeYesterdaySchedule() {
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("password", System.getenv("ADMIN_PASSWORD"));
+        paramMap.put("password", adminPassword);
         paramMap.put("sourceDir", historyDataDir + TimeUtil.getYesterdayDateString("yyyy/MM/dd"));
         paramMap.put("targetFile", TimeUtil.getYesterdayDateString() + ".parquet");
         topSearchHistoryService.mergeParquetByGlob(paramMap);

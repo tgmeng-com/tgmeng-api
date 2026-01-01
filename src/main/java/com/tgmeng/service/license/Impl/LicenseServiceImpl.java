@@ -15,6 +15,7 @@ import com.tgmeng.common.util.TimeUtil;
 import com.tgmeng.service.license.ILicenseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -25,6 +26,9 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class LicenseServiceImpl implements ILicenseService {
+
+    @Value("${my-config.admin-password}")
+    private String adminPassword;
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -60,7 +64,6 @@ public class LicenseServiceImpl implements ILicenseService {
 
     @Override
     public ResultTemplateBean initLicenseFile(Map<String, Object> requestBody) {
-        String adminPassword = System.getenv("ADMIN_PASSWORD");
         String password = requestBody.get("password").toString();
         if (adminPassword.equals(password)) {
             int count = Integer.parseInt(requestBody.get("count").toString());
