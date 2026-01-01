@@ -32,10 +32,11 @@ jobs:
       DOCKER_IMAGE_NAME: tgmeng-api                                  # DockerHub 镜像名称（也就是dockerHub里面的仓库的名字）
       CONTAINER_NAME: tgmeng-api
       GHCR_IMAGE_NAME: tgmeng-api                                   # GHCR 镜像名称（建议是仓库名）
-      MY_CONFIG_AI_PLATFORM_CONFIG: ${{ secrets.MY_CONFIG_AI_PLATFORM_CONFIG }}                  # 把这个在github设置的变量传递给服务器：AI平台的配置
+      MY_CONFIG_AI_AI_PLATFORM_CONFIG: ${{ secrets.MY_CONFIG_AI_AI_PLATFORM_CONFIG }}            # 把这个在github设置的变量传递给服务器：AI平台的配置
       MY_CONFIG_GOOGLE_ADS_CLOSE_PASSWORD: ${{ secrets.MY_CONFIG_GOOGLE_ADS_CLOSE_PASSWORD }}    # 把这个在github设置的变量传递给服务器：关闭谷歌广告
       MY_CONFIG_UMAMI_WEBSITE_TGMENG_COM: ${{ secrets.MY_CONFIG_UMAMI_WEBSITE_TGMENG_COM }}      # 把这个在github设置的变量传递给服务器：umami网站的websiteID
       MY_CONFIG_ADMIN_PASSWORD: ${{ secrets.MY_CONFIG_ADMIN_PASSWORD }}                          # 把这个在github设置的变量传递给服务器：管理员密码
+      MY_CONFIG_PROXY_CONFIG: ${{ secrets.MY_CONFIG_PROXY_CONFIG }}
 
     steps:
       # 获取代码并构建项目
@@ -156,7 +157,7 @@ jobs:
           username: ${{ env.SERVER_USER }}
           password: ${{ env.SERVER_PASSWORD }}
           port: ${{ env.SERVER_PORT }}
-          envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN,DOCKER_IMAGE_NAME,DOCKER_IMAGE_TAG,CONTAINER_NAME,PORT,REMOTE_APP_DIR,MY_CONFIG_AI_PLATFORM_CONFIG,MY_CONFIG_ADMIN_PASSWORD,MY_CONFIG_GOOGLE_ADS_CLOSE_PASSWORD,MY_CONFIG_UMAMI_WEBSITE_TGMENG_COM
+          envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN,DOCKER_IMAGE_NAME,DOCKER_IMAGE_TAG,CONTAINER_NAME,PORT,REMOTE_APP_DIR,MY_CONFIG_AI_AI_PLATFORM_CONFIG,MY_CONFIG_ADMIN_PASSWORD,MY_CONFIG_PROXY_CONFIG,MY_CONFIG_GOOGLE_ADS_CLOSE_PASSWORD,MY_CONFIG_UMAMI_WEBSITE_TGMENG_COM
           script: |
             echo "[$(date)] 准备部署并测试 Docker 容器..."
             
@@ -201,10 +202,11 @@ jobs:
               -v ${REMOTE_APP_DIR}/data:/app/data \
               -v ${REMOTE_APP_DIR}/heapdumps:/app/heapdumps \
               -e SERVER_PORT=${PORT} \
-              -e MY_CONFIG_AI_PLATFORM_CONFIG="${MY_CONFIG_AI_PLATFORM_CONFIG}" \
+              -e MY_CONFIG_AI_AI_PLATFORM_CONFIG="${MY_CONFIG_AI_AI_PLATFORM_CONFIG}" \
               -e MY_CONFIG_ADMIN_PASSWORD="${MY_CONFIG_ADMIN_PASSWORD}" \
               -e MY_CONFIG_GOOGLE_ADS_CLOSE_PASSWORD="${MY_CONFIG_GOOGLE_ADS_CLOSE_PASSWORD}" \
               -e MY_CONFIG_UMAMI_WEBSITE_TGMENG_COM="${MY_CONFIG_UMAMI_WEBSITE_TGMENG_COM}" \
+              -e MY_CONFIG_PROXY_CONFIG="${MY_CONFIG_PROXY_CONFIG}" \
               -e JAVA_OPTS="-Xms1536m -Xmx2048m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heapdumps -XX:ErrorFile=/app/logs/hs_err_%p.log" \
               -e TZ=Asia/Shanghai \
               ${DOCKERHUB_USERNAME}/${DOCKER_IMAGE_NAME}:latest
