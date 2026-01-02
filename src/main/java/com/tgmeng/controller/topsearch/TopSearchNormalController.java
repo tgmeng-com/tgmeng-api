@@ -829,6 +829,11 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/xiaozhongruanjian")
+    public ResultTemplateBean getxiaozhongruanjianSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
 
 
 

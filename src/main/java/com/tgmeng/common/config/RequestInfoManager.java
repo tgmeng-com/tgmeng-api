@@ -2626,6 +2626,21 @@ public class RequestInfoManager {
                 .urlSelector("h2 > a")
                 .register();
 
+        addJsonConfig("https://meta.appinn.net/hot.json")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("小众软件")
+                .platformCategory(PlatFormCategoryRootEnum.SHE_QU.getValue())
+                .platformCategoryRoot(PlatFormCategoryRootEnum.SHE_QU.getValue())
+                .interfaceUrl("/api/topsearch/xiaozhongruanjian")
+                .hotTitleUrlPrefix("https://meta.appinn.net/t/topic/")
+                .addArea()
+                .rootSelector("$.topic_list.topics")
+                .titleSelector("$.title")
+                .urlSelector("$.id")
+                .hotScoreSelector("$.views")
+                .register();
+
+
 
     }
 }
