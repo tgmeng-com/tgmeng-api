@@ -67,11 +67,11 @@ public class ControllerApiSchedule {
         hotPointDataParquetUtil.saveToParquet();
     }
 
-    // 每年 1 月 1 号早上 6 点执行一次
-    @Scheduled(cron = "0 0 6 1 1 ?")
-    public void mergeLastYearSchedule() {
-        hotPointDataParquetUtil.mergeLastYearSchedule();
-    }
+    //// 每年 1 月 1 号早上 6 点执行一次 TODO 每年的数据就先不压缩了，不然单个文件会到20G，那样不论是说转移到云存储还是读取文件内容，效率上都会低很多
+    //@Scheduled(cron = "0 0 6 1 1 ?")
+    //public void mergeLastYearSchedule() {
+    //    hotPointDataParquetUtil.mergeLastYearSchedule();
+    //}
 
     // 每月1号凌晨4点，合并上一个月的数据
     @Scheduled(cron = "0 0 4 1 * ?")
