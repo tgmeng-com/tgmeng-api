@@ -67,10 +67,28 @@ public class ControllerApiSchedule {
         hotPointDataParquetUtil.saveToParquet();
     }
 
+    // 每年 1 月 1 号早上 6 点执行一次
+    @Scheduled(cron = "0 0 6 1 1 ?")
+    public void mergeLastYearSchedule() {
+        hotPointDataParquetUtil.mergeLastYearSchedule();
+    }
+
+    // 每月1号凌晨4点，合并上一个月的数据
+    @Scheduled(cron = "0 0 4 1 * ?")
+    public void mergeLastMonthSchedule() {
+        hotPointDataParquetUtil.mergeLastMonthSchedule();
+    }
+
     // 每天2点，把昨天的热点数据合并到天级别
     @Scheduled(cron = "0 0 2 * * ?")
     public void mergeYesterdaySchedule() {
         hotPointDataParquetUtil.mergeYesterdaySchedule();
+    }
+
+    // 每小时的第10分钟，合并上一个小时的数据（）
+    @Scheduled(cron = "0 10 * * * ?")
+    public void mergeLastHourSchedule() {
+        hotPointDataParquetUtil.mergeLastHourSchedule();
     }
 
     // 定时清理历史热点数据，每天3点清理数天前的历史数据，可以在yml中配置

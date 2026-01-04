@@ -76,12 +76,39 @@ public class HotPointDataParquetUtil {
         return String.format("%s/%d/%02d/%02d/%02d/%02d.parquet", historyDataDir, currentTimeYear, currentTimeMonth, currentTimeDay, currentTimeHour, currentTimeMinute);
     }
 
+    // 合并上一年的数据
+    public void mergeLastYearSchedule() {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("password", adminPassword);
+        paramMap.put("sourceDir", historyDataDir + TimeUtil.getLastYearDateString("yyyy"));
+        paramMap.put("targetFile", TimeUtil.getLastYearDateString("yyyy") + ".parquet");
+        topSearchHistoryService.mergeParquetByGlob(paramMap);
+    }
+
+    // 合并上一个月的数据
+    public void mergeLastMonthSchedule() {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("password", adminPassword);
+        paramMap.put("sourceDir", historyDataDir + TimeUtil.getLastMonthDateString("yyyy/MM"));
+        paramMap.put("targetFile", TimeUtil.getLastMonthDateString("yyyy-MM") + ".parquet");
+        topSearchHistoryService.mergeParquetByGlob(paramMap);
+    }
+
     // 合并昨天的数据到一个parquet中
     public void mergeYesterdaySchedule() {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("password", adminPassword);
         paramMap.put("sourceDir", historyDataDir + TimeUtil.getYesterdayDateString("yyyy/MM/dd"));
         paramMap.put("targetFile", TimeUtil.getYesterdayDateString() + ".parquet");
+        topSearchHistoryService.mergeParquetByGlob(paramMap);
+    }
+
+    // 合并上一个小时的文件到parquet中
+    public void mergeLastHourSchedule() {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("password", adminPassword);
+        paramMap.put("sourceDir", historyDataDir + TimeUtil.getLastHourDateString("yyyy/MM/dd/HH"));
+        paramMap.put("targetFile", TimeUtil.getLastHourDateString("yyyy-MM-dd-HH") + ".parquet");
         topSearchHistoryService.mergeParquetByGlob(paramMap);
     }
 

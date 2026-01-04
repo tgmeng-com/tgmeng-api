@@ -983,12 +983,40 @@ public class TimeUtil {
         return LocalDate.now(defaultZoneId).minusDays(1).format(DateTimeFormatter.ofPattern(defultSimplePattern));
     }
 
+
+    /**
+     * 获取上一年的日期字符串，自定义格式
+     */
+    public String getLastYearDateString(String pattern) {
+        return LocalDate.now(defaultZoneId).minusYears(1)
+                .format(DateTimeFormatter.ofPattern(StrUtil.isEmpty(pattern) ? defaultPattern : pattern));
+    }
+
+    /**
+     * 获取上一个月的日期字符串，自定义格式
+     */
+    public String getLastMonthDateString(String pattern) {
+        return LocalDate.now(defaultZoneId).minusMonths(1)
+                .format(DateTimeFormatter.ofPattern(StrUtil.isEmpty(pattern) ? defaultPattern : pattern));
+    }
+
     /**
      * 获取昨天的日期字符串，自定义格式
      */
     public String getYesterdayDateString(String pattern) {
         return LocalDate.now(defaultZoneId).minusDays(1)
                 .format(DateTimeFormatter.ofPattern(StrUtil.isEmpty(pattern) ? defaultPattern : pattern));
+    }
+
+
+    /**
+     * 获取上一个小时的日期字符串，自定义格式
+     */
+    public static String getLastHourDateString(String pattern) {
+        return LocalDateTime.now(defaultZoneId)
+                .withMinute(0).withSecond(0).withNano(0)
+                .minusHours(1)
+                .format(DateTimeFormatter.ofPattern(pattern));
     }
 
     public Date getDateAfterNowSomeDays(int days) {
