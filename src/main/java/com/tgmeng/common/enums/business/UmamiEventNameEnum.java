@@ -17,15 +17,8 @@ import lombok.Getter;
 */
 @Getter
 @AllArgsConstructor
-public enum SubscriptionChannelTypeEnum implements INameValueEnum<String,String> {
-    DINGDING("DINGDING", "DINGDING", "钉钉", true,1),
-    TELEGRAM("TELEGRAM", "TELEGRAM", "TG", true,2),
-    EMAIL("EMAIL", "EMAIL", "邮箱", true,3),
-    QIYEWEIXIN("QIYEWEIXIN", "QIYEWEIXIN", "企业微信", true,3),
-    FEISHU("FEISHU", "FEISHU", "飞书", true,4),
-    NTFY("NTFY", "NTFY", "NTFY", true,4),
-     GOTIFY("GOTIFY", "GOTIFY", "GOTIFY", true,4),
-     WANGYIPOPO("WANGYIPOPO", "WANGYIPOPO", "网易POPO", true,5);
+public enum UmamiEventNameEnum implements INameValueEnum<String,String> {
+     DING_YUE_TUI_SONG("DING_YUE_TUI_SONG", "订阅推送", "", true,1);
 
     private final String key;
     private final String value;

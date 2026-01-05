@@ -7,6 +7,7 @@ import com.dtflys.forest.http.ForestResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
+import com.tgmeng.common.enums.business.UmamiEventNameEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
@@ -121,7 +122,7 @@ public class WangYiPOPOWebHook {
                 log.error("网易POPO推送失败：{}", e.getMessage());
             }
         }
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.WANGYIPOPO.getDescription(), count);
+        umamiUtil.sendEvent(UmamiEventNameEnum.DING_YUE_TUI_SONG.getValue(), SubscriptionChannelTypeEnum.WANGYIPOPO.getDescription(), count, accessKey);
     }
 
     private String getSignData(LicenseBean.SubscriptionPlatformConfig push, String timestamp) {

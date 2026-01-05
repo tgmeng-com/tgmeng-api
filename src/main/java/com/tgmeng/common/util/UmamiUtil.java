@@ -23,10 +23,10 @@ public class UmamiUtil {
     private IUmamiClient umamiClient;
 
     // 事件名和数据值
-    public void sendEvent(String metricName, Integer value) {
+    public void sendEvent(String eventName, String metricName, Integer value, String targetUser) {
         StopWatch stopWatch = new StopWatch(metricName + value + RandomUtil.randomString(10));
         stopWatch.start();
-        UmamiPostDataBean umamiPostEventData = getUmamiPostEventData(metricName, value);
+        UmamiPostDataBean umamiPostEventData = getUmamiPostEventData(eventName, metricName, value, targetUser);
         ForestRequestHeader forestRequestHeader = new ForestRequestHeader();
         forestRequestHeader.setUserAgent(HttpRequestUtil.getRequestRandomUserAgent());
         umamiClient.sendEvent(forestRequestHeader, "https://umaminew.tgmeng.com/api/send", umamiPostEventData);
@@ -35,14 +35,16 @@ public class UmamiUtil {
     }
 
     // 拼装请求数据体
-    private UmamiPostDataBean getUmamiPostEventData(String metricName, Integer value) {
+    private UmamiPostDataBean getUmamiPostEventData(String eventName, String metricName, Integer value, String targetUser) {
         UmamiPostDataBean umamiPostDataBean = new UmamiPostDataBean();
         UmamiPostDataBean.Payload payload = new UmamiPostDataBean.Payload();
-        payload.setName(metricName);
+        payload.setName(eventName);
         payload.setWebsite(umamiWebsiteTgmengCom);
 
         UmamiPostDataBean.DataInfo data = new UmamiPostDataBean.DataInfo();
         data.setValue(value);
+        data.setPlatForm(metricName);
+        data.setTargetUser(targetUser);
 
         payload.setData(data);
         umamiPostDataBean.setPayload(payload);

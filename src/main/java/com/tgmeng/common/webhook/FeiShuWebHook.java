@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.bean.WebHookFeiShuBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
+import com.tgmeng.common.enums.business.UmamiEventNameEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
@@ -151,7 +152,7 @@ public class FeiShuWebHook {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.FEISHU.getDescription(), count);
+        umamiUtil.sendEvent(UmamiEventNameEnum.DING_YUE_TUI_SONG.getValue(), SubscriptionChannelTypeEnum.FEISHU.getDescription(), count, accessKey);
     }
 
     public WebHookFeiShuBean.TagItem getFeiShuWebhookItem(String tag, String text, String href) {

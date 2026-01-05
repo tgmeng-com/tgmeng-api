@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
+import com.tgmeng.common.enums.business.UmamiEventNameEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
@@ -38,7 +39,7 @@ public class GotifyWebHook {
         log.info("🎠开始推送Gotify：{}条", newHotList.size());
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content);
-        sendPost(webHook, postJsonBody, newHotList.size());
+        sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
         stopWatch.stop();
         log.info("🎉 Gotify成功推送：{}条，accessKey: {},耗时: {} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
     }
@@ -106,12 +107,12 @@ public class GotifyWebHook {
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys, Integer count) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count,String accessKey) {
         for (String postJsonBody : postJsonBodys) {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
         log.info("Gotify成功推送：{}条", count);
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.GOTIFY.getDescription(), count);
+        umamiUtil.sendEvent(UmamiEventNameEnum.DING_YUE_TUI_SONG.getValue(), SubscriptionChannelTypeEnum.GOTIFY.getDescription(), count, accessKey);
     }
 }

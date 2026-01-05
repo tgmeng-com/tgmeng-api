@@ -27,5 +27,7 @@ public class UmamiPostDataBean {
     @Data
     public static class DataInfo {
         private Integer value;
+        private String platForm;
+        private String targetUser;
     }
 }

@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
+import com.tgmeng.common.enums.business.UmamiEventNameEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
@@ -106,6 +107,6 @@ public class TelegramWebHook {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.TELEGRAM.getDescription(), count);
+        umamiUtil.sendEvent(UmamiEventNameEnum.DING_YUE_TUI_SONG.getValue(), SubscriptionChannelTypeEnum.TELEGRAM.getDescription(), count, accessKey);
     }
 }

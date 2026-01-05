@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
+import com.tgmeng.common.enums.business.UmamiEventNameEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
@@ -120,6 +121,6 @@ public class QiYeWeiXinWebHook {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.QIYEWEIXIN.getDescription(), count);
+        umamiUtil.sendEvent(UmamiEventNameEnum.DING_YUE_TUI_SONG.getValue(), SubscriptionChannelTypeEnum.QIYEWEIXIN.getDescription(), count, accessKey);
     }
 }

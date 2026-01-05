@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
+import com.tgmeng.common.enums.business.UmamiEventNameEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
@@ -37,12 +38,12 @@ public class DingTalkWebHook {
         StopWatch stopWatch = new StopWatch(accessKey);
         stopWatch.start();
         String webHook = getWebHook(push);
-        log.info("🎠 开始推送钉钉：{}条，accessKey：{}", newHotList.size(),accessKey);
+        log.info("🎠 开始推送钉钉：{}条，accessKey：{}", newHotList.size(), accessKey);
         List<String> content = getHotContent(newHotList, keywords);
         List<String> postJsonBody = getPostBody(content);
-        sendPost(webHook, postJsonBody, newHotList.size(),accessKey);
+        sendPost(webHook, postJsonBody, newHotList.size(), accessKey);
         stopWatch.stop();
-        log.info("🎉 钉钉成功推送：{}条，accessKey: {},耗时：{} ms", newHotList.size(),accessKey, stopWatch.getTotalTimeMillis());
+        log.info("🎉 钉钉成功推送：{}条，accessKey: {},耗时：{} ms", newHotList.size(), accessKey, stopWatch.getTotalTimeMillis());
     }
 
     public String getWebHook(LicenseBean.SubscriptionPlatformConfig push) {
@@ -111,11 +112,11 @@ public class DingTalkWebHook {
         }
     }
 
-    public void sendPost(String webHook, List<String> postJsonBodys, Integer count,String accessKey) {
+    public void sendPost(String webHook, List<String> postJsonBodys, Integer count, String accessKey) {
         for (String postJsonBody : postJsonBodys) {
             ForestRequestHeader forestRequestHeader = new ForestRequestHeader().setContentType("application/json;charset=UTF-8");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.DINGDING.getDescription(), count);
+        umamiUtil.sendEvent(UmamiEventNameEnum.DING_YUE_TUI_SONG.getValue(), SubscriptionChannelTypeEnum.DINGDING.getDescription(), count, accessKey);
     }
 }

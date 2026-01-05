@@ -5,6 +5,7 @@ import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.enums.business.SubscriptionChannelTypeEnum;
+import com.tgmeng.common.enums.business.UmamiEventNameEnum;
 import com.tgmeng.common.exception.ServerException;
 import com.tgmeng.common.forest.client.webhook.IWebHookClient;
 import com.tgmeng.common.forest.header.ForestRequestHeader;
@@ -92,6 +93,6 @@ public class NtfyWebHook {
                     .setMarkdown("yes");
             iWebHookClient.sendMessage(forestRequestHeader, webHook, postJsonBody);
         }
-        umamiUtil.sendEvent(SubscriptionChannelTypeEnum.NTFY.getDescription(), count);
+        umamiUtil.sendEvent(UmamiEventNameEnum.DING_YUE_TUI_SONG.getValue(), SubscriptionChannelTypeEnum.NTFY.getDescription(), count, accessKey);
     }
 }
