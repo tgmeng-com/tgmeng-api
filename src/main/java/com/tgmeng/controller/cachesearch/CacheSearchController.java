@@ -39,4 +39,10 @@ public class CacheSearchController {
     public ResultTemplateBean getCacheSearchRealTimeSummary(@PathVariable("type") String type) {
         return cacheSearchService.getCacheSearchRealTimeSummary();
     }
+
+    // 热搜列表
+    @RequestMapping("/tgmenghotsearch/{type}")
+    public ResultTemplateBean getTgmengHotSearch(@PathVariable("type") String type) {
+        return cacheSearchService.getTgmengHotSearch();
+    }
 }

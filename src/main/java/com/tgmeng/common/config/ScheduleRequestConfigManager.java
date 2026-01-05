@@ -233,7 +233,16 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/cachesearch/realtimesummary/game", PlatformConfig.builder().requestCycle(300L).timeout(300L).build());
         configs.put("/api/cachesearch/realtimesummary/health", PlatformConfig.builder().requestCycle(300L).timeout(300L).build());
 
-        configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().build());
+        configs.put("/api/cachesearch/wordcloud", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/all", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/technology", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/finance", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/entertainment", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/car", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/sports", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/game", PlatformConfig.builder().requestDelay(5L).build());
+        configs.put("/api/cachesearch/tgmenghotsearch/livelihood", PlatformConfig.builder().requestDelay(5L).build());
+
         configs.put("/api/topsearch/zhitongcaijing", PlatformConfig.builder().build());
 
         configs.put("/api/topsearch/shuimushequ", PlatformConfig.builder().build());

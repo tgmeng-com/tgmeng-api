@@ -1,16 +1,21 @@
 package com.tgmeng.service.cachesearch.Impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.PlatFormCategoryEnum;
 import com.tgmeng.common.enums.business.PlatFormCategoryRootEnum;
 import com.tgmeng.common.enums.business.SearchModeEnum;
 import com.tgmeng.common.enums.enumcommon.EnumUtils;
 import com.tgmeng.common.exception.ServerException;
+import com.tgmeng.common.mapper.mapstruct.topsearch.ITopSearchCommonMapper;
 import com.tgmeng.common.util.*;
 import com.tgmeng.model.dto.ai.response.AICommonChatModelResponseCustomDTO;
+import com.tgmeng.model.dto.ai.response.AiChatModelResponseMessageContentForHotSearchDTO;
 import com.tgmeng.model.dto.ai.response.AiChatModelResponseMessageContentForRealtimesummaryDTO;
+import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import com.tgmeng.service.history.ITopSearchHistoryService;
 import lombok.Data;
@@ -34,6 +39,9 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
 
     @Autowired
     private ITopSearchHistoryService topSearchHistoryService;
+
+    @Autowired
+    ITopSearchCommonMapper iTopSearchCommonMapper;
 
 
     private final AIRequestUtil aiRequestUtil;
@@ -104,7 +112,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                                     lowerCaseWord = word.trim().toLowerCase();
                                 }
                                 // 匹配关键词
-                                if (StrUtil.isBlank(lowerCaseWord) || StrUtil.contains(s, lowerCaseWord)) {
+                                if ((StrUtil.isBlank(lowerCaseWord) || StrUtil.contains(s, lowerCaseWord)) && ObjUtil.isNotEmpty(url)) {
                                     HashMap<String, Object> resultMap = new HashMap<>();
                                     resultMap.put("title", title);
                                     resultMap.put("platformName", map.get("platformName"));
@@ -177,6 +185,64 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
             return ResultTemplateBean.success(result);
         } catch (Exception e) {
             throw new ServerException("AI简报处理失败：" + e.getMessage());
+        }
+    }
+
+    // 获得糖果热榜
+    @Override
+    public ResultTemplateBean getTgmengHotSearch() {
+        try {
+            List<String> allOriginalTitles = getCacheTitleByCategory(null);
+            if (allOriginalTitles.isEmpty()) {
+                return ResultTemplateBean.success(Collections.emptyList());
+            }
+            PlatFormCategoryEnum platFormCategoryEnum = EnumUtils.getEnumByKey(PlatFormCategoryEnum.class, HttpRequestUtil.getRequestPathLastWord());
+            String templateName = "";
+            switch (platFormCategoryEnum) {
+                case PlatFormCategoryEnum.TGMENG_ALL:
+                    templateName = "AIHotSearchTemplateForAll";
+                    break;
+                case PlatFormCategoryEnum.TGMENG_TECHNOLOGY:
+                    templateName = "AIHotSearchTemplateForTechnology";
+                    break;
+                case PlatFormCategoryEnum.TGMENG_FINANCE:
+                    templateName = "AIHotSearchTemplateForFinance";
+                    break;
+                case PlatFormCategoryEnum.TGMENG_ENTERTAINMENT:
+                    templateName = "AIHotSearchTemplateForEntertainment";
+                    break;
+                case PlatFormCategoryEnum.TGMENG_CAR:
+                    templateName = "AIHotSearchTemplateForCar";
+                    break;
+                case PlatFormCategoryEnum.TGMENG_SPORTS:
+                    templateName = "AIHotSearchTemplateForSports";
+                    break;
+                case PlatFormCategoryEnum.TGMENG_GAME:
+                    templateName = "AIHotSearchTemplateForGame";
+                    break;
+                case PlatFormCategoryEnum.TGMENG_LIVELIHOOD:
+                    templateName = "AIHotSearchTemplateForLivelihood";
+                    break;
+                default:
+                    templateName = "AIHotSearchTemplateForAll";
+                    break;
+            }
+            String content = FileUtil.readFileToStringFromClasspath("template/" + templateName + ".txt") + String.join(System.lineSeparator(), allOriginalTitles);
+            AICommonChatModelResponseCustomDTO result = aiRequestUtil.aiChat(content);
+            AiChatModelResponseMessageContentForHotSearchDTO data = MAPPER.readValue(result.getMessageContent(), AiChatModelResponseMessageContentForHotSearchDTO.class);
+            // 转换为热点数据结构
+            List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
+            topSearchCommonVOS = iTopSearchCommonMapper.tgmengHotSearch2TopSearchCommonVos(data.getData());
+            TopSearchCommonVO topSearchResult = new TopSearchCommonVO(
+                    topSearchCommonVOS,
+                    "糖果梦",
+                    "",
+                    platFormCategoryEnum.getValue(),
+                    PlatFormCategoryRootEnum.TGMENG.getValue()
+            );
+            return ResultTemplateBean.success(topSearchResult);
+        } catch (Exception e) {
+            throw new ServerException("热搜词列表处理：" + e.getMessage());
         }
     }
 

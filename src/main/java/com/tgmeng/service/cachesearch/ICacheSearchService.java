@@ -13,4 +13,5 @@ public interface ICacheSearchService {
 
     ResultTemplateBean getCacheSearchRealTimeSummary();
 
+    ResultTemplateBean getTgmengHotSearch();
 }

@@ -27,7 +27,15 @@ public enum PlatFormCategoryEnum implements INameValueEnum<String, String> {
     BA_HA_MU_TE("", "巴哈姆特", "", true, 14),
     FOUR_GAMER("", "4Gamer", "", true, 14),
     GAME_BASE("", "GameBase", "", true, 14),
-    NODELOC("", "Nodeloc", "", true, 14);
+    NODELOC("", "Nodeloc", "", true, 14),
+    TGMENG_ALL("all", "糖果梦综合", "", true, 14),
+    TGMENG_TECHNOLOGY("technology", "糖果梦科技", "", true, 14),
+    TGMENG_FINANCE("finance", "糖果梦财经", "", true, 14),
+    TGMENG_ENTERTAINMENT("entertainment", "糖果梦娱乐", "", true, 14),
+    TGMENG_CAR("car", "糖果梦汽车", "", true, 14),
+    TGMENG_SPORTS("sports", "糖果梦体育", "", true, 14),
+    TGMENG_GAME("game", "糖果梦游戏", "", true, 14),
+    TGMENG_LIVELIHOOD("livelihood", "糖果梦民生", "", true, 14);
 
     private final String key;
     private final String value;

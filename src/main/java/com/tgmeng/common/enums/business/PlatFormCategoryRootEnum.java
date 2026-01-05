@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PlatFormCategoryRootEnum implements INameValueEnum<String, String> {
+    TGMENG("tgmeng", "糖果梦", "", true, 0),
     XIN_WEN("news", "新闻", "", true, 1),
     YANG_MAO("wool", "羊毛", "", true, 2),
     MEI_TI("media", "媒体", "", true, 3),
