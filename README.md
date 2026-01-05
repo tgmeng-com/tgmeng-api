@@ -127,6 +127,8 @@ MY_CONFIG_LICENSE_DIR=./data/license/                      # 密钥是存在本�
 MY_CONFIG_LOG_LICENSE_DIR=./data/log/license/              # 密钥使用的记录日志文件存储位置，方便后续排除哪些密钥恶意搞事情（默认值./data/log/license/）
 MY_CONFIG_LOG_LICENSE_MAX_LOG_SIZE=10485760                # 单个密钥使用记录日志文件的最大文件限制，也就是保证单个密钥的日志文件不超过这个大小（默认值10M）
 MY_CONFIG_LOG_LICENSE_KEEP_LOG_SIZE=9437184                # 单个密钥使用记录日志文件滚动大小，比如用户到了10M，那么保留后面的部分，然后继续写，我们这里是保留最后的9M，然后继续写（默认值9M）
+
+MY_CONFIG_YOUTUBE_KEY=AIzaSyCX494YE2KiRnmGT6Y8odk4SBnlTwIWH4A   # 调用youtubeapi的key
 ```
 
 </details>

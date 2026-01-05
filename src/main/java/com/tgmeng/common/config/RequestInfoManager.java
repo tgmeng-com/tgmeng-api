@@ -11,6 +11,7 @@ import com.tgmeng.common.util.HttpRequestUtil;
 import com.tgmeng.common.util.UserAgentGeneratorUtil;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ import java.util.Map;
 @Component
 public class RequestInfoManager {
     private final Map<String, PlatformConfig> configs = new HashMap<>();
+
+    @Value("${my-config.youtube-key}")
+    private String youtubeKey;
 
     // ==================== 数据模型 ====================
 
@@ -1630,7 +1634,7 @@ public class RequestInfoManager {
                 .hotTitleUrlPrefix("")
                 .register();
 
-        addJsonConfig("https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=50&key=AIzaSyCX494YE2KiRnmGT6Y8odk4SBnlTwIWH4A")
+        addJsonConfig("https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&maxResults=50&key=" + youtubeKey)
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("Youtube")
                 .platformCategory(PlatFormCategoryRootEnum.MEI_TI.getValue())
@@ -2639,7 +2643,6 @@ public class RequestInfoManager {
                 .urlSelector("$.id")
                 .hotScoreSelector("$.views")
                 .register();
-
 
 
     }

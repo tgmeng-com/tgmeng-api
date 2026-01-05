@@ -115,6 +115,7 @@ my-config:
       dir: ./data/log/license/   #密钥使用的记录日志存储位置
       max-log-size: 10485760   # 最大10M
       keep-log-size: 9437184 #超过10M后，保留后面的9M，然后继续写
+  youtube-key: "AIzaSyCX494YE2KiRnmGT6Y8odk4SBnlTwIWH4A"
 
 
 
