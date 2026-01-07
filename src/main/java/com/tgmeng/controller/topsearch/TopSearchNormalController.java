@@ -834,6 +834,11 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
+    @RequestMapping("/2libra")
+    public ResultTemplateBean get2LibraSearch() {
+        return topSearchCommonService.getTopSearchCommonService();
+    }
+
 
 
 

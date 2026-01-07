@@ -346,6 +346,7 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/history/suddenheatpoint/history", PlatformConfig.builder().requestCycle(300L).requestDelay(5L).build());
 
         configs.put("/api/topsearch/xiaozhongruanjian", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/2libra", PlatformConfig.builder().build());
 
     }
 

@@ -2644,6 +2644,20 @@ public class RequestInfoManager {
                 .hotScoreSelector("$.views")
                 .register();
 
+        addDomConfig("https://2libra.com/post/hot/today")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("2Libra")
+                .platformCategory(PlatFormCategoryRootEnum.SHE_QU.getValue())
+                .platformCategoryRoot(PlatFormCategoryRootEnum.SHE_QU.getValue())
+                .interfaceUrl("/api/topsearch/2libra")
+                .hotTitleUrlPrefix("https://2libra.com")
+                .addArea()
+                .rootSelector("ul.card:first-of-type > li")
+                .titleSelector("a.link.link-hover")
+                .urlSelector("a.link.link-hover")
+                .hotScoreSelector(".badge.badge-ghost.badge-sm")
+                .register();
+
 
     }
 }
