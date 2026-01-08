@@ -25,32 +25,32 @@ public class CommonJsoupUtil {
             Document parse = Jsoup.parse(content);
             for (RequestInfoManager.Selector selector : platform.getSelectors()) {
                 Elements rootElements = parse.select(selector.getRoot());
-                for (Element element : rootElements) {
+                for (int i = 0; i < rootElements.size(); i++) {
                     // 热点url
                     String url = "";
-                    if (platform.getHotTitleUrlNeedDeal()){
-                        url = CommonHotPointInfoDealUtil.getUrlAfterDealResult(platform, element, null);
-                    }else{
-                        url = platform.getHotTitleUrlPrefix() + safeAttr(element, selector.getUrl(), "href") + platform.getHotTitleUrlAfter();
+                    if (platform.getHotTitleUrlNeedDeal()) {
+                        url = CommonHotPointInfoDealUtil.getUrlAfterDealResult(platform, rootElements.get(i), null);
+                    } else {
+                        url = platform.getHotTitleUrlPrefix() + safeAttr(rootElements.get(i), selector.getUrl(), "href") + platform.getHotTitleUrlAfter();
                     }
                     // 热点标题
                     String title = "";
-                    if (platform.getHotTitleNeedDeal()){
-                        title = CommonHotPointInfoDealUtil.getHotTitleAfterDealResult(platform, element, null);
-                    }else {
-                        title = safeText(element, selector.getTitle());
+                    if (platform.getHotTitleNeedDeal()) {
+                        title = CommonHotPointInfoDealUtil.getHotTitleAfterDealResult(platform, rootElements.get(i), null);
+                    } else {
+                        title = safeText(rootElements.get(i), selector.getTitle());
                     }
-                    String publishTime = safeText(element, selector.getPublishTime());
-                    String commentCount = StrUtil.isNotBlank(safeText(element, selector.getCommentCount())) ? safeText(element, selector.getCommentCount()) : "0";
+                    String publishTime = safeText(rootElements.get(i), selector.getPublishTime());
+                    String commentCount = StrUtil.isNotBlank(safeText(rootElements.get(i), selector.getCommentCount())) ? safeText(rootElements.get(i), selector.getCommentCount()) : "0";
                     String hotScore = "";
                     if (platform.getHotScoreNeedDeal()) {
-                        hotScore = CommonHotPointInfoDealUtil.getHotScoreAfterDealResult(platform, element, null);
+                        hotScore = CommonHotPointInfoDealUtil.getHotScoreAfterDealResult(platform, rootElements.get(i), null);
                     } else {
-                        hotScore = safeText(element, selector.getHotScore()).toString();
+                        hotScore = safeText(rootElements.get(i), selector.getHotScore()).toString();
                     }
 
                     if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                        topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", publishTime, commentCount, null, null, ""));
+                        topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", publishTime, commentCount, null, null, "", i + 1));
                     }
                 }
             }

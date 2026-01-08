@@ -58,6 +58,7 @@ public class TopSearchCommonVO {
         private Long startTime;
         private Long endTime;
         private String showTime;
+        private Integer sort;
 
     }
 

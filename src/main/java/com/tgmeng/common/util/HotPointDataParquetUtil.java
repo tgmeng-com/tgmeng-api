@@ -44,7 +44,9 @@ public class HotPointDataParquetUtil {
             ParquetUtil parquetUtil = new ParquetUtil();
 
             List<HotPointDataParquetBean> records = new ArrayList<>();
-            for (Map<String, Object> hotPoint : hotList) {
+
+            for (int i = 0; i < hotList.size(); i++) {
+                Map<String, Object> hotPoint = hotList.get(i);
                 HotPointDataParquetBean record = new HotPointDataParquetBean(
                         hotPoint.get("url").toString(),
                         hotPoint.get("title").toString(),
@@ -52,7 +54,9 @@ public class HotPointDataParquetUtil {
                         hotPoint.get("platformCategory").toString(),
                         hotPoint.get("platformCategoryRoot").toString(),
                         hotPoint.get("dataUpdateTime").toString(),
+                        Integer.valueOf(hotPoint.get("sort").toString()),
                         SimHashUtil.calculateSimHash(hotPoint.get("title").toString()));
+                System.out.println("当前索引: " + i);  // 使用索引
                 records.add(record);
             }
 

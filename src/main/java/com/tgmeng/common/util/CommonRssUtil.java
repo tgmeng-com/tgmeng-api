@@ -27,7 +27,8 @@ public class CommonRssUtil {
             SyndFeedInput input = new SyndFeedInput();
             SyndFeed feed = input.build(new StringReader(content));
 
-            for (SyndEntry entry : feed.getEntries()) {
+            for (int i = 0; i < feed.getEntries().size(); i++) {
+                SyndEntry syndEntry = feed.getEntries().get(i);
                 String title = "";           // 标题
                 String url = "";             // 链接
                 String description = "";     // 描述/摘要
@@ -38,36 +39,36 @@ public class CommonRssUtil {
                 String comments = "";        // 评论链接
                 String contentRss = "";         // 完整内容（如果有）
 
-                if (entry.getTitle() != null) {
-                    title = entry.getTitle();
+                if (syndEntry.getTitle() != null) {
+                    title = syndEntry.getTitle();
                 }
-                if (entry.getLink() != null) {
-                    url = entry.getLink();
+                if (syndEntry.getLink() != null) {
+                    url = syndEntry.getLink();
                 }
-                if (entry.getUri() != null) {
-                    guid = entry.getUri();
+                if (syndEntry.getUri() != null) {
+                    guid = syndEntry.getUri();
                 }
-                if (entry.getPublishedDate() != null) {
-                    pubDate = outputFormat.format(entry.getPublishedDate());
+                if (syndEntry.getPublishedDate() != null) {
+                    pubDate = outputFormat.format(syndEntry.getPublishedDate());
                 }
-                if (entry.getDescription() != null) {
-                    description = entry.getDescription().getValue();
+                if (syndEntry.getDescription() != null) {
+                    description = syndEntry.getDescription().getValue();
                 }
                 // 作者
-                if (entry.getAuthor() != null) {
-                    author = entry.getAuthor();
+                if (syndEntry.getAuthor() != null) {
+                    author = syndEntry.getAuthor();
                 }
-                if (entry.getContents() != null && !entry.getContents().isEmpty()) {
-                    contentRss = entry.getContents().getFirst().getValue();
+                if (syndEntry.getContents() != null && !syndEntry.getContents().isEmpty()) {
+                    contentRss = syndEntry.getContents().getFirst().getValue();
                 }
-                if (entry.getEnclosures() != null && !entry.getEnclosures().isEmpty()) {
-                    imageUrl = entry.getEnclosures().getFirst().getUrl();
+                if (syndEntry.getEnclosures() != null && !syndEntry.getEnclosures().isEmpty()) {
+                    imageUrl = syndEntry.getEnclosures().getFirst().getUrl();
                 }
-                if (entry.getComments() != null) {
-                    comments = entry.getComments();
+                if (syndEntry.getComments() != null) {
+                    comments = syndEntry.getComments();
                 }
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, imageUrl, author, description, "", pubDate, "", null, null, null));
+                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, imageUrl, author, description, "", pubDate, "", null, null, null, i + 1));
                 }
             }
         } catch (Exception e) {

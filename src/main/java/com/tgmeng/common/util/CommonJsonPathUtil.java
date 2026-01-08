@@ -59,8 +59,9 @@ public class CommonJsonPathUtil {
                 hotNewsList = new ArrayList<>();
             }
 
-            for (Object element : hotNewsList) {
-                ReadContext itemCtx = JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(element);
+            for (int i = 0; i < hotNewsList.size(); i++) {
+
+                ReadContext itemCtx = JsonPath.using(JsonPathConfig.DEFAULT_CONF).parse(hotNewsList.get(i));
                 String title = itemCtx.read(selector.getTitle());
                 String url = "";
                 if (platform.getHotTitleUrlNeedDeal()) {
@@ -122,7 +123,7 @@ public class CommonJsonPathUtil {
                 String commentCount = "";
 
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, image, author, desc, type, publishTime, commentCount, startTime, endTime, showTime));
+                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, image, author, desc, type, publishTime, commentCount, startTime, endTime, showTime, i + 1));
                 }
             }
         }

@@ -129,6 +129,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                         if (item instanceof Map<?, ?> itemMap) {
                             Object title = itemMap.get("title");
                             Object url = itemMap.get("url");
+                            Object sort = itemMap.get("sort");
                             if (title instanceof String s) {
                                 s = title.toString().trim().toLowerCase();   // 确保 title 转成小写字符串
                                 String lowerCaseWord = null;
@@ -144,6 +145,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
                                     resultMap.put("dataUpdateTime", map.get("dataUpdateTime"));
                                     resultMap.put("platformCategory", map.get("platformCategory"));
                                     resultMap.put("platformCategoryRoot", map.get("platformCategoryRoot"));
+                                    resultMap.put("sort", sort);
                                     resultList.add(resultMap);
                                 }
                             }

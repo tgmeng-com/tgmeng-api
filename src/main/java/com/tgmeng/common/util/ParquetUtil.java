@@ -89,6 +89,7 @@ public class ParquetUtil {
         avroRecord.put("platformCategory", record.getPlatformCategory());
         avroRecord.put("platformCategoryRoot", record.getPlatformCategoryRoot());
         avroRecord.put("dataUpdateTime", record.getDataUpdateTime());
+        avroRecord.put("sort", record.getSort());
         avroRecord.put("simHash", record.getSimHash());
         return avroRecord;
     }

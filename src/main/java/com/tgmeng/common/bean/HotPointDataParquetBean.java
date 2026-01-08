@@ -17,6 +17,7 @@ public class HotPointDataParquetBean {
     private String platformCategory;
     private String platformCategoryRoot;
     private String dataUpdateTime;
+    private Integer sort;
 
     // 计算数据
     private Long simHash;

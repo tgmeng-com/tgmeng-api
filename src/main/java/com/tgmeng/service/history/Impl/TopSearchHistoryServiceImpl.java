@@ -122,6 +122,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                     platformCategoryRoot,
                     title,
                     url,
+                    sort,
                     simHash
                 FROM (
                     SELECT DISTINCT ON (title, platformName)
@@ -131,6 +132,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                         platformCategoryRoot,
                         title,
                         url,
+                        sort,
                         simHash
                     FROM read_parquet('%s')
                     WHERE simHash IS NOT NULL
@@ -139,7 +141,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                       %s
                     ORDER BY title, platformName, dataUpdateTime %s  -- 去重时动态保留最新的还是最老的
                 ) t
-                ORDER BY dataUpdateTime DESC;  -- 最终结果整体降序（最新在前）
+                ORDER BY dataUpdateTime DESC,sort ASC;  -- 最终结果整体降序（最新在前）
                 """, pathPattern, startTime, endTime, conditions.toString(),orderDirection);
 
             List<Map<String, Object>> query = duckdb.query(sql);
@@ -179,6 +181,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                 platformCategoryRoot,
                                 title,
                                 url,
+                                sort,
                                 simHash,
                                 BIT_COUNT(xor(simHash, %d)) as distance
                             FROM (
@@ -192,7 +195,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                   AND BIT_COUNT(xor(simHash, %d)) <= %d
                                 ORDER BY simHash, platformName, dataUpdateTime ASC  -- 每个平台保留最早的
                             ) t
-                            ORDER BY dataUpdateTime DESC
+                            ORDER BY dataUpdateTime DESC,sort ASC;
                     """, simHash, simHash, pathPattern, startTime, endTime, simHash, simHashDistance);
             List<Map<String, Object>> query = duckdb.query(sql);
             log.info("查询历史热点轨迹成功，标题：{}，共 {} 条记录", title, query.size());
@@ -234,6 +237,7 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                                              platformCategoryRoot,
                                              title,
                                              url,
+                                             sort,
                                              simHash,
                                              -- 使用 SimHash 的高48位作为桶ID（可调整位数）
                                              (simHash >> 16) as bucket_id

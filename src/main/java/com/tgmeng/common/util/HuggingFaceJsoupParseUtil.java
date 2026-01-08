@@ -45,11 +45,12 @@ public class HuggingFaceJsoupParseUtil {
         Document parse = Jsoup.parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         Elements elements = parse.select(".pb-12 > .grid > .relative");
-        for (Element element : elements) {
+        for (int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
             String url = "https://huggingface.co" + safeAttr(element, "a", "href");
             String hotScore = safeText(element, "header > div:nth-of-type(2) > div:nth-of-type(2) span");
             String title = safeText(element, "main h4") + " " + safeText(element, "main > div > div:nth-of-type(1)");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "","", null, null, ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "", "", null, null, "", i + 1));
         }
         return topSearchCommonVOS;
     }
@@ -58,11 +59,12 @@ public class HuggingFaceJsoupParseUtil {
         Document parse = Jsoup.parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         Elements elements = parse.select("main section:nth-of-type(2) > .relative .grid .overview-card-wrapper");
-        for (Element element : elements) {
+        for (int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
             String url = "https://huggingface.co" + safeAttr(element, "a", "href");
             String hotScore = extractLastLikeCount(Objects.requireNonNull(element.selectFirst("div:nth-of-type(1) > div:nth-of-type(1)")));
             String title = safeText(element, "h4:nth-of-type(1)");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "","", null, null, ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "", "", null, null, "", i + 1));
         }
         return topSearchCommonVOS;
     }
@@ -71,22 +73,15 @@ public class HuggingFaceJsoupParseUtil {
         Document parse = Jsoup.parse(content);
         List<TopSearchCommonVO.DataInfo> topSearchCommonVOS = new ArrayList<>();
         Elements elements = parse.select("main section:nth-of-type(2) > .relative .grid .overview-card-wrapper");
-        for (Element element : elements) {
+        for (int i = 0; i < elements.size(); i++) {
+            Element element = elements.get(i);
             String url = "https://huggingface.co" + safeAttr(element, "a", "href");
             String hotScore = extractLastLikeCount(Objects.requireNonNull(element.selectFirst("div:nth-of-type(1) > div:nth-of-type(1)")));
             String title = safeText(element, "h4:nth-of-type(1)");
-            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "","", null, null, ""));
+            topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, StringUtil.stringParseToLong(hotScore), url, "", "", "", "", "", "", null, null, "", i + 1));
         }
         return topSearchCommonVOS;
     }
-
-
-
-
-
-
-
-
 
 
     public static String safeText(Element parent, String selector) {
