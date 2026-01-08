@@ -281,12 +281,12 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         List<Map<String, Object>> hotList = new ArrayList<>();
         List<Map<String, Object>> simplePlatformDataPushNewHotList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        sb.append("----").append(platform).append("热搜榜---\n");
+        sb.append("----").append(platform).append("热搜榜---<br>");
         try {
             File singlePlatformPushRecordFile = new File(singlePlatform + license + File.separator + platform + StringUtil.SubscriptionFileExtension);
             if (type == 2) {
                 updateFileContent(new HashSet<>(), singlePlatformPushRecordFile);
-                sb.append("重置今日推送记录成功").append("\n");
+                sb.append("重置今日推送记录成功").append("<br>");
                 return sb.toString();
             }
 
@@ -325,7 +325,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         for (int i = 0; i < simplePlatformDataPushNewHotList.size(); i++) {
             Map<String, Object> item = simplePlatformDataPushNewHotList.get(i);
             String title = item.get("title").toString();
-            sb.append(i + 1).append("、").append(title).append("\n");
+            sb.append(i + 1).append("、").append(title).append("<br>");
         }
         return sb.toString();
     }
