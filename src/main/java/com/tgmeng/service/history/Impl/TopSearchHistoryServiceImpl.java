@@ -1,5 +1,6 @@
 package com.tgmeng.service.history.Impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.exception.ServerException;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,10 +61,10 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
 
     // 热点历史轨迹，指纹匹配
     @Override
-    public ResultTemplateBean getHotPointHistory(Map<String, String> requestBody) {
-        String title = requestBody.get("title");
-        String startTime = requestBody.get("startTime");
-        String endTime = requestBody.get("endTime");
+    public ResultTemplateBean getHotPointHistory(Map<String, Object> requestBody) {
+        String title = requestBody.get("title").toString();
+        String startTime = requestBody.get("startTime").toString();
+        String endTime = requestBody.get("endTime").toString();
         if (StrUtil.isBlank(title) || StrUtil.isBlank(startTime) || StrUtil.isBlank(endTime)) {
             throw new ServerException("param empty error");
         }
@@ -80,14 +82,14 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
 
     // 历史数据，模糊匹配
     @Override
-    public ResultTemplateBean getWordHistory(Map<String, String> requestBody) {
-        String title = requestBody.get("title");
-        String platformName = requestBody.get("platformName");
-        String platformCategory = requestBody.get("platformCategory");
-        String platformCategoryRoot = requestBody.get("platformCategoryRoot");
-        String startTime = requestBody.get("startTime");
-        String endTime = requestBody.get("endTime");
-        String keepLatest = requestBody.get("keepLatest");  // 新增参数
+    public ResultTemplateBean getWordHistory(Map<String, Object> requestBody) {
+        String title = getStringParam(requestBody, "title");
+        List<String> platformNames = getListParam(requestBody, "platformName");
+        List<String> platformCategories = getListParam(requestBody, "platformCategory");
+        List<String> platformCategoryRoots = getListParam(requestBody, "platformCategoryRoot");
+        String startTime = getStringParam(requestBody, "startTime");
+        String endTime = getStringParam(requestBody, "endTime");
+        String keepLatest = getStringParam(requestBody, "keepLatest");  // 新增参数
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime start = LocalDateTime.parse(startTime, formatter);
@@ -100,14 +102,17 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                 String titleLike = "%" + title.trim() + "%";
                 conditions.append(String.format("AND lower(title) LIKE lower('%s') ", titleLike));
             }
-            if (StrUtil.isNotEmpty(platformName)) {
-                conditions.append(String.format("AND platformName = '%s' ", platformName.trim()));
+            if (CollUtil.isNotEmpty(platformNames)) {
+                String inClause = buildInClause(platformNames);
+                conditions.append(String.format("AND platformName IN (%s) ", inClause));
             }
-            if (StrUtil.isNotEmpty(platformCategory)) {
-                conditions.append(String.format("AND platformCategory = '%s' ", platformCategory.trim()));
+            if (CollUtil.isNotEmpty(platformCategories)) {
+                String inClause = buildInClause(platformCategories);
+                conditions.append(String.format("AND platformCategory IN (%s) ", inClause));
             }
-            if (StrUtil.isNotEmpty(platformCategoryRoot)) {
-                conditions.append(String.format("AND platformCategoryRoot = '%s' ", platformCategoryRoot.trim()));
+            if (CollUtil.isNotEmpty(platformCategoryRoots)) {
+                String inClause = buildInClause(platformCategoryRoots);
+                conditions.append(String.format("AND platformCategoryRoot IN (%s) ", inClause));
             }
             // 根据参数决定排序方式（保留最新还是最老）
             String orderDirection = StrUtil.isNotEmpty(keepLatest) ? "DESC" : "ASC";
@@ -115,7 +120,17 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
 
 
             String sql = String.format("""
-                SELECT
+            SELECT
+                dataUpdateTime,
+                platformName,
+                platformCategory,
+                platformCategoryRoot,
+                title,
+                url,
+                sort,
+                simHash
+            FROM (
+                SELECT DISTINCT ON (title, platformName)
                     dataUpdateTime,
                     platformName,
                     platformCategory,
@@ -124,32 +139,22 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                     url,
                     sort,
                     simHash
-                FROM (
-                    SELECT DISTINCT ON (title, platformName)
-                        dataUpdateTime,
-                        platformName,
-                        platformCategory,
-                        platformCategoryRoot,
-                        title,
-                        url,
-                        sort,
-                        simHash
-                    FROM read_parquet('%s')
-                    WHERE simHash IS NOT NULL
-                      AND dataUpdateTime >= '%s'
-                      AND dataUpdateTime <= '%s'
-                      %s
-                    ORDER BY title, platformName, dataUpdateTime %s  -- 去重时动态保留最新的还是最老的
-                ) t
-                ORDER BY dataUpdateTime DESC,sort ASC;  -- 最终结果整体降序（最新在前）
-                """, pathPattern, startTime, endTime, conditions.toString(),orderDirection);
+                FROM read_parquet('%s')
+                WHERE simHash IS NOT NULL
+                  AND dataUpdateTime >= '%s'
+                  AND dataUpdateTime <= '%s'
+                  %s
+                ORDER BY title, platformName, dataUpdateTime %s  -- 去重时动态保留最新的还是最老的
+            ) t
+            ORDER BY dataUpdateTime DESC,sort ASC;  -- 最终结果整体降序（最新在前）
+            """, pathPattern, startTime, endTime, conditions.toString(),orderDirection);
 
             List<Map<String, Object>> query = duckdb.query(sql);
             log.info("查询热点成功,关键词:{},平台:{},分类:{},根分类:{},去重策略:保留{},共 {} 条记录",
                     StrUtil.isEmpty(title) ? "全部" : title,
-                    StrUtil.isEmpty(platformName) ? "全部" : platformName,
-                    StrUtil.isEmpty(platformCategory) ? "全部" : platformCategory,
-                    StrUtil.isEmpty(platformCategoryRoot) ? "全部" : platformCategoryRoot,
+                    CollUtil.isEmpty(platformNames) ? "全部" : platformNames,
+                    CollUtil.isEmpty(platformCategories) ? "全部" : platformCategories,
+                    CollUtil.isEmpty(platformCategoryRoots) ? "全部" : platformCategoryRoots,
                     keepStrategy,
                     query.size());
             return ResultTemplateBean.success(query);
@@ -157,6 +162,41 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
             log.error("查询热点失败:{},错误信息:{}", title, e.getMessage());
             throw new ServerException("error");
         }
+    }
+
+    private String getStringParam(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        return value != null ? value.toString() : null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<String> getListParam(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof List) {
+            return (List<String>) value;
+        }
+        if (value instanceof String) {
+            String str = (String) value;
+            if (StrUtil.isBlank(str)) {
+                return null;
+            }
+            return Arrays.asList(str);
+        }
+        return null;
+    }
+
+    private String buildInClause(List<String> values) {
+        if (CollUtil.isEmpty(values)) {
+            return "";
+        }
+        return values.stream()
+                .filter(StrUtil::isNotBlank)
+                .map(String::trim)
+                .map(v -> "'" + v.replace("'", "''") + "'")
+                .collect(Collectors.joining(", "));
     }
 
     /**

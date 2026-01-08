@@ -80,7 +80,7 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
             List<Map<String, Object>> result = getCacheSearchAllByWord(word);
             return ResultTemplateBean.success(result);
         }
-        Map<String, String> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("title", word);
         paramMap.put("endTime", TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern));
         paramMap.put("platformName", requestBody.get("platformName"));
