@@ -14,4 +14,6 @@ public interface ICacheSearchService {
     ResultTemplateBean getCacheSearchRealTimeSummary();
 
     ResultTemplateBean getTgmengHotSearch();
+
+    String getSimplePlatformDataPush(String platform, String license, Integer type);
 }

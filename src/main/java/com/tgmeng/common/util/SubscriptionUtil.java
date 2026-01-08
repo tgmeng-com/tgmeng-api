@@ -3,7 +3,6 @@ package com.tgmeng.common.util;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.crypto.SecureUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.LicenseBean;
 import com.tgmeng.common.bean.SubscriptionBean;
@@ -21,7 +20,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -152,7 +150,7 @@ public class SubscriptionUtil {
                     if (CollUtil.isNotEmpty(newHotList)) {
                         // 记录新推送的哈希
                         for (Map<String, Object> hotItem : newHotList) {
-                            String hashBase64 = generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
+                            String hashBase64 = HashUtil.generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
                             newHashes.add(hashBase64);
                         }
                         sendToPlatform(push, newHotList, mergedKeywords, licenseBean.getLicenseCode());
@@ -211,12 +209,12 @@ public class SubscriptionUtil {
                 // 过滤关键词
                 .filter(map -> {
                     String hotTitle = String.valueOf(map.get("title"));
-                    String hashBase64 = generateHash(hotTitle, String.valueOf(map.get("platformName")));
+                    String hashBase64 = HashUtil.generateHash(hotTitle, String.valueOf(map.get("platformName")));
                     String hotTitleLower = hotTitle.toLowerCase();
                     return mergedKeywords.stream().anyMatch(keyword -> hotTitleLower.contains(keyword.toLowerCase())) && !sentSet.contains(hashBase64);
                 })
                 .collect(Collectors.toMap(
-                        map -> generateHash(
+                        map -> HashUtil.generateHash(
                                 String.valueOf(map.get("title")),
                                 String.valueOf(map.get("platformName"))
                         ),
@@ -255,15 +253,6 @@ public class SubscriptionUtil {
             default:
                 break;
         }
-    }
-
-    private String generateHash(String title, String platformName) {
-        // 生成 MD5 二进制
-        byte[] hashBinary = SecureUtil.md5().digest(
-                (title + platformName).getBytes(StandardCharsets.UTF_8)
-        );
-        // 转 Base64（22 个字符左右）
-        return Base64.getEncoder().encodeToString(hashBinary);
     }
 
     public void updateFileContent(SubscriptionBean subscriptionBean, File file) {

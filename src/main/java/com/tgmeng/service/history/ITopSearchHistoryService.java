@@ -5,10 +5,13 @@ import com.tgmeng.common.bean.ResultTemplateBean;
 import java.util.Map;
 
 public interface ITopSearchHistoryService {
+
+    // 指纹匹配热点，韩明距离
     ResultTemplateBean getHotPointHistory(Map<String, String> requestBody);
 
     ResultTemplateBean getSuddenHeatPoint(String type);
 
+    // 模糊匹配热点，sql like
     ResultTemplateBean getWordHistory(Map<String, String> requestBody);
 
     ResultTemplateBean mergeParquetByGlob(Map<String, String> requestBody);

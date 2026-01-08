@@ -97,9 +97,6 @@ my-config:
       enabled: true           #是否开启缓存，不开启的话，所有数据都是从接口获取，下面的其他这些配置就没用了
       max-size: 5000         #最大缓存条数
       expire-time: 172800       # 通用缓存过期时间 单位是秒,里默认缓存个48小时
-  subscription:
-    dir: ./data/subscriptions/     # 订阅去重的key所在的文件夹
-    max-hot-number: 10000          # 每个人最多存10000条
   history:
     dir: ./data/history/       # 历史数据文件所在的文件夹，历史数据目前用来查询热点轨迹
     keep-day: 36500               # 历史数据保留天数
@@ -110,6 +107,12 @@ my-config:
   license:
     enabled: true                # 是否开启密钥限制，false的话，就是全部功能开放
     dir: ./data/license/
+  subscription:
+    dir: ./data/subscriptions/     # 订阅去重的key所在的文件夹
+    max-hot-number: 10000          # 每个人最多存10000条
+  single-platform:
+    dir: ./data/singleplatform/    # 单平台当日历史推送记录
+
   log:
     license:
       dir: ./data/log/license/   #密钥使用的记录日志存储位置

@@ -25,6 +25,13 @@ public class LicenseController {
         return licenseService.initLicenseFile(requestBody);
     }
 
+    // 给密钥添加单平台记录推送文件,就是单独平台每日增量推送，每次新增平台都需要执行一下这个
+    @RequestMapping("/licenseAddSinglePlatformPushRecordFile")
+    public ResultTemplateBean licenseAddSinglePlatformPushRecordFile(@RequestBody Map<String, Object> requestBody) {
+        return licenseService.licenseAddSinglePlatformPushRecordFile(requestBody);
+    }
+
+
     // 查询密钥基本信息
     @RequestMapping("/getLicenseConfig")
     @LicenseRequired(feature = LicenseFeatureEnum.BASIC)

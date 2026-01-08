@@ -22,7 +22,8 @@ public enum LicenseFeatureEnum implements INameValueEnum<String,String> {
     SEARCH("", "SEARCH", "搜索", true,2),
     SUBSCRIPTION("", "SUBSCRIPTION", "订阅推送", true,3),
     SUDDEN_NEWS("", "SUDDEN_NEWS", "突发热点", true,2),
-    AI_SUMMARY("", "AI_SUMMARY", "AI简报", true,2);
+    AI_SUMMARY("", "AI_SUMMARY", "AI简报", true,2),
+    SINGLE_PLATFORM_PUSH("", "SINGLE_PLATFORM_PUSH", "单平台增量推送", true,2);
 
     private final String key;
     private final String value;

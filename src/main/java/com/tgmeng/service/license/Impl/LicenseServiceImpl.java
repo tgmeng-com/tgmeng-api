@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,6 +30,9 @@ public class LicenseServiceImpl implements ILicenseService {
 
     @Value("${my-config.admin-password}")
     private String adminPassword;
+
+    @Value("${my-config.single-platform.dir}")
+    private String singlePlatform;
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -111,5 +115,21 @@ public class LicenseServiceImpl implements ILicenseService {
             log.info("更新订阅配置失败，配置:{},失败信息:{}", newLicenseBean, e.getMessage());
             return ResultTemplateBean.success(null);
         }
+    }
+
+    @Override
+    public ResultTemplateBean licenseAddSinglePlatformPushRecordFile(Map<String, Object> requestBody) {
+        String password = requestBody.get("password").toString();
+        if (adminPassword.equals(password)) {
+            String license = requestBody.get("license").toString();
+            List<String> platForms = (List<String>) requestBody.get("platForms");
+            String filePath = singlePlatform + license + File.separator;
+            platForms.forEach(platForm -> {
+                String fileName = platForm + StringUtil.SubscriptionFileExtension;
+                FileUtil.createFileAndWriteInitContent(filePath, fileName, new HashSet<String>().toString());
+            });
+            return ResultTemplateBean.success("单平台推送记录文件创建成功:" + platForms.toString());
+        }
+        return ResultTemplateBean.success("管理员密码无效");
     }
 }

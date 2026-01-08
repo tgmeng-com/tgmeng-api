@@ -49,7 +49,8 @@ public class TopSearchDataCacheAopAspect {
                     "/api/cachesearch/allbyword",
                     "/api/topsearch/history/mergeparquet",
                     "/api/topsearch/history/customexcutesql",
-                    "/api/topsearch/categories"
+                    "/api/topsearch/categories",
+                    "/api/cachesearch/single"
             );
             if (cacheSearchPaths.stream().anyMatch(url::contains)) {
                 log.info("🙋🏻‍♂️外部请求，检索数据，走正常程序:{}", url);

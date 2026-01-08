@@ -82,21 +82,49 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
     @Override
     public ResultTemplateBean getWordHistory(Map<String, String> requestBody) {
         String title = requestBody.get("title");
-        if (StrUtil.isEmpty(title)) {
-            throw new ServerException("word empty error");
-        }
+        String platformName = requestBody.get("platformName");
+        String platformCategory = requestBody.get("platformCategory");
+        String platformCategoryRoot = requestBody.get("platformCategoryRoot");
         String startTime = requestBody.get("startTime");
         String endTime = requestBody.get("endTime");
+        String keepLatest = requestBody.get("keepLatest");  // 新增参数
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime start = LocalDateTime.parse(startTime, formatter);
             LocalDateTime end = LocalDateTime.parse(endTime, formatter);
             // 根据时间范围获取要扫描的数据范围
             String pathPattern = duckdb.buildPathPattern(start, end);
-            String titleLike = "%" + title.trim() + "%";
-            ;
+            // 动态构建条件
+            StringBuilder conditions = new StringBuilder();
+            if (StrUtil.isNotEmpty(title)) {
+                String titleLike = "%" + title.trim() + "%";
+                conditions.append(String.format("AND lower(title) LIKE lower('%s') ", titleLike));
+            }
+            if (StrUtil.isNotEmpty(platformName)) {
+                conditions.append(String.format("AND platformName = '%s' ", platformName.trim()));
+            }
+            if (StrUtil.isNotEmpty(platformCategory)) {
+                conditions.append(String.format("AND platformCategory = '%s' ", platformCategory.trim()));
+            }
+            if (StrUtil.isNotEmpty(platformCategoryRoot)) {
+                conditions.append(String.format("AND platformCategoryRoot = '%s' ", platformCategoryRoot.trim()));
+            }
+            // 根据参数决定排序方式（保留最新还是最老）
+            String orderDirection = StrUtil.isNotEmpty(keepLatest) ? "DESC" : "ASC";
+            String keepStrategy = StrUtil.isNotEmpty(keepLatest) ? "最新" : "最早";
+
+
             String sql = String.format("""
-                    SELECT
+                SELECT
+                    dataUpdateTime,
+                    platformName,
+                    platformCategory,
+                    platformCategoryRoot,
+                    title,
+                    url,
+                    simHash
+                FROM (
+                    SELECT DISTINCT ON (title, platformName)
                         dataUpdateTime,
                         platformName,
                         platformCategory,
@@ -104,29 +132,27 @@ public class TopSearchHistoryServiceImpl implements ITopSearchHistoryService {
                         title,
                         url,
                         simHash
-                    FROM (
-                        SELECT DISTINCT ON (title, platformName)
-                            dataUpdateTime,
-                            platformName,
-                            platformCategory,
-                            platformCategoryRoot,
-                            title,
-                            url,
-                            simHash
-                        FROM read_parquet('%s')
-                        WHERE simHash IS NOT NULL
-                          AND dataUpdateTime >= '%s'
-                          AND dataUpdateTime <= '%s'
-                          AND lower(title) LIKE lower('%s')
-                        ORDER BY title, platformName, dataUpdateTime ASC  -- 去重时保留最早的
-                    ) t
-                    ORDER BY dataUpdateTime DESC;  -- 最终结果整体降序（最新在前）
-                    """, pathPattern, startTime, endTime, titleLike);
+                    FROM read_parquet('%s')
+                    WHERE simHash IS NOT NULL
+                      AND dataUpdateTime >= '%s'
+                      AND dataUpdateTime <= '%s'
+                      %s
+                    ORDER BY title, platformName, dataUpdateTime %s  -- 去重时动态保留最新的还是最老的
+                ) t
+                ORDER BY dataUpdateTime DESC;  -- 最终结果整体降序（最新在前）
+                """, pathPattern, startTime, endTime, conditions.toString(),orderDirection);
+
             List<Map<String, Object>> query = duckdb.query(sql);
-            log.info("查询热点成功，关键词：{}，共 {} 条记录", title, query.size());
+            log.info("查询热点成功,关键词:{},平台:{},分类:{},根分类:{},去重策略:保留{},共 {} 条记录",
+                    StrUtil.isEmpty(title) ? "全部" : title,
+                    StrUtil.isEmpty(platformName) ? "全部" : platformName,
+                    StrUtil.isEmpty(platformCategory) ? "全部" : platformCategory,
+                    StrUtil.isEmpty(platformCategoryRoot) ? "全部" : platformCategoryRoot,
+                    keepStrategy,
+                    query.size());
             return ResultTemplateBean.success(query);
         } catch (Exception e) {
-            log.error("查询热点失败：{}，错误信息：{}", title, e.getMessage());
+            log.error("查询热点失败:{},错误信息:{}", title, e.getMessage());
             throw new ServerException("error");
         }
     }

@@ -15,4 +15,6 @@ public interface ILicenseService {
     ResultTemplateBean getLicenseConfig();
 
     ResultTemplateBean updateSubscriptionConfig(LicenseBean licenseBean);
+
+    ResultTemplateBean licenseAddSinglePlatformPushRecordFile(Map<String, Object> requestBody);
 }

@@ -5,10 +5,7 @@ import com.tgmeng.common.bean.ResultTemplateBean;
 import com.tgmeng.common.enums.business.LicenseFeatureEnum;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -44,5 +41,13 @@ public class CacheSearchController {
     @RequestMapping("/tgmenghotsearch/{type}")
     public ResultTemplateBean getTgmengHotSearch(@PathVariable("type") String type) {
         return cacheSearchService.getTgmengHotSearch();
+    }
+
+    // 单平台增量数据推送
+    @RequestMapping("/single/{platform}")
+    public String getSimplePlatformDataPush(@PathVariable("platform") String platform,
+                                                        @RequestParam(value = "license", required = true) String license,
+                                                        @RequestParam(value = "type", required = true) Integer type) {
+        return cacheSearchService.getSimplePlatformDataPush(platform, license, type);
     }
 }

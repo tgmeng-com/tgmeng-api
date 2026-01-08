@@ -1,10 +1,14 @@
 package com.tgmeng.service.cachesearch.Impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tgmeng.common.bean.ResultTemplateBean;
+import com.tgmeng.common.enums.business.LicenseFeatureEnum;
 import com.tgmeng.common.enums.business.PlatFormCategoryEnum;
 import com.tgmeng.common.enums.business.PlatFormCategoryRootEnum;
 import com.tgmeng.common.enums.business.SearchModeEnum;
@@ -18,6 +22,7 @@ import com.tgmeng.model.dto.ai.response.AiChatModelResponseMessageContentForReal
 import com.tgmeng.model.vo.topsearch.TopSearchCommonVO;
 import com.tgmeng.service.cachesearch.ICacheSearchService;
 import com.tgmeng.service.history.ITopSearchHistoryService;
+import com.tgmeng.service.license.ILicenseService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +30,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,6 +42,14 @@ import java.util.*;
 public class CacheSearchServiceImpl implements ICacheSearchService {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    private final ReentrantLock lock = new ReentrantLock();
+
+    @Value("${my-config.license.dir}")
+    private String licenseDir;
+
+    @Value("${my-config.single-platform.dir}")
+    private String singlePlatform;
 
     @Value("${my-config.history.keep-day}")
     private Integer historyDataKeepDay;
@@ -42,6 +59,9 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
 
     @Autowired
     ITopSearchCommonMapper iTopSearchCommonMapper;
+
+    @Autowired
+    ILicenseService iLicenseService;
 
 
     private final AIRequestUtil aiRequestUtil;
@@ -63,6 +83,10 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("title", word);
         paramMap.put("endTime", TimeUtil.getCurrentTimeFormat(TimeUtil.defaultPattern));
+        paramMap.put("platformName", requestBody.get("platformName"));
+        paramMap.put("platformCategory", requestBody.get("platformCategory"));
+        paramMap.put("platformCategoryRoot", requestBody.get("platformCategoryRoot"));
+        paramMap.put("keepLatest", requestBody.get("keepLatest"));
         // 模糊匹配当天
         if (StrUtil.equals(searchMode, SearchModeEnum.MO_HU_PI_PEI_TODAY.getValue())) {
             paramMap.put("startTime", TimeUtil.getTodayStartTime(TimeUtil.defaultPattern));
@@ -244,6 +268,101 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         } catch (Exception e) {
             throw new ServerException("热搜词列表处理：" + e.getMessage());
         }
+    }
+
+    // type 0表示查看但不记录  1表示查看并记录   2表示清空查看记录
+    @Override
+    public String getSimplePlatformDataPush(String platform, String license, Integer type) {
+        // 校验权限，因为用户是get请求，所以这里做一下权限校验
+        iLicenseService.check(license, "1234567", LicenseFeatureEnum.SINGLE_PLATFORM_PUSH);
+        lock.lock();
+        StopWatch stopWatch = new StopWatch(RandomUtil.randomString(10));
+        stopWatch.start();
+        List<Map<String, Object>> hotList = new ArrayList<>();
+        List<Map<String, Object>> simplePlatformDataPushNewHotList = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        sb.append("----").append(platform).append("热搜榜---\n");
+        try {
+            File singlePlatformPushRecordFile = new File(singlePlatform + license + File.separator + platform + StringUtil.SubscriptionFileExtension);
+            if (type == 2) {
+                updateFileContent(new HashSet<>(), singlePlatformPushRecordFile);
+                sb.append("重置今日推送记录成功").append("\n");
+                return sb.toString();
+            }
+
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("word", null);
+            paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_TODAY.getValue());
+            paramMap.put("platformName", platform);
+            paramMap.put("keepLatest", "true");
+            hotList = searchByWord(paramMap).getData();
+            Set<String> sent = MAPPER.readValue(singlePlatformPushRecordFile, Set.class);
+            // 存储新推送的哈希，用于后续更新文件
+            Set<String> newHashes = ConcurrentHashMap.newKeySet();
+            // 取出没有推送过的热点
+            simplePlatformDataPushNewHotList = getSimplePlatformDataPushNewHotList(hotList, sent);
+            if (CollUtil.isNotEmpty(simplePlatformDataPushNewHotList)) {
+                // 记录新推送的哈希
+                for (Map<String, Object> hotItem : simplePlatformDataPushNewHotList) {
+                    String hashBase64 = HashUtil.generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
+                    newHashes.add(hashBase64);
+                }
+            }
+            // 更新推送记录，参数为1的时候才更新推送记录，其他时间不更新推送记录
+            if (type == 1) {
+                sent.addAll(newHashes);
+                updateFileContent(sent, singlePlatformPushRecordFile);
+            }
+        } catch (Exception e) {
+            log.error("{}: 处理失败，失败原因: {}", platform, e.getMessage());
+            throw new ServerException("平台不支持");
+        } finally {
+            stopWatch.stop();
+            log.info("✈️✈️✈️ ✅ 订阅操作完成，耗时: {} ms", stopWatch.getTotalTimeMillis());
+            lock.unlock();
+        }
+        // 拼接客户需要的结果
+        for (int i = 0; i < simplePlatformDataPushNewHotList.size(); i++) {
+            Map<String, Object> item = simplePlatformDataPushNewHotList.get(i);
+            String title = item.get("title").toString();
+            sb.append(i + 1).append("、").append(title).append("\n");
+        }
+        return sb.toString();
+    }
+
+    // 更新已推送的单平台的信息
+    public void updateFileContent(Set<String> allHashes, File file) {
+        StopWatch stopWatch = new StopWatch(file.getName() + RandomUtil.randomString(10));
+        stopWatch.start();
+        try {
+            FileUtil.writeToFile(file, allHashes);
+            stopWatch.stop();
+            log.info("✈️ 完成更新单平台推送记录: {}，耗时: {} ms", file.getName(), stopWatch.getTotalTimeMillis());
+        } catch (Exception e) {
+            throw new ServerException("重写文件失败 - 文件: " + file.getName() + ", 错误: " + e.getMessage());
+        }
+    }
+
+    // 过滤单平台下已经推送过的信息(就是用户请求过的)
+    private List<Map<String, Object>> getSimplePlatformDataPushNewHotList(List<Map<String, Object>> hotList, Set<String> sentSet) {
+        return hotList.stream()
+                .filter(map -> {
+                    String hotTitle = String.valueOf(map.get("title"));
+                    String hashBase64 = HashUtil.generateHash(hotTitle, String.valueOf(map.get("platformName")));
+                    return !sentSet.contains(hashBase64);
+                })
+                .collect(Collectors.toMap(
+                        map -> HashUtil.generateHash(
+                                String.valueOf(map.get("title")),
+                                String.valueOf(map.get("platformName"))
+                        ),
+                        map -> map,
+                        (existing, replacement) -> replacement,  // 保留最后一个
+                        LinkedHashMap::new
+                ))
+                .values()
+                .stream()
+                .toList();
     }
 
     // 根据分类获取热点标题，参数为null则传回所有热点标题(排除掉了噪点比较大的一些平台)

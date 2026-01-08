@@ -714,7 +714,7 @@ public class RequestInfoManager {
                 .rootSelector(".cell.item")
                 .titleSelector(".topic-link")
                 .urlSelector(".topic-link")
-                .hotScoreSelector(".t-count_livid")
+                .hotScoreSelector(".count_livid")
                 .register();
 
         addDomConfig("https://www.zhibo8.com/")
