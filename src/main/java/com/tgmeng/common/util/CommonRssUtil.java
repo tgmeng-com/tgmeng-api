@@ -68,6 +68,9 @@ public class CommonRssUtil {
                 if (syndEntry.getComments() != null) {
                     comments = syndEntry.getComments();
                 }
+                if (StrUtil.isBlank(url)){
+                    url = "https://tgmeng.com";
+                }
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
                     topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, "", url, imageUrl, author, description, "", pubDate, "", null, null, null, i + 1));
                 }

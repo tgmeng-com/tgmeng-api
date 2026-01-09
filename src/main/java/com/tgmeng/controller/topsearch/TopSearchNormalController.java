@@ -839,22 +839,24 @@ public class TopSearchNormalController {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/tonghuashun/remenhuati")
+    // 下面这几个同花顺的子平台是不对外开放的，是系统内部自己定时器调的
+    @RequestMapping("/schedule/tonghuashun/remenhuati")
     public ResultTemplateBean getTongHuaShunReMenHuaTi() {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/tonghuashun/remenwenzhang")
+    @RequestMapping("/schedule/tonghuashun/remenwenzhang")
     public ResultTemplateBean getTongHuaShunRenMenWenZhang() {
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/tonghuashun/kuaixunzhongyao")
+    @RequestMapping("/schedule/tonghuashun/kuaixunzhongyao")
     public ResultTemplateBean getTongHuaShunKuaiXunZhongYao() {
+
         return topSearchCommonService.getTopSearchCommonService();
     }
 
-    @RequestMapping("/tonghuashun/toutiao")
+    @RequestMapping("/schedule/tonghuashun/toutiao")
     public ResultTemplateBean getTongHuaShunTouTiao() {
         return topSearchCommonService.getTopSearchCommonService();
     }

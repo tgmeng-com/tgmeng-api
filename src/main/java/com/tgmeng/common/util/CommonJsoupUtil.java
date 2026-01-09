@@ -56,6 +56,9 @@ public class CommonJsoupUtil {
                     } else {
                         sort = i + 1;
                     }
+                    if (StrUtil.isBlank(url)){
+                        url = "https://tgmeng.com";
+                    }
                     //if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
                     if (StrUtil.isNotBlank(title)) {
                         topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", publishTime, commentCount, null, null, "", sort));

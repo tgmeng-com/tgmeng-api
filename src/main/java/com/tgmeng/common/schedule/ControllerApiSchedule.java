@@ -123,6 +123,9 @@ public class ControllerApiSchedule {
                     );
 
                     if (result.getData() != null) {
+                        if (endpointKey.contains("/schedule/tonghuashun/kuaixunzhongyao")){
+                            System.out.println(endpointKey);
+                        }
                         cacheUtil.put(endpointKey, result.getData());
                     } else {
                         log.warn("🚨 接口 {} 返回异常，data = null", endpointKey);

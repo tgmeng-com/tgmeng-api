@@ -348,10 +348,10 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/xiaozhongruanjian", PlatformConfig.builder().build());
         configs.put("/api/topsearch/2libra", PlatformConfig.builder().build());
 
-        configs.put("/api/topsearch/tonghuashun/remenhuati", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/tonghuashun/remenwenzhang", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/tonghuashun/kuaixunzhongyao", PlatformConfig.builder().build());
-        configs.put("/api/topsearch/tonghuashun/toutiao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/schedule/tonghuashun/remenhuati", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/schedule/tonghuashun/remenwenzhang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/schedule/tonghuashun/kuaixunzhongyao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/schedule/tonghuashun/toutiao", PlatformConfig.builder().build());
 
         // 用户定制的单平台数据
         configs.put("/api/cachesearch/customer/single/origindata/同花顺", PlatformConfig.builder().build());

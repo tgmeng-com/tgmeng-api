@@ -130,6 +130,9 @@ public class CommonJsonPathUtil {
                 } else {
                     sort = i + 1;
                 }
+                if (StrUtil.isBlank(url)){
+                    url = "https://tgmeng.com";
+                }
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
                     topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, image, author, desc, type, publishTime, commentCount, startTime, endTime, showTime, sort));
                 }
