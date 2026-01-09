@@ -297,8 +297,8 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
             if (type == 2) {
                 updateFileContent(new HashSet<>(), singlePlatformPushRecordFile);
                 StringBuilder reset = new StringBuilder();
-                reset.append(platformCategory).append("/n");
-                reset.append("重置今日推送记录成功").append("/n");
+                reset.append(platformCategory).append("<br>");
+                reset.append("重置今日推送记录成功").append("<br>");
                 return reset.toString();
             }
             // 1：返回当天增量数据
@@ -338,12 +338,12 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         // 遍历每个分组输出
         StringBuilder sb = new StringBuilder();
         groupedData.forEach((platformName, items) -> {
-            sb.append("----").append(platformName).append(" 热搜榜---/n");
+            sb.append("----").append(platformName).append(" 热搜榜---<br>");
             for (int i = 0; i < items.size(); i++) {
                 String title = items.get(i).get("title").toString();
-                sb.append(i + 1).append("、").append(title).append("/n");
+                sb.append(i + 1).append("、").append(title).append("<br>");
             }
-            sb.append("/n");  // 不同平台之间空一行
+            sb.append("<br>");  // 不同平台之间空一行
         });
 
         return sb.toString();
