@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -122,11 +123,19 @@ public class CommonJsonPathUtil {
                 }
                 String commentCount = "";
 
+                Integer sort = 0;
+                if (StrUtil.isNotBlank(selector.getSort())) {
+                    Object value = itemCtx.read(selector.getSort());
+                    sort = value instanceof Number ? ((Number) value).intValue() : Integer.parseInt(String.valueOf(value));
+                } else {
+                    sort = i + 1;
+                }
                 if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, image, author, desc, type, publishTime, commentCount, startTime, endTime, showTime, i + 1));
+                    topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, image, author, desc, type, publishTime, commentCount, startTime, endTime, showTime, sort));
                 }
             }
         }
+        topSearchCommonVOS.sort(Comparator.comparingInt(TopSearchCommonVO.DataInfo::getSort));
         return topSearchCommonVOS;
     }
 

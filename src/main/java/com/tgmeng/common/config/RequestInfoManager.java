@@ -102,6 +102,8 @@ public class RequestInfoManager {
         private String endTime = "";
         @Builder.Default
         private String showTime = "";
+        @Builder.Default
+        private String sort = "";
     }
 
     // ==================== 配置入口 ====================
@@ -298,6 +300,11 @@ public class RequestInfoManager {
 
         public FluentConfig commentCountSelector(String v) {
             currentSelector.commentCount(v);
+            return this;
+        }
+
+        public FluentConfig sortSelector(String v) {
+            currentSelector.sort(v);
             return this;
         }
 
@@ -1067,7 +1074,7 @@ public class RequestInfoManager {
         addDomConfig("https://xnews.jin10.com/")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("金十")
-                .platformCategory(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .platformCategory(PlatFormCategoryEnum.JIN_SHI.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
                 .interfaceUrl("/api/topsearch/jinshi")
                 .hotTitleUrlPrefix("")
@@ -1111,7 +1118,7 @@ public class RequestInfoManager {
         addDomConfig("https://www.cls.cn/")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("财联社")
-                .platformCategory(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .platformCategory(PlatFormCategoryEnum.CAI_LIAN_SHE.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
                 .interfaceUrl("/api/topsearch/cailianshe")
                 .hotTitleUrlPrefix("https://www.cls.cn")
@@ -1137,7 +1144,7 @@ public class RequestInfoManager {
         addDomConfig("https://news.10jqka.com.cn/")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("同花顺")
-                .platformCategory(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .platformCategory(PlatFormCategoryEnum.TONG_HUA_SHUN.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
                 .interfaceUrl("/api/topsearch/tonghuashun")
                 .hotTitleUrlPrefix("")
@@ -1145,6 +1152,66 @@ public class RequestInfoManager {
                 .rootSelector(".list-con ul li")
                 .titleSelector("a")
                 .urlSelector("a")
+                .register();
+
+
+        addJsonConfig("https://dq.10jqka.com.cn/fuyao/hot_list_data/out/hot_list/v1/topic?page=1&page_size=30")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("同花顺 热门话题")
+                .platformCategory(PlatFormCategoryEnum.TONG_HUA_SHUN.getValue())
+                .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .interfaceUrl("/api/topsearch/tonghuashun/remenhuati")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("$.data.topic_list")
+                .titleSelector("$.title")
+                .urlSelector("$.jump_url")
+                .hotScoreSelector("$.hot_value")
+                .register();
+
+        addJsonConfig("https://ai.iwencai.com/index/urp/getdata/basic?tag=%E5%90%8C%E8%8A%B1%E9%A1%BA%E7%83%AD%E6%A6%9C_%E6%96%B0%E7%83%AD%E6%96%87")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("同花顺 热门文章")
+                .platformCategory(PlatFormCategoryEnum.TONG_HUA_SHUN.getValue())
+                .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .interfaceUrl("/api/topsearch/tonghuashun/remenwenzhang")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("$.answer.components[0].data.datas")
+                .titleSelector("$.title")
+                .urlSelector("$.contentUrl[0]")
+                .hotScoreSelector("$.score")
+                .sortSelector("$.rank")
+                .register();
+
+        addDomConfig("https://www.10jqka.com.cn")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("同花顺 快讯 重要")
+                .platformCategory(PlatFormCategoryEnum.TONG_HUA_SHUN.getValue())
+                .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .interfaceUrl("/api/topsearch/tonghuashun/kuaixunzhongyao")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector(".space-y-0 > div")
+                .titleSelector("h3")
+                .urlSelector("")
+                .register();
+
+        addDomConfig("https://www.10jqka.com.cn/")
+                .requestType(ForestRequestTypeEnum.GET)
+                .platformName("同花顺 头条")
+                .platformCategory(PlatFormCategoryEnum.TONG_HUA_SHUN.getValue())
+                .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .interfaceUrl("/api/topsearch/tonghuashun/toutiao")
+                .hotTitleUrlPrefix("")
+                .addArea()
+                .rootSelector("div[class*=\"@container\"][class*=\"w-full\"]:first-of-type")
+                .titleSelector("h3")
+                .urlSelector("a:first-of-type")
+                .addArea()
+                .rootSelector("div[class*=\"@container\"][class*=\"w-full\"]:first-of-type > div:first-of-type > a")
+                .titleSelector("h4")
+                .urlSelector(":root")
                 .register();
 
         addDomConfig("https://www.yicai.com")
@@ -2241,7 +2308,7 @@ public class RequestInfoManager {
         addDomConfig("https://finance.eastmoney.com/yaowen.html")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("东方财富网")
-                .platformCategory(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .platformCategory(PlatFormCategoryEnum.DONG_FANG_CAI_FU_WANG.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
                 .interfaceUrl("/api/topsearch/dongfangcaifuwang")
                 .hotTitleUrlPrefix("")
@@ -2392,7 +2459,7 @@ public class RequestInfoManager {
         addDomConfig("https://xuangutong.com.cn/jingxuan")
                 .requestType(ForestRequestTypeEnum.GET)
                 .platformName("选股通")
-                .platformCategory(PlatFormCategoryRootEnum.CAI_JING.getValue())
+                .platformCategory(PlatFormCategoryEnum.XUAN_GU_TONG.getValue())
                 .platformCategoryRoot(PlatFormCategoryRootEnum.CAI_JING.getValue())
                 .interfaceUrl("/api/topsearch/xuangutong")
                 .hotTitleUrlPrefix("https://xuangutong.com.cn")

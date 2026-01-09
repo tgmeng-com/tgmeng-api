@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -48,12 +49,21 @@ public class CommonJsoupUtil {
                     } else {
                         hotScore = safeText(rootElements.get(i), selector.getHotScore()).toString();
                     }
-
-                    if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
-                        topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", publishTime, commentCount, null, null, "", i + 1));
+                    Integer sort = 0;
+                    if (StrUtil.isNotBlank(selector.getSort())) {
+                        String sortText = safeText(rootElements.get(i), selector.getSort());
+                        sort = StrUtil.isNotBlank(sortText) ? Integer.parseInt(sortText) : i + 1;
+                    } else {
+                        sort = i + 1;
                     }
+                    //if (StrUtil.isNotBlank(title) && StrUtil.isNotBlank(url)) {
+                    if (StrUtil.isNotBlank(title)) {
+                        topSearchCommonVOS.add(new TopSearchCommonVO.DataInfo(title, hotScore, url, "", "", "", "", publishTime, commentCount, null, null, "", sort));
+                    }
+
                 }
             }
+            topSearchCommonVOS.sort(Comparator.comparingInt(TopSearchCommonVO.DataInfo::getSort));
             return topSearchCommonVOS;
         }
     }

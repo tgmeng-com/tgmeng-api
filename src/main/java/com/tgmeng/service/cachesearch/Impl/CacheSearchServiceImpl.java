@@ -274,62 +274,88 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
 
     // type 0表示查看但不记录  1表示查看并记录   2表示清空查看记录
     @Override
-    public String getSimplePlatformDataPush(String platform, String license, Integer type) {
+    public String getSimplePlatformDataPush(String platformCategory, String license, Integer type) {
         // 校验权限，因为用户是get请求，所以这里做一下权限校验
         iLicenseService.check(license, "1234567", LicenseFeatureEnum.SINGLE_PLATFORM_PUSH);
         lock.lock();
         StopWatch stopWatch = new StopWatch(RandomUtil.randomString(10));
         stopWatch.start();
-        List<Map<String, Object>> hotList = new ArrayList<>();
+        // 从缓存里取出当天这个平台所有数据
+        List<Map<String, Object>> hotList = (List<Map<String, Object>>) cacheUtil.getValue("/api/cachesearch/customer/single/origindata/" + platformCategory);
         List<Map<String, Object>> simplePlatformDataPushNewHotList = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
-        sb.append("----").append(platform).append("热搜榜---<br>");
         try {
-            File singlePlatformPushRecordFile = new File(singlePlatform + license + File.separator + platform + StringUtil.SubscriptionFileExtension);
+            // 0：返回当天全部数据
+            if (type == 0) {
+                simplePlatformDataPushNewHotList = hotList;
+            }
+            File singlePlatformPushRecordFile = new File(singlePlatform + license + File.separator + platformCategory + StringUtil.SubscriptionFileExtension);
+            // 2:重置推送记录
             if (type == 2) {
                 updateFileContent(new HashSet<>(), singlePlatformPushRecordFile);
-                sb.append("重置今日推送记录成功").append("<br>");
-                return sb.toString();
+                StringBuilder reset = new StringBuilder();
+                reset.append(platformCategory).append("<br>");
+                reset.append("重置今日推送记录成功").append("<br>");
+                return reset.toString();
             }
-
-            Map<String, String> paramMap = new HashMap<>();
-            paramMap.put("word", null);
-            paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_TODAY.getValue());
-            paramMap.put("platformName", platform);
-            paramMap.put("keepLatest", "true");
-            hotList = searchByWord(paramMap).getData();
-            Set<String> sent = MAPPER.readValue(singlePlatformPushRecordFile, Set.class);
-            // 存储新推送的哈希，用于后续更新文件
-            Set<String> newHashes = ConcurrentHashMap.newKeySet();
-            // 取出没有推送过的热点
-            simplePlatformDataPushNewHotList = getSimplePlatformDataPushNewHotList(hotList, sent);
-            if (CollUtil.isNotEmpty(simplePlatformDataPushNewHotList)) {
-                // 记录新推送的哈希
-                for (Map<String, Object> hotItem : simplePlatformDataPushNewHotList) {
-                    String hashBase64 = HashUtil.generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
-                    newHashes.add(hashBase64);
-                }
-            }
-            // 更新推送记录，参数为1的时候才更新推送记录，其他时间不更新推送记录
+            // 1：返回当天增量数据
             if (type == 1) {
+                Set<String> sent = MAPPER.readValue(singlePlatformPushRecordFile, Set.class);
+                // 存储新推送的哈希，用于后续更新文件
+                Set<String> newHashes = ConcurrentHashMap.newKeySet();
+                // 取出没有推送过的热点
+                simplePlatformDataPushNewHotList = getSimplePlatformDataPushNewHotList(hotList, sent);
+                if (CollUtil.isNotEmpty(simplePlatformDataPushNewHotList)) {
+                    // 记录新推送的哈希
+                    for (Map<String, Object> hotItem : simplePlatformDataPushNewHotList) {
+                        String hashBase64 = HashUtil.generateHash(hotItem.get("title").toString(), hotItem.get("platformName").toString());
+                        newHashes.add(hashBase64);
+                    }
+                }
+                // 更新推送记录，参数为1的时候才更新推送记录，其他时间不更新推送记录
                 sent.addAll(newHashes);
                 updateFileContent(sent, singlePlatformPushRecordFile);
             }
         } catch (Exception e) {
-            log.error("{}: 处理失败，失败原因: {}", platform, e.getMessage());
+            log.error("{}: 处理失败，失败原因: {}", platformCategory, e.getMessage());
             throw new ServerException("平台不支持");
         } finally {
             stopWatch.stop();
             log.info("✈️✈️✈️ ✅ 订阅操作完成，耗时: {} ms", stopWatch.getTotalTimeMillis());
             lock.unlock();
         }
-        // 拼接客户需要的结果
-        for (int i = 0; i < simplePlatformDataPushNewHotList.size(); i++) {
-            Map<String, Object> item = simplePlatformDataPushNewHotList.get(i);
-            String title = item.get("title").toString();
-            sb.append(i + 1).append("、").append(title).append("<br>");
-        }
+
+        // 按 platformName 分组
+        Map<String, List<Map<String, Object>>> groupedData = simplePlatformDataPushNewHotList.stream()
+                .collect(Collectors.groupingBy(
+                        item -> item.get("platformName").toString(),
+                        LinkedHashMap::new,  // 保持原始顺序
+                        Collectors.toList()
+                ));
+        // 遍历每个分组输出
+        StringBuilder sb = new StringBuilder();
+        groupedData.forEach((platformName, items) -> {
+            sb.append("----").append(platformName).append(" 热搜榜---<br>");
+            for (int i = 0; i < items.size(); i++) {
+                String title = items.get(i).get("title").toString();
+                sb.append(i + 1).append("、").append(title).append("<br>");
+            }
+            sb.append("<br>");  // 不同平台之间空一行
+        });
+
         return sb.toString();
+    }
+
+    // 定时准备但平台客户需要的数据，给阿夏的那个
+    @Override
+    public ResultTemplateBean cacheSinglePlatformDataForCustomer(String platformCategory) {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("word", null);
+        paramMap.put("searchMode", SearchModeEnum.MO_HU_PI_PEI_TODAY.getValue());
+        paramMap.put("platformCategory", platformCategory);
+        paramMap.put("keepLatest", "true");
+        List<Map<String, Object>> hotList = new ArrayList<>();
+        hotList = searchByWord(paramMap).getData();
+        return ResultTemplateBean.success(hotList);
     }
 
     // 更新已推送的单平台的信息

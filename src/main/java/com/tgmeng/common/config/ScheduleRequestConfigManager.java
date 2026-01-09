@@ -348,6 +348,18 @@ public class ScheduleRequestConfigManager {
         configs.put("/api/topsearch/xiaozhongruanjian", PlatformConfig.builder().build());
         configs.put("/api/topsearch/2libra", PlatformConfig.builder().build());
 
+        configs.put("/api/topsearch/tonghuashun/remenhuati", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/tonghuashun/remenwenzhang", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/tonghuashun/kuaixunzhongyao", PlatformConfig.builder().build());
+        configs.put("/api/topsearch/tonghuashun/toutiao", PlatformConfig.builder().build());
+
+        // 用户定制的单平台数据
+        configs.put("/api/cachesearch/customer/single/origindata/同花顺", PlatformConfig.builder().build());
+        configs.put("/api/cachesearch/customer/single/origindata/财联社", PlatformConfig.builder().build());
+        configs.put("/api/cachesearch/customer/single/origindata/金十", PlatformConfig.builder().build());
+        configs.put("/api/cachesearch/customer/single/origindata/东方财富网", PlatformConfig.builder().build());
+        configs.put("/api/cachesearch/customer/single/origindata/选股通", PlatformConfig.builder().build());
+
     }
 
     // 获取全部已启用的key

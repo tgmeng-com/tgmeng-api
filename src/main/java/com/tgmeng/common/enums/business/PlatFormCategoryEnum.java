@@ -35,8 +35,12 @@ public enum PlatFormCategoryEnum implements INameValueEnum<String, String> {
     TGMENG_CAR("car", "糖果梦汽车", "", true, 14),
     TGMENG_SPORTS("sports", "糖果梦体育", "", true, 14),
     TGMENG_GAME("game", "糖果梦游戏", "", true, 14),
-    TGMENG_LIVELIHOOD("livelihood", "糖果梦民生", "", true, 14);
-
+    TGMENG_LIVELIHOOD("livelihood", "糖果梦民生", "", true, 14),
+    TONG_HUA_SHUN("", "同花顺", "", true, 14),
+    CAI_LIAN_SHE("", "财联社", "", true, 14),
+    JIN_SHI("", "金十", "", true, 14),
+    DONG_FANG_CAI_FU_WANG("", "东方财富网", "", true, 14),
+    XUAN_GU_TONG("", "选股通", "", true, 14);
     private final String key;
     private final String value;
     private final String description;

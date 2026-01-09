@@ -44,10 +44,16 @@ public class CacheSearchController {
     }
 
     // 单平台增量数据推送
-    @RequestMapping("/single/{platform}")
-    public String getSimplePlatformDataPush(@PathVariable("platform") String platform,
-                                                        @RequestParam(value = "license", required = true) String license,
-                                                        @RequestParam(value = "type", required = true) Integer type) {
-        return cacheSearchService.getSimplePlatformDataPush(platform, license, type);
+    @RequestMapping("/single/{platformCategory}")
+    public String getSimplePlatformDataPush(@PathVariable("platformCategory") String platformCategory,
+                                                        @RequestParam(value = "license", required = false) String license,
+                                                        @RequestParam(value = "type", required = false) Integer type) {
+        return cacheSearchService.getSimplePlatformDataPush(platformCategory, license, type);
+    }
+
+    // 这个是定时准备单平台当天的数据，然后用户调上面那个接口，里面处理的数据都是通过这个接口里弄的
+    @RequestMapping("/customer/single/origindata/{platformCategory}")
+    public ResultTemplateBean getSimplePlatformDataPush(@PathVariable("platformCategory") String platformCategory) {
+        return cacheSearchService.cacheSinglePlatformDataForCustomer(platformCategory);
     }
 }

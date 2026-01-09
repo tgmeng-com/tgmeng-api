@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -74,6 +75,7 @@ public class CommonRssUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        topSearchCommonVOS.sort(Comparator.comparingInt(TopSearchCommonVO.DataInfo::getSort));
         return topSearchCommonVOS;
     }
 }
