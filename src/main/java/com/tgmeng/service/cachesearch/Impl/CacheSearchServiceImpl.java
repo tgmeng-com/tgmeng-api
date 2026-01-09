@@ -281,11 +281,15 @@ public class CacheSearchServiceImpl implements ICacheSearchService {
         StopWatch stopWatch = new StopWatch(RandomUtil.randomString(10));
         stopWatch.start();
         // 从缓存里取出当天这个平台所有数据
-        List<Map<String, Object>> hotList = (List<Map<String, Object>>) cacheUtil.getValue("/api/cachesearch/customer/single/origindata/" + platformCategory);
+        List<Map<String, Object>> hotList = new ArrayList<>();
         List<Map<String, Object>> simplePlatformDataPushNewHotList = new ArrayList<>();
         try {
+            hotList = (List<Map<String, Object>>) cacheUtil.getValue("/api/cachesearch/customer/single/origindata/" + platformCategory);
             // 0：返回当天全部数据
             if (type == 0) {
+                if (null == hotList) {
+                    throw new ServerException("数据为空");
+                }
                 simplePlatformDataPushNewHotList = hotList;
             }
             File singlePlatformPushRecordFile = new File(singlePlatform + license + File.separator + platformCategory + StringUtil.SubscriptionFileExtension);
